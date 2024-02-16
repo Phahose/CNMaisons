@@ -1,0 +1,19 @@
+{
+  "Version": 1,
+  "Hash": "tjn3e9zkXlzRGWQV2xD0EBbioygY3Ue/PQF5CkXHFRw=",
+  "Source": "CNMaisons",
+  "BasePath": "_content/CNMaisons",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "CNMaisons\\wwwroot",
+      "Source": "CNMaisons",
+      "ContentRoot": "C:\\Users\\nekwom1\\Desktop\\CNMaisons\\CNMaisons\\wwwroot\\",
+      "BasePath": "_content/CNMaisons",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": []
+}
