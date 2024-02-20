@@ -2,4 +2,20 @@
 @model CNMaisons.Pages.IndexModel
 @{
 }
-<h1>Index Page</h1>
+<div class="entry">
+    <header>
+        <a href="#"><img src="~/img/png/logo-no-background.png" width="150" class="intro_image"/></a>
+        <ul>
+            <li><a href="#">Sign Up</a></li>
+            <li><a href="#">Log In</a></li>
+            <li class="last_list"><a href="#">View Properties</a></li>
+        </ul>
+    </header>
+    <div class="searchbox">
+        <form method="post" name="SearchForm">
+            <p class="quote">Offering premium, meticulously designed properties with comfort, convenience, and style.</p>
+            <input type="text" name="Search" class="searchfield" placeholder="Find A Place"/>
+            <input type="submit" name="Search" value="Search" class="search_button"/>
+        </form>
+    </div>
+</div>
