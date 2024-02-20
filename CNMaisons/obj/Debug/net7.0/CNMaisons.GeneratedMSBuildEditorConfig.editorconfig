@@ -9,21 +9,21 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = CNMaisons
 build_property.RootNamespace = CNMaisons
-build_property.ProjectDir = C:\Users\nekwom1\Desktop\CNMaisons\CNMaisons\
+build_property.ProjectDir = C:\Users\ekwom\OneDrive\Desktop\BAIST\2nd Semester\BAIS3900 Capstone\CNMaisons\CNMaisons\
 build_property.RazorLangVersion = 7.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\nekwom1\Desktop\CNMaisons\CNMaisons
+build_property.MSBuildProjectDirectory = C:\Users\ekwom\OneDrive\Desktop\BAIST\2nd Semester\BAIS3900 Capstone\CNMaisons\CNMaisons
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/nekwom1/Desktop/CNMaisons/CNMaisons/Pages/Index.cshtml]
+[C:/Users/ekwom/OneDrive/Desktop/BAIST/2nd Semester/BAIS3900 Capstone/CNMaisons/CNMaisons/Pages/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/nekwom1/Desktop/CNMaisons/CNMaisons/Pages/Shared/_Layout.cshtml]
+[C:/Users/ekwom/OneDrive/Desktop/BAIST/2nd Semester/BAIS3900 Capstone/CNMaisons/CNMaisons/Pages/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/nekwom1/Desktop/CNMaisons/CNMaisons/Pages/_ViewStart.cshtml]
+[C:/Users/ekwom/OneDrive/Desktop/BAIST/2nd Semester/BAIS3900 Capstone/CNMaisons/CNMaisons/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
