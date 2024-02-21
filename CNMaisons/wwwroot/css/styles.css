@@ -1,5 +1,7 @@
 ﻿body {
     background-color: #1c1c1b;
+    font-family: "Raleway", sans-serif;
+    color: white;
 }
 .entry {
     position: absolute;
@@ -19,10 +21,10 @@
 .intro_image {
     
 }
-.entry header> a{
+header> a{
     margin-top: 1.5rem;
 }
-.entry > header {
+header {
     display: flex;
     max-height: 20%;
     max-width: 100vw;
@@ -30,21 +32,21 @@
     justify-content: space-between;
     background-color: rgba(0, 0, 0, 0.7);
 }
-.entry ul{
+header ul{
     display: flex;
 }
-.entry li {
+header li {
     list-style: none;
     margin-left: 1rem;
     font-size: 1.2rem;
     font-family: "Raleway", sans-serif;
     padding: 0.5rem;
 }
-.entry li a {
+header li a {
     text-decoration: none;
     color: white;
 }
-.entry li a:hover{
+header li a:hover{
     color: gray;
 }
 .last_list{
@@ -95,3 +97,50 @@
 .search_button:hover {
     background-color: #0a0a0a;
 }
+
+/*Sign Up Page*/
+.application_form{
+    width: fit-content;
+    margin: auto;
+}
+.confirmation_text{
+    width: 35rem;
+}
+fieldset {
+    flex-flow: column;
+    align-items: center;
+    margin-bottom: 3rem;
+    margin-top: 1.5rem;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+fieldset>div{
+    margin:auto;
+    width: inherit;
+}
+
+input[type=text], input[type=email], input[type=tel], input[type=date],
+textarea, input[type=number],select  {
+    width: 95%;
+    margin-left: auto;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border: 1px solid #fff;
+    background-color: rgba(255, 255, 255, 0.5);
+    /*background-color: #1c1c1b;*/
+    caret-color: #fff;
+    color: #fff
+}
+    select option {
+        color: white;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    #video-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        z-index: -1; /* Place the video behind other content */
+    }
