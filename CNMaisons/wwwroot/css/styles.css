@@ -134,13 +134,27 @@ textarea, input[type=number],select  {
         color: white;
         background-color: rgba(0, 0, 0, 0.5);
     }
-    #video-background {
-        position: fixed;
-        top: 0;
-        left: 0;
-        min-width: 100%;
-        min-height: 100%;
-        width: auto;
-        height: auto;
-        z-index: -1; /* Place the video behind other content */
-    }
+#video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -1;
+    filter: brightness(0.6);
+}
+input[type=submit] {
+    width: 95%;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    border: 1px solid #fff;
+    background-color: #1c1c1b;
+    color: white;
+}
+input[type=submit]:hover {
+    background-color: #292323;
+    padding: 0.6rem;
+    transition: 0.2s ease-in-out;
+}
