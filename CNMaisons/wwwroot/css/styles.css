@@ -52,6 +52,9 @@ header li a:hover{
 .last_list{
     border: 1px solid white;
 }
+.last_list:hover{
+    border: 1px solid gray;
+}
 .quote {
     font-family: "Raleway", sans-serif;
     width: fit-content;
@@ -157,4 +160,120 @@ input[type=submit]:hover {
     background-color: #292323;
     padding: 0.6rem;
     transition: 0.2s ease-in-out;
+}
+.form{
+    width: 70%;
+    margin: auto;
+}
+.view_form {
+    width: 50%;
+    margin: auto;
+}
+/*Tennant Home Page*/
+.memberhome_nav{
+    display: flex;
+    justify-content: space-between;
+}
+.memberhome_nav ul{
+    display: flex;
+}
+
+.memberhome_nav li {
+    list-style: none;
+    margin-left: 1rem;
+    font-size: 1rem;
+    font-family: "Raleway", sans-serif;
+    padding: 0.5rem;
+}
+.memberhome_nav a {
+    text-decoration: none;
+    color: white;
+}
+.memberhome_nav > a {
+    margin-top: 1.5rem;
+}
+.home_intro {
+    background-color: #e39a3b;
+    height: 23rem;
+    padding-left: 1rem;
+    padding-right:1rem;
+}
+.icon_div {
+    background-image: url("/img/profile_icon.png");
+    background-size: cover;
+    height: 7rem;
+    width: 7rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3rem;
+    border-radius: 50%;
+}
+.basic_info h2{
+    width: fit-content;
+    margin:auto;
+}
+.basic_info p{
+    width: fit-content;
+    margin:auto;
+    font-weight:bold;
+}
+.infodiv {
+    border: 1px solid #fff;
+    height: 25rem;
+    width: 90%;
+    margin-top: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 50rem;
+    background-color: #1f1e1e;
+    padding: 1rem;
+}
+.boxcontainer {
+    height: 25rem;
+    display: flex;
+    width: 100%;
+    margin:auto;
+    justify-content: space-between;
+}
+.box1>div:nth-child(1){
+    display:flex;
+    flex-flow:column;
+    justify-content:center;
+    align-items:center;
+  
+}
+.box1 > div:nth-child(1) p{
+  margin-bottom: 0;
+}
+.box1 > div:nth-child(1) span{
+    font-weight:bold;
+}
+.box1 > div:nth-child(2) {
+    background-color: black;
+}
+.next_rent {
+    border: 1px solid #fff;
+    margin-top: 3rem;
+    display:flex;
+    flex-flow: column;
+    justify-content:center;
+    padding: 1rem;
+}
+.next_rent p{
+    margin-top:0;
+    margin-left:auto;
+    margin-right:auto;
+    font-size: 2.5rem;
+}
+.next_rent h3{
+    margin-top:2rem;
+    margin-bottom: 0;
+    margin-left:auto;
+    margin-right:auto;
+}
+.title{
+    width:fit-content;
+    margin:auto;
+    margin-top: 0.5rem;
+    font-weight:bold;
 }

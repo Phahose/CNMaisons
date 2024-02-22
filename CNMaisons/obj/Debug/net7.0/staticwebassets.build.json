@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "1thIb+fmpjaD6smotBsoNeFlE6yRgHumHWaBJrfilG8=",
+  "Hash": "Cun92p7zcVfxHfjVbhwAOFg6EoaY0kyZqLcgOPt64lE=",
   "Source": "CNMaisons",
   "BasePath": "_content/CNMaisons",
   "Mode": "Default",
@@ -168,6 +168,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\png\\logo-white.png"
+    },
+    {
+      "Identity": "C:\\Users\\ekwom\\OneDrive\\Desktop\\BAIST\\2nd Semester\\BAIS3900 Capstone\\CNMaisons\\CNMaisons\\wwwroot\\img\\profile_icon.png",
+      "SourceId": "CNMaisons",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\ekwom\\OneDrive\\Desktop\\BAIST\\2nd Semester\\BAIS3900 Capstone\\CNMaisons\\CNMaisons\\wwwroot\\",
+      "BasePath": "_content/CNMaisons",
+      "RelativePath": "img/profile_icon.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\profile_icon.png"
     },
     {
       "Identity": "C:\\Users\\ekwom\\OneDrive\\Desktop\\BAIST\\2nd Semester\\BAIS3900 Capstone\\CNMaisons\\CNMaisons\\wwwroot\\js\\script.js",
