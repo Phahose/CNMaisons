@@ -1,0 +1,77 @@
+﻿@page
+@model CNMaisons.Pages.AddPropertyModel
+@{
+    ViewData["Title"] = "Add Property";
+}
+<div>
+    <nav class="memberhome_nav">
+        <a href="~/Index"><img src="~/img/png/logo-no-background.png" width="150" class="intro_image" /></a>
+        <ul>
+            <li>
+                <a href="#">My Account</a>
+            </li>
+            <li>
+                <a href="#">Record Rent</a>
+            </li>
+            <li>
+                <a href="#">Record Maintainance</a>
+            </li>
+            <li>
+                <a href="#">Contact</a>
+            </li>
+            <li>
+                <a href="#">Edit Account</a>
+            </li>
+        </ul>
+    </nav>
+    <form name="AddProperty" class="form">
+        <fieldset>
+            <legend>Add Property</legend>
+            <label for="PropertyName">Property Name</label>
+            <br />
+            <input type="text" name="PropertyName" />
+            <br />
+
+            <label for="State">Property Location (State)</label>
+            <br />
+            <input type="text" name="State"/>
+            <br />
+            
+            <label for="PropertyAddress">Property Address</label>
+            <br />
+            <input type="text" name="PropertyAddress" />
+            <br />
+
+            <label for="Image1"> Image 1</label>
+            <br/>
+            <input type="file" name="Image1"/>
+            <br/>
+
+            <label for="Image2"> Image 2</label>
+            <br/>
+            <input type="file" name="Image2" />
+            <br/>
+
+            <label for="Image3"> Image 3</label>
+            <br/>
+            <input type="file" name="Image3" />
+            <br/>
+
+            <label for="Image4"> Image 4</label>
+            <br/>
+            <input type="file" name="Image4" />
+            <br/>
+
+            <label for="Image5"> Image 5</label>
+            <br/>
+            <input type="file" name="Image5" />
+            <br/>
+
+            <label for="Image6"> Image 6</label>
+            <br/>
+            <input type="file" name="Image6" />
+            <br/>
+
+        </fieldset>
+    </form>
+</div>
