@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CNMaisons")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4beef015fa9a9ece4b67659dde73a9b8346c6abb")]
 [assembly: System.Reflection.AssemblyProductAttribute("CNMaisons")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CNMaisons")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
