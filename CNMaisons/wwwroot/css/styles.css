@@ -174,6 +174,7 @@ input[type=submit]:hover {
 .view_form {
     width: 50%;
     margin: auto;
+    max-width: 30rem;
 }
 /*Tennant Home Page*/
 .memberhome_nav{
@@ -302,4 +303,45 @@ input[type=submit]:hover {
 .box2 p{
     margin-top:0;
     margin-bottom: 0.2rem;
+}
+.transition-fade {
+    animation: transitionright 1.5s;
+    transform-origin: right;
+}
+
+.transition-fade-down {
+    animation: transitionIn 1.5s;
+    transform-origin: left;
+}
+
+@keyframes transitionIn {
+    from {
+        opacity: 1;
+        transform: translateY(-50%);
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes transitionright {
+    from {
+        opacity: 1;
+        transform: translateX(50%);
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+/*Login Page*/
+.login_page{
+    height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+}
+.loginForm {
+    max-width: 30rem;
 }
