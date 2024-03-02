@@ -1,0 +1,65 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\ekwom\\OneDrive\\Desktop\\BAIST\\2nd Semester\\BAIS3900 Capstone\\CNMaisons\\CNMaisons\\wwwroot\\css\\styles.css",
+      "PackagePath": "staticwebassets\\css\\styles.css"
+    },
+    {
+      "Id": "C:\\Users\\ekwom\\OneDrive\\Desktop\\BAIST\\2nd Semester\\BAIS3900 Capstone\\CNMaisons\\CNMaisons\\wwwroot\\img\\backvideos.mp4",
+      "PackagePath": "staticwebassets\\img\\backvideos.mp4"
+    },
+    {
+      "Id": "C:\\Users\\ekwom\\OneDrive\\Desktop\\BAIST\\2nd Semester\\BAIS3900 Capstone\\CNMaisons\\CNMaisons\\wwwroot\\img\\introhome.jpg",
+      "PackagePath": "staticwebassets\\img\\introhome.jpg"
+    },
+    {
+      "Id": "C:\\Users\\ekwom\\OneDrive\\Desktop\\BAIST\\2nd Semester\\BAIS3900 Capstone\\CNMaisons\\CNMaisons\\wwwroot\\img\\introimage.jpg",
+      "PackagePath": "staticwebassets\\img\\introimage.jpg"
+    },
+    {
+      "Id": "C:\\Users\\ekwom\\OneDrive\\Desktop\\BAIST\\2nd Semester\\BAIS3900 Capstone\\CNMaisons\\CNMaisons\\wwwroot\\img\\loopvideo.mp4",
+      "PackagePath": "staticwebassets\\img\\loopvideo.mp4"
+    },
+    {
+      "Id": "C:\\Users\\ekwom\\OneDrive\\Desktop\\BAIST\\2nd Semester\\BAIS3900 Capstone\\CNMaisons\\CNMaisons\\wwwroot\\img\\png\\logo-black.png",
+      "PackagePath": "staticwebassets\\img\\png\\logo-black.png"
+    },
+    {
+      "Id": "C:\\Users\\ekwom\\OneDrive\\Desktop\\BAIST\\2nd Semester\\BAIS3900 Capstone\\CNMaisons\\CNMaisons\\wwwroot\\img\\png\\logo-color.png",
+      "PackagePath": "staticwebassets\\img\\png\\logo-color.png"
+    },
+    {
+      "Id": "C:\\Users\\ekwom\\OneDrive\\Desktop\\BAIST\\2nd Semester\\BAIS3900 Capstone\\CNMaisons\\CNMaisons\\wwwroot\\img\\png\\logo-no-background.png",
+      "PackagePath": "staticwebassets\\img\\png\\logo-no-background.png"
+    },
+    {
+      "Id": "C:\\Users\\ekwom\\OneDrive\\Desktop\\BAIST\\2nd Semester\\BAIS3900 Capstone\\CNMaisons\\CNMaisons\\wwwroot\\img\\png\\logo-white.png",
+      "PackagePath": "staticwebassets\\img\\png\\logo-white.png"
+    },
+    {
+      "Id": "C:\\Users\\ekwom\\OneDrive\\Desktop\\BAIST\\2nd Semester\\BAIS3900 Capstone\\CNMaisons\\CNMaisons\\wwwroot\\img\\profile_icon.png",
+      "PackagePath": "staticwebassets\\img\\profile_icon.png"
+    },
+    {
+      "Id": "C:\\Users\\ekwom\\OneDrive\\Desktop\\BAIST\\2nd Semester\\BAIS3900 Capstone\\CNMaisons\\CNMaisons\\wwwroot\\js\\script.js",
+      "PackagePath": "staticwebassets\\js\\script.js"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.CNMaisons.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.build.CNMaisons.props",
+      "PackagePath": "build\\CNMaisons.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildMultiTargeting.CNMaisons.props",
+      "PackagePath": "buildMultiTargeting\\CNMaisons.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildTransitive.CNMaisons.props",
+      "PackagePath": "buildTransitive\\CNMaisons.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

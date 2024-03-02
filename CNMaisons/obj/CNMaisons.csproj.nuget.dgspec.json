@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\nekwom1\\Desktop\\CNMaisons\\CNMaisons\\CNMaisons.csproj": {}
+    "C:\\Users\\nekwom1\\Desktop\\Capstone\\CNMaisons\\CNMaisons.csproj": {}
   },
   "projects": {
-    "C:\\Users\\nekwom1\\Desktop\\CNMaisons\\CNMaisons\\CNMaisons.csproj": {
+    "C:\\Users\\nekwom1\\Desktop\\Capstone\\CNMaisons\\CNMaisons.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\nekwom1\\Desktop\\CNMaisons\\CNMaisons\\CNMaisons.csproj",
+        "projectUniqueName": "C:\\Users\\nekwom1\\Desktop\\Capstone\\CNMaisons\\CNMaisons.csproj",
         "projectName": "CNMaisons",
-        "projectPath": "C:\\Users\\nekwom1\\Desktop\\CNMaisons\\CNMaisons\\CNMaisons.csproj",
+        "projectPath": "C:\\Users\\nekwom1\\Desktop\\Capstone\\CNMaisons\\CNMaisons.csproj",
         "packagesPath": "C:\\Users\\nekwom1\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\nekwom1\\Desktop\\CNMaisons\\CNMaisons\\obj\\",
+        "outputPath": "C:\\Users\\nekwom1\\Desktop\\Capstone\\CNMaisons\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -62,7 +62,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }

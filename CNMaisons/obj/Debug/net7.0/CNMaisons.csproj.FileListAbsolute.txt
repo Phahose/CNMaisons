@@ -26,3 +26,31 @@ C:\Users\nekwom1\Desktop\CNMaisons\CNMaisons\obj\Debug\net7.0\ref\CNMaisons.dll
 C:\Users\nekwom1\Desktop\CNMaisons\CNMaisons\bin\Debug\net7.0\CNMaisons.staticwebassets.runtime.json
 C:\Users\nekwom1\Desktop\CNMaisons\CNMaisons\obj\Debug\net7.0\CNMaisons.RazorAssemblyInfo.cache
 C:\Users\nekwom1\Desktop\CNMaisons\CNMaisons\obj\Debug\net7.0\CNMaisons.RazorAssemblyInfo.cs
+C:\Users\ekwom\OneDrive\Desktop\BAIST\2nd Semester\BAIS3900 Capstone\CNMaisons\CNMaisons\bin\Debug\net7.0\appsettings.Development.json
+C:\Users\ekwom\OneDrive\Desktop\BAIST\2nd Semester\BAIS3900 Capstone\CNMaisons\CNMaisons\bin\Debug\net7.0\appsettings.json
+C:\Users\ekwom\OneDrive\Desktop\BAIST\2nd Semester\BAIS3900 Capstone\CNMaisons\CNMaisons\bin\Debug\net7.0\CNMaisons.staticwebassets.runtime.json
+C:\Users\ekwom\OneDrive\Desktop\BAIST\2nd Semester\BAIS3900 Capstone\CNMaisons\CNMaisons\bin\Debug\net7.0\CNMaisons.exe
+C:\Users\ekwom\OneDrive\Desktop\BAIST\2nd Semester\BAIS3900 Capstone\CNMaisons\CNMaisons\bin\Debug\net7.0\CNMaisons.deps.json
+C:\Users\ekwom\OneDrive\Desktop\BAIST\2nd Semester\BAIS3900 Capstone\CNMaisons\CNMaisons\bin\Debug\net7.0\CNMaisons.runtimeconfig.json
+C:\Users\ekwom\OneDrive\Desktop\BAIST\2nd Semester\BAIS3900 Capstone\CNMaisons\CNMaisons\bin\Debug\net7.0\CNMaisons.dll
+C:\Users\ekwom\OneDrive\Desktop\BAIST\2nd Semester\BAIS3900 Capstone\CNMaisons\CNMaisons\bin\Debug\net7.0\CNMaisons.pdb
+C:\Users\ekwom\OneDrive\Desktop\BAIST\2nd Semester\BAIS3900 Capstone\CNMaisons\CNMaisons\obj\Debug\net7.0\CNMaisons.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ekwom\OneDrive\Desktop\BAIST\2nd Semester\BAIS3900 Capstone\CNMaisons\CNMaisons\obj\Debug\net7.0\CNMaisons.AssemblyInfoInputs.cache
+C:\Users\ekwom\OneDrive\Desktop\BAIST\2nd Semester\BAIS3900 Capstone\CNMaisons\CNMaisons\obj\Debug\net7.0\CNMaisons.AssemblyInfo.cs
+C:\Users\ekwom\OneDrive\Desktop\BAIST\2nd Semester\BAIS3900 Capstone\CNMaisons\CNMaisons\obj\Debug\net7.0\CNMaisons.csproj.CoreCompileInputs.cache
+C:\Users\ekwom\OneDrive\Desktop\BAIST\2nd Semester\BAIS3900 Capstone\CNMaisons\CNMaisons\obj\Debug\net7.0\CNMaisons.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\ekwom\OneDrive\Desktop\BAIST\2nd Semester\BAIS3900 Capstone\CNMaisons\CNMaisons\obj\Debug\net7.0\CNMaisons.RazorAssemblyInfo.cache
+C:\Users\ekwom\OneDrive\Desktop\BAIST\2nd Semester\BAIS3900 Capstone\CNMaisons\CNMaisons\obj\Debug\net7.0\CNMaisons.RazorAssemblyInfo.cs
+C:\Users\ekwom\OneDrive\Desktop\BAIST\2nd Semester\BAIS3900 Capstone\CNMaisons\CNMaisons\obj\Debug\net7.0\staticwebassets\msbuild.CNMaisons.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\ekwom\OneDrive\Desktop\BAIST\2nd Semester\BAIS3900 Capstone\CNMaisons\CNMaisons\obj\Debug\net7.0\staticwebassets\msbuild.build.CNMaisons.props
+C:\Users\ekwom\OneDrive\Desktop\BAIST\2nd Semester\BAIS3900 Capstone\CNMaisons\CNMaisons\obj\Debug\net7.0\staticwebassets\msbuild.buildMultiTargeting.CNMaisons.props
+C:\Users\ekwom\OneDrive\Desktop\BAIST\2nd Semester\BAIS3900 Capstone\CNMaisons\CNMaisons\obj\Debug\net7.0\staticwebassets\msbuild.buildTransitive.CNMaisons.props
+C:\Users\ekwom\OneDrive\Desktop\BAIST\2nd Semester\BAIS3900 Capstone\CNMaisons\CNMaisons\obj\Debug\net7.0\staticwebassets.pack.json
+C:\Users\ekwom\OneDrive\Desktop\BAIST\2nd Semester\BAIS3900 Capstone\CNMaisons\CNMaisons\obj\Debug\net7.0\staticwebassets.build.json
+C:\Users\ekwom\OneDrive\Desktop\BAIST\2nd Semester\BAIS3900 Capstone\CNMaisons\CNMaisons\obj\Debug\net7.0\staticwebassets.development.json
+C:\Users\ekwom\OneDrive\Desktop\BAIST\2nd Semester\BAIS3900 Capstone\CNMaisons\CNMaisons\obj\Debug\net7.0\scopedcss\bundle\CNMaisons.styles.css
+C:\Users\ekwom\OneDrive\Desktop\BAIST\2nd Semester\BAIS3900 Capstone\CNMaisons\CNMaisons\obj\Debug\net7.0\CNMaisons.dll
+C:\Users\ekwom\OneDrive\Desktop\BAIST\2nd Semester\BAIS3900 Capstone\CNMaisons\CNMaisons\obj\Debug\net7.0\refint\CNMaisons.dll
+C:\Users\ekwom\OneDrive\Desktop\BAIST\2nd Semester\BAIS3900 Capstone\CNMaisons\CNMaisons\obj\Debug\net7.0\CNMaisons.pdb
+C:\Users\ekwom\OneDrive\Desktop\BAIST\2nd Semester\BAIS3900 Capstone\CNMaisons\CNMaisons\obj\Debug\net7.0\CNMaisons.genruntimeconfig.cache
+C:\Users\ekwom\OneDrive\Desktop\BAIST\2nd Semester\BAIS3900 Capstone\CNMaisons\CNMaisons\obj\Debug\net7.0\ref\CNMaisons.dll
