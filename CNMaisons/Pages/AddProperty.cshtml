@@ -4,29 +4,38 @@
     ViewData["Title"] = "Add Property";
 }
 <div>
-    <nav class="memberhome_nav">
-        <a href="~/Index"><img src="~/img/png/logo-no-background.png" width="150" class="intro_image" /></a>
-        <ul>
-            <li>
-                <a href="#">My Account</a>
-            </li>
-            <li>
-                <a href="#">Record Rent</a>
-            </li>
-            <li>
-                <a href="#">Record Maintainance</a>
-            </li>
-            <li>
-                <a href="#">Contact</a>
-            </li>
-            <li>
-                <a href="#">Edit Account</a>
-            </li>
-        </ul>
-    </nav>
-    <form name="AddProperty" class="form">
+    <div class="home_intro">
+        <nav class="memberhome_nav">
+            <a href="~/Index"><img src="~/img/png/logo-no-background.png" width="150" class="intro_image" /></a>
+            <ul>
+                <li>
+                    <a href="#">My Account</a>
+                </li>
+                <li>
+                    <a href="#">Record Rent</a>
+                </li>
+                <li>
+                    <a href="#">Record Maintainance</a>
+                </li>
+                <li>
+                    <a href="#">Contact</a>
+                </li>
+                <li>
+                    <a href="#">Edit Account</a>
+                </li>
+            </ul>
+        </nav>
+        <div class="basic_info">
+            <div class="icon_div">
+            </div>
+            <h2>Nicholas Ekwom</h2>
+            <p>LandLord</p>
+        </div>
+    </div>
+    
+    <form name="AddProperty" method="post" class="form property_form transition-fade-down">
         <fieldset>
-            <legend>Add Property</legend>
+            <legend>Add a New Property</legend>
             <label for="PropertyName">Property Name</label>
             <br />
             <input type="text" name="PropertyName" />
@@ -37,9 +46,33 @@
             <input type="text" name="State"/>
             <br />
             
+            <label for="State">Property Location (Country)</label>
+            <br />
+            <input type="text" name="Country"/>
+            <br />
+            
             <label for="PropertyAddress">Property Address</label>
             <br />
             <input type="text" name="PropertyAddress" />
+            <br />
+              
+            <label for="PropertyType">Property Type</label>
+            <br />
+            <select name="PropertyType">
+                <option value="Bungalow">Bungalow</option>
+                <option value="Duplex">Duplex</option>
+                <option value="Single Detatched">Single Detatched</option>
+            </select>
+            <br />
+
+            <label for="RoomNumber">Number of Rooms</label>
+            <br />
+            <input type="number" name="RoomNumber" />
+            <br />
+
+            <label for="Description">Property Description</label>
+            <br />
+            <textarea name="Description" style="max-height: 200px; max-width: 600px;"></textarea>
             <br />
 
             <label for="Image1"> Image 1</label>
@@ -72,6 +105,7 @@
             <input type="file" name="Image6" />
             <br/>
 
+            <input type="submit" name="Submit" value="Add Property" />
         </fieldset>
     </form>
 </div>
