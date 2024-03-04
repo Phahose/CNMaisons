@@ -201,14 +201,13 @@ fieldset>div{
 }
 
 input[type=text], input[type=email], input[type=tel], input[type=date],
-textarea, input[type=number],select , input[type=password] {
+textarea, input[type=number], input[type=password] {
     width: 95%;
     margin-left: auto;
     margin-bottom: 1rem;
     padding: 0.5rem;
     border: 1px solid #fff;
     background-color: rgba(255, 255, 255, 0.5);
-    /*background-color: #1c1c1b;*/
     caret-color: #fff;
     color: #fff
 }
@@ -221,6 +220,16 @@ input[type=file]{
         color: white;
         background-color: rgba(0, 0, 0, 0.5);
     }
+select {
+    width: 95%;
+    margin-left: auto;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border: 1px solid #fff;
+    background-color: rgba(255, 255, 255, 0.5);
+    caret-color: #fff;
+    color: #fff
+}
 #video-background {
     position: fixed;
     top: 0;
@@ -442,20 +451,25 @@ input[type=submit]:hover {
     width: 100%;
 }
 
-.carousel-slide[data-active]{
-    opacity: 1;
-}
 
 .swiper-slide img {
     width: 100%;
     object-fit: cover;
     object-position: center;
 }
-.swiper-button-next, .swiper-button-prev{
-    color: white;
+.swiper .swiper-button-next {
+    color: black;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 1rem;
+}
+.swiper .swiper-button-prev {
+    color: black;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 1rem;
 }
 
-.swiper-pagination-bullet-active{
+
+.swiper-pagination-bullet-active {
     background: white;
 }
 
