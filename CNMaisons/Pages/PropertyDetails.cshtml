@@ -2,32 +2,9 @@
 @model CNMaisons.Pages.PropertyDetailsModel
 @{
     Layout = "_Header";
-    ViewData["Title"] = "PropertyDetail";
+    ViewData["Title"] = "Property Details";
 }
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script type="text/javascript">
-    const swiper = new Swiper('.swiper', {
-        autoplay: {
-            delay: 3000,
-            disableOnInteraction: false,
-        },
-        // Optional parameters
-        loop: true,
 
-
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true;
-        },
-
-
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-        },
-
-    });
-</script>
 <div class="container">
     <div class="swiper">
         <!-- Additional required wrapper -->

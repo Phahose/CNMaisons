@@ -400,15 +400,21 @@ FodyWeavers.xsd
 /CNMaisons/.vs/CNMaisons/v17/.futdcache.v2
 /CNMaisons/.vs/ProjectEvaluation/cnmaisons.metadata.v7.bin
 /CNMaisons/.vs/ProjectEvaluation/cnmaisons.projects.v7.bin
+<<<<<<< HEAD
+/CNMaisons/obj/project.nuget.cache
+/CNMaisons/bin/Debug/net7.0/CNMaisons.exe
+/CNMaisons/obj/CNMaisons.csproj.nuget.dgspec.json
+/CNMaisons/obj/CNMaisons.csproj.nuget.g.props
+/CNMaisons/obj/Debug/net7.0/CNMaisons.assets.cache
+/CNMaisons/obj/Debug/net7.0/apphost.exe
+/CNMaisons/obj/Debug/net7.0/CNMaisons.genruntimeconfig.cache
+/CNMaisons/obj/project.assets.json
+=======
 /CNMaisons/obj/Debug/net7.0/CNMaisons.AssemblyInfoInputs.cache
 /CNMaisons/obj/Debug/net7.0/CNMaisons.assets.cache
 /CNMaisons/obj/Debug/net7.0/CNMaisons.AssemblyInfo.cs
 /CNMaisons/obj/Debug/net7.0/CNMaisons.RazorAssemblyInfo.cache
-/CNMaisons/obj/project.nuget.cache
-/CNMaisons/obj/Debug/net7.0/apphost.exe
-/CNMaisons/obj/Debug/net7.0/CNMaisons.csproj.FileListAbsolute.txt
-/CNMaisons/obj/Debug/net7.0/CNMaisons.genruntimeconfig.cache
-/CNMaisons/obj/CNMaisons.csproj.nuget.dgspec.json
-/CNMaisons/obj/CNMaisons.csproj.nuget.g.props
-/CNMaisons/obj/project.assets.json
-/CNMaisons/bin/Debug/net7.0/CNMaisons.exe
+>>>>>>> 31acd9ac90ead0304b39b1a0bc77431dcb9ac4c0
+/CNMaisons/obj/Debug/net7.0/CNMaisons.AssemblyInfo.cs
+/.gitignore
+/CNMaisons/obj/Debug/net7.0/CNMaisons.AssemblyInfo.cs
