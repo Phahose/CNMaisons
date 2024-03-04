@@ -430,10 +430,10 @@ input[type=submit]:hover {
 /*Property Details*/
 .swiper {
     width: 80%;
-    margin-top: 3rem;
+    margin-top: 1rem;
     margin-left: auto;
     margin-right: auto;
-    max-width: 70rem;
+    max-width: 65rem;
     height: 50%;
 }
 
@@ -462,7 +462,7 @@ input[type=submit]:hover {
 .property-info {
     font-family: Arial, sans-serif;
     width: 80%;
-    max-width: 70rem;
+    max-width: 65rem;
     margin: 0 auto;
     padding: 20px;
 }
@@ -474,7 +474,8 @@ input[type=submit]:hover {
 
     .property-info .location {
         font-style: italic;
-        color: #666;
+        color: white;
+        margin:0;
     }
 
     .property-info .icons {
@@ -495,4 +496,7 @@ input[type=submit]:hover {
         font-weight: bold;
         color: #007bff;
     }
-
+.prop_price{
+    font-size: 2rem;
+    margin: 0;
+}
