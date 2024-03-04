@@ -400,3 +400,11 @@ FodyWeavers.xsd
 /CNMaisons/.vs/CNMaisons/v17/.futdcache.v2
 /CNMaisons/.vs/ProjectEvaluation/cnmaisons.metadata.v7.bin
 /CNMaisons/.vs/ProjectEvaluation/cnmaisons.projects.v7.bin
+/CNMaisons/obj/project.nuget.cache
+/CNMaisons/bin/Debug/net7.0/CNMaisons.exe
+/CNMaisons/obj/CNMaisons.csproj.nuget.dgspec.json
+/CNMaisons/obj/CNMaisons.csproj.nuget.g.props
+/CNMaisons/obj/Debug/net7.0/CNMaisons.assets.cache
+/CNMaisons/obj/Debug/net7.0/apphost.exe
+/CNMaisons/obj/Debug/net7.0/CNMaisons.genruntimeconfig.cache
+/CNMaisons/obj/project.assets.json
