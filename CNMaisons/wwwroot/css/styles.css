@@ -2,6 +2,7 @@
     background-color: #1c1c1b;
     font-family: "Raleway", sans-serif;
     color: white;
+    margin: 0;
 }
 .entry {
     position: absolute;
@@ -426,3 +427,72 @@ input[type=submit]:hover {
 .property_form{
     max-width: 50rem;
 }
+/*Property Details*/
+.swiper {
+    overflow: hidden;
+    width: 80%;
+    position: relative;
+    margin: auto;
+    max-width: 70rem;
+    height: 50%;
+}
+
+
+.swiper-slide {
+    width: 100%;
+}
+
+.carousel-slide[data-active]{
+    opacity: 1;
+}
+
+.swiper-slide img {
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+.swiper-button-next, .swiper-button-prev{
+    color: white;
+}
+
+.swiper-pagination-bullet-active{
+    background: white;
+}
+
+.property-info {
+    font-family: Arial, sans-serif;
+    width: 80%;
+    max-width: 70rem;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+    .property-info h1 {
+        font-size: 24px;
+        margin-top: 0;
+    }
+
+    .property-info .location {
+        font-style: italic;
+        color: #666;
+    }
+
+    .property-info .icons {
+        margin-bottom: 10px;
+    }
+
+        .property-info .icons span {
+            font-size: 20px;
+            margin-right: 10px;
+        }
+
+    .property-info .description {
+        line-height: 1.6;
+    }
+
+    .property-info .price {
+        font-size: 18px;
+        font-weight: bold;
+        color: #007bff;
+    }
+

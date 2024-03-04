@@ -1,0 +1,38 @@
+﻿@page
+@model CNMaisons.Pages.PropertyDetailsModel
+@{
+    Layout = "_Header";
+    ViewData["Title"] = "PropertyDetail";
+}
+<div class="container">
+    <div class="swiper">
+        <!-- Additional required wrapper -->
+        <div class="swiper-wrapper">
+            <!-- Slides -->
+            <div class="swiper-slide"><img src="~/img/home_inside1.jpg" alt="Image 1"></div>
+            <div class="swiper-slide"><img src="~/img/home_inside2.jpg" alt="Image 2"></div>
+            <div class="swiper-slide"><img src="~/img/home_inside3.jpg" alt="Image 3"></div>
+        </div>
+        <div class="swiper-pagination"></div>
+
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+
+    </div>
+    <div class="property-info">
+        <div>
+            <p class="prop_id"># Property ID 123456</p>
+            <p class="prop_price">5,000,000 NGN</p>
+        </div>
+        <div>
+            <h1>Beautiful Apartment in Downtown</h1>
+            <p class="location">123 Main St, City, State, Zip</p>
+            <div class="icons">
+                <span class="bedroom-icon">🛏️</span> <!-- Bedroom icon -->
+                <span class="bathroom-icon">🚽</span> <!-- Bathroom icon -->
+                <span class="size-icon">📏</span> <!-- Size icon -->
+            </div>
+           
+        </div>
+    </div>
+</div>
