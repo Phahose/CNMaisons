@@ -400,3 +400,7 @@ FodyWeavers.xsd
 /CNMaisons/.vs/CNMaisons/v17/.futdcache.v2
 /CNMaisons/.vs/ProjectEvaluation/cnmaisons.metadata.v7.bin
 /CNMaisons/.vs/ProjectEvaluation/cnmaisons.projects.v7.bin
+/CNMaisons/obj/Debug/net7.0/CNMaisons.AssemblyInfoInputs.cache
+/CNMaisons/obj/Debug/net7.0/CNMaisons.assets.cache
+/CNMaisons/obj/Debug/net7.0/CNMaisons.AssemblyInfo.cs
+/CNMaisons/obj/Debug/net7.0/CNMaisons.RazorAssemblyInfo.cache
