@@ -3,6 +3,82 @@
 @{
     ViewData["Title"] = "Add Property";
 }
+<script type="text/javascript">
+    function isFormValid (event) {
+        // Validate Property ID'
+        alert('Form is Called');
+        var isValid = true;
+        var propertyID = event.PropertyID.value;
+
+        if (propertyID === "" || !/^CN\d{7}$/.test(propertyID)) {
+            alert("Property ID must be in the format CN followed by 7 digits.");
+           //event.preventDefault(); // Prevent form submission
+            isValid = false;
+        }
+
+        // Validate Property Name
+        var propertyName = event.PropertyName.value;
+        if (propertyName === "") {
+            alert("Please enter Property Name.");
+            //event.preventDefault(); // Prevent form submission
+            isValid = false;
+        }
+
+        // Validate Property Location (State)
+        var state = event.State.value;
+        if (state === "") {
+            alert("Please enter Property Location (State).");
+            //event.preventDefault(); // Prevent form submission
+            isValid = false;
+        }
+
+        // Validate Property Location (Country)
+        var country = event.Country.value;
+        if (country === "") {
+            alert("Please enter Property Location (Country).");
+           // event.preventDefault(); // Prevent form submission
+            isValid = false;
+        }
+
+        // Validate Property Address
+        var propertyAddress = event.PropertyAddress.value;
+        if (propertyAddress === "") {
+            alert("Please enter Property Address.");
+            //event.preventDefault(); // Prevent form submission
+            isValid = false;
+        }
+
+        // Validate Property Type
+        var propertyType = event.PropertyType.value;
+        if (propertyType === "") {
+            alert("Please select Property Type.");
+            //event.preventDefault(); // Prevent form submission
+             isValid = false;
+        }
+
+        // Validate Number of Rooms
+        var roomNumber = event.RoomNumber.value;
+        if (roomNumber === "" || isNaN(roomNumber)) {
+            alert("Please enter valid Number of Rooms.");
+            //event.preventDefault(); // Prevent form submission
+            isValid = false;
+        }
+
+        // Validate Property Description
+        var description = event.Description.value;
+        if (description === "") {
+            alert("Please enter Property Description.");
+            //event.preventDefault(); // Prevent form submission
+            isValid = false;
+        }
+        return isValid;
+        // Additional validation for images can be added here
+
+        // If all validations pass, the form will be submitted
+    });
+
+</script>
+
 <div>
     <div class="home_intro">
         <nav class="memberhome_nav">
@@ -33,9 +109,14 @@
         </div>
     </div>
     
-    <form name="AddProperty" method="post" class="form property_form transition-fade-down">
+    <form name="AddProperty" method="post" class="form property_form transition-fade-down" onsubmit="return isFormValid(window.document.AddProperty);" enctype="multipart/form-data">
         <fieldset>
             <legend>Add a New Property</legend>
+            <label for="PropertyID">Property ID</label>
+            <br />
+            <input type="text" name="PropertyID" />
+            <br />
+
             <label for="PropertyName">Property Name</label>
             <br />
             <input type="text" name="PropertyName" />
@@ -46,7 +127,7 @@
             <input type="text" name="State"/>
             <br />
             
-            <label for="State">Property Location (Country)</label>
+            <label for="Country">Property Location (Country)</label>
             <br />
             <input type="text" name="Country"/>
             <br />
