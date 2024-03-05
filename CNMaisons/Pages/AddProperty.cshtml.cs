@@ -8,5 +8,9 @@ namespace CNMaisons.Pages
         public void OnGet()
         {
         }
+        public void OnPost() 
+        {
+            
+        }
     }
 }
