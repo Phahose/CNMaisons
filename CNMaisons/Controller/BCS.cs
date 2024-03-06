@@ -12,5 +12,13 @@ namespace CNMaisons.Controller
             success = properties.AddProperty(property);
             return success;
         }
+
+        public List<Property> GetProperties()
+        {
+            List<Property> PropertyList = new List<Property>();
+            Properties Properties = new Properties();
+            PropertyList = Properties.GetProperty();
+            return PropertyList;
+        }
     }
 }

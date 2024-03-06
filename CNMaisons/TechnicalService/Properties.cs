@@ -187,5 +187,64 @@ namespace CNMaisons.TechnicalService
             
             return confirmation;
         }
+
+        public List<Property> GetProperty()
+        {
+            List<Property> properties = new List<Property>();
+            SqlConnection cnMaisonsConnection = new SqlConnection();
+            cnMaisonsConnection.ConnectionString = connectionString;
+            cnMaisonsConnection.Open();
+            SqlCommand GetPropertyCommand = new()
+            {
+                Connection = cnMaisonsConnection,
+                CommandType = CommandType.StoredProcedure,
+                CommandText = "GetProperty",
+            };
+            try
+            {
+                SqlDataReader propertyReader = GetPropertyCommand.ExecuteReader();
+                if (propertyReader.HasRows)
+                {
+                    while (propertyReader.Read())
+                    {
+                        Property property = new Property
+                        {
+                            PropertyID = propertyReader["PropertyID"].ToString()!,
+                            PropertyName = propertyReader["PropertyName"].ToString()!,
+                            PropertyLocationState = propertyReader["PropertyLocationState"].ToString()!,
+                            PropertyLocationCountry = propertyReader["PropertyLocationCountry"].ToString()!,
+                            PropertyAddress = propertyReader["PropertyAddress"].ToString()!,
+                            PropertyType = propertyReader["PropertyType"].ToString()!,
+                            NumberOfRooms = Convert.ToInt32(propertyReader["NumberOfRooms"])!,
+                            PropertyDescription = propertyReader["PropertyDescription"].ToString()!,
+                            Image1 = propertyReader["Image1"] == DBNull.Value ? null! : (byte[])propertyReader["Image1"],
+                            Image2 = propertyReader["Image2"] == DBNull.Value ? null! : (byte[])propertyReader["Image2"],
+                            Image3 = propertyReader["Image3"] == DBNull.Value ? null! : (byte[])propertyReader["Image3"],
+                            Image4 = propertyReader["Image4"] == DBNull.Value ? null! : (byte[])propertyReader["Image4"],
+                            Image5 = propertyReader["Image5"] == DBNull.Value ? null! : (byte[])propertyReader["Image5"],
+                            Image6 = propertyReader["Image6"] == DBNull.Value ? null! : (byte[])propertyReader["Image6"],
+                            Image7 = propertyReader["Image7"] == DBNull.Value ? null! : (byte[])propertyReader["Image7"],
+                            Image8 = propertyReader["Image8"] == DBNull.Value ? null! : (byte[])propertyReader["Image8"],
+                            Image9 = propertyReader["Image9"] == DBNull.Value ? null! : (byte[])propertyReader["Image9"],
+                            Image10 = propertyReader["Image10"] == DBNull.Value ? null! : (byte[])propertyReader["Image10"]
+                        };
+                        properties.Add(property);
+                    }
+                }
+               
+                propertyReader.Close();
+            }
+            catch (Exception ex)
+            {
+                // Handle exception
+                Console.WriteLine("Exception: " + ex.Message);
+            }
+            finally
+            {
+                cnMaisonsConnection.Close();
+            }
+
+            return properties;
+        }
     }
 }
