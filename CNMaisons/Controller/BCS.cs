@@ -3,7 +3,7 @@ using CNMaisons.TechnicalService;
 
 namespace CNMaisons.Controller
 {
-    public class Controller
+    public class BCS
     {
         public bool AddProperty(Property property)
         {

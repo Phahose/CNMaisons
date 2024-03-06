@@ -110,31 +110,37 @@
     </div>
     
     <form name="AddProperty" method="post" class="form property_form transition-fade-down" onsubmit="return isFormValid(window.document.AddProperty);" enctype="multipart/form-data">
+        <p>@Model.SusccessMessage</p>
         <fieldset>
-            <legend>Add a New Property</legend>
-            <label for="PropertyID">Property ID</label>
+            <legend>Add a New Property </legend>
+            <label for="PropertyID">Property ID Format CN00001</label>
             <br />
-            <input type="text" name="PropertyID" required/>
+            <input type="text" name="PropertyID" required pattern="[A-Za-z]{2}\d{5}" />
+            @Html.ValidationMessage("PropertyIDError")
             <br />
 
             <label for="PropertyName">Property Name</label>
             <br />
-            <input type="text" name="PropertyName" required />
+            <input type="text" name="PropertyName"  />
+            @Html.ValidationMessage("PropertyNameError")
             <br />
 
             <label for="State">Property Location (State)</label>
             <br />
             <input type="text" name="State" required />
+            @Html.ValidationMessage("StateError")
             <br />
             
             <label for="Country">Property Location (Country)</label>
             <br />
             <input type="text" name="Country" required />
+            @Html.ValidationMessage("CountryError")
             <br />
             
             <label for="PropertyAddress">Property Address</label>
             <br />
             <input type="text" name="PropertyAddress" required />
+            @Html.ValidationMessage("PropertyAddressError")
             <br />
               
             <label for="PropertyType">Property Type</label>
@@ -144,36 +150,43 @@
                 <option value="Duplex">Duplex</option>
                 <option value="Single Detatched">Single Detatched</option>
             </select>
+            @Html.ValidationMessage("PropertyType")
             <br />
 
             <label for="RoomNumber">Number of Rooms</label>
             <br />
             <input type="number" name="RoomNumber" required />
+            @Html.ValidationMessage("RoomNumberError")
             <br />
 
             <label for="Description">Property Description</label>
             <br />
             <textarea name="Description" style="max-height: 200px; max-width: 600px;" required></textarea>
+            @Html.ValidationMessage("Description")
             <br />
 
             <label for="Image1"> Image 1</label>
             <br/>
             <input type="file" name="Image1" required />
+            @Html.ValidationMessage("Image1Error")
             <br/>
 
             <label for="Image2"> Image 2</label>
             <br/>
             <input type="file" name="Image2" />
+            @Html.ValidationMessage("Image2Error")
             <br/>
 
             <label for="Image3"> Image 3</label>
             <br/>
             <input type="file" name="Image3" />
+            @Html.ValidationMessage("Image3Error")
             <br/>
 
             <label for="Image4"> Image 4</label>
             <br/>
             <input type="file" name="Image4" />
+            @Html.ValidationMessage("Image4Error")
             <br/>
 
             <label for="Image5"> Image 5</label>
