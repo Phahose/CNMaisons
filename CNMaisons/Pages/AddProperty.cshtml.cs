@@ -55,6 +55,7 @@ namespace CNMaisons.Pages
         public decimal PropertyPrice {  get; set; } 
 
         public string SusccessMessage {  get; set; } = string.Empty;    
+        public string ErrorMessage {  get; set; } = string.Empty;    
         public void OnGet()
         {
         }
@@ -119,6 +120,7 @@ namespace CNMaisons.Pages
 
             if (ModelState.IsValid)
             {
+                Property property = new();
                 byte[] image1Bytes = ConvertToByteArray(Image1);
                 byte[] image2Bytes = ConvertToByteArray(Image2);
                 byte[] image3Bytes = ConvertToByteArray(Image3);
@@ -130,32 +132,40 @@ namespace CNMaisons.Pages
                 byte[] image9Bytes = ConvertToByteArray(Image9);
                 byte[] image10Bytes = ConvertToByteArray(Image10);
 
-                Property property = new()
-                {
-                    PropertyID = PropertyID,
-                    PropertyName = PropertyName,
-                    PropertyLocationState = State,
-                    PropertyLocationCountry = Country,
-                    PropertyAddress = PropertyAddress,
-                    PropertyType = PropertyType,
-                    NumberOfRooms = RoomNumber,
-                    PropertyDescription = Description,
-                    PropertyPrice = PropertyPrice,
-                    Image1 = image1Bytes,
-                    Image2 = image2Bytes,
-                    Image3 = image3Bytes,
-                    Image4 = image4Bytes,
-                    Image5 = image5Bytes,
-                    Image6 = image6Bytes,
-                    Image7 = image7Bytes,
-                    Image8 = image8Bytes,
-                    Image9 = image9Bytes,
-                    Image10 = image10Bytes,
-                };
-
                 BCS controller = new();
-                controller.AddProperty(property);
-                SusccessMessage = "The Property Added SuccessFully";
+                property = controller.GetPropertyByID(PropertyID);
+
+                if (property != null)
+                {
+                    ErrorMessage = "This ID is Already Exists Try a Diffrent ID";
+                }
+                else
+                {
+                    property = new()
+                    {
+                        PropertyID = PropertyID,
+                        PropertyName = PropertyName,
+                        PropertyLocationState = State,
+                        PropertyLocationCountry = Country,
+                        PropertyAddress = PropertyAddress,
+                        PropertyType = PropertyType,
+                        NumberOfRooms = RoomNumber,
+                        PropertyDescription = Description,
+                        PropertyPrice = PropertyPrice,
+                        Image1 = image1Bytes,
+                        Image2 = image2Bytes,
+                        Image3 = image3Bytes,
+                        Image4 = image4Bytes,
+                        Image5 = image5Bytes,
+                        Image6 = image6Bytes,
+                        Image7 = image7Bytes,
+                        Image8 = image8Bytes,
+                        Image9 = image9Bytes,
+                        Image10 = image10Bytes,
+                    };
+                    controller.AddProperty(property);
+                    SusccessMessage = "The Property Added SuccessFully";
+                }          
             }
         }
 

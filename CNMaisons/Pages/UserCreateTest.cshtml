@@ -1,0 +1,37 @@
+﻿@page
+@model CNMaisons.Pages.UserCreateTestModel
+@{
+    Layout = "_Header";
+    ViewData["Title"] = "Login Sample";
+}
+<div class="login_page">
+    <video autoplay muted loop id="video-background">
+        <source src="~/img/login.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <form name="Login" method="post" class="form loginForm">
+        <fieldset>
+            <legend>Login</legend>
+            <label for="Email">Email</label>
+            <br />
+            <input type="email" name="Email" />
+            <br />
+
+            <label for="Password">Password</label>
+            <br />
+            <input type="password" name="Password" />
+            <br />
+
+            <label for="PropertyType">Role</label>
+            <br />
+            <select name="Role">
+                <option value="Tennant">Tennant</option>
+                <option value="Prospective Tennant">Prospectuve Tennant</option>
+                <option value="LandLord">LandLord</option>
+            </select>
+            <br />
+
+            <input type="submit" name="Submit" value="Create Account" />
+        </fieldset>
+    </form>
+</div>

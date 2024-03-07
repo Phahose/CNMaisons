@@ -38,13 +38,14 @@ CREATE TABLE Users(
 	Password  VARCHAR(100) NOT NULL,
 	Role  VARCHAR(25) NOT NULL,
 	DeactivateAccountStatus  BIT NOT NULL,
-	DefaultPassword  BIT NOT NULL,
+	DefaultPassword  NVARCHAR(255) NOT NULL,
+	UserSalt  NVARCHAR(255) NOT NULL,
 	DateOfCreation  DATETIME DEFAULT GETDATE() NOT NULL
 )
 ALTER TABLE Users
 	ADD CONSTRAINT PK_Users PRIMARY KEY (Email)
 
-
+DROP Table Users
 
 CREATE PROCEDURE AddProperty(
     @PropertyID VARCHAR(7),
@@ -164,8 +165,32 @@ BEGIN
     WHERE PropertyID = @PropertyID AND DeleteFlag = 0;
 END
 
+EXEC GetPropertyByID 'CN00001'
+
+
+CREATE PROCEDURE GetUserByEmail(@Email VARCHAR(100))
+AS
+	BEGIN 
+		SELECT * FROM Users WHERE Email = @Email AND DeactivateAccountStatus = 0
+	END
+
+CREATE PROCEDURE AddUser
+    @Email VARCHAR(100),
+    @Password VARCHAR(100),
+    @Role VARCHAR(25),
+    @DefaultPassword NVARCHAR(255),
+    @UserSalt NVARCHAR(255)
+AS
+BEGIN
+    INSERT INTO Users (Email, Password, Role, DeactivateAccountStatus, DefaultPassword, UserSalt, DateOfCreation)
+    VALUES (@Email, @Password, @Role, 0, @DefaultPassword, @UserSalt, GETDATE())
+END
+
+
+DELETE FROm Property WHERE PropertyID = 'CN00002'
 UPDATE Property 
 SET PropertyPrice = 3202000.56
 WHERE PropertyID = 'CN00003'
 
 SElECT * From Property
+
