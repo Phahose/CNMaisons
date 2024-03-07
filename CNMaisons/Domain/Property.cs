@@ -9,6 +9,7 @@
         public string PropertyAddress { get; set; } = string.Empty;
         public string PropertyType { get; set; } = string.Empty;
         public int NumberOfRooms { get; set; }
+        public decimal PropertyPrice { get; set; }
         public string PropertyDescription {  get; set; } = string.Empty;
         public byte[] Image1 { get; set; } = new byte[0];
         public byte[] Image2 { get; set; } = new byte[0];

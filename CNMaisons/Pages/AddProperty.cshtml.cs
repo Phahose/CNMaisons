@@ -51,6 +51,8 @@ namespace CNMaisons.Pages
         public IFormFile Image10 { get; set; }
         [BindProperty]
         public string Submit { get; set; } = string.Empty;
+        [BindProperty]
+        public decimal PropertyPrice {  get; set; } 
 
         public string SusccessMessage {  get; set; } = string.Empty;    
         public void OnGet()
@@ -85,9 +87,13 @@ namespace CNMaisons.Pages
             {
                 ModelState.AddModelError("PropertyTypeError", "The Property Type is Required");
             }
-            if (RoomNumber == 0)
+            if (RoomNumber <= 0)
             {
                 ModelState.AddModelError("RoomNumberError", "The RoomNumber is Required");
+            }
+            if (PropertyPrice <= 0)
+            {
+                ModelState.AddModelError("PropertyPriceError", "The Price is Required");
             }
             if(Description == null)
             {
@@ -134,6 +140,7 @@ namespace CNMaisons.Pages
                     PropertyType = PropertyType,
                     NumberOfRooms = RoomNumber,
                     PropertyDescription = Description,
+                    PropertyPrice = PropertyPrice,
                     Image1 = image1Bytes,
                     Image2 = image2Bytes,
                     Image3 = image3Bytes,

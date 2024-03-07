@@ -13,6 +13,7 @@
     </header>
     <div class="searchbox transition-fade-down">
         <form method="post" name="SearchForm">
+            <input type="hidden" name="FormType" value="SearchForm">
             <p class="quote">Offering premium, meticulously designed properties with comfort, convenience, and style.</p>
             <input type="text" name="Search" class="searchfield" placeholder="Find A Place"/>
             <input type="submit" name="Search" value="Search" class="search_button"/>
@@ -20,7 +21,8 @@
     </div>
     <div class="properties">
         <p class="prop_head">Some properties</p>
-        <form method="post" name="InfoForm" action="/PropertyDetails">
+        <form method="post" name="InfoForm" onsubmit="submitForm(event)">
+            <input type="hidden" name="FormType" value="InfoForm">
             <div class="cards transition-fade">
                 @foreach (var property in Model.DisplayedPropertyList)
                 {
@@ -29,9 +31,11 @@
                         <div class="property-details">
                             <h2 class="property-title">@property.PropertyName</h2>
                             <p class="property-location">@property.PropertyAddress</p>
+                            <p class="property-location">@property.PropertyID</p>
                             <p class="property-description">@property.PropertyDescription</p>
-                            <div class="property-price">$2000 / month</div>
-                            <input type="submit" name="Submit" value="View Details" class="btn btn-primary" />
+                            <div class="property-price">@property.PropertyPrice / Year</div>
+                            <input type="hidden" name="PropertyID" value="@property.PropertyID">
+                            <input type="submit" name="Submit" value="View Details" class="btn btn-primary" onclick="setPropertyID(@property.PropertyID)" />
                         </div>
                     </div>
                 }
@@ -39,3 +43,28 @@
         </form>
     </div>
 </div>
+
+<script>
+    function submitForm(event) {
+        // Prevent the default form submission
+        event.preventDefault();
+
+        // Find the clicked submit button
+        var submitButton = event.submitter;
+
+        // Find the associated form
+        var form = submitButton.form;
+
+        // Find the hidden input field with the name "PropertyID" within the form
+        var propertyIDInput = submitButton.closest('.property-details').querySelector('input[name="PropertyID"]');
+
+        // Get the value of the hidden input field
+        var propertyID = propertyIDInput.value;
+
+        // Update the value of the hidden input field in the form
+        form.querySelector('input[name="PropertyID"]').value = propertyID;
+
+        // Submit the form
+        form.submit();
+    }
+</script>

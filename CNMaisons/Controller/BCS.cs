@@ -20,5 +20,13 @@ namespace CNMaisons.Controller
             PropertyList = Properties.GetProperty();
             return PropertyList;
         }
+         public Property GetPropertyByID(string propertyID)
+         {
+            Property Property = new();
+            Properties Properties = new Properties();
+            Property = Properties.GetPropertyByID(propertyID);
+            return Property;
+         }
+
     }
 }

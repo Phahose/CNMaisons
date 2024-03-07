@@ -10,9 +10,46 @@
         <!-- Additional required wrapper -->
         <div class="swiper-wrapper">
             <!-- Slides -->
-            <div class="swiper-slide"><img src="~/img/home_inside1.jpg" alt="Image 1"></div>
-            <div class="swiper-slide"><img src="~/img/home_inside2.jpg" alt="Image 2"></div>
-            <div class="swiper-slide"><img src="~/img/home_inside3.jpg" alt="Image 3"></div>
+            @if (Model.Property.Image1 != null)
+            {
+                <div class="swiper-slide"><img src="data:image;base64,@Convert.ToBase64String(Model.Property.Image1)" alt="Property Image" /></div>
+            }
+            @if (Model.Property.Image2 != null)
+            {
+                <div class="swiper-slide"><img src="data:image;base64,@Convert.ToBase64String(Model.Property.Image2)" alt="Property Image" /></div>
+            }
+            @if (Model.Property.Image3 != null)
+            {
+                <div class="swiper-slide"><img src="data:image;base64,@Convert.ToBase64String(Model.Property.Image3)" alt="Property Image" /></div>
+            }
+            @if (Model.Property.Image4 != null)
+            {
+                <div class="swiper-slide"><img src="data:image;base64,@Convert.ToBase64String(Model.Property.Image4)" alt="Property Image" /></div>
+            }
+            @if (Model.Property.Image5 != null)
+            {
+                <div class="swiper-slide"><img src="data:image;base64,@Convert.ToBase64String(Model.Property.Image5)" alt="Property Image" /></div>
+            }
+            @if (Model.Property.Image6 != null)
+            {
+                <div class="swiper-slide"><img src="data:image;base64,@Convert.ToBase64String(Model.Property.Image6)" alt="Property Image" /></div>
+            }
+            @if (Model.Property.Image7 != null)
+            {
+                <div class="swiper-slide"><img src="data:image;base64,@Convert.ToBase64String(Model.Property.Image7)" alt="Property Image" /></div>
+            }
+            @if (Model.Property.Image8 != null)
+            {
+                <div class="swiper-slide"><img src="data:image;base64,@Convert.ToBase64String(Model.Property.Image8)" alt="Property Image" /></div>
+            }
+            @if (Model.Property.Image9 != null)
+            {
+                <div class="swiper-slide"><img src="data:image;base64,@Convert.ToBase64String(Model.Property.Image9)" alt="Property Image" /></div>
+            }
+            @if (Model.Property.Image10 != null)
+            {
+                <div class="swiper-slide"><img src="data:image;base64,@Convert.ToBase64String(Model.Property.Image10)" alt="Property Image" /></div>
+            }
         </div>
         <div class="swiper-pagination"></div>
 
@@ -22,14 +59,14 @@
     </div>
     <div class="property-info">
         <div>
-            <p class="prop_id"># Property ID 123456</p>
-            <p class="prop_price">5,000,000 NGN</p>
+            <p class="prop_id"># Property ID @Model.Property.PropertyID</p>
+            <p class="prop_price">@Model.Property.PropertyPrice NGN</p>
         </div>
         <div>
-            <h1>Beautiful Apartment in Downtown</h1>
-            <p class="location">123 Main St, City, State, Zip</p>
+            <h1>@Model.Property.PropertyDescription</h1>
+            <p class="location">@Model.Property.PropertyAddress</p>
             <div class="icons">
-                <p><i class="fa-solid fa-bed"></i> 4</p>
+                <p><i class="fa-solid fa-bed"></i> @Model.Property.NumberOfRooms</p>
                 <p><i class="fa-solid fa-bath"></i> 5</p>
                 <p> <i class="fa-solid fa-ruler-combined"></i> 123.3sqft</p>  
             </div>

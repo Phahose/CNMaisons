@@ -29,6 +29,9 @@ CREATE TABLE Property
 ALTER TABLE Property
 	ADD CONSTRAINT PK_PropertyID PRIMARY KEY (PropertyID)
 
+ALTER TABLE Property
+ADD PropertyPrice DECIMAL(18, 2) NOT NULL DEFAULT 0.0;
+
 
 CREATE TABLE Users(
 	Email  VARCHAR(100) NOT NULL,
@@ -52,6 +55,7 @@ CREATE PROCEDURE AddProperty(
     @PropertyType VARCHAR(50),
     @NumberOfRooms INT,
     @PropertyDescription VARCHAR(100),
+	@PropertyPrice DECIMAL(18,2),
     @Image1 VARBINARY(MAX),
     @Image2 VARBINARY(MAX) = NULL,
     @Image3 VARBINARY(MAX) = NULL,
@@ -128,17 +132,40 @@ BEGIN
         RETURN;
     END
 
+	IF @PropertyPrice IS NULL
+	BEGIN
+		RAISERROR ('Property Price cannot be NULL.', 16, 9)
+		RETURN;
+	END
     -- Insert the property into the table
-    INSERT INTO Property (PropertyID, PropertyName, PropertyLocationState, PropertyLocationCountry, PropertyAddress, PropertyType, NumberOfRooms, PropertyDescription, Image1, Image2, Image3, Image4, Image5, Image6, Image7, Image8, Image9, Image10, DeleteFlag, DateAdded)
-    VALUES (@PropertyID, @PropertyName, @PropertyLocationState, @PropertyLocationCountry, @PropertyAddress, @PropertyType, @NumberOfRooms, @PropertyDescription, @Image1, @Image2, @Image3, @Image4, @Image5, @Image6, @Image7, @Image8, @Image9, @Image10, @DeleteFlag, GETDATE())
+    INSERT INTO Property (PropertyID, PropertyName, PropertyLocationState, PropertyLocationCountry, PropertyAddress, PropertyPrice, PropertyType, NumberOfRooms, PropertyDescription, Image1, Image2, Image3, Image4, Image5, Image6, Image7, Image8, Image9, Image10, DeleteFlag, DateAdded)
+    VALUES (@PropertyID, @PropertyName, @PropertyLocationState, @PropertyLocationCountry, @PropertyAddress,@PropertyPrice, @PropertyType, @NumberOfRooms, @PropertyDescription, @Image1, @Image2, @Image3, @Image4, @Image5, @Image6, @Image7, @Image8, @Image9, @Image10, @DeleteFlag, GETDATE())
 END
 
+DROP PROCEDURE AddProperty
 
 CREATE PROCEDURE GetProperty
 AS
 	BEGIN
-		SELECT PropertyID, PropertyName, PropertyLocationState, PropertyLocationCountry, PropertyAddress, PropertyType, NumberOfRooms, PropertyDescription, Image1, Image2, Image3, Image4, Image5, Image6, Image7, Image8, Image9, Image10
+		SELECT PropertyID, PropertyName, PropertyLocationState, PropertyLocationCountry, PropertyAddress, PropertyPrice, PropertyType, NumberOfRooms, PropertyDescription, Image1, Image2, Image3, Image4, Image5, Image6, Image7, Image8, Image9, Image10
 		FROM
 		Property 
 		WHERE DeleteFlag = 0
 	END
+
+DROP PROCEDURE GetProperty
+
+CREATE PROCEDURE GetPropertyByID
+    @PropertyID VARCHAR(7)
+AS
+BEGIN
+    SELECT PropertyID, PropertyName, PropertyLocationState, PropertyLocationCountry, PropertyAddress, PropertyPrice, PropertyType, NumberOfRooms, PropertyDescription, Image1, Image2, Image3, Image4, Image5, Image6, Image7, Image8, Image9, Image10
+    FROM Property
+    WHERE PropertyID = @PropertyID AND DeleteFlag = 0;
+END
+
+UPDATE Property 
+SET PropertyPrice = 3202000.56
+WHERE PropertyID = 'CN00003'
+
+SElECT * From Property
