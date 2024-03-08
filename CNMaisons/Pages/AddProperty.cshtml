@@ -1,0 +1,232 @@
+﻿@page
+@model CNMaisons.Pages.AddPropertyModel
+@{
+    ViewData["Title"] = "Add Property";
+}
+<script type="text/javascript">
+    function isFormValid (event) {
+        // Validate Property ID'
+        alert('Form is Called');
+        var isValid = true;
+        var propertyID = event.PropertyID.value;
+
+        if (propertyID === "" || !/^CN\d{7}$/.test(propertyID)) {
+            alert("Property ID must be in the format CN followed by 7 digits.");
+           //event.preventDefault(); // Prevent form submission
+            isValid = false;
+        }
+
+        // Validate Property Name
+        var propertyName = event.PropertyName.value;
+        if (propertyName === "") {
+            alert("Please enter Property Name.");
+            //event.preventDefault(); // Prevent form submission
+            isValid = false;
+        }
+
+        // Validate Property Location (State)
+        var state = event.State.value;
+        if (state === "") {
+            alert("Please enter Property Location (State).");
+            //event.preventDefault(); // Prevent form submission
+            isValid = false;
+        }
+
+        // Validate Property Location (Country)
+        var country = event.Country.value;
+        if (country === "") {
+            alert("Please enter Property Location (Country).");
+           // event.preventDefault(); // Prevent form submission
+            isValid = false;
+        }
+
+        // Validate Property Address
+        var propertyAddress = event.PropertyAddress.value;
+        if (propertyAddress === "") {
+            alert("Please enter Property Address.");
+            //event.preventDefault(); // Prevent form submission
+            isValid = false;
+        }
+
+        // Validate Property Type
+        var propertyType = event.PropertyType.value;
+        if (propertyType === "") {
+            alert("Please select Property Type.");
+            //event.preventDefault(); // Prevent form submission
+             isValid = false;
+        }
+
+        // Validate Number of Rooms
+        var roomNumber = event.RoomNumber.value;
+        if (roomNumber === "" || isNaN(roomNumber)) {
+            alert("Please enter valid Number of Rooms.");
+            //event.preventDefault(); // Prevent form submission
+            isValid = false;
+        }
+
+        // Validate Property Description
+        var description = event.Description.value;
+        if (description === "") {
+            alert("Please enter Property Description.");
+            //event.preventDefault(); // Prevent form submission
+            isValid = false;
+        }
+        return isValid;
+        // Additional validation for images can be added here
+
+        // If all validations pass, the form will be submitted
+    });
+
+</script>
+
+<div>
+    <div class="home_intro">
+        <nav class="memberhome_nav">
+            <a href="~/Index"><img src="~/img/png/logo-no-background.png" width="150" class="intro_image" /></a>
+            <ul>
+                <li>
+                    <a href="#">My Account</a>
+                </li>
+                <li>
+                    <a href="#">Record Rent</a>
+                </li>
+                <li>
+                    <a href="#">Record Maintainance</a>
+                </li>
+                <li>
+                    <a href="#">Contact</a>
+                </li>
+                <li>
+                    <a href="#">Edit Account</a>
+                </li>
+            </ul>
+        </nav>
+        <div class="basic_info">
+            <div class="icon_div">
+            </div>
+            <h2>Nicholas Ekwom</h2>
+            <p>LandLord</p>
+        </div>
+    </div>
+    
+    <form name="AddProperty" method="post" class="form property_form transition-fade-down" onsubmit="return isFormValid(window.document.AddProperty);" enctype="multipart/form-data">
+        <p>@Model.SusccessMessage</p>
+        <p>@Model.ErrorMessage</p>
+        <fieldset>
+            <legend>Add a New Property </legend>
+            <label for="PropertyID">Property ID Format CN00001</label>
+            <br />
+            <input type="text" name="PropertyID" required pattern="[A-Za-z]{2}\d{5}" />
+            @Html.ValidationMessage("PropertyIDError")
+            <br />
+
+            <label for="PropertyName">Property Name</label>
+            <br />
+            <input type="text" name="PropertyName"  />
+            @Html.ValidationMessage("PropertyNameError")
+            <br />
+
+            <label for="State">Property Location (State)</label>
+            <br />
+            <input type="text" name="State" required />
+            @Html.ValidationMessage("StateError")
+            <br />
+            
+            <label for="Country">Property Location (Country)</label>
+            <br />
+            <input type="text" name="Country" required />
+            @Html.ValidationMessage("CountryError")
+            <br />
+            
+            <label for="PropertyAddress">Property Address</label>
+            <br />
+            <input type="text" name="PropertyAddress" required />
+            @Html.ValidationMessage("PropertyAddressError")
+            <br />
+              
+            <label for="PropertyType">Property Type</label>
+            <br />
+            <select name="PropertyType">
+                <option value="Bungalow">Bungalow</option>
+                <option value="Duplex">Duplex</option>
+                <option value="Single Detatched">Single Detatched</option>
+            </select>
+            @Html.ValidationMessage("PropertyType")
+            <br />
+
+            <label for="RoomNumber">Number of Rooms</label>
+            <br />
+            <input type="number" name="RoomNumber" required />
+            @Html.ValidationMessage("RoomNumberError")
+            <br />
+
+            <label for="PropertyPrice">Property Price</label>
+            <br />
+            <input type="number" name="PropertyPrice" required />
+            @Html.ValidationMessage("RoomNumberError")
+            <br />
+
+            <label for="Description">Property Description</label>
+            <br />
+            <textarea name="Description" style="max-height: 200px; max-width: 600px;" required></textarea>
+            @Html.ValidationMessage("Description")
+            <br />
+
+            <label for="Image1"> Image 1</label>
+            <br/>
+            <input type="file" name="Image1" required />
+            @Html.ValidationMessage("Image1Error")
+            <br/>
+
+            <label for="Image2"> Image 2</label>
+            <br/>
+            <input type="file" name="Image2" />
+            @Html.ValidationMessage("Image2Error")
+            <br/>
+
+            <label for="Image3"> Image 3</label>
+            <br/>
+            <input type="file" name="Image3" />
+            @Html.ValidationMessage("Image3Error")
+            <br/>
+
+            <label for="Image4"> Image 4</label>
+            <br/>
+            <input type="file" name="Image4" />
+            @Html.ValidationMessage("Image4Error")
+            <br/>
+
+            <label for="Image5"> Image 5</label>
+            <br/>
+            <input type="file" name="Image5" />
+            <br/>
+
+            <label for="Image6"> Image 6</label>
+            <br/>
+            <input type="file" name="Image6" />
+            <br/>
+
+            <label for="Image7"> Image 7</label>
+            <br/>
+            <input type="file" name="Image7" />
+            <br/>
+
+            <label for="Image8"> Image 8</label>
+            <br/>
+            <input type="file" name="Image8" />
+            <br/>
+
+            <label for="Image9"> Image 9</label>
+            <br/>
+            <input type="file" name="Image9" />
+            <br/>
+
+            <label for="Image10"> Image 10</label>
+            <br/>
+            <input type="file" name="Image10" />
+            <br/>
+
+            <input type="submit" name="Submit" value="Add Property" />
+        </fieldset>
+    </form>
+</div>
