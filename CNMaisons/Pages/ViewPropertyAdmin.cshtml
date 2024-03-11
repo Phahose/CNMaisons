@@ -1,0 +1,62 @@
+﻿@page
+@model CNMaisons.Pages.ViewPropertyAdminModel
+@{
+    Layout = "_Header";
+    ViewData["Title"] = "Property Details";
+}
+<div>
+    <form method="post" name="PropertyListPage" onsubmit="submitForm(event)">
+        <div class="filters">
+            <input type="text" name="StateFilter" class="filter-input" placeholder="Filter By State"/> 
+            <input type="text" name="PropertyIDFilter" class="filter-input" placeholder="Property ID"/>
+            <input type="submit" name="Submit" value="Filter" class="btn filter-btn"/>
+        </div>        
+        @foreach (var property in Model.DisplayedPropertyList)
+        {
+            <div class="prop-card">
+                <div>
+                    <a href="#"><img src="data:image;base64,@Convert.ToBase64String(property.Image1)" alt="Property Image" /></a>
+                </div>
+                <div>
+                    <p>@property.PropertyID</p>
+                    <p>@property.PropertyName</p>
+                    <p>@property.PropertyPrice</p>
+                </div>
+                <div>
+                    <input type="hidden" name="PropertyID" value="@property.PropertyID">
+                    <input type="submit" name="Submit" value="Update Property" class="update-prop-button">
+                    <input type="submit" name="Submit" value="Delete Property" class="delete-prop-button">
+                </div>
+            </div>
+        }
+    </form>
+</div>
+<script>
+    function submitForm(event) {
+        // Prevent the default form submission
+
+        // Find the clicked submit button
+        var submitButton = event.submitter;
+
+        // Find the associated form
+        var form = submitButton.form;
+
+        // Find the hidden input field with the name "PropertyID" within the form
+        var propertyIDInput = submitButton.closest('.prop-card').querySelector('input[name="PropertyID"]');
+        var submitInput = submitButton.value;
+
+        // Get the value of the hidden input field
+        var propertyID = propertyIDInput.value;
+        
+
+        // Update the value of the hidden input field in the form
+        form.querySelector('input[name="PropertyID"]').value = propertyID;
+        form.querySelector('input[name="Submit"]').value = submitInput;
+
+        // Submit the form
+        console.log(submitInput);
+        console.log(form.querySelector('input[name="Submit"]').value);
+        alert("Form Triggerd");
+        form.submit();
+    }
+</script>

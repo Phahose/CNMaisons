@@ -192,5 +192,6 @@ UPDATE Property
 SET PropertyPrice = 3202000.56
 WHERE PropertyID = 'CN00003'
 
-SElECT * From Property
+SElECT * From Users
 
+DELETE FROM Users

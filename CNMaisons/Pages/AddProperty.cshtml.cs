@@ -135,7 +135,7 @@ namespace CNMaisons.Pages
                 BCS controller = new();
                 property = controller.GetPropertyByID(PropertyID);
 
-                if (property != null)
+                if (property.PropertyID != "")
                 {
                     ErrorMessage = "This ID is Already Exists Try a Diffrent ID";
                 }

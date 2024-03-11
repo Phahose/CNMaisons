@@ -19,7 +19,7 @@ namespace CNMaisons.Pages
         {
             BCS controller = new BCS();
             PropertyList = controller.GetProperties();
-            DisplayedPropertyList = PropertyList.Take(3).ToList();
+            DisplayedPropertyList = PropertyList.ToList();
         }
 
         public IActionResult OnPost()
