@@ -53,7 +53,6 @@ namespace CNMaisons.Pages
         public string Submit { get; set; } = string.Empty;
         [BindProperty]
         public decimal PropertyPrice {  get; set; } 
-
         public string SusccessMessage {  get; set; } = string.Empty;    
         public string ErrorMessage {  get; set; } = string.Empty;    
         public void OnGet()

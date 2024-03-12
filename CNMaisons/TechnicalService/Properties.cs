@@ -197,6 +197,187 @@ namespace CNMaisons.TechnicalService
             return confirmation;
         }
 
+        public bool UpdateProperty(Property Property)
+        {
+            SqlConnection cnMaisonsConnection = new SqlConnection();
+            cnMaisonsConnection.ConnectionString = connectionString;
+            cnMaisonsConnection.Open();
+            bool confirmation = true;
+            string message;
+            SqlCommand UpdatePropetryCommand = new()
+            {
+                Connection = cnMaisonsConnection,
+                CommandType = CommandType.StoredProcedure,
+                CommandText = "UpdateProperty",
+            };
+            SqlParameter PropertyIDParameter = new()
+            {
+                ParameterName = "@PropertyID",
+                SqlDbType = SqlDbType.VarChar,
+                SqlValue = Property.PropertyID,
+                Direction = ParameterDirection.Input,
+            };
+            SqlParameter PropertyName = new()
+            {
+                ParameterName = "@PropertyName",
+                SqlDbType = SqlDbType.VarChar,
+                SqlValue = Property.PropertyName,
+                Direction = ParameterDirection.Input,
+            };
+            SqlParameter PropertyLocationState = new()
+            {
+                ParameterName = "@PropertyLocationState",
+                SqlDbType = SqlDbType.VarChar,
+                SqlValue = Property.PropertyLocationState,
+                Direction = ParameterDirection.Input,
+            };
+            SqlParameter PropertyLocationCountry = new()
+            {
+                ParameterName = "@PropertyLocationCountry",
+                SqlDbType = SqlDbType.VarChar,
+                SqlValue = Property.PropertyLocationCountry,
+                Direction = ParameterDirection.Input,
+            };
+            SqlParameter @PropertyAddress = new()
+            {
+                ParameterName = "@PropertyAddress",
+                SqlDbType = SqlDbType.VarChar,
+                SqlValue = Property.PropertyAddress
+            };
+            SqlParameter PropertyType = new()
+            {
+                ParameterName = "@PropertyType",
+                SqlDbType = SqlDbType.VarChar,
+                SqlValue = Property.PropertyType,
+                Direction = ParameterDirection.Input,
+            };
+            SqlParameter NumberOfRooms = new()
+            {
+                ParameterName = "NumberOfRooms",
+                SqlDbType = SqlDbType.Int,
+                SqlValue = Property.NumberOfRooms,
+                Direction = ParameterDirection.Input,
+            };
+            SqlParameter PropertyPrice = new()
+            {
+                ParameterName = "PropertyPrice",
+                SqlDbType = SqlDbType.Decimal,
+                SqlValue = Property.PropertyPrice,
+                Direction = ParameterDirection.Input,
+            };
+
+            SqlParameter PropertyDescription = new()
+            {
+                ParameterName = "@PropertyDescription",
+                SqlDbType = SqlDbType.VarChar,
+                SqlValue = Property.PropertyType,
+                Direction = ParameterDirection.Input,
+            };
+            SqlParameter Image1 = new()
+            {
+                ParameterName = "@Image1",
+                SqlDbType = SqlDbType.VarBinary,
+                SqlValue = Property.Image1,
+                Direction = ParameterDirection.Input,
+            };
+            SqlParameter Image2 = new()
+            {
+                ParameterName = "@Image2",
+                SqlDbType = SqlDbType.VarBinary,
+                SqlValue = Property.Image2,
+                Direction = ParameterDirection.Input,
+            };
+            SqlParameter Image3 = new()
+            {
+                ParameterName = "@Image3",
+                SqlDbType = SqlDbType.VarBinary,
+                SqlValue = Property.Image3,
+                Direction = ParameterDirection.Input,
+            };
+            SqlParameter Image4 = new()
+            {
+                ParameterName = "@Image4",
+                SqlDbType = SqlDbType.VarBinary,
+                SqlValue = Property.Image4,
+                Direction = ParameterDirection.Input,
+            };
+            SqlParameter Image5 = new()
+            {
+                ParameterName = "@Image5",
+                SqlDbType = SqlDbType.VarBinary,
+                SqlValue = Property.Image5,
+                Direction = ParameterDirection.Input,
+            };
+            SqlParameter Image6 = new()
+            {
+                ParameterName = "@Image6",
+                SqlDbType = SqlDbType.VarBinary,
+                SqlValue = Property.Image6,
+                Direction = ParameterDirection.Input,
+            };
+            SqlParameter Image7 = new()
+            {
+                ParameterName = "@Image7",
+                SqlDbType = SqlDbType.VarBinary,
+                SqlValue = Property.Image7,
+                Direction = ParameterDirection.Input,
+            };
+            SqlParameter Image8 = new()
+            {
+                ParameterName = "@Image8",
+                SqlDbType = SqlDbType.VarBinary,
+                SqlValue = Property.Image8,
+                Direction = ParameterDirection.Input,
+            };
+            SqlParameter Image9 = new()
+            {
+                ParameterName = "@Image9",
+                SqlDbType = SqlDbType.VarBinary,
+                SqlValue = Property.Image9,
+                Direction = ParameterDirection.Input,
+            };
+            SqlParameter Image10 = new()
+            {
+                ParameterName = "@Image10",
+                SqlDbType = SqlDbType.VarBinary,
+                SqlValue = Property.Image10,
+                Direction = ParameterDirection.Input,
+            };
+
+            try
+            {
+                UpdatePropetryCommand.Parameters.Add(PropertyIDParameter);
+                UpdatePropetryCommand.Parameters.Add(PropertyName);
+                UpdatePropetryCommand.Parameters.Add(PropertyLocationState);
+                UpdatePropetryCommand.Parameters.Add(PropertyLocationCountry);
+                UpdatePropetryCommand.Parameters.Add(PropertyAddress);
+                UpdatePropetryCommand.Parameters.Add(PropertyType);
+                UpdatePropetryCommand.Parameters.Add(NumberOfRooms);
+                UpdatePropetryCommand.Parameters.Add(PropertyDescription);
+                UpdatePropetryCommand.Parameters.Add(PropertyPrice);
+                UpdatePropetryCommand.Parameters.Add(Image1);
+                UpdatePropetryCommand.Parameters.Add(Image2);
+                UpdatePropetryCommand.Parameters.Add(Image3);
+                UpdatePropetryCommand.Parameters.Add(Image4);
+                UpdatePropetryCommand.Parameters.Add(Image5);
+                UpdatePropetryCommand.Parameters.Add(Image6);
+                UpdatePropetryCommand.Parameters.Add(Image7);
+                UpdatePropetryCommand.Parameters.Add(Image8);
+                UpdatePropetryCommand.Parameters.Add(Image9);
+                UpdatePropetryCommand.Parameters.Add(Image10);
+
+                UpdatePropetryCommand.ExecuteNonQuery();
+                cnMaisonsConnection.Close();
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+                confirmation = false;
+            }
+
+            return confirmation;
+        }
+
         public List<Property> GetProperty()
         {
             List<Property> properties = new List<Property>();

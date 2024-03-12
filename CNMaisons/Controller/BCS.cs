@@ -13,6 +13,13 @@ namespace CNMaisons.Controller
             success = properties.AddProperty(property);
             return success;
         }
+         public bool UpdateProperty(Property property)
+         {
+            bool success = false;
+            Properties properties = new Properties();
+            success = properties.UpdateProperty(property);
+            return success;
+         }
 
         public List<Property> GetProperties()
         {

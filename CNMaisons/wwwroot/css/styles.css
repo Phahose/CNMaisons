@@ -588,3 +588,19 @@ input.filter-btn{
     width:fit-content;
     margin-top: 1rem;
 }
+.img-row img{
+   width: 9rem;
+   height: 9rem;
+   margin: 1rem;
+   margin-right:auto;
+   border-radius: 5%;
+}
+.img-row{
+    display: flex;
+    justify-content: left;
+    margin-left: auto;
+}
+.img-table{
+    width: 100%;
+    margin: auto;
+}

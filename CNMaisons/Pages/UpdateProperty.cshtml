@@ -5,14 +5,14 @@
     ViewData["Title"] = "Update Property";
 }
 <div>
-    <form name="UpdateProperty" method="post" class="form property_form transition-fade-down" onsubmit="return isFormValid(window.document.AddProperty);" enctype="multipart/form-data">
+    <form name="UpdateProperty" method="post" class="form property_form transition-fade-down" onsubmit="enableField()" enctype="multipart/form-data">
         <p>@Model.SucceessMessage</p>
         <p>@Model.ErrorMessage</p>
         <fieldset>
             <legend>Update Property</legend>
             <label for="PropertyID">Property ID Format CN00001</label>
             <br />
-            <input type="text" name="PropertyID" required pattern="[A-Za-z]{2}\d{5}" value="@Model.Property.PropertyID"/>
+            <input type="text" name="PropertyID" required pattern="[A-Za-z]{2}\d{5}" value="@Model.Property.PropertyID" disabled/>
             @Html.ValidationMessage("PropertyIDError")
             <br />
 
@@ -67,62 +67,191 @@
             <textarea name="Description" style="max-height: 200px; max-width: 600px;" required value="@Model.Property.PropertyDescription"></textarea>
             @Html.ValidationMessage("Description")
             <br />
-
-            <label for="Image1"> Image 1</label>
-            <br />
-            <input type="file" name="Image1" required/>
-            @Html.ValidationMessage("Image1Error")
-            <br />
-
-            <label for="Image2"> Image 2</label>
-            <br />
-            <input type="file" name="Image2" />
-            @Html.ValidationMessage("Image2Error")
-            <br />
-
-            <label for="Image3"> Image 3</label>
-            <br />
-            <input type="file" name="Image3" />
-            @Html.ValidationMessage("Image3Error")
-            <br />
-
-            <label for="Image4"> Image 4</label>
-            <br />
-            <input type="file" name="Image4" />
-            @Html.ValidationMessage("Image4Error")
-            <br />
-
-            <label for="Image5"> Image 5</label>
-            <br />
-            <input type="file" name="Image5" />
-            <br />
-
-            <label for="Image6"> Image 6</label>
-            <br />
-            <input type="file" name="Image6" />
-            <br />
-
-            <label for="Image7"> Image 7</label>
-            <br />
-            <input type="file" name="Image7" />
-            <br />
-
-            <label for="Image8"> Image 8</label>
-            <br />
-            <input type="file" name="Image8" />
-            <br />
-
-            <label for="Image9"> Image 9</label>
-            <br />
-            <input type="file" name="Image9" />
-            <br />
-
-            <label for="Image10"> Image 10</label>
-            <br />
-            <input type="file" name="Image10" />
-            <br />
-
+           <table class="img-table">
+               <tr>
+                   <td>
+                        <label for="Image1"> Image 1</label>
+                        <br />
+                        <input type="file" name="Image1" required />
+                        @Html.ValidationMessage("Image1Error")
+                        <br />
+                   </td>
+                   <td class="img-row">
+                       @if (Model.Property.Image1 != null)
+                       {
+                          <img src="data:image;base64,@Convert.ToBase64String(Model.Property.Image1)" alt="Property Image" />
+                       }
+                       else
+                       {
+                           <img src="~/img/no-image.jpg" alt="No Image Found Placeholder">
+                       }
+                   </td>
+               </tr>
+               <tr>
+                   <td>
+                        <label for="Image2"> Image 2</label>
+                        <br />
+                        <input type="file" name="Image2" />
+                        @Html.ValidationMessage("Image2Error")
+                        <br />
+                   </td>
+                   <td class="img-row">
+                       @if (Model.Property.Image2 != null)
+                       {
+                            <img src="data:image;base64,@Convert.ToBase64String(Model.Property.Image2)" alt="Property Image" />
+                       }
+                       else
+                       {
+                           <img src="~/img/no-image.jpg" alt="No Image Found Placeholder">
+                       }
+                   </td>
+               </tr>
+               <tr>
+                   <td>
+                        <label for="Image3"> Image 3</label>
+                        <br />
+                        <input type="file" name="Image3" />
+                        @Html.ValidationMessage("Image3Error")
+                        <br />
+                   </td>
+                   <td class="img-row">
+                        <img src="data:image;base64,@Convert.ToBase64String(Model.Property.Image3)" alt="Property Image" />
+                   </td>
+               </tr>
+               <tr>
+                   <td>
+                        <label for="Image4"> Image 4</label>
+                        <br />
+                        <input type="file" name="Image4" />
+                        @Html.ValidationMessage("Image4Error")
+                        <br />
+                   </td>
+                   <td class="img-row">
+                       @if (Model.Property.Image4 != null)
+                       {
+                         <img src="data:image;base64,@Convert.ToBase64String(Model.Property.Image4)" alt="Property Image" />
+                       }
+                       else
+                       {
+                            <img src="~/img/no-image.jpg" alt="No Image Found Placeholder">
+                       }
+                   </td>
+               </tr>
+               <tr>
+                   <td>
+                        <label for="Image5"> Image 5</label>
+                        <br />
+                        <input type="file" name="Image5" />
+                        <br />
+                   </td>
+                   <td class="img-row">
+                       @if (Model.Property.Image5 != null)
+                       {
+                         <img src="data:image;base64,@Convert.ToBase64String(Model.Property.Image5)" alt="Property Image" />
+                       }
+                       else
+                       {
+                           <img src="~/img/no-image.jpg" alt="No Image Found Placeholder">
+                       }
+                   </td>
+               </tr>
+               <tr>
+                   <td>
+                        <label for="Image6"> Image 6</label>
+                        <br />
+                        <input type="file" name="Image6" />
+                        <br />
+                   </td>
+                   <td class="img-row">
+                       @if (Model.Property.Image6 != null)
+                       {
+                           <img src="data:image;base64,@Convert.ToBase64String(Model.Property.Image6)" alt="Property Image" />
+                       }  
+                       else
+                       {
+                           <img src="~/img/no-image.jpg" alt="No Image Found Placeholder">
+                       }
+                   </td>
+               </tr>
+               <tr>
+                   <td>
+                        <label for="Image7"> Image 7</label>
+                        <br />
+                        <input type="file" name="Image7" />
+                        <br />
+                   </td>
+                   <td class="img-row">
+                       @if (Model.Property.Image7 != null)
+                       {
+                          <img src="data:image;base64,@Convert.ToBase64String(Model.Property.Image7)" alt="Property Image" />
+                       } 
+                       else
+                       {
+                           <img src="~/img/no-image.jpg" alt="No Image Found Placeholder">
+                       }
+                   </td>
+               </tr>
+               <tr>
+                   <td>
+                        <label for="Image8"> Image 8</label>
+                        <br />
+                        <input type="file" name="Image8" />
+                        <br />
+                   </td>
+                   <td class="img-row">
+                       @if (Model.Property.Image8 != null)
+                       {
+                          <img src="data:image;base64,@Convert.ToBase64String(Model.Property.Image8)" alt="Property Image" />
+                       }  
+                       else
+                       {
+                           <img src="~/img/no-image.jpg" alt="No Image Found Placeholder">
+                       }
+                   </td>
+               </tr>
+               <tr>
+                   <td>
+                        <label for="Image9"> Image 9</label>
+                        <br />
+                        <input type="file" name="Image9" />
+                        <br />
+                   </td>
+                   <td class="img-row">
+                       @if (Model.Property.Image9 != null)
+                       {
+                         <img src="data:image;base64,@Convert.ToBase64String(Model.Property.Image9)" alt="Property Image" />   
+                       } 
+                       else
+                       {
+                           <img src="~/img/no-image.jpg" alt="No Image Found Placeholder">
+                       }
+                   </td>
+               </tr>
+               <tr>
+                   <td>
+                        <label for="Image10"> Image 10</label>
+                        <br />
+                        <input type="file" name="Image10" />
+                        <br />
+                   </td>
+                   <td class="img-row">
+                       @if (Model.Property.Image10 != null)
+                       {
+                         <img src="data:image;base64,@Convert.ToBase64String(Model.Property.Image10)" alt="Property Image" />
+                       }
+                       else
+                       {
+                           <img src="~/img/no-image.jpg" alt="No Image Found Placeholder">
+                       }
+                   </td>
+               </tr>
+           </table>
             <input type="submit" name="Submit" value="Update Property" class="btn" />
         </fieldset>
     </form>
 </div>
+<script>
+    function enableField() {
+        document.getElementsByName("PropertyID")[0].disabled = false;
+    }
+</script>
