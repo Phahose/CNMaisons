@@ -504,5 +504,37 @@ namespace CNMaisons.TechnicalService
             }
             return property;
         }
+        public bool DeleteProperty(string propertyID)
+        {
+            bool success = true;
+            try
+            {
+                SqlConnection cnMaisonsConnection = new SqlConnection();
+                cnMaisonsConnection.ConnectionString = connectionString;
+                cnMaisonsConnection.Open();
+                SqlCommand DeletePropertyCommand = new()
+                {
+                    Connection = cnMaisonsConnection,
+                    CommandType = CommandType.StoredProcedure,
+                    CommandText = "DeleteProperty",
+                };
+
+                SqlParameter PropertyID = new SqlParameter()
+                {
+                    ParameterName = "@PropertyID",
+                    SqlDbType = SqlDbType.VarChar,
+                    SqlValue = propertyID,
+                    Direction = ParameterDirection.Input,
+                };
+
+                DeletePropertyCommand.Parameters.Add(PropertyID);
+                DeletePropertyCommand.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+               success = false;
+            }
+            return success;
+        }
     }
 }

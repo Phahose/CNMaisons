@@ -604,3 +604,27 @@ input.filter-btn{
     width: 100%;
     margin: auto;
 }
+.delConfirmation {
+    background-color: #282a2e;
+    border: 1px solid white;
+    position: absolute;
+    top: 50%;
+    bottom: 50%;
+    left: 22%;
+    right: 10%;
+    min-width: fit-content;
+    height: fit-content;
+    padding: 4rem 2rem;
+    width: 10rem;
+    margin: 0 auto;
+}
+
+.delConfirmation > input[type= submit]{
+    margin: 1rem;
+}
+.flex-buttons{
+    display: flex;
+    width: 10rem;;
+    margin: auto;
+    justify-content: space-between;
+}

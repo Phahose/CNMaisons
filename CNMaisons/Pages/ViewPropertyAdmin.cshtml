@@ -5,7 +5,7 @@
     ViewData["Title"] = "Property Details";
 }
 <div>
-    <form method="post" name="PropertyListPage" onsubmit="submitForm(event)">
+    <form method="post" name="PropertyListPage" onsubmit="submitForm(event)" class="transition-fade-down">
         <div class="filters">
             <input type="text" name="StateFilter" class="filter-input" placeholder="Filter By State"/> 
             <input type="text" name="PropertyIDFilter" class="filter-input" placeholder="Property ID"/>
@@ -26,6 +26,17 @@
                     <input type="hidden" name="PropertyID" value="@property.PropertyID">
                     <input type="submit" name="Submit" value="Update Property" class="update-prop-button">
                     <input type="submit" name="Submit" value="Delete Property" class="delete-prop-button">
+                </div>
+            </div>
+        }
+        @if (Model.DeleteRequest == true)
+        {
+            <div class="delConfirmation">
+                <h3>Are You sure You want to delete this Property @Model.PropertyID</h3>
+                <div class="flex-buttons">
+                    <input type="hidden" name="PropertyID" value="@Model.PropertyID">
+                    <input type="submit" name="Submit" value="Delete" class="delete-prop-button">
+                    <input type="submit" name="Submit" value="Cancel" class="update-prop-button">
                 </div>
             </div>
         }

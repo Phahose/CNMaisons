@@ -231,12 +231,10 @@ BEGIN
     WHERE PropertyID = @PropertyID;
 END;
 
-
-DELETE FROm Property WHERE PropertyID = 'CN00002'
-UPDATE Property 
-SET PropertyPrice = 3202000.56
-WHERE PropertyID = 'CN00003'
-
-SElECT * From Users
-
-DELETE FROM Users
+CREATE Procedure DeleteProperty (@PropertyID VARCHAR(7))
+AS 
+	BEGIN
+		Update Property 
+		SET DeleteFlag = 1
+		Where PropertyID = @PropertyID
+	END

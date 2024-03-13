@@ -21,6 +21,13 @@ namespace CNMaisons.Controller
             return success;
          }
 
+        public bool DeleteProperty(string propertyID)
+        {
+            bool success = false;
+            Properties properties = new Properties();
+            success = properties.DeleteProperty(propertyID);
+            return success;
+        }
         public List<Property> GetProperties()
         {
             List<Property> PropertyList = new List<Property>();
