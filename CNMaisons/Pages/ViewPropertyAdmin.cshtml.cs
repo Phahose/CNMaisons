@@ -10,6 +10,8 @@ namespace CNMaisons.Pages
         [BindProperty]
         public string PropertyID { get; set; } = string.Empty;
         [BindProperty]
+        public string DeletedPropertyID { get; set; } = string.Empty;
+        [BindProperty]
         public string PropertyIDFilter { get; set; } = string.Empty;
         public List<Property> PropertyList { get; set; } = new();
         public List<Property> DisplayedPropertyList { get; set; } = new();
@@ -68,16 +70,9 @@ namespace CNMaisons.Pages
                         HttpContext.Session.SetString("PropertyID", PropertyID);
                     }
                     return RedirectToPage("/UpdateProperty");
-                case "Delete Property":
-                    DeleteRequest = true;
-                    HttpContext.Session.SetString("PropId", PropertyID);
-                break;
-                case "Cancel":
-                    DeleteRequest = false;
-                break;
                 case "Delete":
-                    PropertyID = HttpContext.Session.GetString("PropId")!;
-                    Success = controller.DeleteProperty(PropertyID);
+                    //PropertyID = HttpContext.Session.GetString("PropId")!;
+                    Success = controller.DeleteProperty(DeletedPropertyID);
                     if (Success)
                     {
                         SuccessMessage = "Property Deleted SuccessFully";

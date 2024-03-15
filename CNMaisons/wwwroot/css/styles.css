@@ -608,7 +608,7 @@ input.filter-btn{
     background-color: #282a2e;
     border: 1px solid white;
     position: absolute;
-    top: 50%;
+    top: 40%;
     bottom: 50%;
     left: 22%;
     right: 10%;
@@ -627,4 +627,8 @@ input.filter-btn{
     width: 10rem;;
     margin: auto;
     justify-content: space-between;
+}
+.hideform{
+    display: none;
+    background-color: red;
 }
