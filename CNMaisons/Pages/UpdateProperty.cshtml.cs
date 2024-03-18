@@ -1,3 +1,4 @@
+#nullable disable
 using CNMaisons.Controller;
 using CNMaisons.Domain;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +7,7 @@ using static System.Net.Mime.MediaTypeNames;
 using System.Diagnostics.Metrics;
 using System.Text.RegularExpressions;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 
 namespace CNMaisons.Pages
 {
@@ -33,7 +35,7 @@ namespace CNMaisons.Pages
         [BindProperty]
         public string Description { get; set; } = string.Empty;
         [BindProperty]
-        public IFormFile Image1 { get; set; }
+        public IFormFile Image1 { get; set; } 
         [BindProperty]
         public IFormFile Image2 { get; set; }
         [BindProperty]
@@ -69,9 +71,15 @@ namespace CNMaisons.Pages
         }
         public void OnPost()
         {
-            string pattern = @"[A-Za-z]{2}[0-9]{5}$";
-            Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
+            if (HttpContext.Session.GetString("PropertyID") != null)
+            {
+                PropertyID = HttpContext.Session.GetString("PropertyID")!;
+            }
+
+            BCS controller = new BCS();
+            Property = controller.GetPropertyByID(PropertyID);
             ModelState.Clear();
+            #region Validation
             if (PropertyID == null)
             {
                 ModelState.AddModelError("PropertyIDError", "The Property ID is Required");
@@ -108,7 +116,7 @@ namespace CNMaisons.Pages
             {
                 ModelState.AddModelError("DescriptionError", "The Description is Required");
             }
-            if (Image1 == null)
+            /*if (Image1 == null)
             {
                 ModelState.AddModelError("Image1Error", "Image1 is required");
             }
@@ -123,16 +131,16 @@ namespace CNMaisons.Pages
             if (Image4 == null)
             {
                 ModelState.AddModelError("Image4Error", "Image4 is required");
-            }
-
+            }*/
+            #endregion
 
             if (ModelState.IsValid)
             {
                 Property property = new();
-                byte[] image1Bytes = ConvertToByteArray(Image1);
-                byte[] image2Bytes = ConvertToByteArray(Image2);
-                byte[] image3Bytes = ConvertToByteArray(Image3);
-                byte[] image4Bytes = ConvertToByteArray(Image4);
+                byte[] image1Bytes = ConvertToByteArray(Image1!);
+                byte[] image2Bytes = ConvertToByteArray(Image2!);
+                byte[] image3Bytes = ConvertToByteArray(Image3!);
+                byte[] image4Bytes = ConvertToByteArray(Image4!);
                 byte[] image5Bytes = ConvertToByteArray(Image5);
                 byte[] image6Bytes = ConvertToByteArray(Image6);
                 byte[] image7Bytes = ConvertToByteArray(Image7);
@@ -140,18 +148,16 @@ namespace CNMaisons.Pages
                 byte[] image9Bytes = ConvertToByteArray(Image9);
                 byte[] image10Bytes = ConvertToByteArray(Image10);
 
-                BCS controller = new();
-                property = controller.GetPropertyByID(PropertyID);
                 property = new()
                 {
-                    PropertyID = PropertyID,
-                    PropertyName = PropertyName,
-                    PropertyLocationState = State,
-                    PropertyLocationCountry = Country,
-                    PropertyAddress = PropertyAddress,
-                    PropertyType = PropertyType,
+                    PropertyID = PropertyID!,
+                    PropertyName = PropertyName!,
+                    PropertyLocationState = State!,
+                    PropertyLocationCountry = Country!,
+                    PropertyAddress = PropertyAddress!,
+                    PropertyType = PropertyType!,
                     NumberOfRooms = RoomNumber,
-                    PropertyDescription = Description,
+                    PropertyDescription = Description!,
                     PropertyPrice = PropertyPrice,
                     Image1 = image1Bytes,
                     Image2 = image2Bytes,
@@ -164,9 +170,107 @@ namespace CNMaisons.Pages
                     Image9 = image9Bytes,
                     Image10 = image10Bytes,
                 };
+                if (Image1 == null || Image2 == null || Image3 == null || Image4== null || Image5 == null || Image6 == null || Image7 == null || Image8 == null || Image9 == null || Image10 == null)
+                {
+                    #region Image Null Checker
+                    property = new();
+                    property.PropertyID = PropertyID!;
+                    property.PropertyName = PropertyName!;
+                    property.PropertyLocationState = State!;
+                    property.PropertyLocationCountry = Country!;
+                    property.PropertyAddress = PropertyAddress!;
+                    property.PropertyType = PropertyType!;
+                    property.NumberOfRooms = RoomNumber;
+                    property.PropertyDescription = Description!;
+                    property.PropertyPrice = PropertyPrice;
+                    if (Image1 == null)
+                    {
+                        property.Image1 = Property.Image1!;
+                    }
+                    else
+                    {
+                        property.Image1 = ConvertToByteArray(Image1);
+                    }
+                    if (Image2 == null)
+                    {
+                        property.Image2 = Property.Image2!;
+                    }
+                    else
+                    {
+                        property.Image2 = ConvertToByteArray(Image2);
+                    }
+                    if (Image3 == null)
+                    {
+                        property.Image3 = Property.Image3!;
+                    }
+                    else
+                    {
+                        property.Image3 = ConvertToByteArray(Image3);
+                    }
+
+                    if (Image4 == null)
+                    {
+                        property.Image4 = Property.Image4!;
+                    }
+                    else
+                    {
+                        property.Image4 = ConvertToByteArray(Image4);
+                    }
+                    if (Image5 == null)
+                    {
+                        property.Image5 = Property.Image5!;
+                    }
+                    else
+                    {
+                        property.Image5 = ConvertToByteArray(Image5);
+                    }
+                    if (Image6 == null)
+                    {
+                        property.Image6 = Property.Image6!;
+                    }
+                    else
+                    {
+                        property.Image6 = ConvertToByteArray(Image7);
+                    }
+                    if (Image8 == null)
+                    {
+                        property.Image8 = Property.Image8!;
+                    }
+                    else
+                    {
+                        property.Image8 = ConvertToByteArray(Image8);
+                    }
+                    if (Image3 == null)
+                    {
+                        property.Image3 = Property.Image3!;
+                    }
+                    else
+                    {
+                        property.Image3 = ConvertToByteArray(Image3);
+                    }
+                    if (Image9 == null)
+                    {
+                        property.Image9 = Property.Image9!;
+                    }
+                    else
+                    {
+                        property.Image9 = ConvertToByteArray(Image9);
+                    }
+                    if (Image10 == null)
+                    {
+                        property.Image10 = Property.Image10!;
+                    }
+                    else
+                    {
+                        property.Image10 = ConvertToByteArray(Image10);
+                    }
+
+                    #endregion
+
+                }
                 controller.UpdateProperty(property);
                 SucceessMessage = "The Property Updated SuccessFully";
-                
+              
             }
         }
         private byte[] ConvertToByteArray(IFormFile file)
@@ -181,5 +285,6 @@ namespace CNMaisons.Pages
             }
             else { return null; }
         }
+
     }
 }
