@@ -7,15 +7,64 @@
         <a href="~/Index"><img src="~/img/png/logo-no-background.png" width="150" class="intro_image"/></a>
         <ul>
             <li><a href="~/Application">Apply to Rent</a></li>
-            <li><a href="#">Log In</a></li>
+            <li><a href="~/Login">Log In</a></li>
             <li class="last_list"><a href="~/ViewProperty">View Properties</a></li>
         </ul>
     </header>
-    <div class="searchbox">
+    <div class="searchbox transition-fade-down">
         <form method="post" name="SearchForm">
+            <input type="hidden" name="FormType" value="SearchForm">
             <p class="quote">Offering premium, meticulously designed properties with comfort, convenience, and style.</p>
             <input type="text" name="Search" class="searchfield" placeholder="Find A Place"/>
             <input type="submit" name="Search" value="Search" class="search_button"/>
         </form>
     </div>
+    <div class="properties">
+        <p class="prop_head">Some properties</p>
+        <form method="post" name="InfoForm" onsubmit="submitForm(event)">
+            <input type="hidden" name="FormType" value="InfoForm">
+            <div class="cards transition-fade">
+                @foreach (var property in Model.DisplayedPropertyList)
+                {
+                    <div class="property-card">
+                        <a href="#"><img src="data:image;base64,@Convert.ToBase64String(property.Image1)" alt="Property Image" /></a>
+                        <div class="property-details">
+                            <h2 class="property-title">@property.PropertyName</h2>
+                            <p class="property-location">@property.PropertyAddress</p>
+                            <p class="property-location">@property.PropertyID</p>
+                            <p class="property-description">@property.PropertyDescription</p>
+                            <div class="property-price">@property.PropertyPrice / Year</div>
+                            <input type="hidden" name="PropertyID" value="@property.PropertyID">
+                            <input type="submit" name="Submit" value="View Details" class="btn btn-primary" onclick="setPropertyID(@property.PropertyID)" />
+                        </div>
+                    </div>
+                }
+            </div>
+        </form>
+    </div>
 </div>
+
+<script>
+    function submitForm(event) {
+        // Prevent the default form submission
+        event.preventDefault();
+
+        // Find the clicked submit button
+        var submitButton = event.submitter;
+
+        // Find the associated form
+        var form = submitButton.form;
+
+        // Find the hidden input field with the name "PropertyID" within the form
+        var propertyIDInput = submitButton.closest('.property-details').querySelector('input[name="PropertyID"]');
+
+        // Get the value of the hidden input field
+        var propertyID = propertyIDInput.value;
+
+        // Update the value of the hidden input field in the form
+        form.querySelector('input[name="PropertyID"]').value = propertyID;
+
+        // Submit the form
+        form.submit();
+    }
+</script>

@@ -8,18 +8,40 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,100;0,300;0,400;0,500;0,700;0,800;0,900;1,100;1,300;1,400;1,500;1,700;1,800;1,900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://kit.fontawesome.com/d2022e2e35.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
         <a href="~/Index"><img src="~/img/png/logo-no-background.png" width="150" class="intro_image" /></a>
         <ul>
             <li><a href="~/Application">Apply to Rent</a></li>
-            <li><a href="#">Log In</a></li>
+            <li><a href="~/Login">Log In</a></li>
             <li class="last_list"><a href="~/ViewProperty">View Properties</a></li>
         </ul>
     </header>
     <div>
         @RenderBody()
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script type="text/javascript">
+        const swiper = new Swiper('.swiper', {
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            // Optional parameters
+            loop: true,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
+    </script>
 </body>
 </html>

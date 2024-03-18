@@ -2,6 +2,7 @@
     background-color: #1c1c1b;
     font-family: "Raleway", sans-serif;
     color: white;
+    margin: 0;
 }
 .entry {
     position: absolute;
@@ -100,6 +101,83 @@ header li a:hover{
 .search_button:hover {
     background-color: #0a0a0a;
 }
+.properties{
+    margin-top: 8rem;
+}
+.cards {
+    display: flex;
+    width: 85%;
+    margin: auto;
+    flex-flow: row wrap;
+    align-items:center;
+    justify-content:center;
+}
+.property-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-bottom: 20px;
+    background-color: #1e2021;
+    height: 35rem;
+    margin: 1rem;
+    width: 29%;
+    max-width: 20rem;
+}
+.property-card  img{
+    height: 40%;
+    width: 100%;
+}
+
+.property-details{
+    padding: 1rem;
+}
+
+.property-title {
+    font-size: 1.2rem;
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: white;
+}
+
+.property-location {
+    color: white;
+    margin-bottom: 10px;
+}
+
+.property-description {
+    margin-bottom: 15px;
+    color: white;
+}
+
+.property-price {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 15px;
+}
+.prop_head{
+    font-weight: bold;
+    width: fit-content;
+    font-size: 1.2rem;
+    margin: auto;
+    border-bottom: 1px solid white;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-bottom: 0.5rem;
+}
+.btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
 
 /*Sign Up Page*/
 .application_form{
@@ -123,14 +201,13 @@ fieldset>div{
 }
 
 input[type=text], input[type=email], input[type=tel], input[type=date],
-textarea, input[type=number],select , input[type=password] {
+textarea, input[type=number], input[type=password] {
     width: 95%;
     margin-left: auto;
     margin-bottom: 1rem;
     padding: 0.5rem;
     border: 1px solid #fff;
     background-color: rgba(255, 255, 255, 0.5);
-    /*background-color: #1c1c1b;*/
     caret-color: #fff;
     color: #fff
 }
@@ -143,6 +220,16 @@ input[type=file]{
         color: white;
         background-color: rgba(0, 0, 0, 0.5);
     }
+select {
+    width: 95%;
+    margin-left: auto;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border: 1px solid #fff;
+    background-color: rgba(255, 255, 255, 0.5);
+    caret-color: #fff;
+    color: #fff
+}
 #video-background {
     position: fixed;
     top: 0;
@@ -154,7 +241,7 @@ input[type=file]{
     z-index: -1;
     filter: brightness(0.6);
 }
-input[type=submit] {
+.btn {
     width: 95%;
     padding: 0.5rem;
     margin-top: 0.5rem;
@@ -162,7 +249,7 @@ input[type=submit] {
     background-color: #1c1c1b;
     color: white;
 }
-input[type=submit]:hover {
+.btn:hover {
     background-color: #292323;
     padding: 0.6rem;
     transition: 0.2s ease-in-out;
@@ -174,6 +261,7 @@ input[type=submit]:hover {
 .view_form {
     width: 50%;
     margin: auto;
+    max-width: 30rem;
 }
 /*Tennant Home Page*/
 .memberhome_nav{
@@ -302,4 +390,245 @@ input[type=submit]:hover {
 .box2 p{
     margin-top:0;
     margin-bottom: 0.2rem;
+}
+.transition-fade {
+    animation: transitionright 1.5s;
+    transform-origin: right;
+}
+
+.transition-fade-down {
+    animation: transitionIn 1.5s;
+    transform-origin: left;
+}
+
+@keyframes transitionIn {
+    from {
+        opacity: 1;
+        transform: translateY(-50%);
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes transitionright {
+    from {
+        opacity: 1;
+        transform: translateX(50%);
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+/*Login Page*/
+.login_page{
+    height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+}
+.loginForm {
+    max-width: 30rem;
+}
+/*Add Property*/
+.property_form{
+    max-width: 50rem;
+}
+/*Property Details*/
+.swiper {
+    width: 80%;
+    margin-top: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 60rem;
+    height: 50%;
+}
+
+
+.swiper-slide {
+    width: 100%;
+}
+
+
+.swiper-slide img {
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    height: 30rem;
+    max-width: 60rem;
+}
+.swiper .swiper-button-next {
+    color: black;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 1rem;
+}
+.swiper .swiper-button-prev {
+    color: black;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 1rem;
+}
+
+.swiper-pagination-bullet-active {
+    background: white;
+}
+
+.property-info {
+    font-family: Arial, sans-serif;
+    width: 80%;
+    max-width: 60rem;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.property-info h1 {
+    font-size: 24px;
+    margin-top: 0;
+}
+
+.property-info .location {
+    font-style: italic;
+    color: white;
+    margin:0;
+}
+
+.property-info i {
+    font-size: 1.8rem;
+    margin-right: 1rem;
+    margin-top: 1rem;
+}
+
+.icons{
+    display: flex;
+    justify-content:space-between;
+    width: 40%;
+    max-width: 20rem;
+}
+
+.property-info i:after {
+   content:"Text";
+   font-size: 0.2rem;
+}
+
+
+.property-info .description {
+    line-height: 1.6;
+}
+
+.property-info .price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #007bff;
+}
+.prop_price{
+    font-size: 2rem;
+    margin: 0;
+}
+
+
+/*View Property Admin*/
+.prop-card {
+    display: flex;
+    width: 70%;
+    margin: 1rem auto;
+    justify-content: space-between;
+    border: 1px solid white;
+    padding: 1rem;
+    border-radius: 1%;
+    max-width: 50rem;
+    align-items:center;
+}
+.prop-card img{
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+}
+
+.update-prop-button {
+    background-color: blue;
+    width: fit-content;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    color: white;
+}
+.delete-prop-button {
+    background-color: red;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    color: white;
+}
+.update-prop-button:hover{
+    cursor: pointer;
+    background-color: darkblue
+}
+.delete-prop-button:hover{
+    cursor: pointer;
+    background-color: darkred;
+}
+.filters{
+    width: 70%;
+    max-width: 50rem;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+input.filter-input {
+    width: 30%;
+    margin-right: auto;
+    margin-top: 1rem;
+    margin-left: 1rem;
+    color: black;
+    background-color: white;
+}
+input.filter-btn{
+    width: 25%;
+    padding: 0 3rem;
+    height: 2rem;
+    width:fit-content;
+    margin-top: 1rem;
+}
+.img-row img{
+   width: 9rem;
+   height: 9rem;
+   margin: 1rem;
+   margin-right:auto;
+   border-radius: 5%;
+}
+.img-row{
+    display: flex;
+    justify-content: left;
+    margin-left: auto;
+}
+.img-table{
+    width: 100%;
+    margin: auto;
+}
+.delConfirmation {
+    background-color: #282a2e;
+    border: 1px solid white;
+    position: absolute;
+    top: 40%;
+    bottom: 50%;
+    left: 22%;
+    right: 10%;
+    min-width: fit-content;
+    height: fit-content;
+    padding: 4rem 2rem;
+    width: 10rem;
+    margin: 0 auto;
+}
+
+.delConfirmation > input[type= submit]{
+    margin: 1rem;
+}
+.flex-buttons{
+    display: flex;
+    width: 10rem;;
+    margin: auto;
+    justify-content: space-between;
+}
+.hideform{
+    display: none;
+    background-color: red;
 }
