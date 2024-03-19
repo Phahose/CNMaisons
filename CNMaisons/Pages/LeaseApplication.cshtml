@@ -3,37 +3,65 @@
 @{
     Layout = "_Header";
     ViewData["Title"] = "Lease Application";
+    var emailPattern = new System.Text.RegularExpressions.Regex(@"^[^\s@]+@[^\s@]+\.[^\s@]+$");
+
 }
 
-<script type="text/javascript">
-    function isFormValid(event) {
-        var isValid = true;
 
-        // Validate Passport
-        var passport = event.Passport.value;
-        if (passport === "" || !/^.{1,}$/i.test(passport)) {
-            alert("Please enter a valid Passport.");
+<script src="~/libraries/jquery/jquery.js"></script>
+<script src="~/libraries/jquery-validate/jquery.validate.js"></script>
+<script src="~/libraries/jquery-validate-unobtrusive/jquery.validate.unobtrusive.js"></script>
+<script type="text/javascript">
+
+    function isFormValid(event) {
+        var isValid = true; // Set to true initially
+        var textOnly = /^[a-zA-Z]+$/;
+        var textAndNumbers = /^[a-zA-Z0-9]+$/;
+        var numbersOnly = /^[0-9]+$/;
+
+
+        
+        // Validate Passport (File Upload)
+        var passportFile = event.Passport.files[0];
+        if (!passportFile) {
+            var passportFileError = "Add the passport.";
             isValid = false;
         }
 
+        
+        
         // Validate FirstName
         var firstName = event.FirstName.value;
-        if (firstName === "" || !/^.{1,30}$/i.test(firstName)) {
-            alert("Please enter a valid FirstName.");
+        if (firstName === "" || !textOnly.test(firstName)) {
+            var firstNameError = "Enter a valid First Name.";
             isValid = false;
         }
-
+        
+        alert("I am here");
         // Validate LastName
         var lastName = event.LastName.value;
-        if (lastName === "" || !/^.{1,30}$/i.test(lastName)) {
-            alert("Please enter a valid LastName.");
+        if (lastName === "" || !textOnly.test(lastName)) {
+            var lastNameError = "Enter a valid Last Name.";
             isValid = false;
         }
 
         // Validate PhoneNumber
         var phoneNumber = event.PhoneNumber.value;
-        if (phoneNumber === "" || !/^\d{14}$/i.test(phoneNumber)) {
+        if (phoneNumber === "" || !textAndNumbers.test(phoneNumber)) {
             alert("Please enter a valid PhoneNumber.");
+            isValid = false;
+        }
+
+
+        // Validate Email
+        var email = event.Email.value;
+        if (email === "" || !textAndNumbers.test(emailPattern)) {
+            alert("Please enter a valid email address.");
+            isValid = false;
+        }
+        var email = event.Email.value;
+        if (email === "" || !emailPattern.test(email)) {
+            alert("Please enter a valid email address.");
             isValid = false;
         }
 
@@ -44,31 +72,33 @@
             alert("Please enter a valid Date of Birth.");
             isValid = false;
         }
+            //textOnly          textAndNumbers          numbersOnly
+
 
         // Validate Nationality
         var nationality = event.Nationality.value;
-        if (nationality === "" || !/^.{1,20}$/i.test(nationality)) {
+        if (nationality === "" || !textOnly.test(nationality)) {
             alert("Please enter a valid Nationality.");
             isValid = false;
         }
 
         // Validate PermanentHomeAddress
         var permanentHomeAddress = event.PermanentHomeAddress.value;
-        if (permanentHomeAddress === "" || !/^.{1,100}$/i.test(permanentHomeAddress)) {
+        if (permanentHomeAddress === "" || !textAndNumbers.test(permanentHomeAddress)) {
             alert("Please enter a valid Permanent Home Address.");
             isValid = false;
         }
 
         // Validate Occupation
         var occupation = event.Occupation.value;
-        if (occupation === "" || !/^.{1,25}$/i.test(occupation)) {
+        if (occupation === "" || !textOnly.test(occupation)) {
             alert("Please enter a valid Occupation.");
             isValid = false;
         }
 
         // Validate SelfEmployed
         var selfEmployed = event.SelfEmployed.value;
-        if (selfEmployed === "" || !/^.{1,}$/i.test(selfEmployed)) {
+        if (selfEmployed === "" || !textOnly.test(selfEmployed)) {
             alert("Please enter a valid SelfEmployed status.");
             isValid = false;
         }
@@ -76,7 +106,7 @@
 
                 // Validate MaritalStatus
         var maritalStatus = event.MaritalStatus.value;
-        if (maritalStatus === "" || !/^.{1,10}$/i.test(maritalStatus)) {
+        if (maritalStatus === "" || !textOnly.test(maritalStatus)) {
             alert("Please enter a valid Marital Status.");
             isValid = false;
         }
@@ -90,101 +120,104 @@
 
         // Validate NextOfKinFirstName
         var nextOfKinFirstName = event.NextOfKinFirstName.value;
-        if (nextOfKinFirstName === "" || !/^.{1,30}$/i.test(nextOfKinFirstName)) {
+        if (nextOfKinFirstName === "" || !textOnly.test(nextOfKinFirstName)) {
             alert("Please enter a valid Next of Kin First Name.");
             isValid = false;
         }
 
         // Validate NextOfKinLastName
         var nextOfKinLastName = event.NextOfKinLastName.value;
-        if (nextOfKinLastName === "" || !/^.{1,30}$/i.test(nextOfKinLastName)) {
+        if (nextOfKinLastName === "" || !textOnly.test(nextOfKinLastName)) {
             alert("Please enter a valid Next of Kin Last Name.");
             isValid = false;
         }
 
         // Validate NextOfKinAddress
         var nextOfKinAddress = event.NextOfKinAddress.value;
-        if (nextOfKinAddress === "" || !/^.{1,100}$/i.test(nextOfKinAddress)) {
+        if (nextOfKinAddress === "" || !textAndNumbers.test(nextOfKinAddress)) {
             alert("Please enter a valid Next of Kin Address.");
             isValid = false;
         }
 
         // Validate NextOfKinPhoneNumber
         var nextOfKinPhoneNumber = event.NextOfKinPhoneNumber.value;
-        if (nextOfKinPhoneNumber === "" || !/^\d{14}$/i.test(nextOfKinPhoneNumber)) {
+        if (nextOfKinPhoneNumber === "" || !textAndNumbers.test(nextOfKinPhoneNumber)) {
             alert("Please enter a valid Next of Kin Phone Number.");
             isValid = false;
         }
 
         // Validate Guarantor1FirstName
         var guarantor1FirstName = event.Guarantor1FirstName.value;
-        if (guarantor1FirstName === "" || !/^.{1,30}$/i.test(guarantor1FirstName)) {
+        if (guarantor1FirstName === "" || !textOnly.test(guarantor1FirstName)) {
             alert("Please enter a valid Guarantor 1 First Name.");
             isValid = false;
         }
 
         // Validate Guarantor1LastName
         var guarantor1LastName = event.Guarantor1LastName.value;
-        if (guarantor1LastName === "" || !/^.{1,30}$/i.test(guarantor1LastName)) {
+        if (guarantor1LastName === "" || !textOnly.test(guarantor1LastName)) {
             alert("Please enter a valid Guarantor 1 Last Name.");
             isValid = false;
         }
 
         // Validate Guarantor1Address
         var guarantor1Address = event.Guarantor1Address.value;
-        if (guarantor1Address === "" || !/^.{1,100}$/i.test(guarantor1Address)) {
+        if (guarantor1Address === "" || !textAndNumbers.test(guarantor1Address)) {
             alert("Please enter a valid Guarantor 1 Address.");
             isValid = false;
         }
 
         // Validate Guarantor1Occupation
         var guarantor1Occupation = event.Guarantor1Occupation.value;
-        if (guarantor1Occupation === "" || !/^.{1,25}$/i.test(guarantor1Occupation)) {
+        if (guarantor1Occupation === "" || !textOnly.test(guarantor1Occupation)) {
             alert("Please enter a valid Guarantor 1 Occupation.");
             isValid = false;
         }
 
         // Validate Guarantor1PhoneNumber
         var guarantor1PhoneNumber = event.Guarantor1PhoneNumber.value;
-        if (guarantor1PhoneNumber === "" || !/^\d{14}$/i.test(guarantor1PhoneNumber)) {
+        if (guarantor1PhoneNumber === "" || !textAndNumbers.test(guarantor1PhoneNumber)) {
             alert("Please enter a valid Guarantor 1 Phone Number.");
             isValid = false;
         }
 
         // Validate Guarantor2FirstName
         var guarantor2FirstName = event.Guarantor2FirstName.value;
-        if (guarantor2FirstName === "" || !/^.{1,30}$/i.test(guarantor2FirstName)) {
+        if (guarantor2FirstName === "" || !textOnly.test(guarantor2FirstName)) {
             alert("Please enter a valid Guarantor 2 First Name.");
             isValid = false;
         }
 
         // Validate Guarantor2LastName
         var guarantor2LastName = event.Guarantor2LastName.value;
-        if (guarantor2LastName === "" || !/^.{1,30}$/i.test(guarantor2LastName)) {
+        if (guarantor2LastName === "" || !textOnly.test(guarantor2LastName)) {
             alert("Please enter a valid Guarantor 2 Last Name.");
             isValid = false;
         }
 
         // Validate Guarantor2Address
         var guarantor2Address = event.Guarantor2Address.value;
-        if (guarantor2Address === "" || !/^.{1,100}$/i.test(guarantor2Address)) {
+        if (guarantor2Address === "" || !textOnly.test(guarantor2Address)) {
             alert("Please enter a valid Guarantor 2 Address.");
             isValid = false;
         }
 
         // Validate Guarantor2Occupation
         var guarantor2Occupation = event.Guarantor2Occupation.value;
-        if (guarantor2Occupation === "" || !/^.{1,25}$/i.test(guarantor2Occupation)) {
+        if (guarantor2Occupation === "" || !textOnly.test(guarantor2Occupation)) {
             alert("Please enter a valid Guarantor 2 Occupation.");
             isValid = false;
         }
 
         // Validate Guarantor2PhoneNumber
         var guarantor2PhoneNumber = event.Guarantor2PhoneNumber.value;
-        if (guarantor2PhoneNumber === "" || !/^\d{14}$/i.test(guarantor2PhoneNumber)) {
+        if (guarantor2PhoneNumber === "" || !textAndNumbers.test(guarantor2PhoneNumber)) {
             alert("Please enter a valid Guarantor 2 Phone Number.");
             isValid = false;
         }
+
+
+
 
         // Validate Declaration
         var declaration = event.Declaration.value;
@@ -193,19 +226,7 @@
             isValid = false;
         }
 
-        // Validate ApprovalStatus
-        var approvalStatus = event.ApprovalStatus.value;
-        if (approvalStatus === "" || !/^.{1,10}$/i.test(approvalStatus)) {
-            alert("Please enter a valid Approval Status.");
-            isValid = false;
-        }
-
-        // Validate DeleteFlag
-        var deleteFlag = event.DeleteFlag.value;
-        if (deleteFlag === "" || !/^.{1,3}$/i.test(deleteFlag)) {
-            alert("Please enter a valid Delete Flag.");
-            isValid = false;
-        }
+       
 
         return isValid;
     }
@@ -245,9 +266,12 @@
     </video>
 
 
+    <form name="Application" method="post" class="form property_form transition-fade-down" onsubmit="return isFormValid(this);" enctype="multipart/form-data">
 
+        <!--<form name="Application" method="post" class="form property_form transition-fade-down" onsubmit="return isFormValid(window.document.LeaseApplication);" enctype="multipart/form-data">-->
+        <!--<input type="submit" name="Submit" value="Submit Lease Application" class="btn" /> -->
+        <button type="submit" name="Submit">Submit Lease Application</button>
 
-    <form name="Application" method="post" enctype="multipart/form-data" onsubmit="return isFormValid(window.document.LeaseApplication);"  class="application_form form">
         <fieldset>
             <legend>Personal Information</legend>
             <div>
@@ -258,34 +282,34 @@
 
                 <label for="FirstName">First Name</label>
                 <br />
-                <input type="text" name="FirstName" />
+                <input type="text" name="FirstName" value="Ezra" />
                 <br />
 
                 <label for="LasName">Last Name</label>
                 <br />
-                <input type="text" name="LastName" />
+                <input type="text" name="LastName" value="Mallo"/>
                 <br />
                 TelePhone Number*:
-                <input type="tel" name="PhoneNumber" />
+                <input type="tel" name="PhoneNumber" value="0803857564"/>
                 Email:
-                <input type="email" name="Email" />
+                <input type="email" name="Email" value="ezra.mallo@gmail.com" />
 
                 Date Of Birth*:
-                <input type="date" name="DOB" />
+                <input type="date" name="DOB" value="01-01-1982" />
                 Password*:
-                <input type="password" name="Password" />
+                <input type="password" name="Password" value="abc123" />
 
                 Nationality*:
-                <input type="text" name="Nationality" />
+                <input type="text" name="Nationality" value="Nigeria" />
                 State of Origin
-                <input type="text" name="StateofOrigin" />
+                <input type="text" name="StateofOrigin" value="Enugu"/>
 
                 Local Govt. Area:
-                <input type="text" name="LGA" />
+                <input type="text" name="LGA" value="Ezeagu" />
                 Home Town:
-                <input type="text" name="HomeTown" />
+                <input type="text" name="HomeTown" value="Akama" />
                 Permanent Home Address*:
-                <input type="text" name="PermanentHomeAddress" />
+                <input type="text" name="PermanentHomeAddress" value="Isiokwe" />
 
             </div>
         </fieldset>
@@ -299,7 +323,7 @@
 
                     <label for="Occupation">Occupation*:</label>
 
-                    <input type="text" name="Occupation" />
+                    <input type="text" name="Occupation" value="Engineer" />
 
                     <label for="SelfEmployed">Are you self-employed or in employment of an establishment?*: </label>
                     <input type="radio" id="answer_yes" name="SelfEmployed" value="yes" onclick="showFields()">
@@ -518,8 +542,8 @@
                     <br />
                     <input type="text" name="ApprovalStatus" value="Pending" hidden />
                     <input type="text" name="DeleteFlag" value="0" hidden />
-                    <input type="submit" name="Submit" value="Submit Lease Application" />
-                </div>
+           
+            </div>
             </div>
             </div>
         </fieldset>        

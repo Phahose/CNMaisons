@@ -76,5 +76,13 @@ namespace CNMaisons.Controller
             // Hash the password with PBKDF2 using HMACSHA256
             return new Rfc2898DeriveBytes(password, salt, 100000, HashAlgorithmName.SHA256).GetBytes(32);
         }
+
+        public bool SubmitLeaseApplication(Tenant aTenant)
+        {
+            bool success;
+            Tenants tenatManager = new();
+            success = tenatManager.AddLeaseApplication(aTenant);
+            return success;
+        }
     }
 }
