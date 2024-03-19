@@ -1,0 +1,292 @@
+﻿@page
+@model CNMaisons.Pages.LeaseApplicationModel
+@{
+    Layout = "_Header";
+    ViewData["Title"] = "Lease Application";
+}
+<div>
+    <video autoplay muted loop id="video-background">
+        <source src="~/img/backvideos.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <form name="Application" method="post" enctype="multipart/form-data" class="application_form form">
+        <fieldset>
+            <legend>Personal Information</legend>
+            <div>
+                <label for="Pasport Photo">Passport Photo</label>
+                <br />
+                <input type="file" name="Passport" />
+                <br />
+
+                <label for="FirstName">First Name</label>
+                <br />
+                <input type="text" name="FirstName" />
+                <br />
+
+                <label for="LasName">Last Name</label>
+                <br />
+                <input type="text" name="LastName" />
+                <br />
+                TelePhone Number*:
+                <input type="tel" name="PhoneNumber" />
+                Email:
+                <input type="email" name="Email" />
+
+                Date Of Birth*:
+                <input type="date" name="DOB" />
+                Password*:
+                <input type="password" name="Password" />
+
+                Nationality*:
+                <input type="text" name="Nationality" />
+                State of Origin
+                <input type="text" name="StateofOrigin" />
+
+                Local Govt. Area:
+                <input type="text" name="LGA" />
+                Home Town:
+                <input type="text" name="HomeTown" />
+                Permanent Home Address*:
+                <input type="text" name="PermanentHomeAddress" />
+
+            </div>
+        </fieldset>
+
+
+
+        <fieldset>
+            <legend>Occupation Info</legend>
+            <div>
+                <div>
+
+                    <label for="Occupation">Occupation*:</label>
+
+                    <input type="text" name="Occupation" />
+
+                    <label for="SelfEmployed">Are you self-employed or in employment of an establishment?*: </label>
+                    <input type="radio" id="answer_yes" name="SelfEmployed" value="yes" onclick="showFields()">
+                    <label for="answer_yes">Yes</label>
+                    <input type="radio" id="answer_no" name="SelfEmployed" value="no" onclick="hideFields()">
+                    <label for="answer_no">No</label>
+
+                    <!-----displays only when  self-employed = yes-->
+                    <div id="selfEmployedFields" style="display: none;">
+                        <label for="BusinessRegistrationNumber">Business Registration Number</label>
+                        <br />
+                        <input type="text" name="BusinessRegistrationNumber" />
+                        <br />
+
+                        <label for="CorporateAffairsCertificate">Corporate Affairs Certificate</label>
+                        <br />
+                        <input type="text" name="CorporateAffairsCertificate" />
+                        <br />
+                        <label for="NatureOfJob">Nature of business</label>
+                        <br />
+                        <input type="text" name="NatureOfJob" />
+                        <br />
+                    </div>
+                    <!----------------------------------------------------------------------->
+                    <!-----displays only when  self-employed = no-->
+                    <div id="employerFields" style="display: none;">
+                        <label for="NameofEmployer">Name of Employer</label>
+                        <br />
+                        <input type="text" name="NameofEmployer" />
+                        <br />
+
+                        <label for="AddressOfEmployer">Address of Employer</label>
+                        <br />
+                        <input type="text" name="AddressOfEmployer" />
+                        <br />
+
+                        <label for="LengthOnJob">How long have you been on the job?</label>
+                        <br />
+                        <input type="text" name="LengthOnJob" />
+                        <br />
+
+                        <label for="CurrentPositionHeld">Current Position Held at Job</label>
+                        <br />
+                        <input type="text" name="CurrentPositionHeld" />
+                        <br />
+
+                        <label for="NatureOfJob">Nature of Job</label>
+                        <br />
+                        <input type="text" name="NatureOfJob" />
+                    <br />
+                </div>
+            </div>
+        </fieldset>
+
+
+
+        <fieldset>
+            <legend>Past Rental Information</legend>
+            <div>
+                <div>
+                    <label for="FormerResidenceAddress">Former Residence Address</label>
+                    <br />
+                    <input type="text" name="FormerResidenceAddress" />
+                    <br />
+
+                    <label for="ReasonForMoving">State your reasons for moving out of former residence: </label><br />
+                    <textarea name="ReasonForMoving" style="max-height: 200px; max-width: 500px;"></textarea>
+                    <br />
+                    <label for="LengthOfStayAtOldResidence">Number of years spent at the former residence</label>
+                    <br />
+                    <input type="number" min="0" name="LengthOfStayAtOldResidence" />
+                    <br />
+                    <label for="NameOfFormerResidentManager">Name of Former Landlord or Estate Manager</label>
+                    <br />
+                    <input type="text" name="NameOfFormerResidentManager" />
+                    <br />
+                    <label for="ObjectionsToReasonsForMoving">Do you Have any Objection to Your Reson to Leaving you Former Residence</label>
+                    <br />
+                    <textarea name="ObjectionsToReasonsForMoving" style="max-height: 200px; max-width: 500px;"></textarea>
+                </div>
+            </div>
+        </fieldset>
+
+
+        <fieldset>
+            <legend>Marital Information</legend>
+            <div>
+                <div>
+                    <label for="MaritalStatus">Marital Status</label>
+                    <br />
+                    <select name="MaritalStatus" onchange="toggleSpouseFields(this)">
+                        <option value="Single">Single</option>
+                        <option value="Married">Married</option>
+                        <option value="Divorced">Divorced</option>
+                        <option value="Widowed">Widowed</option>
+                        <option value="SingleParent">Single Parent</option>
+                    </select>
+                    <br />
+                    
+                    <!-----displays only when  MaritalStatus = Married-->
+                    <div id="spouseFields" style="display: none;">
+                            <label for="SpouseFirstName">Spouse's First Name</label>
+                            <br />
+                            <input type="text" name="SpouseFirstName" />
+                            <br />
+                            <label for="SpouseLastName">Spouse's Last Name</label>
+                            <br />
+                            <input type="text" name="SpouseLastName" />
+                            <br />
+                            <label for="SpouseOccupation">Spouse's Occupation/Employment</label>
+                            <br />
+                            <input type="text" name="SpouseOccupation" />
+                            <br />
+                    </div>
+                    <!----------------------------------------------------------------------->
+
+                    <label for="NumberOfOccupants">Number of occupants*:</label>
+                    <br />
+                    <input type="text" name="NumberOfOccupants" />
+                    <br />
+                </div>
+            </div>
+        </fieldset>
+
+
+        
+        <fieldset>
+            <legend>Next of Kin Information</legend>
+            <div>
+                <div>
+                    <label for="NextOfKinFirstName">Next Of Kin First Name*:</label>
+                    <br />
+                    <input type="text" name="NextOfKinFirstName" />
+                    <br />
+                    <label for="NextOfKinLastName">Next Of Kin Last Name*:</label>
+                    <br />
+                    <input type="text" name="NextOfKinLastName" />
+                    <br />
+                    <label for="NextOfKinAddress">Next Of Kin Address*:</label>
+                    <br />
+                    <input type="text" name="NextOfKinAddress" />
+                    <br />
+                    <label for="NextOfKinPhoneNumber">Next Of Kin Phone Number</label>
+                    <br />
+                    <input type="text" name="NextOfKinPhoneNumber" />
+                    <br />
+                </div>
+            </div>
+        </fieldset>
+
+
+
+
+        <fieldset>
+            <legend>Guarrantor Information</legend>
+            <div>
+                <div>
+                    <label for="Guarantor1FirstName">Guarantor #1 First Name*:</label>
+                    <br />
+                    <input type="text" name="Guarantor1FirstName" />
+                    <br />
+                    <label for="Guarantor1LastName">
+                        Guarantor #1 Last Name<*: /label>
+                            <br />
+                            <input type="text" name="Guarantor1LastName" />
+                            <br />
+                            <label for="Guarrantor1Address">Guarantor #1 Address*:</label>
+                            <br />
+                            <input type="text" name="Guarrantor1Address" />
+                            <br />
+                            <label for="Guarantor1Occupation">Guarantor #1 Occupation*:</label>
+                            <br />
+                            <input type="text" name="Guarantor1Occupation" />
+                            <br />
+                            <label for="Guarantor1PhoneNumber">Guarantor #1 Phone Number*:</label>
+                            <br />
+                            <input type="tel" name="Guarantor1PhoneNumber" />
+                            <br />
+                            <label for="Guarantor1AlternatePhoneNumber">Guarantor Alt. Phone#</label>
+                            <br />
+                            <input type="tel" name="Guarantor1AlternatePhoneNumber" />
+                            <br />
+
+                            <label for="Guarantor2FirstName">Guarantor #2 First Name*:</label>
+                            <br />
+                            <input type="text" name="Guarantor2FirstName" />
+                            <br />
+                            <label for="Guarantor2LastName">Guarantor #2 Last Name*:</label>
+                            <br />
+                            <input type="text" name="Guarantor2LastName" />
+                            <br />
+                            <label for="Guarrantor2Address">Guarantor #2 Address*:</label>
+                            <br />
+                            <input type="text" name="Guarrantor2Address" />
+                            <br />
+                            <label for="Guarantor2Occupation">Guarantor #2 Occupation*:</label>
+                            <br />
+                            <input type="text" name="Guarantor2Occupation" />
+                            <br />
+                            <label for="Guarantor2PhoneNumber">Guarantor #2 Phone Number*:</label>
+                            <br />
+                            <input type="tel" name="Guarantor2PhoneNumber" />
+                            <br />
+                            <label for="Guarantor2AlternatePhoneNumber">Guarantor Alt. Phone#</label>
+                            <br />
+                            <input type="tel" name="Guarantor2AlternatePhoneNumber" />
+                            <br />
+                </div>
+
+                <div class="confirmation_text">
+                    <label for="LegalConfirmation">
+                        I hereby declare and state that all the information supplied above are true and correct to the best of my knowledge and belief and
+                        I accept to be held liable for any misrepresentation therein.*:
+                    </label>
+                </div>
+                <input type="checkbox" value="Yes" name="Declaration" />
+                <br />
+                <input type="text" name="ApprovalStatus" value="Pending" hidden />
+                <input type="text" name="DeleteFlag" value="0" hidden />
+                <input type="submit" name="Submit" value="Apply" />
+
+            </div>
+</div>
+        </fieldset>
+        
+    </form>
+</div>
