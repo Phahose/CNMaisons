@@ -26,6 +26,7 @@
         if (!passportFile) {
             var passportFileError = "Add the passport.";
             isValid = false;
+            alert("I am here at line 29 first and the status is " + isValid);
         }
 
         
@@ -35,14 +36,16 @@
         if (firstName === "" || !textOnly.test(firstName)) {
             var firstNameError = "Enter a valid First Name.";
             isValid = false;
+            alert("I am here at line 39 and the status is " + isValid);
         }
         
-        alert("I am here");
+        
         // Validate LastName
         var lastName = event.LastName.value;
         if (lastName === "" || !textOnly.test(lastName)) {
             var lastNameError = "Enter a valid Last Name.";
             isValid = false;
+            alert("I am here at line 48 and the status is " + isValid);
         }
 
         // Validate PhoneNumber
@@ -50,20 +53,18 @@
         if (phoneNumber === "" || !textAndNumbers.test(phoneNumber)) {
             alert("Please enter a valid PhoneNumber.");
             isValid = false;
+            alert("I am here at line 56 and the status is " + isValid);
         }
 
 
         // Validate Email
-        var email = event.Email.value;
-        if (email === "" || !textAndNumbers.test(emailPattern)) {
-            alert("Please enter a valid email address.");
-            isValid = false;
-        }
-        var email = event.Email.value;
-        if (email === "" || !emailPattern.test(email)) {
-            alert("Please enter a valid email address.");
-            isValid = false;
-        }
+
+
+        // var email = event.Email.value;
+        // if (email === "" || !emailPattern.test(email)) {
+        //     alert("Please enter a valid email address.");
+        //     isValid = false;
+        // }
 
 
         // Validate DOB
@@ -71,6 +72,7 @@
         if (dob === "") {
             alert("Please enter a valid Date of Birth.");
             isValid = false;
+            alert("I am here at line 74 and the status is " + isValid);
         }
             //textOnly          textAndNumbers          numbersOnly
 
@@ -80,6 +82,7 @@
         if (nationality === "" || !textOnly.test(nationality)) {
             alert("Please enter a valid Nationality.");
             isValid = false;
+            alert("I am here at line 85 and the status is " + isValid);
         }
 
         // Validate PermanentHomeAddress
@@ -87,13 +90,18 @@
         if (permanentHomeAddress === "" || !textAndNumbers.test(permanentHomeAddress)) {
             alert("Please enter a valid Permanent Home Address.");
             isValid = false;
+            alert("I am here at 93 and the status is " + isValid);
         }
+
+
+        
 
         // Validate Occupation
         var occupation = event.Occupation.value;
         if (occupation === "" || !textOnly.test(occupation)) {
             alert("Please enter a valid Occupation.");
             isValid = false;
+            alert("I am here at line 104 and the status is " + isValid);
         }
 
         // Validate SelfEmployed
@@ -101,14 +109,16 @@
         if (selfEmployed === "" || !textOnly.test(selfEmployed)) {
             alert("Please enter a valid SelfEmployed status.");
             isValid = false;
+            alert("I am here at line 112 and the status is " + isValid);
         }
 
-
-                // Validate MaritalStatus
+        
+        // Validate MaritalStatus
         var maritalStatus = event.MaritalStatus.value;
         if (maritalStatus === "" || !textOnly.test(maritalStatus)) {
             alert("Please enter a valid Marital Status.");
             isValid = false;
+            alert("I am here at line 121 and the status is " + isValid);
         }
 
         // Validate NumberOfOccupants
@@ -116,6 +126,7 @@
         if (numberOfOccupants === "" || isNaN(numberOfOccupants) || numberOfOccupants <= 0) {
             alert("Please enter a valid Number of Occupants.");
             isValid = false;
+            alert("I am here at line 129 and the status is " + isValid);
         }
 
         // Validate NextOfKinFirstName
@@ -123,6 +134,7 @@
         if (nextOfKinFirstName === "" || !textOnly.test(nextOfKinFirstName)) {
             alert("Please enter a valid Next of Kin First Name.");
             isValid = false;
+            alert("I am here at line 137 and the status is " + isValid);
         }
 
         // Validate NextOfKinLastName
@@ -130,13 +142,14 @@
         if (nextOfKinLastName === "" || !textOnly.test(nextOfKinLastName)) {
             alert("Please enter a valid Next of Kin Last Name.");
             isValid = false;
+            alert("I am here at line 145 and the status is " + isValid);
         }
-
         // Validate NextOfKinAddress
         var nextOfKinAddress = event.NextOfKinAddress.value;
         if (nextOfKinAddress === "" || !textAndNumbers.test(nextOfKinAddress)) {
             alert("Please enter a valid Next of Kin Address.");
             isValid = false;
+            alert("I am here at line 153 and the status is " + isValid);
         }
 
         // Validate NextOfKinPhoneNumber
@@ -144,13 +157,16 @@
         if (nextOfKinPhoneNumber === "" || !textAndNumbers.test(nextOfKinPhoneNumber)) {
             alert("Please enter a valid Next of Kin Phone Number.");
             isValid = false;
+            alert("I am here at line 160 and the status is " + isValid);
         }
+
 
         // Validate Guarantor1FirstName
         var guarantor1FirstName = event.Guarantor1FirstName.value;
         if (guarantor1FirstName === "" || !textOnly.test(guarantor1FirstName)) {
             alert("Please enter a valid Guarantor 1 First Name.");
             isValid = false;
+            alert("I am here at line 169 and the status is " + isValid);
         }
 
         // Validate Guarantor1LastName
@@ -158,6 +174,7 @@
         if (guarantor1LastName === "" || !textOnly.test(guarantor1LastName)) {
             alert("Please enter a valid Guarantor 1 Last Name.");
             isValid = false;
+            alert("I am here at line 177 and the status is " + isValid);
         }
 
         // Validate Guarantor1Address
@@ -165,13 +182,15 @@
         if (guarantor1Address === "" || !textAndNumbers.test(guarantor1Address)) {
             alert("Please enter a valid Guarantor 1 Address.");
             isValid = false;
+            alert("I am here at line 185 and the status is " + isValid);
         }
-
+        
         // Validate Guarantor1Occupation
         var guarantor1Occupation = event.Guarantor1Occupation.value;
         if (guarantor1Occupation === "" || !textOnly.test(guarantor1Occupation)) {
             alert("Please enter a valid Guarantor 1 Occupation.");
             isValid = false;
+            alert("I am here at line 193 and the status is " + isValid);
         }
 
         // Validate Guarantor1PhoneNumber
@@ -179,13 +198,15 @@
         if (guarantor1PhoneNumber === "" || !textAndNumbers.test(guarantor1PhoneNumber)) {
             alert("Please enter a valid Guarantor 1 Phone Number.");
             isValid = false;
+            alert("I am here at line 201 and the status is " + isValid);
         }
-
+                
         // Validate Guarantor2FirstName
         var guarantor2FirstName = event.Guarantor2FirstName.value;
         if (guarantor2FirstName === "" || !textOnly.test(guarantor2FirstName)) {
             alert("Please enter a valid Guarantor 2 First Name.");
             isValid = false;
+            alert("I am here at line 209 and the status is " + isValid);
         }
 
         // Validate Guarantor2LastName
@@ -193,13 +214,15 @@
         if (guarantor2LastName === "" || !textOnly.test(guarantor2LastName)) {
             alert("Please enter a valid Guarantor 2 Last Name.");
             isValid = false;
+            alert("I am here at line 217 and the status is " + isValid);
         }
-
+        
         // Validate Guarantor2Address
         var guarantor2Address = event.Guarantor2Address.value;
         if (guarantor2Address === "" || !textOnly.test(guarantor2Address)) {
             alert("Please enter a valid Guarantor 2 Address.");
             isValid = false;
+            alert("I am here at line 225 and the status is " + isValid);
         }
 
         // Validate Guarantor2Occupation
@@ -207,6 +230,7 @@
         if (guarantor2Occupation === "" || !textOnly.test(guarantor2Occupation)) {
             alert("Please enter a valid Guarantor 2 Occupation.");
             isValid = false;
+            alert("I am here at line 233 and the status is " + isValid);
         }
 
         // Validate Guarantor2PhoneNumber
@@ -214,6 +238,7 @@
         if (guarantor2PhoneNumber === "" || !textAndNumbers.test(guarantor2PhoneNumber)) {
             alert("Please enter a valid Guarantor 2 Phone Number.");
             isValid = false;
+            alert("I am here at line 241 and the status is " + isValid);
         }
 
 
@@ -224,9 +249,10 @@
         if (declaration === "" || !/^.{1,60}$/i.test(declaration)) {
             alert("Please enter a valid Declaration.");
             isValid = false;
+            alert("I am here at line 252 and the status is " + isValid);
         }
 
-       
+      
 
         return isValid;
     }
@@ -266,11 +292,10 @@
     </video>
 
 
-    <form name="Application" method="post" class="form property_form transition-fade-down" onsubmit="return isFormValid(this);" enctype="multipart/form-data">
+    <form name="Application" method="post" class="form property_form transition-fade-down" onsubmit="return isFormValid(this);" enctype="multipart/form-data" >
 
-        <!--<form name="Application" method="post" class="form property_form transition-fade-down" onsubmit="return isFormValid(window.document.LeaseApplication);" enctype="multipart/form-data">-->
-        <!--<input type="submit" name="Submit" value="Submit Lease Application" class="btn" /> -->
-        <button type="submit" name="Submit">Submit Lease Application</button>
+        <!--<form name="Application" method="post" class="form property_form transition-fade-down" onsubmit="return isFormValid(this);" enctype="multipart/form-data" action="ViewHTTPRequest">-->
+        <input type="submit" name="Submit" value="Submit Lease Application" class="btn" /> 
 
         <fieldset>
             <legend>Personal Information</legend>
@@ -295,7 +320,8 @@
                 <input type="email" name="Email" value="ezra.mallo@gmail.com" />
 
                 Date Of Birth*:
-                <input type="date" name="DOB" value="01-01-1982" />
+                <input type="date" name="DOB" value="1982-01-01" />
+
                 Password*:
                 <input type="password" name="Password" value="abc123" />
 
@@ -326,7 +352,7 @@
                     <input type="text" name="Occupation" value="Engineer" />
 
                     <label for="SelfEmployed">Are you self-employed or in employment of an establishment?*: </label>
-                    <input type="radio" id="answer_yes" name="SelfEmployed" value="yes" onclick="showFields()">
+                    <input type="radio" id="answer_yes" name="SelfEmployed" value="yes" onclick="showFields() " checked>
                     <label for="answer_yes">Yes</label>
                     <input type="radio" id="answer_no" name="SelfEmployed" value="no" onclick="hideFields()">
                     <label for="answer_no">No</label>
@@ -442,7 +468,7 @@
 
                     <label for="NumberOfOccupants">Number of occupants*:</label>
                     <br />
-                    <input type="text" name="NumberOfOccupants" />
+                    <input type="text" name="NumberOfOccupants" value="2"/>
                     <br />
                 </div>
             </div>
@@ -456,19 +482,19 @@
                 <div>
                     <label for="NextOfKinFirstName">Next Of Kin First Name*:</label>
                     <br />
-                    <input type="text" name="NextOfKinFirstName" />
+                    <input type="text" name="NextOfKinFirstName" value="FirstName"/>
                     <br />
                     <label for="NextOfKinLastName">Next Of Kin Last Name*:</label>
                     <br />
-                    <input type="text" name="NextOfKinLastName" />
+                    <input type="text" name="NextOfKinLastName" value="LastName" />
                     <br />
                     <label for="NextOfKinAddress">Next Of Kin Address*:</label>
                     <br />
-                    <input type="text" name="NextOfKinAddress" />
+                    <input type="text" name="NextOfKinAddress" value="Address" />
                     <br />
                     <label for="NextOfKinPhoneNumber">Next Of Kin Phone Number</label>
                     <br />
-                    <input type="text" name="NextOfKinPhoneNumber" />
+                    <input type="text" name="NextOfKinPhoneNumber" value="PhoneNumber" />
                     <br />
                 </div>
             </div>
@@ -483,23 +509,24 @@
                 <div>
                     <label for="Guarantor1FirstName">Guarantor #1 First Name*:</label>
                     <br />
-                    <input type="text" name="Guarantor1FirstName" />
+                    <input type="text" name="Guarantor1FirstName" value="FirstName" />
                     <br />
                     <label for="Guarantor1LastName">Guarantor #1 Last Name</label>
                     <br />
-                    <input type="text" name="Guarantor1LastName" />
+                    <input type="text" name="Guarantor1LastName" value="LastName" />
                     <br />
-                    <label for="Guarrantor1Address">Guarantor #1 Address*:</label>
+                    <label for="Guarantor1Address">Guarantor #1 Address*:</label>
                     <br />
-                    <input type="text" name="Guarrantor1Address" />
+                    <input type="text" name="Guarantor1Address" value="Address" />
                     <br />
+                    
                     <label for="Guarantor1Occupation">Guarantor #1 Occupation*:</label>
                     <br />
-                    <input type="text" name="Guarantor1Occupation" />
+                    <input type="text" name="Guarantor1Occupation" value="placeholder"/>
                     <br />
                     <label for="Guarantor1PhoneNumber">Guarantor #1 Phone Number*:</label>
                     <br />
-                    <input type="tel" name="Guarantor1PhoneNumber" />
+                    <input type="tel" name="Guarantor1PhoneNumber" value="PhoneNumber"  />
                     <br />
                     <label for="Guarantor1AlternatePhoneNumber">Guarantor Alt. Phone#</label>
                     <br />
@@ -508,23 +535,23 @@
 
                     <label for="Guarantor2FirstName">Guarantor #2 First Name*:</label>
                     <br />
-                    <input type="text" name="Guarantor2FirstName" />
+                    <input type="text" name="Guarantor2FirstName" value="placeholder" />
                     <br />
                     <label for="Guarantor2LastName">Guarantor #2 Last Name*:</label>
                     <br />
-                    <input type="text" name="Guarantor2LastName" />
+                    <input type="text" name="Guarantor2LastName" value="placeholder" />
                     <br />
-                    <label for="Guarrantor2Address">Guarantor #2 Address*:</label>
+                    <label for="Guarantor2Address">Guarantor #2 Address*:</label>
                     <br />
-                    <input type="text" name="Guarrantor2Address" />
+                    <input type="text" name="Guarantor2Address" value="placeholder" />
                     <br />
                     <label for="Guarantor2Occupation">Guarantor #2 Occupation*:</label>
                     <br />
-                    <input type="text" name="Guarantor2Occupation" />
+                    <input type="text" name="Guarantor2Occupation" value="placeholder" />
                     <br />
                     <label for="Guarantor2PhoneNumber">Guarantor #2 Phone Number*:</label>
                     <br />
-                    <input type="tel" name="Guarantor2PhoneNumber" />
+                    <input type="tel" name="Guarantor2PhoneNumber" value="placeholder" />
                     <br />
                     <label for="Guarantor2AlternatePhoneNumber">Guarantor Alt. Phone#</label>
                     <br />
@@ -538,7 +565,7 @@
                         I accept to be held liable for any misrepresentation therein.*:
                     </label>
                 </div>
-                    <input type="checkbox" value="Yes" name="Declaration" />
+                    <input type="checkbox" value="Yes" name="Declaration" checked/>
                     <br />
                     <input type="text" name="ApprovalStatus" value="Pending" hidden />
                     <input type="text" name="DeleteFlag" value="0" hidden />
