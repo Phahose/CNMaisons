@@ -223,14 +223,18 @@ AS
 		Update Property 
 		SET DeleteFlag = 1
 		WHERE PropertyID = @PropertyID
-	END\
+	END
 
 
 
 
 
 
-CREATE TABLE Users(
+CREATE TABLE Employee(
+	EmployeeID INT IDENTITY(1,1) NOT NULL,
+    FirstName VARCHAR(50) NOT NULL,
+	LastName VARCHAR(50) NOT NULL,
+	PhoneNumber INT NOT NULL,
 	Email  VARCHAR(100) NOT NULL,
 	Password  VARCHAR(100) NOT NULL,
 	Role  VARCHAR(25) NOT NULL,
@@ -239,8 +243,8 @@ CREATE TABLE Users(
 	UserSalt  NVARCHAR(255) NOT NULL,
 	DateOfCreation  DATETIME DEFAULT GETDATE() NOT NULL
 )
-ALTER TABLE Users
-	ADD CONSTRAINT PK_Users PRIMARY KEY (Email)
+ALTER TABLE Employee
+	ADD CONSTRAINT PK_Users PRIMARY KEY (EmployeeID)
 
 DROP Table Users
 
@@ -249,7 +253,11 @@ DROP Table Users
 
 
 
-CREATE PROCEDURE AddUser
+
+CREATE PROCEDURE AddEmployee
+    @FirstName VARCHAR(50),
+	@Lastname VARCHAR(50),
+	@PhoneNumber INT,
     @Email VARCHAR(100),
     @Password VARCHAR(100),
     @Role VARCHAR(25),
@@ -257,13 +265,9 @@ CREATE PROCEDURE AddUser
     @UserSalt NVARCHAR(255)
 AS
 BEGIN
-    INSERT INTO Users (Email, Password, Role, DeactivateAccountStatus, DefaultPassword, UserSalt, DateOfCreation)
-    VALUES (@Email, @Password, @Role, 0, @DefaultPassword, @UserSalt, GETDATE())
+    INSERT INTO Employee (FirstName, LastName, PhoneNumber, Email, Password, Role, DeactivateAccountStatus, DefaultPassword, UserSalt, DateOfCreation)
+    VALUES (@FirstName, @Lastname, @PhoneNumber, @Email, @Password, @Role, 0, @DefaultPassword, @UserSalt, GETDATE())
 END
-
-
-
-
 
 
 
@@ -271,7 +275,7 @@ END
 CREATE PROCEDURE GetUserByEmail(@Email VARCHAR(100))
 AS
 	BEGIN 
-		SELECT * FROM Users WHERE Email = @Email AND DeactivateAccountStatus = 0
+		SELECT * FROM Employee WHERE Email = @Email AND DeactivateAccountStatus = 0
 	END
 
 

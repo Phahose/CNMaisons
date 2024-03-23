@@ -9,9 +9,24 @@
         <source src="~/img/login.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
+    
     <form name="Login" method="post" class="form loginForm">
+        <p class="@Model.SuccessClass">@Model.SuccessMessage</p>
+        <p class="@Model.ErrorClass">@Model.ErrorMessage</p>
         <fieldset>
-            <legend>Create New User</legend>
+            <legend>Create New Employee</legend>
+            <label>First Name</label>
+            <br />
+            <input type="text" name="FirstName"/>
+            <br />
+            <label>Last Name</label>
+            <br />
+            <input type="text" name="LastName"/>
+            <br />
+            <label>PhoneNumber</label>
+            <br />
+            <input type="number" name="PhoneNumber"/>
+            <br />
             <label for="Email">Email</label>
             <br />
             <input type="email" name="Email" />

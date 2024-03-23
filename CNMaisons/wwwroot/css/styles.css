@@ -632,3 +632,19 @@ input.filter-btn{
     display: none;
     background-color: red;
 }
+
+/*Create Employee*/
+.success_message{
+    background-color: darkgreen;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+}
+.error_message{
+    background-color: red;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+}

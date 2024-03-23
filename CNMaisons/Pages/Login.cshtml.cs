@@ -26,7 +26,7 @@ namespace CNMaisons.Pages
         {
             AlertClass = "alert_error";
             BCS bCS = new BCS();
-            User existingUser = new();
+            Employee existingUser = new();
             existingUser = bCS.GetUserByEmail(Email);
 
             // Convert DB Data Back to byte[] form because they werr stored in the DB as strings

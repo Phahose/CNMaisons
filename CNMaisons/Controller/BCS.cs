@@ -43,15 +43,15 @@ namespace CNMaisons.Controller
             return Property;
          }
 
-        public User GetUserByEmail(string existingUseremail)
+        public Employee GetUserByEmail(string existingUseremail)
         {
-            User user = new User();
+            Employee user = new Employee();
             UsersManager controll = new UsersManager();
             user = controll.GetUserByEmail(existingUseremail);
             return user;
         }
 
-        public bool AddUser(User user)
+        public bool AddEmployee(Employee employee)
         {
             bool success = false;
             UsersManager users = new();
@@ -60,14 +60,14 @@ namespace CNMaisons.Controller
             {
                 rngCsp.GetNonZeroBytes(salt);
             }
-            byte[] hashedPassword = HashPasswordWithSalt(user.Password, salt);
+            byte[] hashedPassword = HashPasswordWithSalt(employee.Password, salt);
 
             // Convert the salt and hashed password to Base64 for storage
             string saltBase64 = Convert.ToBase64String(salt);
             string hashedPasswordBase64 = Convert.ToBase64String(hashedPassword);
-            user.Password = hashedPasswordBase64;
-            user.UserSalt = saltBase64;
-            success = users.AddUser(user);
+            employee.Password = hashedPasswordBase64;
+            employee.UserSalt = saltBase64;
+            success = users.AddEmployee(employee);
             return success;
         }
 
