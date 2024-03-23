@@ -2,22 +2,30 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using CNMaisons.Controller;
 using CNMaisons.Domain;
+using System.ComponentModel.DataAnnotations;
 
 namespace CNMaisons.Pages
 {
     public class UserCreateTestModel : PageModel
     {
+
         [BindProperty]
+        [Required]
         public string FirstName { get; set; }  = string.Empty;
         [BindProperty]
+        [Required]
         public string LastName { get; set; } = string.Empty;
         [BindProperty]
+        [Required]
         public int PhoneNumber { get; set; } 
         [BindProperty]
+        [Required]
         public string Email { get; set; } = string.Empty;
         [BindProperty]
+        [Required]
         public string Password { get; set; } = string.Empty;
         [BindProperty]
+        [Required]
         public string Role { get; set; } = string.Empty;
         [BindProperty]
         public string Submit {  get; set; } = string.Empty;
