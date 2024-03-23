@@ -5,9 +5,11 @@ using CNMaisons.Domain;
 using CNMaisons.Controller;
 using System.Text.RegularExpressions;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CNMaisons.Pages
 {
+    [Authorize]
     public class AddPropertyModel : PageModel
     {
         [BindProperty]

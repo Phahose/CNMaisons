@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CNMaisons.Pages
 {
-    public class UserCreateTestModel : PageModel
+    public class CreateEmployeeModel : PageModel
     {
 
         [BindProperty]

@@ -24,7 +24,6 @@ namespace CNMaisons.Pages
 
         public async Task<IActionResult> OnPost()
         {
-            AlertClass = "alert_error";
             BCS bCS = new BCS();
             Employee existingUser = new();
             existingUser = bCS.GetUserByEmail(Email);
@@ -40,9 +39,9 @@ namespace CNMaisons.Pages
             Password = enteredHashedPasswordBase64;
 
             string UserEmail = existingUser.Email;
-            //string UserName = existingUser.MemberFirstName;
+            string UserRole = existingUser.Role;
             string UserPassword = existingUser.Password;
-            string UserRole = existingUser.UserSalt;
+            string UserSalt = existingUser.UserSalt;
 
             if (Email == UserEmail)
             {
@@ -52,11 +51,11 @@ namespace CNMaisons.Pages
                     var claims = new List<Claim>
                     {
                         new Claim(ClaimTypes.Email, Email),
-                        new Claim(ClaimTypes.Role, UserRole),
+                        new Claim(ClaimTypes.Role, UserSalt),
                     };
                     var claimsIdentity = new ClaimsIdentity(claims,
                     CookieAuthenticationDefaults.AuthenticationScheme);
-                    claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, UserRole));
+                    claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, UserSalt));
                     AuthenticationProperties authProperties = new AuthenticationProperties
                     {
                         #region
@@ -82,9 +81,18 @@ namespace CNMaisons.Pages
                     new ClaimsPrincipal(claimsIdentity), authProperties);
                     Message = "Login Success";
                     HttpContext.Session.SetString("Email", Email);
-                    return RedirectToPage("/TenantHome");
+                    if (UserRole == "Tennant")
+                    {
+                        return RedirectToPage("/TennantHome");
+                    }
+                    else
+                    {
+                        return RedirectToPage("/StaffHome");
+                    }
+                    
                 }
             }
+            AlertClass = "error_message";
             Message = "Invalid attempt";
             return Page();
         }

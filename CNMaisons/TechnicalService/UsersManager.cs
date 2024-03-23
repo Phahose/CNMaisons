@@ -44,11 +44,14 @@ namespace CNMaisons.TechnicalService
             {
                 while (UserReader.Read())
                 {
+                    employee.EmployeeID= (int)UserReader[0];
+                    employee.FirstName = (string)UserReader["FirstName"];
+                    employee.LastName = (string)UserReader["LastName"];
+                    employee.PhoneNumber = (int)UserReader["PhoneNumber"];
                     employee.Email = (string)UserReader["Email"];
                     employee.Password = (string)UserReader["Password"];
                     employee.UserSalt = (string)UserReader["UserSalt"];
                     employee.Role = (string)UserReader["Role"];
-                    //user.AccountStatus = (int)UserReader["DeactivateAccountStatus"];
                     employee.DateJoined = (DateTime)UserReader["DateOfCreation"];
                 }
             }

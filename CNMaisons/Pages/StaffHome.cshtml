@@ -1,0 +1,87 @@
+﻿@page
+@model CNMaisons.Pages.StaffHomeModel
+@{
+    ViewData["Title"] = "Home";
+}
+<div class="memberhome">
+    <div>
+        <div class="home_intro">
+            <nav class="memberhome_nav">
+                <a href="~/Index"><img src="~/img/png/logo-no-background.png" width="150" class="intro_image" /></a>
+                @if (Model.Employee.Role == "LandLord")
+                {
+                    <ul>
+                        <li>
+                            <a href="#">My Account</a>
+                        </li>
+                        <li>
+                            <a href="~/AddProperty">Add Property</a>
+                        </li>
+                        <li>
+                            <a href="#">View Maintainance Requests</a>
+                        </li>
+                        <li>
+                            <a href="~/CreateEmployee">Create New Employee Account</a>
+                        </li>
+                        <li>
+                            <a href="#">View Visit Requests</a>
+                        </li>
+                        <li>
+                            <a href="~/ViewPropertyAdmin">View Properties</a>
+                        </li>
+
+                    </ul>
+                }
+                @if (Model.Employee.Role == "Staff")
+                {
+                    <ul>
+                        <li>
+                            <a href="#">My Account</a>
+                        </li>
+                        <li>
+                            <a href="~/AddProperty">Add Property</a>
+                        </li>
+                        <li>
+                            <a href="#">View Visit Requests</a>
+                        </li>
+                        <li>
+                            <a href="#">Edit Account</a>
+                        </li>
+                    </ul>
+                }
+            </nav>
+            <div class="basic_info">
+                <div class="icon_div">
+        
+                </div>
+                <h2>@Model.Employee.FirstName @Model.Employee.LastName</h2>
+                <p>@Model.Employee.Role</p>
+            </div>
+        </div> 
+        <p class="title">Account info</p>
+        <div class="infodiv transition-fade-down">
+            <form method="post" name="StaffAccountForm" class="boxcontainer">
+                <div class="staff-info">
+                    <div>
+                        <input type="submit" name="Submit" value="Update Account" class="update-account"/>
+                        <input type="submit" name="Submit" value="Delete Account" class="delete-account"/>
+                    </div>  
+                    <div>
+                        <p class="title">FirstName</p>
+                        <input type="text" name="FirstName" value="@Model.Employee.FirstName" class="val"/>
+                        <p class="title">LastName</p>
+                        <input type="text" name="LastName" value="@Model.Employee.LastName" class="val"/>
+                        <p class="title">Phone Number</p>
+                        <input type="text" name="PhoneNumber" value="@Model.Employee.PhoneNumber" class="val"/>      
+                    </div>   
+                    <div>
+                        <p class="title">Email</p>
+                        <input type="text" name="FirstName" value="@Model.Employee.Email" class="val" />
+                        <p class="title">Date Joined</p>
+                        <p class="date-joined">@Model.Employee.DateJoined.ToString("yyyy-MMMM")</p>
+                    </div>
+                </div>              
+            </form>
+        </div>
+    </div>
+</div>

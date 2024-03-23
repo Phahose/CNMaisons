@@ -1,10 +1,12 @@
 using CNMaisons.Controller;
 using CNMaisons.Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace CNMaisons.Pages
 {
+    [Authorize]
     public class ViewPropertyAdminModel : PageModel
     {
         [BindProperty]

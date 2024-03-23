@@ -648,3 +648,40 @@ input.filter-btn{
     padding: 0.5rem;
     border-radius: 0.5rem;
 }
+
+/*Staff Page */
+.staff-info{
+    display: flex;
+    width: 80%;
+    justify-content: space-between;
+    margin: 0 auto;
+}
+.update-account {
+    padding: 0.5rem;
+    background-color: #d6db9c;
+    transition: 0.2s ease-in-out;
+}
+.update-account:hover{
+    padding: 0.7rem;
+}
+.delete-account {
+    padding: 0.5rem;
+    background-color: #d61118;
+    transition: 0.2s ease-in-out;
+    color: white;
+}
+.delete-account:hover {
+    padding: 0.7rem;
+}
+.date-joined {
+    width: 95%;
+    margin-left: auto;
+    margin-top: 0rem;
+    margin-bottom: 1rem;
+    padding: 0.4rem;
+    border: 1px solid #fff;
+    background-color: rgba(255, 255, 255, 0.5);
+    caret-color: #fff;
+    color: #fff;
+    font-size: 1rem;
+}

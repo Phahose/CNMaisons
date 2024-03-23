@@ -11,15 +11,15 @@
     </video>
     <form name="Login" method="post" class="form loginForm">
         <fieldset>
+            <p class="@Model.AlertClass">@Model.Message</p>
             <legend>Login</legend>
-
             <label for="Email">Email</label>
             <br />
-            <input type="email" name="Email" />
+            <input type="email" name="Email" required/>
             <br />
             <label for="Password">Password</label>
             <br />
-            <input type="password" name="Password" />
+            <input type="password" name="Password" required/>
             <br />
             <input type="submit" name="Submit" value="Login" class="btn"/>
         </fieldset>

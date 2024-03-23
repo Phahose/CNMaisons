@@ -1,5 +1,5 @@
 ﻿@page
-@model CNMaisons.Pages.UserCreateTestModel
+@model CNMaisons.Pages.CreateEmployeeModel
 @{
     Layout = "_Header";
     ViewData["Title"] = "Login Sample";
@@ -25,7 +25,7 @@
             <br />
             <label>PhoneNumber</label>
             <br />
-            <input type="number" name="PhoneNumber" required/>
+            <input type="text" name="PhoneNumber" required/>
             <br />
             <label for="Email">Email</label>
             <br />
@@ -40,8 +40,7 @@
             <label for="PropertyType">Role</label>
             <br />
             <select name="Role">
-                <option value="Tennant">Tennant</option>
-                <option value="Prospective Tennant">Prospectuve Tennant</option>
+                <option value="Staff">Staff</option>
                 <option value="LandLord">LandLord</option>
             </select>
             <br />
