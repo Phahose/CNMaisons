@@ -539,7 +539,7 @@ namespace CNMaisons.Pages
                 {
                     Message = "Tenant 's Lease application was successful saved and Login Account created.";
                     User newUser = new();
-                    newUser.FIrstName = HttpContext.Session.GetString("FirstName1") ?? string.Empty;
+                    newUser.FirstName = HttpContext.Session.GetString("FirstName1") ?? string.Empty;
                     newUser.LastName = HttpContext.Session.GetString("LastName1") ?? string.Empty;
                     newUser.Email = HttpContext.Session.GetString("Email1") ?? string.Empty;
                     newUser.Password = HttpContext.Session.GetString("Password1") ?? string.Empty;

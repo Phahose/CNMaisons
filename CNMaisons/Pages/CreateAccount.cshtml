@@ -11,13 +11,15 @@
     </video>
 
     <form name="Login" method="post" class="form loginForm">
+        <br />
+        <span style="font-size: larger; font-style: italic;">@Model.errorMessage</span>
         <fieldset>
             <legend>Create New User</legend>
             <table>
                 <tr>
                     <td>First Name:</td>
                     <td>
-                        <input type="text" name="FirstName" required maxlength="30" />
+                        <input type="text" name="UserFirstName" required maxlength="30" />
                     </td>
                 </tr>
                 <tr>
@@ -87,14 +89,6 @@
                     </td>
                 </tr>
             </table>
-</div>
-
-            </table>
-
-
-
-
-
         </fieldset>
     </form>
 </div>

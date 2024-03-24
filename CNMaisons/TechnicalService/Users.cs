@@ -107,7 +107,7 @@ namespace CNMaisons.TechnicalService
                 string hashedPasswordBase64 = Convert.ToBase64String(hashedPassword);
 
                 // Adding parameters
-                AddParameter("@FirstName", SqlDbType.VarChar, user.FIrstName);
+                AddParameter("@FirstName", SqlDbType.VarChar, user.FirstName);
                 AddParameter("@LastName", SqlDbType.VarChar, user.LastName);
                 AddParameter("@Email", SqlDbType.VarChar, user.Email);
                 AddParameter("@Password", SqlDbType.VarChar, hashedPasswordBase64);

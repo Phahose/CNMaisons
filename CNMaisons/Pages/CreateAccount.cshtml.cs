@@ -1,5 +1,6 @@
 using CNMaisons.Controller;
 using CNMaisons.Domain;
+using CNMaisons.TechnicalService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -9,9 +10,12 @@ namespace CNMaisons.Pages
     {
         
         public string Message { get; set; } = string.Empty;
-        
+        public string errorMessage { get; set; } = string.Empty;
+        public bool FlagError;
+
+
         [BindProperty]
-        public string FIrstName { get; set; } = string.Empty;
+        public string UserFirstName { get; set; } = string.Empty;
         
         [BindProperty]
         public string LastName { get; set; } = string.Empty;
@@ -36,27 +40,65 @@ namespace CNMaisons.Pages
         }
         public void OnPost() 
         {
-            CNMS RequestDirector = new();
-            
-            User newUser = new();
-            newUser.FIrstName = FIrstName;
-            newUser.LastName = LastName;
-            newUser.Email = Email;
-            newUser.Password = Password;
-            newUser.UserSalt = "placeholder";
-            newUser.Role = Role;
-            newUser.DefaultPassword = DefaultPassword;
 
-            string UserAccountConfirmation = RequestDirector.CreateUserAccount(newUser);
-            if (UserAccountConfirmation == "Successful!")
+            errorMessage = "";
+            ModelState.Clear();
+
+            if (string.IsNullOrEmpty(UserFirstName))
             {
-                Message = "User Account has been created succesfully.";
-            }
-            else
-            {
-                Message = UserAccountConfirmation;
+                errorMessage += "The FirstName is Required.\n";
             }
 
+            if (string.IsNullOrEmpty(LastName))
+            {
+                errorMessage += "The LastName is Required.\n";
+            }
+
+            if (string.IsNullOrEmpty(Email))
+            {
+                errorMessage += "The Email is Required.\n";
+            }
+
+
+            if (string.IsNullOrEmpty(Password))
+            {
+                errorMessage += "The Password is Required.\n";
+            }
+
+
+            if (string.IsNullOrEmpty(Role))
+            {
+                errorMessage += "The Role is Required.\n";
+            }
+
+
+
+            if (ModelState.IsValid)
+            {
+                CNMS RequestDirector = new();
+
+                User newUser = new();
+                newUser.FirstName = UserFirstName;
+                newUser.LastName = LastName;
+                newUser.Email = Email;
+                newUser.Password = Password;
+                newUser.UserSalt = "placeholder";
+                newUser.Role = Role;
+                newUser.DefaultPassword = DefaultPassword;
+
+                string UserAccountConfirmation = RequestDirector.CreateUserAccount(newUser);
+                if (UserAccountConfirmation == "Successful!")
+                {
+                    Message = "User Account has been created succesfully.";
+                    errorMessage = "";
+                }
+                else
+                {
+                    Message = UserAccountConfirmation;
+                }
+
+
+            }
 
         }
     }
