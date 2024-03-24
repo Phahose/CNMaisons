@@ -131,7 +131,7 @@ namespace CNMaisons.Pages
                 byte[] image9Bytes = ConvertToByteArray(Image9);
                 byte[] image10Bytes = ConvertToByteArray(Image10);
 
-                BCS controller = new();
+                CNMS controller = new();
                 property = controller.GetPropertyByID(PropertyID);
 
                 if (property.PropertyID != "")

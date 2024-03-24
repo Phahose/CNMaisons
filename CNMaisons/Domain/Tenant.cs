@@ -5,14 +5,14 @@ namespace CNMaisons.Domain
     public class Tenant
     {
         public string TenantID { get; set; } = string.Empty;
-        public string PropertyID { get; set; } = string.Empty; 
+        public string PropertyID { get; set; } = string.Empty;
         public byte[] Passport { get; set; } = new byte[0];
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
         public string PhoneNumber { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public DateTime DOB { get; set; }
-        public string Password{ get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
         public string Nationality { get; set; } = string.Empty;
         public string StateofOrigin { get; set; } = string.Empty;
         public string LGA { get; set; } = string.Empty;
@@ -54,7 +54,7 @@ namespace CNMaisons.Domain
         public string Guarantor2PhoneNumber { get; set; } = string.Empty;
         public string Guarantor2AlternatePhoneNumber { get; set; } = string.Empty;
         public string Declaration { get; set; } = string.Empty;
-        public string YourSignature { get; set; } = string.Empty;        
+        public string YourSignature { get; set; } = string.Empty;
         public string ApprovalStatus { get; set; } = string.Empty;
         public bool DeleteFlag { get; set; }
 

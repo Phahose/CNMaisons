@@ -7,6 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controller\BCS.cs" />
+    <Compile Remove="Pages\UserCreateTest.cshtml.cs" />
+    <Compile Remove="TechnicalService\UsersManager.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\UserCreateTest.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.0" />
   </ItemGroup>
 

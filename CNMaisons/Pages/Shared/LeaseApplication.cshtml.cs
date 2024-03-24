@@ -4,7 +4,9 @@ using CNMaisons.TechnicalService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Data;
 using System.Globalization;
+using System.Security.Cryptography;
 
 namespace CNMaisons.Pages
 {
@@ -22,7 +24,7 @@ namespace CNMaisons.Pages
 
         [BindProperty]
         public string PropertyID { get; set; } = string.Empty;
-        
+
         [BindProperty]
         public string FirstName { get; set; } = string.Empty;
 
@@ -468,11 +470,11 @@ namespace CNMaisons.Pages
 
             //if ModelState is true
             if (ModelState.IsValid == true)
-            { 
-            
+            {
+
                 Tenant aTenant;
-                 byte[] PassportBytes = ConvertToByteArray(Passport);
-                
+                byte[] PassportBytes = ConvertToByteArray(Passport);
+
                 aTenant = new()
                 {
                     TenantID = TenantID,
@@ -531,11 +533,34 @@ namespace CNMaisons.Pages
 
                 };
 
-                BCS tenantController = new();
-                string  Confirmation = tenantController.SubmitLeaseApplication(aTenant);
+                CNMS RequestDirector = new();
+                string Confirmation = RequestDirector.SubmitLeaseApplication(aTenant);
                 if (Confirmation == "Successful!")
                 {
-                    Message = "Tenant 's Lease application was successful saved.";
+                    Message = "Tenant 's Lease application was successful saved and Login Account created.";
+                    User newUser = new();
+                    newUser.FIrstName = HttpContext.Session.GetString("FirstName1") ?? string.Empty;
+                    newUser.LastName = HttpContext.Session.GetString("LastName1") ?? string.Empty;
+                    newUser.Email = HttpContext.Session.GetString("Email1") ?? string.Empty;
+                    newUser.Password = HttpContext.Session.GetString("Password1") ?? string.Empty;
+                    newUser.UserSalt = "placeholder";
+                    newUser.Role = "Tenant";
+                    newUser.DefaultPassword = "1"; 
+
+                    String UserAccountConfirmation = RequestDirector.CreateUserAccount(newUser);
+                    if (UserAccountConfirmation == "Successful!")
+                    {
+                        int s = 10;
+                        //what to do
+                    }
+                    else
+                    {
+                        int t = 10;
+                    }
+
+
+
+
                     return Page();
                 }
                 else
@@ -544,7 +569,6 @@ namespace CNMaisons.Pages
                     Message = Confirmation;
                     RePopulate();
                     return Page();
-                    
                 }
             }
             RePopulate();

@@ -8,31 +8,48 @@
 }
 
 
+
+<script src="~/libraries/jquery/jquery.js"></script>
+<script src="~/libraries/jquery-validate/jquery.validate.js"></script>
+<script src="~/libraries/jquery-validate-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+<script type="text/javascript">
+    function copyTenantID(tenantID) {  
+        document.querySelector('input[name="FindTenantID"]').value = tenantID;
+    }
+</script>
+
+
 <form name="FindPendingApplicationForm" method="post">
     <h4>Review Lease Applications</h4>
     <div style="display: flex; align-content: center">
         <table style="border-collapse: collapse; text-align: left; width: 100%;">
             <thead>
                 <tr style="border: 1px solid #ddd; background-color:black;">
-                    <th style="border: 1px solid #ddd;">ApprovalStatus</th>
                     <th style="border: 1px solid #ddd;">TenantID</th>
                     <th style="border: 1px solid #ddd;">PropertyID</th>
                     <th style="border: 1px solid #ddd;">FirstName</th>
                     <th style="border: 1px solid #ddd;">LastName</th>                 
+                    <th style="border: 1px solid #ddd;">ApprovalStatus</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var record in Model.ListOfTenantsPendingReview)
                 {
                     <tr>
-                        <td style="border: 1px solid #ddd;">@record.TenantID</td>
+                        <td style="border: 1px solid #ddd;"><a href="#" onclick="copyTenantID('@record.TenantID')">@record.TenantID</a></td>
                         <td style="border: 1px solid #ddd;">@record.PropertyID</td>
                         <td style="border: 1px solid #ddd;">@record.FirstName</td>
                         <td style="border: 1px solid #ddd;">@record.LastName</td>
-
+                        <td style="border: 1px solid #ddd;">@record.ApprovalStatus</td>
                     </tr>
                 }
-            </tbody></tr>
+            </tbody>
+            </tr>
+            <tr>
+                <td>Tenant ID</td>
+                <td><input type="text" name="FindTenantID" disabled /></td>
+            </tr>
             <tr>
                 <td><input type="submit" name="Submit" value="Find" /></td>
                 <td><input type="submit" name="Submit" value="Close" /></td>
@@ -41,445 +58,3 @@
         </table>
     </div>
 </form>
-@* 
-@if (Model.Message == "Prospective Member details are shown below.")
-{
-
-    <form name="MembersDetailsForm" method="post">
-        <input type="hidden" name="LoginParameter" value="@Model.aProspectiveMember.LoginUserName" />
-        <input type="hidden" name="EmailParameter" value="@Model.aProspectiveMember.MembershipID" />
-        <input type="hidden" name="MembershipLevelParameter" value="@Model.aProspectiveMember.MembershipLevel" />
-        <input type="hidden" name="ModifyMembershipID" value="@Model.aProspectiveMember.MembershipID" />
-
-        <div>
-            <div>
-                <table style="border-collapse: collapse; text-align: left; width: 100%;">
-                    <thead>
-                        <tr style="border: 1px solid #ddd; background-color: #f2f2f2;">
-                            <th style="border: 1px solid #ddd;">Membership ID</th>
-                            <th style="border: 1px solid #ddd;">First_Name</th>
-                            <th style="border: 1px solid #ddd;">Last_Name</th>
-                            <th style="border: 1px solid #ddd;">Login_Username</th>
-                            <th style="border: 1px solid #ddd;">Application_Form</th>
-                            <th style="border: 1px solid #ddd;">Home_Address</th>
-                            <th style="border: 1px solid #ddd;">Home_PostalCode</th>
-                            <th style="border: 1px solid #ddd;">Home_Phone</th>
-                            <th style="border: 1px solid #ddd;">Home_AlternatePhone</th>
-                            <th style="border: 1px solid #ddd;">Email</th>
-                            <th style="border: 1px solid #ddd;">Date_Of_Birth</th>
-                            <th style="border: 1px solid #ddd;">Occupation</th>
-                            <th style="border: 1px solid #ddd;">Company_Name</th>
-                            <th style="border: 1px solid #ddd;">Office_Address</th>
-                            <th style="border: 1px solid #ddd;">Office_PostalCode</th>
-                            <th style="border: 1px solid #ddd;">Office_Phone</th>
-                            <th style="border: 1px solid #ddd;">Sponsor1ID</th>
-                            <th style="border: 1px solid #ddd;">Sponsor2ID</th>
-                            <th style="border: 1px solid #ddd;">Application_Status</th>
-                            <th style="border: 1px solid #ddd;">Date_Of_Application</th>
-                            <th style="border: 1px solid #ddd;">Membership_Level</th>
-                            <th style="border: 1px solid #ddd;">Player_Status</th>
-                            <th style="border: 1px solid #ddd;">Financial_Standing</th>
-                            <th style="border: 1px solid #ddd;">Deactivate_Account_Status</th>
-                        </tr>
-                    </thead>
-                    <tdody>
-                        <tr>
-                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.MembershipID</td>
-                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.FirstName</td>
-                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.LastName</td>
-                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.LoginUserName</td>
-
-
-                            <td style="border: 1px solid #ddd;">
-                                <a href="data:application/octet-stream;base64,@base64Document" download="@Model.aProspectiveMember.ApplicationForm"> Application Form </a>
-                            </td>
-
-                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.HomeAddress</td>
-                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.HomePostalCode</td>
-                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.HomePhone</td>
-                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.HomeAlternatePhone</td>
-                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.Email</td>
-                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.DateOfBirth.ToString("dd-MMM-yyyy")</td>
-                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.Occupation</td>
-                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.CompanyName</td>
-                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.OfficeAddress</td>
-                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.OfficePostalCode</td>
-                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.OfficePhone</td>
-                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.ShareHolder1ID</td>
-                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.ShareHolder2ID</td>
-                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.ApplicationStatus</td>
-                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.DateOfApplication.ToString("dd-MM-yyyy")</td>
-                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.MembershipLevel</td>
-                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.PlayerStatus</td>
-                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.FinancialStanding</td>
-                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.DeactivateAccountStatus</td>
-                        </tr>
-                    </tdody>
-                </table>
-            </div>
-            <table>
-                <tr>
-                    <td>
-                        @if (Model.aProspectiveMember.ApplicationForm != null)
-                        {
-                            // Check if the image data is at least 78 bytes long
-                            int imageDataLength = Model.aProspectiveMember.ApplicationForm.Length;
-
-                            // Check if the image data is at least 78 bytes long
-                            if (imageDataLength > 78)
-                            {
-                                // Create a new byte array with the first 78 bytes removed
-                                byte[] modifiedImageData = new byte[@Model.aProspectiveMember.ApplicationForm.Length]; // - 78];
-                                Array.Copy(@Model.aProspectiveMember.ApplicationForm, 78, modifiedImageData, 0, @Model.aProspectiveMember.ApplicationForm.Length - 78);
-
-                                // Convert the modified byte array to a data URI
-                                //<img class="category-image" src="data:image/jpeg;base64,@Convert.ToBase64String(modifiedImageData)" alt="Category Image" />
-                                <img style="max-width: 100%; height: auto;" src="data:image/jpeg;base64,@Convert.ToBase64String(modifiedImageData)" alt="Category Image" />
-
-                            }
-                            else
-                            {
-                                // If the image data is less than 78 bytes, display the original image
-                                <img src="data:image/jpeg;base64,@Convert.ToBase64String(@Model.aProspectiveMember.ApplicationForm)" alt="Category Image" />
-                            }
-                        }
-                        else
-                        {
-                            <p>No Image Available</p>
-                        }
-                    </td>
-                </tr>
-
-            </table>
-
-            <table>
-                <tr>
-                    <td>Committee Application Review :</td>
-                    <td>
-                    <td>
-                        <select asp-for="NewApplicationStatus" class="form-control" required>
-                            <option value="0">--Make-a-Selection--</option>
-                            <option value="Accepted">Accepted</option>
-                            <option value=", Denied">Denied</option>
-                            <option value="Waitlisted">Waitlisted</option>
-                        </select>
-                        <span style="color:red; font-size:smaller; font:italic">@Html.ValidationMessage("NewApplicationStatus") </span>
-
-
-                    </td>
-                    :</td>
-                </tr>
-            </table>
-            <div>
-                <table>
-                    <tr>
-                        <td><input type="submit" name="Submit" value="Review" /></td>
-                        <td><input type="submit" name="Submit" value="Close" /></td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-
-    </form>
-
-}
-
-
-
-
-<div>
-
-</div>
-<div>
-    <form name="ReviewApplication" method="post" class="form property_form transition-fade-down" >
-        <input type="button" name="populate values" value="populate values" onclick="populateValue()" class="btn" />
-        <!--<form name="Application" method="post" class="form property_form transition-fade-down" onsubmit="return isFormValid(this);" enctype="multipart/form-data" action="ViewHTTPRequest">-->
-        <input type="submit" name="Submit" value="Submit Lease Application" class="btn" />
-        <br />
-        <span style="font-size: larger; font-style: italic;">@Model.Message</span>
-
-        <br />
-        <span style="font-size: larger; font-style: italic;">@Model.errorMessage</span>
-        <br />
-        <fieldset>
-            <legend>Personal Information</legend>
-            <div>
-                <label for="Passport Photo">Passport Photo</label>
-                <br />
-                <input type="file" name="Passport" />
-                <br />
-
-                <label for="Tenant ID">Tenant ID</label>
-                <br />
-                <input type="text" name="TenantID" required maxlength="5"  />
-                <br />
-
-                <label for="FirstName">First Name</label>
-                <br />
-                <input type="text" name="FirstName" maxlength="30" />
-                <br />
-
-                <label for="LasName">Last Name</label>
-                <br />
-                <input type="text" name="LastName" maxlength="30" />
-                <br />
-                TelePhone Number*:
-                <input type="tel" name="PhoneNumber" maxlength="14" />
-                Email:
-                <input type="email" name="Email" />
-
-                Date Of Birth*:
-                <input type="date" name="DOB" />
-
-                Password*:
-                <input type="password" name="Password" maxlength="100" />
-
-                Nationality*:
-                <input type="text" name="Nationality" maxlength="20" />
-                State of Origin
-                <input type="text" name="StateofOrigin" maxlength="20" />
-
-                Local Govt. Area:
-                <input type="text" name="LGA" maxlength="20" />
-                Home Town:
-                <input type="text" name="HomeTown" maxlength="20" />
-                Permanent Home Address*:
-                <input type="text" name="PermanentHomeAddress" maxlength="100" />
-            </div>
-        </fieldset>
-
-
-        <fieldset>
-            <legend>Occupation Info</legend>
-            <div>
-                <div>
-                    <label for="Occupation">Occupation*:</label>
-
-                    <input type="text" name="Occupation" />
-
-                    <label for="SelfEmployed">Are you self-employed or in employment of an establishment?*: </label>
-                    <input type="radio" id="answer_yes" name="SelfEmployed" value="yes" onclick="showFields() " checked>
-                    <label for="answer_yes">Yes</label>
-                    <input type="radio" id="answer_no" name="SelfEmployed" value="no" onclick="hideFields()">
-                    <label for="answer_no">No</label>
-
-                    <!-----displays only when  self-employed = yes-->
-                    <div id="selfEmployedFields" style="display: none;">
-                        <label for="BusinessRegistrationNumber">Business Registration Number</label>
-                        <br />
-                        <input type="text" name="BusinessRegistrationNumber" maxlength="15" />
-                        <br />
-
-                        <label for="CorporateAffairsCertificate">Corporate Affairs Certificate</label>
-                        <br />
-                        <input type="text" name="CorporateAffairsCertificate" />                        
-                        <br />
-                    </div>
-                    <!----------------------------------------------------------------------->
-                    <!-----displays only when  self-employed = no-->
-                    <div id="employerFields" style="display: none;">
-                        <label for="NameofEmployer">Name of Employer</label>
-                        <br />
-                        <input type="text" name="NameofEmployer" maxlength="50" />
-                        <br />
-
-                        <label for="AddressOfEmployer">Address of Employer</label>
-                        <br />
-                        <input type="text" name="AddressOfEmployer" maxlength="100" />
-                        <br />
-
-                        <label for="LengthOnJob">How long have you been on the job?</label>
-                        <br />
-                        <input type="text" name="LengthOnJob" maxlength="2" />
-                        <br />
-
-                        <label for="CurrentPositionHeld">Current Position Held at Job</label>
-                        <br />
-                        <input type="text" name="CurrentPositionHeld" maxlength="25" />
-                        <br />                        
-                    </div>
-
-                    <label for="NatureOfJob">Nature of business or Nature of Job</label>
-                    <br />                    
-                    <input type="text" name="NatureOfJob" maxlength="25" />
-                </div>
-        </fieldset>
-
-
-        <fieldset>
-            <legend>Past Rental Information</legend>
-            <div>
-                <div>
-                    <label for="FormerResidenceAddress">Former Residence Address</label>
-                    <br />
-                    <input type="text" name="FormerResidenceAddress" maxlength="100" />
-                    <br />
-
-                    <label for="ReasonForMoving">State your reasons for moving out of former residence: </label><br />
-                    <textarea name="ReasonForMoving" style="max-height: 200px; max-width: 500px;" maxlength="50"></textarea>
-                    <br />
-                    <label for="LengthOfStayAtOldResidence">Number of years spent at the former residence</label>
-                    <br />
-                    <input type="number" min="0" name="LengthOfStayAtOldResidence" maxlength="2" />
-                    <br />
-                    <label for="NameOfFormerResidentManager">Name of Former Landlord or Estate Manager</label>
-                    <br />
-                    <input type="text" name="NameOfFormerResidentManager" maxlength="60" />
-                    <br />
-                    <label for="ObjectionsToReasonsForMoving">Do you Have any Objection to Your Reson to Leaving you Former Residence</label>
-                    <br />
-                    <textarea name="ObjectionsToReasonsForMoving" style="max-height: 200px; max-width: 500px;" maxlength="100"></textarea>
-                </div>
-            </div>
-        </fieldset>
-
-
-        <fieldset>
-            <legend>Marital Information</legend>
-            <div>
-                <div>
-                    <label for="MaritalStatus">Marital Status</label>
-                    <br />
-                    <select name="MaritalStatus" onchange="toggleSpouseFields(this)">
-                        <option value="Single">Single</option>
-                        <option value="Married">Married</option>
-                        <option value="Divorced">Divorced</option>
-                        <option value="Widowed">Widowed</option>
-                        <option value="SingleParent">Single Parent</option>
-                    </select>
-                    <br />
-
-                    <!-----displays only when  MaritalStatus = Married-->
-                    <div id="spouseFields" style="display: none;">
-                        <label for="SpouseFirstName">Spouse's First Name</label>
-                        <br />
-                        <input type="text" name="SpouseFirstName" maxlength="30" />
-                        <br />
-                        <label for="SpouseLastName">Spouse's Last Name</label>
-                        <br />
-                        <input type="text" name="SpouseLastName" maxlength="30" />
-                        <br />
-                        <label for="SpouseOccupation">Spouse's Occupation/Employment</label>
-                        <br />
-                        <input type="text" name="SpouseOccupation" maxlength="25" />
-                        <br />
-                    </div>
-                    <!----------------------------------------------------------------------->
-
-                    <label for="NumberOfOccupants">Number of occupants*:</label>
-                    <br />
-                    <input type="number" name="NumberOfOccupants" / maxlength="2">
-                    <br />
-                </div>
-            </div>
-        </fieldset>
-
-
-        <fieldset>
-            <legend>Next of Kin Information</legend>
-            <div>
-                <div
-
-                    <label for="NextOfKinFirstName">Next Of Kin First Name*:</label>
-                    <br />
-                    <input type="text" name="NextOfKinFirstName"  maxlength="30"/>
-                    <br />
-                    <label for="NextOfKinLastName">Next Of Kin Last Name*:</label>
-                    <br />
-                    <input type="text" name="NextOfKinLastName" maxlength="30" />
-                    <br />
-                    <label for="NextOfKinAddress">Next Of Kin Address*:</label>
-                    <br />
-                    <input type="text" name="NextOfKinAddress" maxlength="100"/>
-                    <br />
-                    <label for="NextOfKinPhoneNumber">Next Of Kin Phone Number</label>
-                    <br />
-                    <input type="text" name="NextOfKinPhoneNumber" maxlength="14" />
-                    <br />
-                </div>
-            </div>
-        </fieldset>
-
-
-
-
-        <fieldset>
-            <legend>Guarrantor Information</legend>
-            <div>
-                <div>
-                    <label for="Guarantor1FirstName">Guarantor #1 First Name*:</label>
-                    <br />
-                    <input type="text" name="Guarantor1FirstName" maxlength="30" />
-                    <br />
-                    <label for="Guarantor1LastName">Guarantor #1 Last Name</label>
-                    <br />
-                    <input type="text" name="Guarantor1LastName" maxlength="30" />
-                    <br />
-                    <label for="Guarantor1Address">Guarantor #1 Address*:</label>
-                    <br />
-                    <input type="text" name="Guarantor1Address" maxlength="100" />
-                    <br />
-
-                    <label for="Guarantor1Occupation">Guarantor #1 Occupation*:</label>
-                    <br />
-                    <input type="text" name="Guarantor1Occupation" maxlength="25" />
-                    <br />
-                    <label for="Guarantor1PhoneNumber">Guarantor #1 Phone Number*:</label>
-                    <br />
-                    <input type="tel" name="Guarantor1PhoneNumber" maxlength="14" />
-                    <br />
-                    <label for="Guarantor1AlternatePhoneNumber">Guarantor Alt. Phone#</label>
-                    <br />
-                    <input type="tel" name="Guarantor1AlternatePhoneNumber" maxlength="14" />
-                    <br />
-
-                    <label for="Guarantor2FirstName">Guarantor #2 First Name*:</label>
-                    <br />
-                    <input type="text" name="Guarantor2FirstName" maxlength="30" />
-                    <br />
-                    <label for="Guarantor2LastName">Guarantor #2 Last Name*:</label>
-                    <br />
-                    <input type="text" name="Guarantor2LastName" maxlength="30" />
-                    <br />
-                    <label for="Guarantor2Address">Guarantor #2 Address*:</label>
-                    <br />
-                    <input type="text" name="Guarantor2Address" maxlength="100" />
-                    <br />
-                    <label for="Guarantor2Occupation">Guarantor #2 Occupation*:</label>
-                    <br />
-                    <input type="text" name="Guarantor2Occupation" maxlength="25" />
-                    <br />
-                    <label for="Guarantor2PhoneNumber">Guarantor #2 Phone Number*:</label>
-                    <br />
-                    <input type="tel" name="Guarantor2PhoneNumber" maxlength="14" />
-                    <br />
-                    <label for="Guarantor2AlternatePhoneNumber">Guarantor Alt. Phone#</label>
-                    <br />
-                    <input type="tel" name="Guarantor2AlternatePhoneNumber" maxlength="14" />
-                    <br />
-                </div>
-
-
-
-                <div class="confirmation_text">
-                    <label for="LegalConfirmation">
-                        I hereby declare and state that all the information supplied above are true and correct to the best of my knowledge and belief and
-                        I accept to be held liable for any misrepresentation therein.*:
-                    </label>
-                </div>
-                <label>Enter you name in full as a signature</label>
-                <br />
-                 <input type="text" name="YourSignature" />
-
-                    <input type="checkbox" value="Yes" name="Declaration" checked/>
-                    <br />
-                    <input type="text" name="ApprovalStatus" value="Pending" hidden />
-                    <input type="text" name="DeleteFlag" value="0" hidden />
-           
-            </div>
-            </div>
-            </div>
-        </fieldset>        
-    </form>
-</div>
- *@

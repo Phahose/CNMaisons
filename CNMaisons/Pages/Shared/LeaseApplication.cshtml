@@ -44,7 +44,7 @@
         document.querySelector('input[name="Guarantor2Occupation"]').value = "placeholder";
         document.querySelector('input[name="Guarantor2PhoneNumber"]').value = "placeholder";
         document.querySelector('input[name="YourSignature"]').value = "placeholder";
-        
+
     }
 
 
@@ -57,7 +57,7 @@
         var numbersOnly = /^[0-9]+$/;
 
 
-        
+
         // Validate Passport (File Upload)
         var passportFile = event.Passport.files[0];
         if (!passportFile) {
@@ -65,31 +65,31 @@
             isValid = false;
         }
 
-        
-        
+
+
         // Validate TennatID
-        var tenantID= event.TenantID.value;
+        var tenantID = event.TenantID.value;
         if (tenantID === "" || !textOnly.test(tenantID)) {
-                var tenantIDError = "Enter a valid tenant ID.";
-            isValid = false;            
+            var tenantIDError = "Enter a valid tenant ID.";
+            isValid = false;
         }
 
 
-            // Validate PropertyID
-            var propertyID = event.PropertyID.value;
-            if (propertyID === "" || !textOnly.test(propertyID)) {
-                var PropertyIDError = "Enter a valid property ID.";
-                isValid = false;
-            }
+        // Validate PropertyID
+        var propertyID = event.PropertyID.value;
+        if (propertyID === "" || !textOnly.test(propertyID)) {
+            var PropertyIDError = "Enter a valid property ID.";
+            isValid = false;
+        }
 
         // Validate FirstName
         var firstName = event.FirstName.value;
         if (firstName === "" || !textOnly.test(firstName)) {
             var firstNameError = "Enter a valid First Name.";
-            isValid = false;            
+            isValid = false;
         }
 
-            // Validate LastName
+        // Validate LastName
         var lastName = event.LastName.value;
         if (lastName === "" || !textOnly.test(lastName)) {
             var lastNameError = "Enter a valid Last Name.";
@@ -120,7 +120,7 @@
             alert("Please enter a valid Date of Birth.");
             isValid = false;
         }
-            //textOnly          textAndNumbers          numbersOnly
+        //textOnly          textAndNumbers          numbersOnly
 
 
         // Validate Nationality
@@ -134,11 +134,11 @@
         var permanentHomeAddress = event.PermanentHomeAddress.value;
         if (permanentHomeAddress === "" || !textAndNumbers.test(permanentHomeAddress)) {
             alert("Please enter a valid Permanent Home Address.");
-            isValid = false;            
+            isValid = false;
         }
 
 
-        
+
 
         // Validate Occupation
         var occupation = event.Occupation.value;
@@ -154,7 +154,7 @@
             isValid = false;
         }
 
-        
+
         // Validate MaritalStatus
         var maritalStatus = event.MaritalStatus.value;
         if (maritalStatus === "" || !textOnly.test(maritalStatus)) {
@@ -217,7 +217,7 @@
             alert("Please enter a valid Guarantor 1 Address.");
             isValid = false;
         }
-        
+
         // Validate Guarantor1Occupation
         var guarantor1Occupation = event.Guarantor1Occupation.value;
         if (guarantor1Occupation === "" || !textOnly.test(guarantor1Occupation)) {
@@ -231,7 +231,7 @@
             alert("Please enter a valid Guarantor 1 Phone Number.");
             isValid = false;
         }
-                
+
         // Validate Guarantor2FirstName
         var guarantor2FirstName = event.Guarantor2FirstName.value;
         if (guarantor2FirstName === "" || !textOnly.test(guarantor2FirstName)) {
@@ -245,7 +245,7 @@
             alert("Please enter a valid Guarantor 2 Last Name.");
             isValid = false;
         }
-        
+
         // Validate Guarantor2Address
         var guarantor2Address = event.Guarantor2Address.value;
         if (guarantor2Address === "" || !textOnly.test(guarantor2Address)) {
@@ -281,7 +281,7 @@
 
 
 
-    
+
     //---- script for  self - employed  selection-
     function showFields() {
         document.getElementById("selfEmployedFields").style.display = "block";
@@ -312,7 +312,7 @@
     </video>
 
 
-    <form name="Application" method="post" class="form property_form transition-fade-down"  enctype="multipart/form-data" >
+    <form name="Application" method="post" class="form property_form transition-fade-down" enctype="multipart/form-data">
         <input type="button" name="populate values" value="populate values" onclick="populateValue()" class="btn" />
         <!--<form name="Application" method="post" class="form property_form transition-fade-down" onsubmit="return isFormValid(this);" enctype="multipart/form-data" action="ViewHTTPRequest">-->
         <input type="submit" name="Submit" value="Submit Lease Application" class="btn" />
@@ -332,7 +332,7 @@
 
                 <label for="Tenant ID">Tenant ID</label>
                 <br />
-                <input type="text" name="TenantID" required maxlength="5"  />
+                <input type="text" name="TenantID" required maxlength="5" />
                 <br />
                 <label for="Property ID">Which Property ID are you interested in:</label>
                 <br />
@@ -355,7 +355,7 @@
                 <br />
                 TelePhone Number*:
                 <input type="tel" name="PhoneNumber" maxlength="14" />
-                
+
                 Date Of Birth*:
                 <input type="date" name="DOB" />
 
@@ -400,7 +400,7 @@
 
                         <label for="CorporateAffairsCertificate">Corporate Affairs Certificate</label>
                         <br />
-                        <input type="text" name="CorporateAffairsCertificate" />                        
+                        <input type="text" name="CorporateAffairsCertificate" />
                         <br />
                     </div>
                     <!----------------------------------------------------------------------->
@@ -424,11 +424,11 @@
                         <label for="CurrentPositionHeld">Current Position Held at Job</label>
                         <br />
                         <input type="text" name="CurrentPositionHeld" maxlength="25" />
-                        <br />                        
+                        <br />
                     </div>
 
                     <label for="NatureOfJob">Nature of business or Nature of Job</label>
-                    <br />                    
+                    <br />
                     <input type="text" name="NatureOfJob" maxlength="25" />
                 </div>
         </fieldset>
@@ -597,16 +597,16 @@
                 </div>
                 <label>Enter you name in full as a signature</label>
                 <br />
-                 <input type="text" name="YourSignature" />
+                <input type="text" name="YourSignature" />
 
-                    <input type="checkbox" value="Yes" name="Declaration" checked/>
-                    <br />
-                    <input type="text" name="ApprovalStatus" value="Pending" hidden />
-                    <input type="text" name="DeleteFlag" value="0" hidden />
-           
+                <input type="checkbox" value="Yes" name="Declaration" checked />
+                <br />
+                <input type="text" name="ApprovalStatus" value="Pending" hidden />
+                <input type="text" name="DeleteFlag" value="0" hidden />
+
             </div>
+</div>
             </div>
-            </div>
-        </fieldset>        
+        </fieldset>
     </form>
 </div>

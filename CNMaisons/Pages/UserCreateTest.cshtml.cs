@@ -27,7 +27,7 @@ namespace CNMaisons.Pages
                 Password = Password,
                 Role = Role,
             };
-            BCS controller = new BCS();
+            CNMS controller = new CNMS();
             controller.AddUser(user);
             
         }
