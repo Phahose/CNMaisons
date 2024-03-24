@@ -77,12 +77,12 @@ namespace CNMaisons.Controller
             return new Rfc2898DeriveBytes(password, salt, 100000, HashAlgorithmName.SHA256).GetBytes(32);
         }
 
-        public bool SubmitLeaseApplication(Tenant aTenant)
+        public string SubmitLeaseApplication(Tenant aTenant)
         {
-            bool success;
+            string Success;
             Tenants tenatManager = new();
-            success = tenatManager.AddLeaseApplication(aTenant);
-            return success;
+            Success = tenatManager.AddLeaseApplication(aTenant);
+            return Success;
         }
     }
 }

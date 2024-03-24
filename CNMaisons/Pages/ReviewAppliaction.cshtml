@@ -1,5 +1,5 @@
-﻿@page
-@model CNMaisons.Pages.LeaseApplicationModel
+﻿@* @page
+@model CNMaisons.Pages.ReviewModel
 @{
     Layout = "_Header";
     ViewData["Title"] = "Lease Application";
@@ -8,311 +8,176 @@
 }
 
 
-<script src="~/libraries/jquery/jquery.js"></script>
-<script src="~/libraries/jquery-validate/jquery.validate.js"></script>
-<script src="~/libraries/jquery-validate-unobtrusive/jquery.validate.unobtrusive.js"></script>
+<form name="FindPendingApplicationForm" method="post">
+    <h4>Review Lease Applications</h4>
+    <div style="display: flex; align-content: center">
+        <table>
+            <tr>
 
-<script type="text/javascript">
-    //to popuate values. To be removed later
-    function populateValue() {
-        document.querySelector('input[name="TenantID"]').value = "CN01";
-        document.querySelector('input[name="PropertyID"]').value = "CNP0001";
-        document.querySelector('input[name="FirstName"]').value = "Ezra";
-        document.querySelector('input[name="LastName"]').value = "Mallo";
-        document.querySelector('input[name="PhoneNumber"]').value = "0803857564";
-        document.querySelector('input[name="Email"]').value = "ezra.mallo@gmail.com";
-        document.querySelector('input[name="DOB"]').value = "1982-01-01";
-        document.querySelector('input[name="Password"]').value = "abc123";
-        document.querySelector('input[name="Nationality"]').value = "Nigeria";
-        document.querySelector('input[name="PermanentHomeAddress"]').value = "Isiokwe";
-        document.querySelector('input[name="Occupation"]').value = "Engineer";
-        document.querySelector('input[name="SelfEmployed"][value="yes"]').checked = true;
-        document.querySelector('select[name="MaritalStatus"]').value = "Single";
-        document.querySelector('input[name="NumberOfOccupants"]').value = "2";
-        document.querySelector('input[name="NextOfKinFirstName"]').value = "FirstName";
-        document.querySelector('input[name="NextOfKinLastName"]').value = "LastName";
-        document.querySelector('input[name="NextOfKinAddress"]').value = "Address";
-        document.querySelector('input[name="NextOfKinPhoneNumber"]').value = "PhoneNumber";
-        document.querySelector('input[name="Guarantor1FirstName"]').value = "FirstName";
-        document.querySelector('input[name="Guarantor1LastName"]').value = "LastName";
-        document.querySelector('input[name="Guarantor1Address"]').value = "Address";
-        document.querySelector('input[name="Guarantor1Occupation"]').value = "placeholder";
-        document.querySelector('input[name="Guarantor1PhoneNumber"]').value = "PhoneNumber";
-        document.querySelector('input[name="Guarantor2FirstName"]').value = "placeholder";
-        document.querySelector('input[name="Guarantor2LastName"]').value = "placeholder";
-        document.querySelector('input[name="Guarantor2Address"]').value = "placeholder";
-        document.querySelector('input[name="Guarantor2Occupation"]').value = "placeholder";
-        document.querySelector('input[name="Guarantor2PhoneNumber"]').value = "placeholder";
-        document.querySelector('input[name="YourSignature"]').value = "placeholder";
-        
-    }
+                <td>Enter MembershipID:</td>
+                <td><input type="text" asp-for="findMemberID" placeholder="MembershipID." maxlength="25" /></td>
+            </tr>
+            <tr>
+                <td><input type="submit" name="Submit" value="Find" /></td>
+                <td><input type="submit" name="Submit" value="Close" /></td>
+            </tr>
+            <tr>
+                <td><span style="font-size:smaller;color:red;font-style:italic">@Model.Message</span></td>
+            </tr>
+        </table>
+    </div>
+</form>
 
+@if (Model.Message == "Prospective Member details are shown below.")
+{
 
+    <form name="MembersDetailsForm" method="post">
+        <input type="hidden" name="LoginParameter" value="@Model.aProspectiveMember.LoginUserName" />
+        <input type="hidden" name="EmailParameter" value="@Model.aProspectiveMember.MembershipID" />
+        <input type="hidden" name="MembershipLevelParameter" value="@Model.aProspectiveMember.MembershipLevel" />
+        <input type="hidden" name="ModifyMembershipID" value="@Model.aProspectiveMember.MembershipID" />
 
-
-    function isFormValid(event) {
-        var isValid = true; // Set to true initially
-        var textOnly = /^[a-zA-Z]+$/;
-        var textAndNumbers = /^[a-zA-Z0-9]+$/;
-        var numbersOnly = /^[0-9]+$/;
-
-
-        
-        // Validate Passport (File Upload)
-        var passportFile = event.Passport.files[0];
-        if (!passportFile) {
-            var passportFileError = "Add the passport.";
-            isValid = false;
-        }
-
-        
-        
-        // Validate TennatID
-        var tenantID= event.TenantID.value;
-        if (tenantID === "" || !textOnly.test(tenantID)) {
-                var tenantIDError = "Enter a valid tenant ID.";
-            isValid = false;            
-        }
-
-
-            // Validate PropertyID
-            var propertyID = event.PropertyID.value;
-            if (propertyID === "" || !textOnly.test(propertyID)) {
-                var PropertyIDError = "Enter a valid property ID.";
-                isValid = false;
-            }
-
-        // Validate FirstName
-        var firstName = event.FirstName.value;
-        if (firstName === "" || !textOnly.test(firstName)) {
-            var firstNameError = "Enter a valid First Name.";
-            isValid = false;            
-        }
-
-            // Validate LastName
-        var lastName = event.LastName.value;
-        if (lastName === "" || !textOnly.test(lastName)) {
-            var lastNameError = "Enter a valid Last Name.";
-            isValid = false;
-        }
-
-        // Validate PhoneNumber
-        var phoneNumber = event.PhoneNumber.value;
-        if (phoneNumber === "" || !textAndNumbers.test(phoneNumber)) {
-            alert("Please enter a valid PhoneNumber.");
-            isValid = false;
-        }
+        <div>
+            <div>
+                <table style="border-collapse: collapse; text-align: left; width: 100%;">
+                    <thead>
+                        <tr style="border: 1px solid #ddd; background-color: #f2f2f2;">
+                            <th style="border: 1px solid #ddd;">Membership ID</th>
+                            <th style="border: 1px solid #ddd;">First_Name</th>
+                            <th style="border: 1px solid #ddd;">Last_Name</th>
+                            <th style="border: 1px solid #ddd;">Login_Username</th>
+                            <th style="border: 1px solid #ddd;">Application_Form</th>
+                            <th style="border: 1px solid #ddd;">Home_Address</th>
+                            <th style="border: 1px solid #ddd;">Home_PostalCode</th>
+                            <th style="border: 1px solid #ddd;">Home_Phone</th>
+                            <th style="border: 1px solid #ddd;">Home_AlternatePhone</th>
+                            <th style="border: 1px solid #ddd;">Email</th>
+                            <th style="border: 1px solid #ddd;">Date_Of_Birth</th>
+                            <th style="border: 1px solid #ddd;">Occupation</th>
+                            <th style="border: 1px solid #ddd;">Company_Name</th>
+                            <th style="border: 1px solid #ddd;">Office_Address</th>
+                            <th style="border: 1px solid #ddd;">Office_PostalCode</th>
+                            <th style="border: 1px solid #ddd;">Office_Phone</th>
+                            <th style="border: 1px solid #ddd;">Sponsor1ID</th>
+                            <th style="border: 1px solid #ddd;">Sponsor2ID</th>
+                            <th style="border: 1px solid #ddd;">Application_Status</th>
+                            <th style="border: 1px solid #ddd;">Date_Of_Application</th>
+                            <th style="border: 1px solid #ddd;">Membership_Level</th>
+                            <th style="border: 1px solid #ddd;">Player_Status</th>
+                            <th style="border: 1px solid #ddd;">Financial_Standing</th>
+                            <th style="border: 1px solid #ddd;">Deactivate_Account_Status</th>
+                        </tr>
+                    </thead>
+                    <tdody>
+                        <tr>
+                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.MembershipID</td>
+                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.FirstName</td>
+                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.LastName</td>
+                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.LoginUserName</td>
 
 
-        // Validate Email
+                            <td style="border: 1px solid #ddd;">
+                                <a href="data:application/octet-stream;base64,@base64Document" download="@Model.aProspectiveMember.ApplicationForm"> Application Form </a>
+                            </td>
+
+                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.HomeAddress</td>
+                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.HomePostalCode</td>
+                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.HomePhone</td>
+                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.HomeAlternatePhone</td>
+                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.Email</td>
+                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.DateOfBirth.ToString("dd-MMM-yyyy")</td>
+                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.Occupation</td>
+                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.CompanyName</td>
+                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.OfficeAddress</td>
+                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.OfficePostalCode</td>
+                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.OfficePhone</td>
+                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.ShareHolder1ID</td>
+                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.ShareHolder2ID</td>
+                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.ApplicationStatus</td>
+                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.DateOfApplication.ToString("dd-MM-yyyy")</td>
+                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.MembershipLevel</td>
+                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.PlayerStatus</td>
+                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.FinancialStanding</td>
+                            <td style="border: 1px solid #ddd;">@Model.aProspectiveMember.DeactivateAccountStatus</td>
+                        </tr>
+                    </tdody>
+                </table>
+            </div>
+            <table>
+                <tr>
+                    <td>
+                        @if (Model.aProspectiveMember.ApplicationForm != null)
+                        {
+                            // Check if the image data is at least 78 bytes long
+                            int imageDataLength = Model.aProspectiveMember.ApplicationForm.Length;
+
+                            // Check if the image data is at least 78 bytes long
+                            if (imageDataLength > 78)
+                            {
+                                // Create a new byte array with the first 78 bytes removed
+                                byte[] modifiedImageData = new byte[@Model.aProspectiveMember.ApplicationForm.Length]; // - 78];
+                                Array.Copy(@Model.aProspectiveMember.ApplicationForm, 78, modifiedImageData, 0, @Model.aProspectiveMember.ApplicationForm.Length - 78);
+
+                                // Convert the modified byte array to a data URI
+                                //<img class="category-image" src="data:image/jpeg;base64,@Convert.ToBase64String(modifiedImageData)" alt="Category Image" />
+                                <img style="max-width: 100%; height: auto;" src="data:image/jpeg;base64,@Convert.ToBase64String(modifiedImageData)" alt="Category Image" />
+
+                            }
+                            else
+                            {
+                                // If the image data is less than 78 bytes, display the original image
+                                <img src="data:image/jpeg;base64,@Convert.ToBase64String(@Model.aProspectiveMember.ApplicationForm)" alt="Category Image" />
+                            }
+                        }
+                        else
+                        {
+                            <p>No Image Available</p>
+                        }
+                    </td>
+                </tr>
+
+            </table>
+
+            <table>
+                <tr>
+                    <td>Committee Application Review :</td>
+                    <td>
+                    <td>
+                        <select asp-for="NewApplicationStatus" class="form-control" required>
+                            <option value="0">--Make-a-Selection--</option>
+                            <option value="Accepted">Accepted</option>
+                            <option value=", Denied">Denied</option>
+                            <option value="Waitlisted">Waitlisted</option>
+                        </select>
+                        <span style="color:red; font-size:smaller; font:italic">@Html.ValidationMessage("NewApplicationStatus") </span>
 
 
-        // var email = event.Email.value;
-        // if (email === "" || !emailPattern.test(email)) {
-        //     alert("Please enter a valid email address.");
-        //     isValid = false;
-        // }
+                    </td>
+                    :</td>
+                </tr>
+            </table>
+            <div>
+                <table>
+                    <tr>
+                        <td><input type="submit" name="Submit" value="Review" /></td>
+                        <td><input type="submit" name="Submit" value="Close" /></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
 
+    </form>
 
-        // Validate DOB
-        var dob = event.DOB.value;
-        if (dob === "") {
-            alert("Please enter a valid Date of Birth.");
-            isValid = false;
-        }
-            //textOnly          textAndNumbers          numbersOnly
-
-
-        // Validate Nationality
-        var nationality = event.Nationality.value;
-        if (nationality === "" || !textOnly.test(nationality)) {
-            alert("Please enter a valid Nationality.");
-            isValid = false;
-        }
-
-        // Validate PermanentHomeAddress
-        var permanentHomeAddress = event.PermanentHomeAddress.value;
-        if (permanentHomeAddress === "" || !textAndNumbers.test(permanentHomeAddress)) {
-            alert("Please enter a valid Permanent Home Address.");
-            isValid = false;            
-        }
-
-
-        
-
-        // Validate Occupation
-        var occupation = event.Occupation.value;
-        if (occupation === "" || !textOnly.test(occupation)) {
-            alert("Please enter a valid Occupation.");
-            isValid = false;
-        }
-
-        // Validate SelfEmployed
-        var selfEmployed = event.SelfEmployed.value;
-        if (selfEmployed === "" || !textOnly.test(selfEmployed)) {
-            alert("Please enter a valid SelfEmployed status.");
-            isValid = false;
-        }
-
-        
-        // Validate MaritalStatus
-        var maritalStatus = event.MaritalStatus.value;
-        if (maritalStatus === "" || !textOnly.test(maritalStatus)) {
-            alert("Please enter a valid Marital Status.");
-            isValid = false;
-        }
-
-        // Validate NumberOfOccupants
-        var numberOfOccupants = event.NumberOfOccupants.value;
-        if (numberOfOccupants === "" || isNaN(numberOfOccupants) || numberOfOccupants <= 0) {
-            alert("Please enter a valid Number of Occupants.");
-            isValid = false;
-        }
-
-        // Validate NextOfKinFirstName
-        var nextOfKinFirstName = event.NextOfKinFirstName.value;
-        if (nextOfKinFirstName === "" || !textOnly.test(nextOfKinFirstName)) {
-            alert("Please enter a valid Next of Kin First Name.");
-            isValid = false;
-        }
-
-        // Validate NextOfKinLastName
-        var nextOfKinLastName = event.NextOfKinLastName.value;
-        if (nextOfKinLastName === "" || !textOnly.test(nextOfKinLastName)) {
-            alert("Please enter a valid Next of Kin Last Name.");
-            isValid = false;
-        }
-        // Validate NextOfKinAddress
-        var nextOfKinAddress = event.NextOfKinAddress.value;
-        if (nextOfKinAddress === "" || !textAndNumbers.test(nextOfKinAddress)) {
-            alert("Please enter a valid Next of Kin Address.");
-            isValid = false;
-        }
-
-        // Validate NextOfKinPhoneNumber
-        var nextOfKinPhoneNumber = event.NextOfKinPhoneNumber.value;
-        if (nextOfKinPhoneNumber === "" || !textAndNumbers.test(nextOfKinPhoneNumber)) {
-            alert("Please enter a valid Next of Kin Phone Number.");
-            isValid = false;
-        }
-
-
-        // Validate Guarantor1FirstName
-        var guarantor1FirstName = event.Guarantor1FirstName.value;
-        if (guarantor1FirstName === "" || !textOnly.test(guarantor1FirstName)) {
-            alert("Please enter a valid Guarantor 1 First Name.");
-            isValid = false;
-        }
-
-        // Validate Guarantor1LastName
-        var guarantor1LastName = event.Guarantor1LastName.value;
-        if (guarantor1LastName === "" || !textOnly.test(guarantor1LastName)) {
-            alert("Please enter a valid Guarantor 1 Last Name.");
-            isValid = false;
-        }
-
-        // Validate Guarantor1Address
-        var guarantor1Address = event.Guarantor1Address.value;
-        if (guarantor1Address === "" || !textAndNumbers.test(guarantor1Address)) {
-            alert("Please enter a valid Guarantor 1 Address.");
-            isValid = false;
-        }
-        
-        // Validate Guarantor1Occupation
-        var guarantor1Occupation = event.Guarantor1Occupation.value;
-        if (guarantor1Occupation === "" || !textOnly.test(guarantor1Occupation)) {
-            alert("Please enter a valid Guarantor 1 Occupation.");
-            isValid = false;
-        }
-
-        // Validate Guarantor1PhoneNumber
-        var guarantor1PhoneNumber = event.Guarantor1PhoneNumber.value;
-        if (guarantor1PhoneNumber === "" || !textAndNumbers.test(guarantor1PhoneNumber)) {
-            alert("Please enter a valid Guarantor 1 Phone Number.");
-            isValid = false;
-        }
-                
-        // Validate Guarantor2FirstName
-        var guarantor2FirstName = event.Guarantor2FirstName.value;
-        if (guarantor2FirstName === "" || !textOnly.test(guarantor2FirstName)) {
-            alert("Please enter a valid Guarantor 2 First Name.");
-            isValid = false;
-        }
-
-        // Validate Guarantor2LastName
-        var guarantor2LastName = event.Guarantor2LastName.value;
-        if (guarantor2LastName === "" || !textOnly.test(guarantor2LastName)) {
-            alert("Please enter a valid Guarantor 2 Last Name.");
-            isValid = false;
-        }
-        
-        // Validate Guarantor2Address
-        var guarantor2Address = event.Guarantor2Address.value;
-        if (guarantor2Address === "" || !textOnly.test(guarantor2Address)) {
-            alert("Please enter a valid Guarantor 2 Address.");
-            isValid = false;
-        }
-
-        // Validate Guarantor2Occupation
-        var guarantor2Occupation = event.Guarantor2Occupation.value;
-        if (guarantor2Occupation === "" || !textOnly.test(guarantor2Occupation)) {
-            alert("Please enter a valid Guarantor 2 Occupation.");
-            isValid = false;
-        }
-
-        // Validate Guarantor2PhoneNumber
-        var guarantor2PhoneNumber = event.Guarantor2PhoneNumber.value;
-        if (guarantor2PhoneNumber === "" || !textAndNumbers.test(guarantor2PhoneNumber)) {
-            alert("Please enter a valid Guarantor 2 Phone Number.");
-            isValid = false;
-        }
-
-        // Validate Declaration
-        var declaration = event.Declaration.value;
-        if (declaration === "" || !/^.{1,60}$/i.test(declaration)) {
-            alert("Please enter a valid Declaration.");
-            isValid = false;
-        }
-
-        return isValid;
-    }
+}
 
 
 
-
-
-    
-    //---- script for  self - employed  selection-
-    function showFields() {
-        document.getElementById("selfEmployedFields").style.display = "block";
-        document.getElementById("employerFields").style.display = "none";
-    }
-
-    function hideFields() {
-        document.getElementById("selfEmployedFields").style.display = "none";
-        document.getElementById("employerFields").style.display = "block";
-    }
-
-
-    //--- script for  self - employed  selection-- >
-    function toggleSpouseFields(select) {
-        var spouseFields = document.getElementById("spouseFields");
-        if (select.value === "Married") {
-            spouseFields.style.display = "block";
-        } else {
-            spouseFields.style.display = "none";
-        }
-    }
-</script>
 
 <div>
-    <video autoplay muted loop id="video-background">
-        <source src="~/img/backvideos.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
 
-
-    <form name="Application" method="post" class="form property_form transition-fade-down"  enctype="multipart/form-data" >
+</div>
+<div>
+    <form name="ReviewApplication" method="post" class="form property_form transition-fade-down" >
         <input type="button" name="populate values" value="populate values" onclick="populateValue()" class="btn" />
         <!--<form name="Application" method="post" class="form property_form transition-fade-down" onsubmit="return isFormValid(this);" enctype="multipart/form-data" action="ViewHTTPRequest">-->
         <input type="submit" name="Submit" value="Submit Lease Application" class="btn" />
@@ -334,15 +199,6 @@
                 <br />
                 <input type="text" name="TenantID" required maxlength="5"  />
                 <br />
-                <label for="Property ID">Which Property ID are you interested in:</label>
-                <br />
-                <input type="text" name="PropertyID" required maxlength="7" />
-                <br />
-
-                Email:
-                <input type="email" name="Email" />
-
-
 
                 <label for="FirstName">First Name</label>
                 <br />
@@ -355,7 +211,9 @@
                 <br />
                 TelePhone Number*:
                 <input type="tel" name="PhoneNumber" maxlength="14" />
-                
+                Email:
+                <input type="email" name="Email" />
+
                 Date Of Birth*:
                 <input type="date" name="DOB" />
 
@@ -610,3 +468,4 @@
         </fieldset>        
     </form>
 </div>
+ *@
