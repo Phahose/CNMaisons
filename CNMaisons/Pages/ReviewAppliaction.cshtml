@@ -1,4 +1,4 @@
-﻿@* @page
+﻿@page
 @model CNMaisons.Pages.ReviewModel
 @{
     Layout = "_Header";
@@ -11,23 +11,37 @@
 <form name="FindPendingApplicationForm" method="post">
     <h4>Review Lease Applications</h4>
     <div style="display: flex; align-content: center">
-        <table>
-            <tr>
+        <table style="border-collapse: collapse; text-align: left; width: 100%;">
+            <thead>
+                <tr style="border: 1px solid #ddd; background-color:black;">
+                    <th style="border: 1px solid #ddd;">ApprovalStatus</th>
+                    <th style="border: 1px solid #ddd;">TenantID</th>
+                    <th style="border: 1px solid #ddd;">PropertyID</th>
+                    <th style="border: 1px solid #ddd;">FirstName</th>
+                    <th style="border: 1px solid #ddd;">LastName</th>                 
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var record in Model.ListOfTenantsPendingReview)
+                {
+                    <tr>
+                        <td style="border: 1px solid #ddd;">@record.TenantID</td>
+                        <td style="border: 1px solid #ddd;">@record.PropertyID</td>
+                        <td style="border: 1px solid #ddd;">@record.FirstName</td>
+                        <td style="border: 1px solid #ddd;">@record.LastName</td>
 
-                <td>Enter MembershipID:</td>
-                <td><input type="text" asp-for="findMemberID" placeholder="MembershipID." maxlength="25" /></td>
-            </tr>
+                    </tr>
+                }
+            </tbody></tr>
             <tr>
                 <td><input type="submit" name="Submit" value="Find" /></td>
                 <td><input type="submit" name="Submit" value="Close" /></td>
             </tr>
-            <tr>
-                <td><span style="font-size:smaller;color:red;font-style:italic">@Model.Message</span></td>
-            </tr>
+           
         </table>
     </div>
 </form>
-
+@* 
 @if (Model.Message == "Prospective Member details are shown below.")
 {
 

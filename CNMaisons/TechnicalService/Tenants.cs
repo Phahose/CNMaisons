@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using System.Data;
 using CNMaisons.Domain;
+using Microsoft.AspNetCore.Rewrite;
 
 namespace CNMaisons.TechnicalService
 {
@@ -131,5 +132,53 @@ namespace CNMaisons.TechnicalService
             return Success;
         }
 
+        public List<Tenant> RetrievePendingLeaseApplication()
+        {
+            List<Tenant> list = new List<Tenant>();
+
+            //connection
+            SqlConnection MyDataSource = new();
+            MyDataSource.ConnectionString = connectionString;
+            MyDataSource.Open();
+
+            //Command
+            SqlCommand MyCommand = new()
+            {
+                Connection = MyDataSource,
+                CommandType = CommandType.StoredProcedure,
+                CommandText = "GetPendingLeaseApplication"
+            };
+
+            SqlDataReader MyDataReader = MyCommand.ExecuteReader();
+
+
+            List<Tenant> myTenantPendingReviewList = new();
+            Tenant aTenantPendingReview =new();
+
+            if (MyDataReader.HasRows)
+            {
+                while (MyDataReader.Read())
+                {
+                    aTenantPendingReview = new()
+                    { 
+                        ApprovalStatus = (string)MyDataReader["ApprovalStatus"],
+                        TenantID = (string)MyDataReader["TenantID"],
+                        PropertyID = (string)MyDataReader["PropertyID"],
+                        FirstName = (string)MyDataReader["FirstName"],
+                        LastName = (string)MyDataReader["LastName"],
+                    };
+                    myTenantPendingReviewList.Add(aTenantPendingReview);
+                }
+            }
+
+            return myTenantPendingReviewList;
+        }
+
     }
+
+
+
 }
+
+
+

@@ -84,5 +84,13 @@ namespace CNMaisons.Controller
             Success = tenatManager.AddLeaseApplication(aTenant);
             return Success;
         }
+        public List<Tenant> GetPendingLeaseApplication()
+        {
+            List<Tenant> TenantsPendingApplicationReview=new();
+            Tenants tenatManager = new();
+            TenantsPendingApplicationReview = tenatManager.RetrievePendingLeaseApplication();
+            return TenantsPendingApplicationReview;
+        }
+        
     }
 }
