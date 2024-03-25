@@ -1,5 +1,6 @@
 ﻿using CNMaisons.Domain;
 using CNMaisons.TechnicalService;
+using Microsoft.AspNetCore.Identity;
 
 namespace CNMaisons.Controller
 {
@@ -84,5 +85,13 @@ namespace CNMaisons.Controller
         }
 
 
-    }
+        public String ReviewApplication(String findTenantID, String approvalStatus)
+        {
+             String Success;
+            Tenants RequestManager = new();
+            Success = RequestManager.UpdateApplication(findTenantID, approvalStatus);
+            return Success;
+        }
+
+}
 }

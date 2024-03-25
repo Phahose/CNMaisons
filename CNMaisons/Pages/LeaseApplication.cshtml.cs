@@ -485,7 +485,6 @@ namespace CNMaisons.Pages
                     PhoneNumber = PhoneNumber,
                     Email = Email,
                     DOB = DOB,
-                    Password = Password,
                     Nationality = Nationality,
                     StateofOrigin = StateofOrigin,
                     LGA = LGA,
@@ -537,7 +536,7 @@ namespace CNMaisons.Pages
                 string Confirmation = RequestDirector.SubmitLeaseApplication(aTenant);
                 if (Confirmation == "Successful!")
                 {
-                    Message = "Tenant 's Lease application was successful saved and Login Account created.";
+                    Message = "Tenant's Lease application was successful saved.";
                     User newUser = new();
                     newUser.FirstName = HttpContext.Session.GetString("FirstName1") ?? string.Empty;
                     newUser.LastName = HttpContext.Session.GetString("LastName1") ?? string.Empty;
@@ -545,17 +544,16 @@ namespace CNMaisons.Pages
                     newUser.Password = HttpContext.Session.GetString("Password1") ?? string.Empty;
                     newUser.UserSalt = "placeholder";
                     newUser.Role = "Tenant";
-                    newUser.DefaultPassword = "1"; 
+                    newUser.DefaultPassword = "0"; // 0 because user typed it by himself
 
                     String UserAccountConfirmation = RequestDirector.CreateUserAccount(newUser);
                     if (UserAccountConfirmation == "Successful!")
                     {
-                        int s = 10;
-                        //what to do
+                        Message = "Tenant's Lease application was successful saved and Login Account created.";
                     }
                     else
                     {
-                        int t = 10;
+                        Message = "Tenant's Lease application was successful saved. Login WAS NOT created. Admin need to create one for him";
                     }
 
 
