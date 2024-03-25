@@ -1,17 +1,11 @@
 using CNMaisons.Controller;
+using CNMaisons.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using CNMaisons.Domain;
-using System.Security.Cryptography.X509Certificates;
-using Microsoft.AspNetCore.Mvc.ViewFeatures.Buffers;
-using CNMaisons.TechnicalService;
-using Microsoft.AspNetCore.Mvc.Razor;
 
 namespace CNMaisons.Pages
 {
-
-
-    public class ReviewModel : PageModel
+    public class ViewTenantModel : PageModel
     {
         public bool ViewFormNow = false;
         public string Message { get; set; } = string.Empty;
@@ -51,7 +45,7 @@ namespace CNMaisons.Pages
             switch (Submit)
             {
                 case "Close":
-                    return RedirectToPage("/Index");
+                    return RedirectToPage("Index");                    
                     break;
 
                 case "Find":
@@ -61,9 +55,9 @@ namespace CNMaisons.Pages
                         if (ModelState.IsValid)
                         {
                             SetSessionString("FindTenantID1", FindTenantID);  // save content for furtre retreival
-                            
+
                             CNMS RequestDirector = new();
-                            tenantForReview = RequestDirector.ViewTenant(FindTenantID);                            
+                            tenantForReview = RequestDirector.ViewTenant(FindTenantID);
                             if (tenantForReview != null)
                             {
                                 ViewFormNow = true;
@@ -73,31 +67,6 @@ namespace CNMaisons.Pages
                         }
                     }
                     return Page();
-                    break;
-
-                case "Submit Review":
-                    if (ApprovalStatus  !="Pending")
-                    {
-                        ViewFormNow = false;
-                        if (ModelState.IsValid)
-                        {
-                            FindTenantID = HttpContext.Session.GetString("FindTenantID1") ?? string.Empty;
-                            
-                            CNMS RequestDirector = new();
-                            String Confirmation = RequestDirector.ReviewApplication(FindTenantID, ApprovalStatus);                            
-                            if (Confirmation == "Successful!")
-                            {
-                                ViewFormNow = false;
-                                Message = "Tenant's Lease application reviewed.";
-                                OnGet();
-                                return Page();
-                            }
-                        }
-
-
-                    }
-                    return Page(); 
-                    break;
             }
             return Page();
         }
@@ -115,4 +84,3 @@ namespace CNMaisons.Pages
 
     }
 }
-

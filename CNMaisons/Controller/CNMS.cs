@@ -68,6 +68,15 @@ namespace CNMaisons.Controller
             Success = RequestManager.AddLeaseApplication(aTenant);
             return Success;
         }
+
+        public string UpdateTenant(Tenant aTenant)
+        {
+            string Success;
+            Tenants RequestManager = new();
+            Success = RequestManager.ModifyTenant(aTenant);
+            return Success;
+        }
+
         public List<Tenant> GetPendingLeaseApplication()
         {
             List<Tenant> TenantsPendingApplicationReview = new();
