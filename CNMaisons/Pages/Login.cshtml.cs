@@ -25,9 +25,9 @@ namespace CNMaisons.Pages
         public async Task<IActionResult> OnPost()
         {
             AlertClass = "alert_error";
-            BCS bCS = new BCS();
+            CNMPMS RequestDirector= new CNMPMS();
             User existingUser = new();
-            existingUser = bCS.GetUserByEmail(Email);
+            existingUser = RequestDirector.GetUserByEmail(Email);
 
             // Convert DB Data Back to byte[] form because they werr stored in the DB as strings
             byte[] salt = Convert.FromBase64String(existingUser.UserSalt);

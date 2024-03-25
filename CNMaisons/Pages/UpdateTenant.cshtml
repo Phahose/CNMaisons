@@ -1,0 +1,247 @@
+﻿@page
+@model CNMaisons.Pages.UpdateTenantModel
+@{
+    Layout = "_Header";
+    ViewData["Title"] = "Update Tenant";
+    var emailPattern = new System.Text.RegularExpressions.Regex(@"^[^\s@]+@[^\s@]+\.[^\s@]+$");
+
+}
+
+
+
+<script src="~/libraries/jquery/jquery.js"></script>
+<script src="~/libraries/jquery-validate/jquery.validate.js"></script>
+<script src="~/libraries/jquery-validate-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+<script type="text/javascript">
+    function copyTenantID(tenantID) {
+        document.querySelector('input[name="FindTenantID"]').value = tenantID;
+    }
+</script>
+
+<form name="FindPendingApplicationForm" method="post">
+    <h4>Update Tenant</h4>
+    <div style="display: flex; align-content: center">
+        <table style="border-collapse: collapse; text-align: left; width: 100%;">
+            <tr>
+                <td>Tenant ID</td>
+                <td><input type="text" name="FindTenantID" /></td>
+            </tr>
+            <tr>
+                <td><input type="submit" name="Submit" value="Find" class="btn" /></td>                
+            </tr>
+
+        </table>
+    </div>
+</form>
+
+@if (Model.ViewFormNow == true)
+{
+
+    <form name="Application" method="post" class="form property_form transition-fade-down" enctype="multipart/form-data">
+        <span style="font-size: larger; font-style: italic;">@Model.Message</span>
+        <table>
+            <fieldset>
+                <legend>Declaration, Signature, and Approval</legend>
+
+                <div>
+                    <label>Approval Status:   </label><br />
+                    <input type="text" name="ApprovalStatus" value="@Model.tenantForReview.ApprovalStatus" /><br />
+
+                    <label>Declaration:          </label><br />
+                    <input type="text" name="Declaration" value="@Model.tenantForReview.Declaration" /><br />
+
+                    <label>Your Signature:     </label><br />
+                    <input type="text" name="YourSignature" value="@Model.tenantForReview.YourSignature" />
+                    <br />                    
+                    <br />
+
+                    <input type="submit" name="Submit" value="Close" class="btn" />
+
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Personal Information</legend>
+                <div>
+                    <label>Tenant ID:                    </label><br />
+                    <input type="text" name="TenantID" value="@Model.tenantForReview.TenantID" /><br />
+
+                    <label>Property ID:                </label><br />
+                    <input type="text" name="Property ID" value="@Model.tenantForReview.PropertyID" /><br />
+
+                    <label>First Name:                 </label><br />
+                    <input type="text" name="FirsrName" value="@Model.tenantForReview.FirstName" /><br />
+
+                    <label>Last Name:                  </label><br />
+                    <input type="text" name="LastName" value="@Model.tenantForReview.LastName" /><br />
+
+                    <label>Phone Number:         </label><br />
+                    <input type="tel" name="PhoneNumber" value="@Model.tenantForReview.PhoneNumber" /><br />
+
+                    <label>Email:                          </label><br />
+                    <input type="email" name="Email" value="@Model.tenantForReview.Email" /><br />
+
+                    <label>Date of Birth:             </label><br />
+                    <input type="date" name="DOB" value="@Model.tenantForReview.DOB" /><br />
+
+                    <label>Nationality:                </label><br />
+                    <input type="text" name="Nationality" value="@Model.tenantForReview.Nationality" /><br />
+
+                    <label>State of Origin:          </label><br />
+                    <input type="text" name="StateofOrigin" value="@Model.tenantForReview.StateofOrigin" /><br />
+
+                    <label>Local Govt. Area:      </label><br />
+                    <input type="text" name ="LGA" value="@Model.tenantForReview.LGA" /><br />
+
+                    <label>Home Town:              </label><br />
+                    <input type="text" name="HomeTown" value="@Model.tenantForReview.HomeTown" /><br />
+
+                    <label>Permanent Home Add: </label><br />
+                    <input type="text" name="PermanentHomeAdd" value="@Model.tenantForReview.PermanentHomeAddress" /><br />
+                </div>
+            </fieldset>
+
+
+
+
+
+            <fieldset>
+                <legend>Occupation Info</legend>
+                <div>
+                    <label>Occupation: </label><br />
+                    <input type="text" name="Occupation" value="@Model.tenantForReview.Occupation" /><br />
+
+                    <label>Self Employed: </label><br />
+                    <input type="text" name="SelfEmployed" value="@Model.tenantForReview.SelfEmployed" /><br />
+
+                    <label>Business Registration Number: </label><br />
+                    <input type="text" name="BusinessRegistrationNumber" value="@Model.tenantForReview.BusinessRegistrationNumber" /><br />
+
+                    <label>Coporate Affairs Certificate: </label><br />
+                    <input type="text" name="CoporateAffairsCertificate" value="@Model.tenantForReview.CoporateAffairsCertificate" /><br />
+
+                    <label>Name of Employer: </label><br />
+                    <input type="text" name="NameOfEmployer" value="@Model.tenantForReview.NameofEmployer" /><br />
+
+                    <label>Address Of Employer: </label><br />
+                    <input type="text" name="AddressOfEmployer" value="@Model.tenantForReview.AddressOfEmployer" /><br />
+
+                    <label>Length On Job: </label><br />
+                    <input type="text" name="LengthOnJob" value="@Model.tenantForReview.LengthOnJob" /><br />
+
+                    <label>Current Position Held: </label><br />
+                    <input type="text" name="CurrentPositionHeld" value="@Model.tenantForReview.CurrentPositionHeld" /><br />
+
+                    <label>Nature Of Job: </label><br />
+                    <input type="text" name="NatureOfJob" value="@Model.tenantForReview.NatureOfJob" /><br />
+
+                </div>
+            </fieldset>
+
+
+
+
+            <fieldset>
+                <legend>Past Rental Information</legend>
+                <div>
+                    <label>Former Residence Address: </label><br />
+                    <input type="text" name="FormerResidenceAddress" value="@Model.tenantForReview.FormerResidenceAddress" /><br />
+
+                    <label>Reason For Moving: </label><br />
+                    <input type="text" name="ReasonForMoving" value="@Model.tenantForReview.ReasonForMoving" /><br />
+
+                    <label>Length Of Stay At Old Residence: </label><br />
+                    <input type="text" name="LengthOfStayAtOldResidence" value="@Model.tenantForReview.LengthOfStayAtOldResidence" /><br />
+
+                    <label>Name Of Former Resident Manager: </label><br />
+                    <input type="text" name="NameOfFormerResidentManager" value="@Model.tenantForReview.NameOfFormerResidentManager" /><br />
+
+                    <label>Objections To Reasons For Moving: </label><br />
+                    <input type="text" name="ObjectionsToReasonsForMoving" value="@Model.tenantForReview.ObjectionsToReasonsForMoving" /><br />
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Marital Information</legend>
+                <div>
+                    <label>Marital Status: </label><br />
+                    <input type="text" name="MaritalStatus" value="@Model.tenantForReview.MaritalStatus" /><br />
+
+                    <label>Spouse First Name: </label><br />
+                    <input type="text" name="SpouseFirstName" value="@Model.tenantForReview.SpouseFirstName" /><br />
+
+                    <label>Spouse Last Name: </label><br />
+                    <input type="text" name="SpouseLastName" value="@Model.tenantForReview.SpouseLastName" /><br />
+
+                    <label>Spouse Occupation: </label><br />
+                    <input type="text" name="SpouseOccupation" value="@Model.tenantForReview.SpouseOccupation" /><br />
+
+                    <label>Number Of Occupants: </label><br />
+                    <input type="text" name="NumberOfOccupants" value="@Model.tenantForReview.NumberOfOccupants" /><br />
+
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Next of Kin Information</legend>
+                <div>
+                    <label>Next Of Kin First Name: </label><br />
+                    <input type="text" name="NextOfKinFirstName" value="@Model.tenantForReview.NextOfKinFirstName" /><br />
+
+                    <label>Next Of Kin Last Name: </label><br />
+                    <input type="text" name="NextOfKinLastName" value="@Model.tenantForReview.NextOfKinLastName" /><br />
+
+                    <label>Next Of Kin Address: </label><br />
+                    <input type="text" name="NextOfKinAddress" value="@Model.tenantForReview.NextOfKinAddress" /><br />
+
+                    <label>Next Of Kin Phone Number: </label><br />
+                    <input type="text" name="NextOfKinPhoneNumber" value="@Model.tenantForReview.NextOfKinPhoneNumber" /><br />
+
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Guarantor Information</legend>
+                <div>
+                    <label>Guarantor1 First Name: </label><br />
+                    <input type="text" name="Guarantor1FirstName" value="@Model.tenantForReview.Guarantor1FirstName" /><br />
+
+                    <label>Guarantor1 Last Name: </label><br />
+                    <input type="text" name="Guarantor1LastName" value="@Model.tenantForReview.Guarantor1LastName" /><br />
+
+                    <label>Guarantor1 Address: </label><br />
+                    <input type="text" name="Guarantor1Address" value="@Model.tenantForReview.Guarantor1Address" /><br />
+
+                    <label>Guarantor1 Occupation: </label><br />
+                    <input type="text" name="Guarantor1Occupation" value="@Model.tenantForReview.Guarantor1Occupation" /><br />
+
+                    <label>Guarantor1 Phone Number: </label><br />
+                    <input type="text" name="Guarantor1PhoneNumber" value="@Model.tenantForReview.Guarantor1PhoneNumber" /><br />
+
+                    <label>Guarantor1 Alternate Phone Number: </label><br />
+                    <input type="text" name="Guarantor1AlternatePhoneNumber" value="@Model.tenantForReview.Guarantor1AlternatePhoneNumber" /><br />
+
+                    <label>Guarantor2 First Name: </label><br />
+                    <input type="text" name="Guarantor2FirstName" value="@Model.tenantForReview.Guarantor2FirstName" /><br />
+
+                    <label>Guarantor2 Last Name: </label><br />
+                    <input type="text" name="Guarantor2LastName" value="@Model.tenantForReview.Guarantor2LastName" /><br />
+
+                    <label>Guarantor2 Address: </label><br />
+                    <input type="text" name="Guarantor2Address" value="@Model.tenantForReview.Guarantor2Address" /><br />
+
+                    <label>Guarantor2 Occupation: </label><br />
+                    <input type="text" name="Guarantor2Occupation" value="@Model.tenantForReview.Guarantor2Occupation" /><br />
+
+                    <label>Guarantor2 Phone Number: </label><br />
+                    <input type="text" name="Guarantor2PhoneNumber" value="@Model.tenantForReview.Guarantor2PhoneNumber" /><br />
+
+                    <label>Guarantor2 Alternate Phone Number: </label><br />
+                    <input type="text" name="Guarantor2AlternatePhoneNumber" value="@Model.tenantForReview.Guarantor2AlternatePhoneNumber" /><br />
+                    <br />
+                    <input type="submit" name="Submit" value="Close" class="btn" />
+                </div>
+            </fieldset>
+        </table>
+    </form>
+
+}

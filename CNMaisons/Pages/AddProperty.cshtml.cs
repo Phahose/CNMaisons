@@ -5,9 +5,11 @@ using CNMaisons.Domain;
 using CNMaisons.Controller;
 using System.Text.RegularExpressions;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CNMaisons.Pages
 {
+    [Authorize]
     public class AddPropertyModel : PageModel
     {
         [BindProperty]
@@ -131,7 +133,7 @@ namespace CNMaisons.Pages
                 byte[] image9Bytes = ConvertToByteArray(Image9);
                 byte[] image10Bytes = ConvertToByteArray(Image10);
 
-                BCS controller = new();
+                CNMPMS controller = new();
                 property = controller.GetPropertyByID(PropertyID);
 
                 if (property.PropertyID != "")

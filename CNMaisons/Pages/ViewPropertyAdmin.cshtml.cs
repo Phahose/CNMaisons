@@ -1,10 +1,12 @@
 using CNMaisons.Controller;
 using CNMaisons.Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace CNMaisons.Pages
 {
+    [Authorize]
     public class ViewPropertyAdminModel : PageModel
     {
         [BindProperty]
@@ -27,14 +29,14 @@ namespace CNMaisons.Pages
        
         public void OnGet()
         {
-            BCS controller = new BCS();
+            CNMPMS controller = new CNMPMS();
             PropertyList = controller.GetProperties();
             DisplayedPropertyList = PropertyList.ToList();
         }
 
         public IActionResult OnPost()
         {
-            BCS controller = new BCS();
+            CNMPMS controller = new CNMPMS();
             PropertyList = controller.GetProperties();
             DisplayedPropertyList = PropertyList.ToList();
             switch (Submit)
@@ -64,7 +66,7 @@ namespace CNMaisons.Pages
             
                 case "Update Property":
                     HttpContext.Session.Clear();
-                    controller = new BCS();
+                    controller = new CNMPMS();
                     if (PropertyID != null)
                     {
                         HttpContext.Session.SetString("PropertyID", PropertyID);

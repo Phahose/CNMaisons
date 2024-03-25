@@ -16,7 +16,7 @@ namespace CNMaisons.Pages
                 PropertyID = HttpContext.Session.GetString("PropertyID")!;
             }
 
-            BCS controller = new BCS();
+            CNMPMS controller = new CNMPMS();
             Property = controller.GetPropertyByID(PropertyID);
         }
     }

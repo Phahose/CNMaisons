@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 
 namespace CNMaisons.Controller
 {
-    public class BCS
+    public class CNMPMS
     {
         public bool AddProperty(Property property)
         {
@@ -46,35 +46,47 @@ namespace CNMaisons.Controller
         public User GetUserByEmail(string existingUseremail)
         {
             User user = new User();
-            UsersManager controll = new UsersManager();
-            user = controll.GetUserByEmail(existingUseremail);
+            Users RequestManager = new Users();
+            user = RequestManager.GetUserByEmail(existingUseremail);
             return user;
         }
 
-        public bool AddUser(User user)
+        public bool CreateUserAccount(User aUserAccount)
         {
-            bool success = false;
-            UsersManager users = new();
-            byte[] salt = new byte[128/8];
-            using (var rngCsp = new RNGCryptoServiceProvider())
-            {
-                rngCsp.GetNonZeroBytes(salt);
-            }
-            byte[] hashedPassword = HashPasswordWithSalt(user.Password, salt);
 
-            // Convert the salt and hashed password to Base64 for storage
-            string saltBase64 = Convert.ToBase64String(salt);
-            string hashedPasswordBase64 = Convert.ToBase64String(hashedPassword);
-            user.Password = hashedPasswordBase64;
-            user.UserSalt = saltBase64;
-            success = users.AddUser(user);
-            return success;
+            bool Success;
+            Users RequestManager = new();
+            Success = RequestManager.AddUser(aUserAccount);
+            return Success;
         }
 
-        private static byte[] HashPasswordWithSalt(string password, byte[] salt)
+        public string SubmitLeaseApplication(Tenant aTenant)
         {
-            // Hash the password with PBKDF2 using HMACSHA256
-            return new Rfc2898DeriveBytes(password, salt, 100000, HashAlgorithmName.SHA256).GetBytes(32);
+            string Success;
+            Tenants tenatManager = new();
+            Success = tenatManager.AddLeaseApplication(aTenant);
+            return Success;
+        }
+        public List<Tenant> GetPendingLeaseApplication()
+        {
+            List<Tenant> TenantsPendingApplicationReview=new();
+            Tenants tenatManager = new();
+            TenantsPendingApplicationReview = tenatManager.RetrievePendingLeaseApplication();
+            return TenantsPendingApplicationReview;
+        }
+        public Tenant ViewTenant(String aTenantID)
+        {
+            Tenant aTenants = new();
+            Tenants RequestManager = new();
+            aTenants = RequestManager.GetTenantLeaseApplicationForReview(aTenantID);
+            return aTenants;
+        }
+        public String ReviewApplication(String findTenantID, String approvalStatus)
+        {
+            String Success;
+            Tenants RequestManager = new();
+            Success = RequestManager.UpdateApplication(findTenantID, approvalStatus);
+            return Success;
         }
     }
 }

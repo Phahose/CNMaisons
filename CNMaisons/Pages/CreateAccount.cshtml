@@ -1,0 +1,94 @@
+﻿@page
+@model CNMaisons.Pages.CreateAccountModel
+@{
+    Layout = "_Header";
+    ViewData["Title"] = "Create Account";
+}
+<div class="login_page">
+    <video autoplay muted loop id="video-background">
+        <source src="~/img/login.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <form name="Login" method="post" class="form loginForm">
+        <br />
+        <span style="font-size: larger; font-style: italic;">@Model.errorMessage</span>
+        <fieldset>
+            <legend>Create New User</legend>
+            <table>
+                <tr>
+                    <td>First Name:</td>
+                    <td>
+                        <input type="text" name="UserFirstName" required maxlength="30" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Last Name:</td>
+                    <td>
+                        <input type="text" name="LastName" required maxlength="30" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Email:</td>
+                    <td>
+                        <input type="email" name="Email" required maxlength="100"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Password:</td>
+                    <td>
+                        <input type="password" name="Password" required maxlength="100"/>
+                    </td>
+                </tr>
+
+                
+                <tr>
+                    <td>Select Role:</td>
+                    <td>
+                        <select asp-for="Role" class="form-control" required>
+                            <option value="0">--Make-a-Selection--</option>
+                            <option value="Landlord">Landlord</option>
+                            <option value="Staff">Staff</option>                            
+                            <option value="Tenant">Tenant</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <table style="border-collapse: collapse; width: auto; text-align: left">
+                        <thead>
+                            <tr style="border: 1px solid #ddd; background-color: black;">
+                                <th style="border: 1px solid #ddd;">Status</th>
+                                <th style="border: 1px solid #ddd;">True</th>
+                                <th style="border: 1px solid #ddd;">False</th>
+                            </tr>
+                        </thead>
+                        <tdody>
+                        <!--
+                                    <tr>
+                                    <td style="border: 1px solid #ddd;">Deactivate Account Status</td>
+                                    <td style="border: 1px solid #ddd;"><input type="radio"  value="true">Deactivated </td>
+                                    <td style="border: 1px solid #ddd;"><input type="radio" value="false" checked>Not Deactivated </td>
+                                </tr>
+
+                        -->
+                            <tr>
+                                <td style="border: 1px solid #ddd;">Default Password</td>
+                                <td style="border: 1px solid #ddd;"><input type="radio" value="true" name="DefaultPassword" checked>Set to default</td>
+                                <td style="border: 1px solid #ddd;"><input type="radio" value="false" name="DefaultPassword">Not set to default </td>
+                            </tr>
+                        </tdody>
+                    </table>
+                </tr>
+
+                <tr>
+                    <td>
+                        <button name="Submit" type="submit">Submit</button>
+                        @Model.Message
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </form>
+</div>

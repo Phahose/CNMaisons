@@ -8,9 +8,11 @@ using System.Diagnostics.Metrics;
 using System.Text.RegularExpressions;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CNMaisons.Pages
 {
+    [Authorize]
     public class UpdatePropertyModel : PageModel
     {
         public string ErrorMessage {get; set; } = string.Empty;
@@ -66,7 +68,7 @@ namespace CNMaisons.Pages
                 PropertyID = HttpContext.Session.GetString("PropertyID")!;
             }
 
-            BCS controller = new BCS();
+            CNMPMS controller = new CNMPMS();
             Property = controller.GetPropertyByID(PropertyID);
         }
         public void OnPost()
@@ -76,7 +78,7 @@ namespace CNMaisons.Pages
                 PropertyID = HttpContext.Session.GetString("PropertyID")!;
             }
 
-            BCS controller = new BCS();
+            CNMPMS controller = new CNMPMS();
             Property = controller.GetPropertyByID(PropertyID);
             ModelState.Clear();
             #region Validation
