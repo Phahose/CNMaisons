@@ -24,9 +24,10 @@ namespace CNMaisons.Pages
 
         public async Task<IActionResult> OnPost()
         {
-            CNMPMS bCS = new CNMPMS();
-            Employee existingUser = new();
-            existingUser = bCS.GetUserByEmail(Email);
+            AlertClass = "alert_error";
+            CNMS RequestDirector= new CNMS();
+            User existingUser = new();
+            existingUser = RequestDirector.GetUserByEmail(Email);
 
             // Convert DB Data Back to byte[] form because they werr stored in the DB as strings
             byte[] salt = Convert.FromBase64String(existingUser.UserSalt);
@@ -39,9 +40,9 @@ namespace CNMaisons.Pages
             Password = enteredHashedPasswordBase64;
 
             string UserEmail = existingUser.Email;
-            string UserRole = existingUser.Role;
+            //string UserName = existingUser.MemberFirstName;
             string UserPassword = existingUser.Password;
-            string UserSalt = existingUser.UserSalt;
+            string UserRole = existingUser.UserSalt;
 
             if (Email == UserEmail)
             {
@@ -51,11 +52,11 @@ namespace CNMaisons.Pages
                     var claims = new List<Claim>
                     {
                         new Claim(ClaimTypes.Email, Email),
-                        new Claim(ClaimTypes.Role, UserSalt),
+                        new Claim(ClaimTypes.Role, UserRole),
                     };
                     var claimsIdentity = new ClaimsIdentity(claims,
                     CookieAuthenticationDefaults.AuthenticationScheme);
-                    claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, UserSalt));
+                    claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, UserRole));
                     AuthenticationProperties authProperties = new AuthenticationProperties
                     {
                         #region
@@ -81,18 +82,9 @@ namespace CNMaisons.Pages
                     new ClaimsPrincipal(claimsIdentity), authProperties);
                     Message = "Login Success";
                     HttpContext.Session.SetString("Email", Email);
-                    if (UserRole == "Tennant")
-                    {
-                        return RedirectToPage("/TennantHome");
-                    }
-                    else
-                    {
-                        return RedirectToPage("/StaffHome");
-                    }
-                    
+                    return RedirectToPage("/TenantHome");
                 }
             }
-            AlertClass = "error_message";
             Message = "Invalid attempt";
             return Page();
         }

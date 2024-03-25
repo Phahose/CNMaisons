@@ -1,16 +1,15 @@
 ﻿namespace CNMaisons.Domain
 {
-    public class Employee
+    public class User
     {
-        public int EmployeeID { get; set; }
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
-        public int PhoneNumber { get; set; } 
         public string Email { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
-        public string Role {  get; set; } = string.Empty;   
-        public int AccountStatus { get; set; }
+        public string Role { get; set; } = string.Empty;
+        public string DeactivateAccountStatus { get; set; } = string.Empty;
+        public string DefaultPassword { get; set; } = string.Empty;
         public string UserSalt { get; set; } = string.Empty;
-        public DateTime DateJoined { get; set; } 
+        public DateTime DateOfCreation { get; set; }
     }
 }
