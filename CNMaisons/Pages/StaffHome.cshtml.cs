@@ -15,7 +15,7 @@ namespace CNMaisons.Pages
         public void OnGet()
         {      
            Email = HttpContext.Session.GetString("Email")!;
-           BCS controller = new BCS();
+           CNMPMS controller = new CNMPMS();
            Employee = controller.GetUserByEmail(Email);
         }
     }

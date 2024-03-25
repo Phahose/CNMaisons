@@ -50,10 +50,10 @@ namespace CNMaisons.Pages
                 Password = Password,
                 Role = Role,
             };
-            BCS controller = new BCS();
+            CNMPMS RequestDirector = new CNMPMS();
 
             Employee searchEmployee = new();
-            searchEmployee = controller.GetUserByEmail(Email);
+            searchEmployee = RequestDirector.GetUserByEmail(Email);
 
 
             if (searchEmployee.Email != "")
@@ -63,7 +63,7 @@ namespace CNMaisons.Pages
             }
             else
             {
-                success = controller.AddEmployee(employee);
+                success = RequestDirector.AddEmployee(employee);
                 if (success == true)
                 {
                     SuccessClass = "success_message";

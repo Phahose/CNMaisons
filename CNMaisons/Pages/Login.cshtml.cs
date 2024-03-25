@@ -24,7 +24,7 @@ namespace CNMaisons.Pages
 
         public async Task<IActionResult> OnPost()
         {
-            BCS bCS = new BCS();
+            CNMPMS bCS = new CNMPMS();
             Employee existingUser = new();
             existingUser = bCS.GetUserByEmail(Email);
 

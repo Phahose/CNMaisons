@@ -17,7 +17,7 @@ namespace CNMaisons.Pages
         public string SuccessMessage { get; set; } = string.Empty;
         public void OnGet()
         {
-            BCS controller = new BCS();
+            CNMPMS controller = new CNMPMS();
             PropertyList = controller.GetProperties();
             DisplayedPropertyList = PropertyList.ToList();
         }
@@ -33,7 +33,7 @@ namespace CNMaisons.Pages
                 else if (FormType == "InfoForm")
                 {
                     HttpContext.Session.Clear();
-                    BCS controller = new BCS();
+                    CNMPMS controller = new CNMPMS();
                     if (PropertyID != null)
                     {
                         HttpContext.Session.SetString("PropertyID", PropertyID);

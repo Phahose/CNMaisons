@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 
 namespace CNMaisons.Controller
 {
-    public class BCS
+    public class CNMPMS
     {
         public bool AddProperty(Property property)
         {

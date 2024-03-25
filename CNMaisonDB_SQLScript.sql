@@ -173,18 +173,8 @@ AS
 	BEGIN 
 		SELECT * FROM Users WHERE Email = @Email AND DeactivateAccountStatus = 0
 	END
+Drop Procedure GetUserByEmail
 
-CREATE PROCEDURE AddUser
-    @Email VARCHAR(100),
-    @Password VARCHAR(100),
-    @Role VARCHAR(25),
-    @DefaultPassword NVARCHAR(255),
-    @UserSalt NVARCHAR(255)
-AS
-BEGIN
-    INSERT INTO Users (Email, Password, Role, DeactivateAccountStatus, DefaultPassword, UserSalt, DateOfCreation)
-    VALUES (@Email, @Password, @Role, 0, @DefaultPassword, @UserSalt, GETDATE())
-END
 
 
 CREATE PROCEDURE UpdateProperty

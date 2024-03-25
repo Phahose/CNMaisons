@@ -68,7 +68,7 @@ namespace CNMaisons.Pages
                 PropertyID = HttpContext.Session.GetString("PropertyID")!;
             }
 
-            BCS controller = new BCS();
+            CNMPMS controller = new CNMPMS();
             Property = controller.GetPropertyByID(PropertyID);
         }
         public void OnPost()
@@ -78,7 +78,7 @@ namespace CNMaisons.Pages
                 PropertyID = HttpContext.Session.GetString("PropertyID")!;
             }
 
-            BCS controller = new BCS();
+            CNMPMS controller = new CNMPMS();
             Property = controller.GetPropertyByID(PropertyID);
             ModelState.Clear();
             #region Validation
