@@ -11,12 +11,12 @@ namespace CNMaisons.Pages
     public class StaffHomeModel : PageModel
     {
         public string Email { get; set; } = string.Empty;
-        public Employee Employee { get; set; } = new Employee();
+        public User Users { get; set; } = new User();
         public void OnGet()
         {      
            Email = HttpContext.Session.GetString("Email")!;
            CNMPMS controller = new CNMPMS();
-           Employee = controller.GetUserByEmail(Email);
+           Users = controller.GetUserByEmail(Email);
         }
     }
 }

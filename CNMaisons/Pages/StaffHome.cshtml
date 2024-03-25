@@ -8,7 +8,7 @@
         <div class="home_intro">
             <nav class="memberhome_nav">
                 <a href="~/Index"><img src="~/img/png/logo-no-background.png" width="150" class="intro_image" /></a>
-                @if (Model.Employee.Role == "LandLord")
+                @if (Model.Users.Role == "LandLord")
                 {
                     <ul>
                         <li>
@@ -32,7 +32,7 @@
 
                     </ul>
                 }
-                @if (Model.Employee.Role == "Staff")
+                @if (Model.Users.Role == "Staff")
                 {
                     <ul>
                         <li>
@@ -54,8 +54,8 @@
                 <div class="icon_div">
         
                 </div>
-                <h2>@Model.Employee.FirstName @Model.Employee.LastName</h2>
-                <p>@Model.Employee.Role</p>
+                <h2>@Model.Users.FirstName @Model.Users.LastName</h2>
+                <p>@Model.Users.Role</p>
             </div>
         </div> 
         <p class="title">Account info</p>
@@ -68,17 +68,14 @@
                     </div>  
                     <div>
                         <p class="title">FirstName</p>
-                        <input type="text" name="FirstName" value="@Model.Employee.FirstName" class="val"/>
+                        <input type="text" name="FirstName" value="@Model.Users.FirstName" class="val" />
                         <p class="title">LastName</p>
-                        <input type="text" name="LastName" value="@Model.Employee.LastName" class="val"/>
-                        <p class="title">Phone Number</p>
-                        <input type="text" name="PhoneNumber" value="@Model.Employee.PhoneNumber" class="val"/>      
+                        <input type="text" name="LastName" value="@Model.Users.LastName" class="val" />
                     </div>   
                     <div>
                         <p class="title">Email</p>
-                        <input type="text" name="FirstName" value="@Model.Employee.Email" class="val" />
+                        <input type="text" name="FirstName" value="@Model.Users.Email" class="val" />
                         <p class="title">Date Joined</p>
-                        <p class="date-joined">@Model.Employee.DateJoined.ToString("yyyy-MMMM")</p>
                     </div>
                 </div>              
             </form>

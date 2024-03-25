@@ -75,7 +75,7 @@ namespace CNMaisons.Pages
 
             if (ModelState.IsValid)
             {
-                CNMS RequestDirector = new();
+                CNMPMS RequestDirector = new();
 
                 User newUser = new();
                 newUser.FirstName = UserFirstName;
@@ -85,16 +85,17 @@ namespace CNMaisons.Pages
                 newUser.UserSalt = "placeholder";
                 newUser.Role = Role;
                 newUser.DefaultPassword = DefaultPassword;
+                string userConfirmationMessage = "Create Failed Error Occured";
 
-                string UserAccountConfirmation = RequestDirector.CreateUserAccount(newUser);
-                if (UserAccountConfirmation == "Successful!")
+                bool UserAccountConfirmation = RequestDirector.CreateUserAccount(newUser);
+                if (UserAccountConfirmation == true)
                 {
                     Message = "User Account has been created succesfully.";
                     errorMessage = "";
                 }
                 else
                 {
-                    Message = UserAccountConfirmation;
+                    Message = userConfirmationMessage;
                 }
 
 

@@ -41,29 +41,28 @@ namespace CNMaisons.Pages
         public void OnPost() 
         {
             bool success = false;
-            Employee employee = new()
+            User user = new()
             {
                 FirstName = FirstName,
                 LastName = LastName,
-                PhoneNumber = PhoneNumber,
                 Email = Email,
                 Password = Password,
                 Role = Role,
             };
             CNMPMS RequestDirector = new CNMPMS();
 
-            Employee searchEmployee = new();
-            searchEmployee = RequestDirector.GetUserByEmail(Email);
+            User searchUser = new();
+            searchUser = RequestDirector.GetUserByEmail(Email); 
 
 
-            if (searchEmployee.Email != "")
+            if (searchUser.Email != "")
             {
                 ErrorClass = "error_message";
                 ErrorMessage = "This Employee Email Already Exists Try Signing In";
             }
             else
             {
-                success = RequestDirector.AddEmployee(employee);
+                success = RequestDirector.CreateUserAccount(user);
                 if (success == true)
                 {
                     SuccessClass = "success_message";

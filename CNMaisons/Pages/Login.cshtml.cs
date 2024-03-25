@@ -25,7 +25,7 @@ namespace CNMaisons.Pages
         public async Task<IActionResult> OnPost()
         {
             AlertClass = "alert_error";
-            CNMS RequestDirector= new CNMS();
+            CNMPMS RequestDirector= new CNMPMS();
             User existingUser = new();
             existingUser = RequestDirector.GetUserByEmail(Email);
 

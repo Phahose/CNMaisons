@@ -30,8 +30,8 @@
                 <div class="icon_div">
         
                 </div>
-                <h2>@Model.Employee.FirstName @Model.Employee.LastName</h2>
-                <p>@Model.Employee.Role</p>
+                <h2>@Model.Users.FirstName @Model.Users.LastName</h2>
+                <p>@Model.Users.Role</p>
             </div>
         </div> 
         <p class="title">Account info</p>
@@ -39,9 +39,8 @@
             <div class="boxcontainer ">
                 <div class="box1">
                     <div>
-                        <p><span>ID</span>: @Model.Employee.EmployeeID</p>
-                        <p><span>Full Name</span>: @Model.Employee.FirstName @Model.Employee.LastName</p>
-                        <p><span>Email</span>: @Model.Employee.Email</p>
+                        <p><span>Full Name</span>: @Model.Users.FirstName @Model.Users.LastName</p>
+                        <p><span>Email</span>: @Model.Users.Email</p>
                         <p><span>Address</span>: 124 Streen Edmonton</p>
                         <p><span>Application Status</span> Status: Pending</p>
                     </div>

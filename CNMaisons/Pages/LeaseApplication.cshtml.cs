@@ -532,7 +532,7 @@ namespace CNMaisons.Pages
 
                 };
 
-                CNMS RequestDirector = new();
+                CNMPMS RequestDirector = new();
                 string Confirmation = RequestDirector.SubmitLeaseApplication(aTenant);
                 if (Confirmation == "Successful!")
                 {
@@ -546,8 +546,8 @@ namespace CNMaisons.Pages
                     newUser.Role = "Tenant";
                     newUser.DefaultPassword = "0"; // 0 because user typed it by himself
 
-                    String UserAccountConfirmation = RequestDirector.CreateUserAccount(newUser);
-                    if (UserAccountConfirmation == "Successful!")
+                    bool UserAccountConfirmation = RequestDirector.CreateUserAccount(newUser);
+                    if (UserAccountConfirmation == true)
                     {
                         Message = "Tenant's Lease application was successful saved and Login Account created.";
                     }

@@ -64,9 +64,10 @@ namespace CNMaisons.TechnicalService
 
 
 
-        public String AddUser(User user)
+        public bool AddUser(User user)
         {
-            String Success;
+            bool Success = false;
+            string successMessage;
             SqlConnection cnMaisonsConnection = new SqlConnection();
             cnMaisonsConnection.ConnectionString = connectionString;
             cnMaisonsConnection.Open();
@@ -117,7 +118,8 @@ namespace CNMaisons.TechnicalService
 
                 MyCommand.ExecuteNonQuery();
                 MyDataSource.Close();
-                Success = "Successful!";
+                successMessage = "Successful!";
+                Success = true;
             }
             catch (SqlException ex)
             {
@@ -125,16 +127,16 @@ namespace CNMaisons.TechnicalService
                 if (ex.Number == 2627) // Unique constraint violation error number
                 {
 
-                    Success = "This Tenant ID or the Email already exist. ";
+                    successMessage = "This Tenant ID or the Email already exist. ";
                 }
                 else
                 {
-                    Success = $"An error occurred: {ex.Message}";
+                    successMessage = $"An error occurred: {ex.Message}";
                 }
             }
             catch (Exception ex)
             {
-                Success = $"An error occurred: {ex.Message}";
+                successMessage = $"An error occurred: {ex.Message}";
             }
             return Success;
 

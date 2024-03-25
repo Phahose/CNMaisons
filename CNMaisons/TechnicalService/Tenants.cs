@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿#nullable disable
+using Microsoft.Data.SqlClient;
 using System.Data;
 using CNMaisons.Domain;
 using Microsoft.AspNetCore.Rewrite;

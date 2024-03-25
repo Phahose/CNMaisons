@@ -15,7 +15,7 @@ namespace CNMaisons.Pages
     {
         public bool ViewFormNow = false;
         public string Message { get; set; } = string.Empty;
-        public CNMS RequestDirector;
+        public CNMPMS RequestDirector { get; set; } = new();
 
         public Tenant tenantForReview = new();
 
@@ -36,7 +36,7 @@ namespace CNMaisons.Pages
 
         public void OnGet()
         {
-            CNMS tenantController = new();
+            CNMPMS tenantController = new();
             ListOfTenantsPendingReview = tenantController.GetPendingLeaseApplication();
             if (ListOfTenantsPendingReview == null)
             {
@@ -52,7 +52,7 @@ namespace CNMaisons.Pages
             {
                 case "Close":
                     return RedirectToPage("/Index");
-                    break;
+                
 
                 case "Find":
                     if (FindTenantID != null)
@@ -62,7 +62,7 @@ namespace CNMaisons.Pages
                         {
                             SetSessionString("FindTenantID1", FindTenantID);  // save content for furtre retreival
                             
-                            CNMS RequestDirector = new();
+                            CNMPMS RequestDirector = new();
                             tenantForReview = RequestDirector.ViewTenant(FindTenantID);                            
                             if (tenantForReview != null)
                             {
@@ -73,7 +73,7 @@ namespace CNMaisons.Pages
                         }
                     }
                     return Page();
-                    break;
+                 
 
                 case "Submit Review":
                     if (ApprovalStatus  !="Pending")
@@ -83,7 +83,7 @@ namespace CNMaisons.Pages
                         {
                             FindTenantID = HttpContext.Session.GetString("FindTenantID1") ?? string.Empty;
                             
-                            CNMS RequestDirector = new();
+                            CNMPMS RequestDirector = new();
                             String Confirmation = RequestDirector.ReviewApplication(FindTenantID, ApprovalStatus);                            
                             if (Confirmation == "Successful!")
                             {
@@ -97,7 +97,7 @@ namespace CNMaisons.Pages
 
                     }
                     return Page(); 
-                    break;
+                  
             }
             return Page();
         }
