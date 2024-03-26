@@ -82,7 +82,7 @@ namespace CNMaisons.Pages
                     new ClaimsPrincipal(claimsIdentity), authProperties);
                     Message = "Login Success";
                     HttpContext.Session.SetString("Email", Email);
-                    return RedirectToPage("/TenantHome");
+                    return RedirectToPage("/TennantHome");
                 }
             }
             Message = "Invalid attempt";
