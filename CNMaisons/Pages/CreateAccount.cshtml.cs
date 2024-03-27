@@ -1,3 +1,4 @@
+#nullable disable
 using CNMaisons.Controller;
 using CNMaisons.Domain;
 using CNMaisons.TechnicalService;
@@ -10,7 +11,7 @@ namespace CNMaisons.Pages
     {
         
         public string Message { get; set; } = string.Empty;
-        public string errorMessage { get; set; } = string.Empty;
+        public List<string> errorMessage { get; set; } = new List<string>();
         public bool FlagError;
 
 
@@ -22,55 +23,74 @@ namespace CNMaisons.Pages
         
         [BindProperty] 
         public string Email { get; set; } = string.Empty;
+
+        [BindProperty] 
+        public string AdminEmail { get; set; } = string.Empty;
         
         [BindProperty] 
         public string Password { get; set; } = string.Empty;
+        [BindProperty] 
+        public string ConfirmPassword { get; set; } = string.Empty;
         
         [BindProperty] 
         public string Role { get; set; } = string.Empty;
-        
-        
-        [BindProperty] 
-        public string DefaultPassword { get; set; } = string.Empty;
-        
-        
+
+        [BindProperty]
+        public string DefaultPassword { get; set; } = "true";
+
+        [BindProperty]
+        public IFormFile EmployeeImage { get; set; }
+        public User Users { get; set; } = new User();
+        public Employee Employee { get; set; } = new Employee();
+
 
         public void OnGet()
         {
+            AdminEmail = HttpContext.Session.GetString("Email")!;
+            CNMPMS controller = new CNMPMS();
+            Users = controller.GetUserByEmail(AdminEmail);
+            Employee = controller.GetAllEmployees(AdminEmail);
         }
         public void OnPost() 
         {
 
-            errorMessage = "";
+            AdminEmail = HttpContext.Session.GetString("Email")!;
+            CNMPMS controller = new CNMPMS();
+            Users = controller.GetUserByEmail(AdminEmail);
+            Employee = controller.GetAllEmployees(AdminEmail);
             ModelState.Clear();
 
             if (string.IsNullOrEmpty(UserFirstName))
             {
-                errorMessage += "The FirstName is Required.\n";
+                errorMessage.Add("Please Enter a Valid FirstName");
             }
 
             if (string.IsNullOrEmpty(LastName))
             {
-                errorMessage += "The LastName is Required.\n";
+                errorMessage.Add("Please Enter a Valid LastName");
             }
 
             if (string.IsNullOrEmpty(Email))
             {
-                errorMessage += "The Email is Required.\n";
+                errorMessage.Add("Please Enter a Valid Email");
             }
 
 
             if (string.IsNullOrEmpty(Password))
             {
-                errorMessage += "The Password is Required.\n";
+                errorMessage.Add("The Password is Required");
             }
 
 
-            if (string.IsNullOrEmpty(Role))
+            if (Role == "0")
             {
-                errorMessage += "The Role is Required.\n";
+                errorMessage.Add("Please Select a Role For this User");
             }
 
+            if (Password != ConfirmPassword)
+            {
+                errorMessage.Add("The Password and the Confirm Password Must Match");
+            }
 
 
             if (ModelState.IsValid)
@@ -78,29 +98,58 @@ namespace CNMaisons.Pages
                 CNMPMS RequestDirector = new();
 
                 User newUser = new();
-                newUser.FirstName = UserFirstName;
-                newUser.LastName = LastName;
+                Employee newEmployee = new();
+
+                byte[] employeeImageBytes = ConvertToByteArray(EmployeeImage);
+
+                newEmployee.FirstName = UserFirstName;
+                newEmployee.LastName = LastName;
                 newUser.Email = Email;
                 newUser.Password = Password;
                 newUser.UserSalt = "placeholder";
                 newUser.Role = Role;
                 newUser.DefaultPassword = DefaultPassword;
+                newEmployee.EmployeeImage = employeeImageBytes;
                 string userConfirmationMessage = "Create Failed Error Occured";
 
-                bool UserAccountConfirmation = RequestDirector.CreateUserAccount(newUser);
+                bool UserAccountConfirmation = false;
+
+                Employee searchEmployee = RequestDirector.GetAllEmployees(Email);
+                Tenant searchTenant = RequestDirector.GetAllTennants(Email);
+
+                if (searchEmployee.FirstName != "")
+                {
+                    errorMessage.Add("This Email Already Exists as an Employee");
+                }
+
+
+                if (errorMessage.Count() == 0)
+                {
+                   UserAccountConfirmation = RequestDirector.CreateEmployeeAccount(newUser, newEmployee);
+                }
+               
                 if (UserAccountConfirmation == true)
                 {
                     Message = "User Account has been created succesfully.";
-                    errorMessage = "";
                 }
                 else
                 {
                     Message = userConfirmationMessage;
                 }
-
-
             }
+        }
 
+        private byte[] ConvertToByteArray(IFormFile file)
+        {
+            if (file != null)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    file.CopyTo(memoryStream);
+                    return memoryStream.ToArray();
+                }
+            }
+            else { return null; }
         }
     }
 }

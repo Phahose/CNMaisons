@@ -84,25 +84,59 @@
         <nav class="memberhome_nav">
             <a href="~/Index"><img src="~/img/png/logo-no-background.png" width="150" class="intro_image" /></a>
             <ul>
-                <li>
-                    <a href="#">My Account</a>
-                </li>
-                <li>
-                    <a href="#">Record Rent</a>
-                </li>
-                <li>
-                    <a href="#">Record Maintainance</a>
-                </li>
-                <li>
-                    <a href="#">Contact</a>
-                </li>
-                <li>
-                    <a href="#">Edit Account</a>
-                </li>
+                @if (Model.Users.Role == "LandLord")
+                {
+                    <ul>
+                        <li>
+                            <a href="~/IndexStaff">My Account</a>
+                        </li>
+                        <li>
+                            <a href="~/AddProperty">Add Property</a>
+                        </li>
+                        <li>
+                            <a href="#">View Maintainance Requests</a>
+                        </li>
+                        <li>
+                            <a href="~/CreateAccount">Create New Employee Account</a>
+                        </li>
+                        <li>
+                            <a href="#">View Visit Requests</a>
+                        </li>
+                        <li>
+                            <a href="~/ViewPropertyAdmin">View Properties</a>
+                        </li>
+
+                    </ul>
+                }
+                @if (Model.Users.Role == "Staff")
+                {
+                    <ul>
+                        <li>
+                            <a href="~/IndexStaff">My Account</a>
+                        </li>
+                        <li>
+                            <a href="~/AddProperty">Add Property</a>
+                        </li>
+                        <li>
+                            <a href="#">View Visit Requests</a>
+                        </li>
+                        <li>
+                            <a href="#">Edit Account</a>
+                        </li>
+                    </ul>
+                }
             </ul>
         </nav>
         <div class="basic_info">
             <div class="icon_div">
+                @if (Model.Employee.EmployeeImage != null)
+                {
+                    <img src="data:image;base64,@Convert.ToBase64String(Model.Employee.EmployeeImage)" alt="Property Image" />
+                }
+                else
+                {
+                    <a href="~/Index"><img src="~/img/profile_icon" width="150" class="intro_image" /></a>
+                }
             </div>
             <h2>Nicholas Ekwom</h2>
             <p>LandLord</p>

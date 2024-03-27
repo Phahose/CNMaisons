@@ -60,6 +60,15 @@ namespace CNMaisons.Controller
             return Success;
         }
 
+        public bool CreateEmployeeAccount(User aUserAccount, Employee anEmplyeeAccount)
+        {
+
+            bool Success;
+            Employees RequestManager = new();
+            Success = RequestManager.AddEmployee(aUserAccount, anEmplyeeAccount);
+            return Success;
+        }
+
         public string SubmitLeaseApplication(Tenant aTenant)
         {
             string Success;
@@ -87,6 +96,21 @@ namespace CNMaisons.Controller
             Tenants RequestManager = new();
             Success = RequestManager.UpdateApplication(findTenantID, approvalStatus);
             return Success;
+        }
+        public Employee GetAllEmployees(string Email)
+        {
+            Employee employee = new Employee();
+            Employees employees = new Employees();
+            employee = employees.GetAllEmployees(Email);
+            return employee;
+        }
+        public Tenant GetAllTennants (string email)
+        {
+            Tenant tenant = new();
+            Tenants Tennants = new();
+            tenant = Tennants.GetTenant(email);
+
+            return tenant;
         }
     }
 }

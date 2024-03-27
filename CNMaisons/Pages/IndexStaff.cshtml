@@ -1,5 +1,5 @@
 ﻿@page
-@model CNMaisons.Pages.StaffHomeModel
+@model CNMaisons.Pages.IndexStaffModel
 @{
     ViewData["Title"] = "Home";
 }
@@ -12,7 +12,7 @@
                 {
                     <ul>
                         <li>
-                            <a href="#">My Account</a>
+                            <a href="~/IndexStaff">My Account</a>
                         </li>
                         <li>
                             <a href="~/AddProperty">Add Property</a>
@@ -21,7 +21,7 @@
                             <a href="#">View Maintainance Requests</a>
                         </li>
                         <li>
-                            <a href="~/CreateEmployee">Create New Employee Account</a>
+                            <a href="~/CreateAccount">Create New Employee Account</a>
                         </li>
                         <li>
                             <a href="#">View Visit Requests</a>
@@ -36,7 +36,7 @@
                 {
                     <ul>
                         <li>
-                            <a href="#">My Account</a>
+                            <a href="~/IndexStaff">My Account</a>
                         </li>
                         <li>
                             <a href="~/AddProperty">Add Property</a>
@@ -52,9 +52,16 @@
             </nav>
             <div class="basic_info">
                 <div class="icon_div">
-        
+                    @if (Model.Employee.EmployeeImage != null)
+                    {
+                        <img src="data:image;base64,@Convert.ToBase64String(Model.Employee.EmployeeImage)" alt="Property Image" />
+                    }
+                    else
+                    {
+                        <a href="~/Index"><img src="~/img/profile_icon" width="150" class="intro_image" /></a>
+                    }
                 </div>
-                <h2>@Model.Users.FirstName @Model.Users.LastName</h2>
+                <h2>@Model.Employee.FirstName @Model.Employee.LastName</h2>
                 <p>@Model.Users.Role</p>
             </div>
         </div> 
@@ -68,9 +75,9 @@
                     </div>  
                     <div>
                         <p class="title">FirstName</p>
-                        <input type="text" name="FirstName" value="@Model.Users.FirstName" class="val" />
+                        <input type="text" name="FirstName" value="@Model.Employee.FirstName" class="val" />
                         <p class="title">LastName</p>
-                        <input type="text" name="LastName" value="@Model.Users.LastName" class="val" />
+                        <input type="text" name="LastName" value="@Model.Employee.LastName" class="val" />
                     </div>   
                     <div>
                         <p class="title">Email</p>
