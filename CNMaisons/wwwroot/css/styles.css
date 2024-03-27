@@ -297,8 +297,7 @@ select {
     padding-left: 1rem;
     padding-right:1rem;
 }
-.icon_div {
-    background-image: url("/img/profile_icon.png");
+.icon_div img {
     background-size: cover;
     height: 7rem;
     width: 7rem;
@@ -306,6 +305,7 @@ select {
     margin-right: auto;
     margin-top: 3rem;
     border-radius: 50%;
+    display: flex;
 }
 .basic_info h2{
     width: fit-content;

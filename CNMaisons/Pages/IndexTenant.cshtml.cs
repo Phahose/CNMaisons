@@ -8,11 +8,11 @@ using Microsoft.IdentityModel.Tokens;
 namespace CNMaisons.Pages
 {
     [Authorize]
-    public class StaffHomeModel : PageModel
+    public class IndexTenantModel : PageModel
     {
         public string Email { get; set; } = string.Empty;
         public User Users { get; set; } = new User();
-        public Employee Employee { get; set; } = new Employee();
+        public Tenant Tenant { get; set; } = new Tenant();
         public void OnGet()
         {      
            Email = HttpContext.Session.GetString("Email")!;

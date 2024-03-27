@@ -1,18 +1,83 @@
 ﻿@page
 @model CNMaisons.Pages.CreateAccountModel
 @{
-    Layout = "_Header";
+   // Layout = "_Header";
     ViewData["Title"] = "Create Account";
 }
-<div class="login_page">
-    <video autoplay muted loop id="video-background">
-        <source src="~/img/login.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
+<div>
+    <div class="home_intro">
+        <nav class="memberhome_nav">
+            <a href="~/Index"><img src="~/img/png/logo-no-background.png" width="150" class="intro_image" /></a>
+            <ul>
+                @if (Model.Users.Role == "LandLord")
+                {
+                    <ul>
+                        <li>
+                            <a href="~/IndexStaff">My Account</a>
+                        </li>
+                        <li>
+                            <a href="~/AddProperty">Add Property</a>
+                        </li>
+                        <li>
+                            <a href="#">View Maintainance Requests</a>
+                        </li>
+                        <li>
+                            <a href="~/CreateAccount">Create New Employee Account</a>
+                        </li>
+                        <li>
+                            <a href="#">View Visit Requests</a>
+                        </li>
+                        <li>
+                            <a href="~/ViewPropertyAdmin">View Properties</a>
+                        </li>
 
-    <form name="Login" method="post" class="form loginForm">
+                    </ul>
+                }
+                @if (Model.Users.Role == "Staff")
+                {
+                    <ul>
+                        <li>
+                            <a href="~/IndexStaff">My Account</a>
+                        </li>
+                        <li>
+                            <a href="~/AddProperty">Add Property</a>
+                        </li>
+                        <li>
+                            <a href="#">View Visit Requests</a>
+                        </li>
+                        <li>
+                            <a href="#">Edit Account</a>
+                        </li>
+                    </ul>
+                }
+            </ul>
+        </nav>
+        <div class="basic_info">
+            <div class="icon_div">
+                @if (Model.Employee.EmployeeImage != null)
+                {
+                    <img src="data:image;base64,@Convert.ToBase64String(Model.Employee.EmployeeImage)" alt="Property Image" />
+                }
+                else
+                {
+                    <a href="~/Index"><img src="~/img/profile_icon" width="150" class="intro_image" /></a>
+                }
+            </div>
+            <h2>Nicholas Ekwom</h2>
+            <p>LandLord</p>
+        </div>
+    </div>
+    <form name="Login" method="post" class="form loginForm" enctype="multipart/form-data">
         <br />
-        <span style="font-size: larger; font-style: italic;">@Model.errorMessage</span>
+        @foreach (string error in Model.errorMessage)
+        {
+            <p style="font-size: small; color: red; background-color:white; padding: 0.5rem;">@error</p>
+            
+        }     
+        @if (Model.Message != "")
+        {
+            <p style="font-size: small; color: green; background-color:white; padding: 0.5rem;">@Model.Message</p>
+        }  
         <fieldset>
             <legend>Create New User</legend>
             <label>First Name</label>
@@ -35,31 +100,19 @@
             <br />
             <input type="password" name="ConfirmPassword" required />
             <br />
+            <label for="EmployeeImage">Employee Image</label>
+            <br />
+            <input type="file" name="EmployeeImage"  />
+            <br />
             <label for="Role">Select Role:</label>
             <br />
             <select name="Role" class="form-control" required>
                 <option value="0">--Make-a-Selection--</option>
-                <option value="Landlord">Landlord</option>
+                <option value="LandLord">Landlord</option>
                 <option value="Staff">Staff</option>
             </select>
-            <table style="border-collapse: collapse; width: auto; text-align: left">
-                <thead>
-                    <tr style="border: 1px solid #ddd; background-color: black;">
-                        <th style="border: 1px solid #ddd;">Status</th>
-                        <th style="border: 1px solid #ddd;">True</th>
-                        <th style="border: 1px solid #ddd;">False</th>
-                    </tr>
-                </thead>
-                <tdody>
-                    <tr>
-                        <td style="border: 1px solid #ddd;">Default Password</td>
-                        <td style="border: 1px solid #ddd;"><input type="radio" value="true" name="DefaultPassword" checked>Set to default</td>
-                        <td style="border: 1px solid #ddd;"><input type="radio" value="false" name="DefaultPassword">Not set to default </td>
-                    </tr>
-                </tdody>
-            </table>
             <button name="Submit" type="submit" class="btn">Submit</button>
-            @Model.Message    
+              
         </fieldset>
     </form>
 </div>

@@ -40,9 +40,9 @@ namespace CNMaisons.Pages
             Password = enteredHashedPasswordBase64;
 
             string UserEmail = existingUser.Email;
-            //string UserName = existingUser.MemberFirstName;
+            string UserRole = existingUser.Role;
             string UserPassword = existingUser.Password;
-            string UserRole = existingUser.UserSalt;
+            string UserSalt = existingUser.UserSalt;
 
             if (Email == UserEmail)
             {
@@ -82,7 +82,23 @@ namespace CNMaisons.Pages
                     new ClaimsPrincipal(claimsIdentity), authProperties);
                     Message = "Login Success";
                     HttpContext.Session.SetString("Email", Email);
-                    return RedirectToPage("/TennantHome");
+                    if (UserRole == "Tenant")
+                    {
+                        return RedirectToPage("/IndexTenant");
+                    }
+                    if (UserRole == "Staff")
+                    {
+                        return RedirectToPage("/IndexStaff");
+                    }
+                    if (UserRole == "LandLord")
+                    {
+                        return RedirectToPage("/IndexStaff");
+                    }
+                    else
+                    {
+                        return RedirectToPage("/Index");
+                    }
+                    
                 }
             }
             Message = "Invalid attempt";

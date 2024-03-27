@@ -1257,19 +1257,6 @@ BEGIN
 END;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 --Maintenance
 --DROP TABLE Maintenance
 CREATE TABLE Maintenance(
@@ -1652,7 +1639,7 @@ ALTER TABLE Reminders
 
 
 
-
+		
 
 
 
@@ -1775,16 +1762,19 @@ CREATE PROCEDURE AddUser
 AS
 BEGIN
     INSERT INTO Users (Email, Password, Role, DeactivateAccountStatus,UserSalt, DefaultPassword)
-    VALUES (@Email, @Password, @Role, 0, @UserSalt, @DefaultPassword,)
+    VALUES (@Email, @Password, @Role, 0, @UserSalt, @DefaultPassword)
 END
 
 CREATE TABLE Employee(
 	EmployeeID INT IDENTITY(1,1) NOT NULL,
-	FistName VARCHAR(50) NOT NULL,
+	EmployeeImage VARBINARY(MAX) NULL,
+	FirstName VARCHAR(50) NOT NULL,
 	LastName VARCHAR(50) NOT NULL,
 	Email VARCHAR(100) NOT NULL,
 	DateJoined DATE NOT NULL
 )
+
+
 
 --DROP TABLE Employee
 DROP PROCEDURE AddEmployee
@@ -1794,18 +1784,35 @@ CREATE PROCEDURE AddEmployee (@FirstName VARCHAR(50),
 							  @Password VARCHAR(100), 
 							  @Role VARCHAR(25),
 							  @DefaultPassword NVARCHAR(255),
-							  @UserSalt NVARCHAR(255))
+							  @UserSalt NVARCHAR(255),
+							  @EmployeeImage VARBINARY(MAX))
 AS 
 	BEGIN 
 	 EXEC AddUser @Email, @Password, @Role, @DefaultPassword, @UserSalt
 
-	 INSERT INTO Employee(FistName, LastName, Email, DateJoined)
-	 VALUES (@FirstName, @LastName, @Email, GETDATE())
+	 INSERT INTO Employee(EmployeeImage,FirstName, LastName, Email, DateJoined)
+	 VALUES (@EmployeeImage,@FirstName, @LastName, @Email, GETDATE())
 	END
 
+CREATE PROCEDURE GetAllTenants(@Email VARCHAR(100))
+AS 
+	BEGIN 
+	 SELECT * FROM Tenant
+	 WHERE Email = @Email
+	END
+
+CREATE PROCEDURE GetAllEmployees(@Email VARCHAR(100))
+AS 
+	BEGIN 
+	 SELECT * FROM Employee
+	 WHERE Email = @Email
+	END
 
 	SELECT * FROm USERs
 	SELECT * FROM EMployee
 
 	DELETE FROM Employee
 	DELETE FROM USERs
+
+
+	EXec GetAllEmployees 'ekwomnick@gmail.com'

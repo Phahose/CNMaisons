@@ -5,10 +5,10 @@ using System.Security.Cryptography;
 
 namespace CNMaisons.TechnicalService
 {
-    public class Users
+    public class Employees
     {
         private string? connectionString;
-        public Users()
+        public Employees()
         {
             ConfigurationBuilder DatabaseUserBuilder = new ConfigurationBuilder();
             DatabaseUserBuilder.SetBasePath(Directory.GetCurrentDirectory());
@@ -17,48 +17,7 @@ namespace CNMaisons.TechnicalService
             connectionString = DatabaseUserConfiguration.GetConnectionString("CNMaisons");
         }
 
-        public User GetUserByEmail(string email)
-        {
-            User user = new User();
-            SqlConnection cnMaisonsConnection = new SqlConnection();
-            cnMaisonsConnection.ConnectionString = connectionString;
-            cnMaisonsConnection.Open();
-
-            SqlCommand GetUser = new()
-            {
-                CommandType = CommandType.StoredProcedure,
-                Connection = cnMaisonsConnection,
-                CommandText = "GetUserByEmail"
-            };
-
-            SqlParameter EmailParameter = new()
-            {
-                ParameterName = "@Email",
-                SqlDbType = SqlDbType.VarChar,
-                Direction = ParameterDirection.Input,
-                SqlValue = email
-            };
-
-            GetUser.Parameters.Add(EmailParameter);
-            SqlDataReader UserReader = GetUser.ExecuteReader();
-
-            if (UserReader.HasRows)
-            {
-                while (UserReader.Read())
-                {
-                    user.Email = (string)UserReader["Email"];
-                    user.Password = (string)UserReader["Password"];
-                    user.UserSalt = (string)UserReader["UserSalt"];
-                    user.Role = (string)UserReader["Role"];
-                    user.DeactivateAccountStatus = (bool)UserReader["DeactivateAccountStatus"];
-                }
-            }
-            UserReader.Close();
-            cnMaisonsConnection.Close();
-            return user;
-        }
-
-        public bool AddUser(User user)
+        public bool AddEmployee(User user, Employee employee)
         {
             bool Success = false;
             string successMessage;
@@ -77,7 +36,7 @@ namespace CNMaisons.TechnicalService
                 SqlCommand MyCommand = new SqlCommand();
                 MyCommand.Connection = MyDataSource;
                 MyCommand.CommandType = CommandType.StoredProcedure;
-                MyCommand.CommandText = "AddUser";
+                MyCommand.CommandText = "AddEmployee";
 
                 void AddParameter(string parameterName, SqlDbType sqlDbType, object value)
                 {
@@ -102,7 +61,10 @@ namespace CNMaisons.TechnicalService
                 string hashedPasswordBase64 = Convert.ToBase64String(hashedPassword);
 
                 // Adding parameters
+                AddParameter("@FirstName", SqlDbType.VarChar, employee.FirstName);
+                AddParameter("@LastName", SqlDbType.VarChar, employee.LastName);
                 AddParameter("@Email", SqlDbType.VarChar, user.Email);
+                AddParameter("@EmployeeImage", SqlDbType.VarBinary, employee.EmployeeImage);
                 AddParameter("@Password", SqlDbType.VarChar, hashedPasswordBase64);
                 AddParameter("@Role", SqlDbType.VarChar, user.Role);
                 AddParameter("@DefaultPassword", SqlDbType.VarChar, user.DefaultPassword);
@@ -133,12 +95,52 @@ namespace CNMaisons.TechnicalService
             return Success;
 
         }
-        
+        public Employee GetAllEmployees(string Email)
+        {
+            Employee employee = new Employee();
+            SqlConnection cnMaisonsConnection = new SqlConnection();
+            cnMaisonsConnection.ConnectionString = connectionString;
+            cnMaisonsConnection.Open();
+
+            SqlCommand GetEmployees = new()
+            {
+                CommandType = CommandType.StoredProcedure,
+                Connection = cnMaisonsConnection,
+                CommandText = "GetAllEmployees"
+            };
+
+            SqlParameter EmailParameter = new()
+            {
+                ParameterName = "@Email",
+                SqlDbType = SqlDbType.VarChar,
+                Direction = ParameterDirection.Input,
+                SqlValue = Email
+            };
+
+            GetEmployees.Parameters.Add(EmailParameter);
+            SqlDataReader MyDataReader = GetEmployees.ExecuteReader();
+
+            if (MyDataReader.HasRows)
+            {
+                while (MyDataReader.Read())
+                {
+                    employee.EmployeeId = (int)MyDataReader["EmployeeID"];               
+                    employee.EmployeeImage = MyDataReader["EmployeeImage"] == DBNull.Value ? null! : (byte[])MyDataReader["EmployeeImage"];
+                    employee.FirstName = (string)MyDataReader["FirstName"];
+                    employee.LastName = (string)MyDataReader["LastName"];
+                    employee.Email = (string)MyDataReader["Email"];
+                    employee.DateJoined = (DateTime)MyDataReader["DateJoined"];
+                }
+            }
+            MyDataReader.Close();
+            cnMaisonsConnection.Close();
+            return employee;
+        }
+
         private static byte[] HashPasswordWithSalt(string password, byte[] salt)
         {
             // Hash the password with PBKDF2 using HMACSHA256
             return new Rfc2898DeriveBytes(password, salt, 100000, HashAlgorithmName.SHA256).GetBytes(32);
         }
-
     }
 }

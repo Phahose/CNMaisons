@@ -6,6 +6,7 @@
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
-        public DateOnly DateJoined { get; set; }
+        public DateTime DateJoined { get; set; }
+        public byte[] EmployeeImage { get; set; } = new byte[0];
     }
 }
