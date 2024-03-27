@@ -43,8 +43,6 @@ namespace CNMaisons.Pages
             bool success = false;
             User user = new()
             {
-                FirstName = FirstName,
-                LastName = LastName,
                 Email = Email,
                 Password = Password,
                 Role = Role,

@@ -15,80 +15,51 @@
         <span style="font-size: larger; font-style: italic;">@Model.errorMessage</span>
         <fieldset>
             <legend>Create New User</legend>
-            <table>
-                <tr>
-                    <td>First Name:</td>
-                    <td>
-                        <input type="text" name="UserFirstName" required maxlength="30" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>Last Name:</td>
-                    <td>
-                        <input type="text" name="LastName" required maxlength="30" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>Email:</td>
-                    <td>
-                        <input type="email" name="Email" required maxlength="100"/>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>Password:</td>
-                    <td>
-                        <input type="password" name="Password" required maxlength="100"/>
-                    </td>
-                </tr>
-
-                
-                <tr>
-                    <td>Select Role:</td>
-                    <td>
-                        <select asp-for="Role" class="form-control" required>
-                            <option value="0">--Make-a-Selection--</option>
-                            <option value="Landlord">Landlord</option>
-                            <option value="Staff">Staff</option>                            
-                            <option value="Tenant">Tenant</option>
-                        </select>
-                    </td>
-                </tr>
-
-                <tr>
-                    <table style="border-collapse: collapse; width: auto; text-align: left">
-                        <thead>
-                            <tr style="border: 1px solid #ddd; background-color: black;">
-                                <th style="border: 1px solid #ddd;">Status</th>
-                                <th style="border: 1px solid #ddd;">True</th>
-                                <th style="border: 1px solid #ddd;">False</th>
-                            </tr>
-                        </thead>
-                        <tdody>
-                        <!--
-                                    <tr>
-                                    <td style="border: 1px solid #ddd;">Deactivate Account Status</td>
-                                    <td style="border: 1px solid #ddd;"><input type="radio"  value="true">Deactivated </td>
-                                    <td style="border: 1px solid #ddd;"><input type="radio" value="false" checked>Not Deactivated </td>
-                                </tr>
-
-                        -->
-                            <tr>
-                                <td style="border: 1px solid #ddd;">Default Password</td>
-                                <td style="border: 1px solid #ddd;"><input type="radio" value="true" name="DefaultPassword" checked>Set to default</td>
-                                <td style="border: 1px solid #ddd;"><input type="radio" value="false" name="DefaultPassword">Not set to default </td>
-                            </tr>
-                        </tdody>
-                    </table>
-                </tr>
-
-                <tr>
-                    <td>
-                        <button name="Submit" type="submit">Submit</button>
-                        @Model.Message
-                    </td>
-                </tr>
+            <label>First Name</label>
+            <br />
+            <input type="text" name="UserFirstName" required maxlength="30" />
+            <br />
+            <label>Last Name</label>
+            <br />
+            <input type="text" name="LastName" required maxlength="30" />
+            <br />
+            <label for="Email">Email</label>
+            <br />
+            <input type="email" name="Email" required maxlength="100" />
+            <br />
+            <label for="Password">Password</label>
+            <br />
+            <input type="password" name="Password" required />
+            <br />
+            <label for="ConfirmPassword">Confirm Password</label>
+            <br />
+            <input type="password" name="ConfirmPassword" required />
+            <br />
+            <label for="Role">Select Role:</label>
+            <br />
+            <select name="Role" class="form-control" required>
+                <option value="0">--Make-a-Selection--</option>
+                <option value="Landlord">Landlord</option>
+                <option value="Staff">Staff</option>
+            </select>
+            <table style="border-collapse: collapse; width: auto; text-align: left">
+                <thead>
+                    <tr style="border: 1px solid #ddd; background-color: black;">
+                        <th style="border: 1px solid #ddd;">Status</th>
+                        <th style="border: 1px solid #ddd;">True</th>
+                        <th style="border: 1px solid #ddd;">False</th>
+                    </tr>
+                </thead>
+                <tdody>
+                    <tr>
+                        <td style="border: 1px solid #ddd;">Default Password</td>
+                        <td style="border: 1px solid #ddd;"><input type="radio" value="true" name="DefaultPassword" checked>Set to default</td>
+                        <td style="border: 1px solid #ddd;"><input type="radio" value="false" name="DefaultPassword">Not set to default </td>
+                    </tr>
+                </tdody>
             </table>
+            <button name="Submit" type="submit" class="btn">Submit</button>
+            @Model.Message    
         </fieldset>
     </form>
 </div>

@@ -241,17 +241,14 @@ AS
 
 
 
---DROP Table Users
+DROP Table Employee
 CREATE TABLE Users(
-	FirstName VARCHAR(30) NOT NULL,  
-	LastName VARCHAR(30) NOT NULL,
 	Email VARCHAR(100) NOT NULL,
 	Password  VARCHAR(100) NOT NULL,
 	Role  VARCHAR(25) NOT NULL,
 	DeactivateAccountStatus  BIT NOT NULL,
 	DefaultPassword  NVARCHAR(255) NOT NULL,
 	UserSalt  NVARCHAR(255) NOT NULL,
-	DateOfCreation  DATETIME DEFAULT GETDATE() NOT NULL
 )
 
 ALTER TABLE Users
@@ -259,25 +256,10 @@ ALTER TABLE Users
 
 
 
-	FirstName, LastName, Email, Password, Role, DeactivateAccountStatus, DefaultPassword, UserSalt, DateOfCreation
 
 
 
 
---DROP PROCEDURE AddUser
-CREATE PROCEDURE AddUser
-	@FirstName VARCHAR(30),
-	@LastName VARCHAR(30),
-    @Email VARCHAR(100),
-    @Password VARCHAR(100),
-    @Role VARCHAR(25),
-    @DefaultPassword NVARCHAR(255),
-    @UserSalt NVARCHAR(255)
-AS
-BEGIN
-    INSERT INTO Users (FirstName, LastName, Email, Password, Role, DeactivateAccountStatus, DefaultPassword, UserSalt, DateOfCreation)
-    VALUES (@FirstName, @LastName, @Email, @Password, @Role, 0, @DefaultPassword, @UserSalt, GETDATE())
-END
 
 
 
@@ -289,6 +271,7 @@ AS
 	BEGIN 
 		SELECT * FROM Users WHERE Email = @Email AND DeactivateAccountStatus = 0
 	END
+
 
 
 
@@ -1287,7 +1270,6 @@ END;
 
 
 
-
 --Maintenance
 --DROP TABLE Maintenance
 CREATE TABLE Maintenance(
@@ -1783,4 +1765,47 @@ BEGIN
     RETURN @ReturnCode;
 END;
 
+DROP PROCEDURE AddUser
+CREATE PROCEDURE AddUser
+    @Email VARCHAR(100),
+    @Password VARCHAR(100),
+    @Role VARCHAR(25),
+    @DefaultPassword NVARCHAR(255),
+    @UserSalt NVARCHAR(255)
+AS
+BEGIN
+    INSERT INTO Users (Email, Password, Role, DeactivateAccountStatus,UserSalt, DefaultPassword)
+    VALUES (@Email, @Password, @Role, 0, @UserSalt, @DefaultPassword,)
+END
 
+CREATE TABLE Employee(
+	EmployeeID INT IDENTITY(1,1) NOT NULL,
+	FistName VARCHAR(50) NOT NULL,
+	LastName VARCHAR(50) NOT NULL,
+	Email VARCHAR(100) NOT NULL,
+	DateJoined DATE NOT NULL
+)
+
+--DROP TABLE Employee
+DROP PROCEDURE AddEmployee
+CREATE PROCEDURE AddEmployee (@FirstName VARCHAR(50), 
+							  @LastName VARCHAR(50), 
+							  @Email VARCHAR(100), 
+							  @Password VARCHAR(100), 
+							  @Role VARCHAR(25),
+							  @DefaultPassword NVARCHAR(255),
+							  @UserSalt NVARCHAR(255))
+AS 
+	BEGIN 
+	 EXEC AddUser @Email, @Password, @Role, @DefaultPassword, @UserSalt
+
+	 INSERT INTO Employee(FistName, LastName, Email, DateJoined)
+	 VALUES (@FirstName, @LastName, @Email, GETDATE())
+	END
+
+
+	SELECT * FROm USERs
+	SELECT * FROM EMployee
+
+	DELETE FROM Employee
+	DELETE FROM USERs

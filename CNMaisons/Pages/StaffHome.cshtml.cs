@@ -12,6 +12,7 @@ namespace CNMaisons.Pages
     {
         public string Email { get; set; } = string.Empty;
         public User Users { get; set; } = new User();
+        public Employee Employee { get; set; } = new Employee();
         public void OnGet()
         {      
            Email = HttpContext.Session.GetString("Email")!;

@@ -25,6 +25,8 @@ namespace CNMaisons.Pages
         
         [BindProperty] 
         public string Password { get; set; } = string.Empty;
+        [BindProperty] 
+        public string ConfirmPassword { get; set; } = string.Empty;
         
         [BindProperty] 
         public string Role { get; set; } = string.Empty;
@@ -71,6 +73,10 @@ namespace CNMaisons.Pages
                 errorMessage += "The Role is Required.\n";
             }
 
+            if (Password != ConfirmPassword)
+            {
+                errorMessage += "Your Password Does Not match the confirm password.\n";
+            }
 
 
             if (ModelState.IsValid)
@@ -78,8 +84,9 @@ namespace CNMaisons.Pages
                 CNMPMS RequestDirector = new();
 
                 User newUser = new();
-                newUser.FirstName = UserFirstName;
-                newUser.LastName = LastName;
+                Employee newEmployee = new();
+                newEmployee.FirstName = UserFirstName;
+                newEmployee.LastName = LastName;
                 newUser.Email = Email;
                 newUser.Password = Password;
                 newUser.UserSalt = "placeholder";
@@ -87,7 +94,7 @@ namespace CNMaisons.Pages
                 newUser.DefaultPassword = DefaultPassword;
                 string userConfirmationMessage = "Create Failed Error Occured";
 
-                bool UserAccountConfirmation = RequestDirector.CreateUserAccount(newUser);
+                bool UserAccountConfirmation = RequestDirector.CreateEmployeeAccount(newUser, newEmployee);
                 if (UserAccountConfirmation == true)
                 {
                     Message = "User Account has been created succesfully.";

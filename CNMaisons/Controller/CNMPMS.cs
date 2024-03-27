@@ -60,6 +60,15 @@ namespace CNMaisons.Controller
             return Success;
         }
 
+        public bool CreateEmployeeAccount(User aUserAccount, Employee anEmplyeeAccount)
+        {
+
+            bool Success;
+            Users RequestManager = new();
+            Success = RequestManager.AddEmployee(aUserAccount, anEmplyeeAccount);
+            return Success;
+        }
+
         public string SubmitLeaseApplication(Tenant aTenant)
         {
             string Success;
