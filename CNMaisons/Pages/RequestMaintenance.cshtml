@@ -1,0 +1,118 @@
+﻿@page
+@model CNMaisons.Pages.RequestMaintenanceModel
+@{
+    Layout = "_Header";
+    ViewData["Title"] = "Request Maintenance";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Request Maintenance</title>
+</head>
+<body>
+    <header>
+        <nav>
+
+        </nav>
+    </header>
+    <main>
+        <form name="RequestMaintenanceForm" method="post" class="form" enctype="multipart/form-data" onsubmit="return isRequestMaintenanceValid(window.document.RequestMaintenanceForm);">
+          <fieldset>
+              <legend>Maintenance Request Form</legend>
+              <div class="form-group">
+                    <label for="MaintenanceID">Maintenance ID:</label>
+                    <input type="text" class="form-control" id="MaintenanceID" name="MaintenanceID" required>
+                </div>
+                <div class="form-group">
+                    <label for="TenantID">Tenant ID:</label>
+                    <input type="text" class="form-control" id="TenantID" name="TenantID" required>
+                </div>
+                <div class="form-group">
+                    <label for="PropertyID">Property ID:</label>
+                    <input type="text" class="form-control" id="PropertyID" name="PropertyID" required>
+                </div>
+                <div class="form-group">
+                    <label for="StartDate">Expected Start Date:</label>
+                    <input type="date" class="form-control" id="StartDate" name="StartDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="EndDate">Expected End Date:</label>
+                    <input type="date" class="form-control" id="EndDate" name="EndDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="MaintenanceType">Type of Maintenance:</label>
+                    <select class="form-control" id="MaintenanceType" name="MaintenanceType" required>
+                        <option value="Plumbing">Plumbing</option>
+                        <option value="Electrical">Electrical</option>
+                        <option value="Exterior">Exterior</option>
+                        <option value="HVAC">HVAC</option>
+                        <option value="Others">Others</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="Description">Description of Maintenance/Repair:</label>
+                    <textarea class="form-control" id="Description" name="Description" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="Priority">Requested Priority:</label><br>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="Urgency" id="HighPriority" value="High" required>
+                        <label class="form-check-label" for="HighPriority">High (Immediate, within 24 hours)</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="Urgency" id="MediumPriority" value="Medium">
+                        <label class="form-check-label" for="MediumPriority">Medium (within a week)</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="Urgency" id="LowPriority" value="Low">
+                        <label class="form-check-label" for="LowPriority">Low (time permitting)</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Image1">Image 1:</label>
+                    <input type="file" class="form-control-file" id="Image1" name="Image1">
+                </div>
+                <div class="form-group">
+                    <label for="Image2">Image 2:</label>
+                    <input type="file" class="form-control-file" id="Image2" name="Image2">
+                </div>
+            </fieldset>
+            
+                <fieldset>
+                    <legend>Completion Form - CN Staffs Only</legend>
+                    <div class="form-group">
+                        <label for="Remarks">Completion Remarks:</label>
+                    <textarea class="form-control" id="Remarks" name="Remarks" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="CompletionDate">Date of Completion:</label>
+                    <input type="date" class="form-control" id="CompletionDate" name="CompletionDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="ApprovedStartDate">Actual Start Date of Repair:</label>
+                        <input type="date" class="form-control" id="ApprovedStartDate" name="ApprovedStartDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="ActualCost">Actual Cost:</label>
+                        <input type="number" class="form-control" id="ActualCost" name="ActualCost" step="0.01">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Status">Status:</label>
+                        <select class="form-control" id="Status" name="Status" required>
+                            <option value="Pending">Pending</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                </fieldset>
+
+            <input type="submit" name="Submit" value="Submit Request Form" class="btn" />
+            <input type="reset" name="Submit" value="Clear Request Form" class="btn" />
+            
+        </form>
+    </main>
+    <footer>
+    </footer>
+</body>
+</html>
