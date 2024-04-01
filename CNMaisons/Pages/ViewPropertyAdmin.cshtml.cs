@@ -73,7 +73,6 @@ namespace CNMaisons.Pages
                     return Page();
             
                 case "Update Property":
-                    HttpContext.Session.Clear();
                     controller = new CNMPMS();
                     if (PropertyID != null)
                     {

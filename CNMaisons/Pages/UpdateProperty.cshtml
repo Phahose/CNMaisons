@@ -10,6 +10,8 @@
         <p>@Model.ErrorMessage</p>
         <fieldset>
             <legend>Update Property</legend>
+            <label for="Occupied">Mark As Occupied</label><br />
+            <input type="checkbox" name="MyCheckbox" /><br />
             <label for="PropertyID">Property ID Format CN00001</label>
             <br />
             <input type="text" name="PropertyID" required pattern="[A-Za-z]{2}\d{5}" value="@Model.Property.PropertyID" disabled/>

@@ -22,5 +22,6 @@
         public byte[] Image9 { get; set; } = new byte[0];
         public byte[] Image10 { get; set; } = new byte[0];
         public int DeleteFlag {  get; set; } = 0;   
+        public bool Occupied { get; set; }
     }
 }

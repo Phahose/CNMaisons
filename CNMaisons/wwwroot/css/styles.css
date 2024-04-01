@@ -705,6 +705,7 @@ input.filter-btn{
     font-size: 1.2rem;
     font-family: "Raleway", sans-serif;
     padding: 0.5rem;
+    padding-bottom: 0;
 }
 .loggedin-list li:not(:last-child){
     margin-top: 1.5rem;
