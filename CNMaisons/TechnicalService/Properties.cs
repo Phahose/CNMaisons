@@ -343,6 +343,13 @@ namespace CNMaisons.TechnicalService
                 SqlValue = Property.Image10,
                 Direction = ParameterDirection.Input,
             };
+            SqlParameter Occupied = new()
+            {
+                ParameterName = "@Occupied",
+                SqlDbType = SqlDbType.Bit,
+                SqlValue = Property.Occupied,
+                Direction = ParameterDirection.Input,
+            };
 
             try
             {
@@ -365,6 +372,7 @@ namespace CNMaisons.TechnicalService
                 UpdatePropetryCommand.Parameters.Add(Image8);
                 UpdatePropetryCommand.Parameters.Add(Image9);
                 UpdatePropetryCommand.Parameters.Add(Image10);
+                UpdatePropetryCommand.Parameters.Add(Occupied);
 
                 UpdatePropetryCommand.ExecuteNonQuery();
                 cnMaisonsConnection.Close();
@@ -417,7 +425,8 @@ namespace CNMaisons.TechnicalService
                             Image7 = propertyReader["Image7"] == DBNull.Value ? null! : (byte[])propertyReader["Image7"],
                             Image8 = propertyReader["Image8"] == DBNull.Value ? null! : (byte[])propertyReader["Image8"],
                             Image9 = propertyReader["Image9"] == DBNull.Value ? null! : (byte[])propertyReader["Image9"],
-                            Image10 = propertyReader["Image10"] == DBNull.Value ? null! : (byte[])propertyReader["Image10"]
+                            Image10 = propertyReader["Image10"] == DBNull.Value ? null! : (byte[])propertyReader["Image10"],
+                            Occupied = (bool)propertyReader["Occupied"]
                         };
                         properties.Add(property);
                     }
@@ -488,7 +497,8 @@ namespace CNMaisons.TechnicalService
                         Image7 = propertyReader["Image7"] == DBNull.Value ? null! : (byte[])propertyReader["Image7"],
                         Image8 = propertyReader["Image8"] == DBNull.Value ? null! : (byte[])propertyReader["Image8"],
                         Image9 = propertyReader["Image9"] == DBNull.Value ? null! : (byte[])propertyReader["Image9"],
-                        Image10 = propertyReader["Image10"] == DBNull.Value ? null! : (byte[])propertyReader["Image10"]
+                        Image10 = propertyReader["Image10"] == DBNull.Value ? null! : (byte[])propertyReader["Image10"],
+                        Occupied = (bool)propertyReader["Occupied"]
                     };
                 }
                 propertyReader.Close();

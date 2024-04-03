@@ -19,7 +19,7 @@ namespace CNMaisons.Pages
         {
             CNMPMS controller = new CNMPMS();
             PropertyList = controller.GetProperties();
-            DisplayedPropertyList = PropertyList.ToList();
+            DisplayedPropertyList = PropertyList.Where(p => p.Occupied == false).ToList();
         }
 
         public IActionResult OnPost()
