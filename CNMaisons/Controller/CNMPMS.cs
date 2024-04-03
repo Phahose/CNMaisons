@@ -52,6 +52,7 @@ namespace CNMaisons.Controller
             return Success;
         }
 
+        
         public User GetUserByEmail(string existingUseremail)
         {
             User user = new User();
@@ -102,11 +103,12 @@ namespace CNMaisons.Controller
             return Success;
         }
 
-        public String AddPropertyVisit(Visit propertyVisit)
+        
+        public String AddPropertyVisit(Visit aPropertyVisit)
         {
             String Success;
-            Visits VisitsRequestManager = new();
-            Success = VisitsRequestManager.CreatePropertyVisit(propertyVisit);
+            Visits PropertyVisitRequestManager = new();
+            Success = PropertyVisitRequestManager.CreatePropertyVisit(aPropertyVisit);
             return Success;
         }
 
