@@ -1,0 +1,108 @@
+﻿@page
+@model CNMaisons.Pages.InquireVisitModel
+@{
+    Layout = "_Header";
+    ViewData["Title"] = "View Visit Requests";
+    var emailPattern = new System.Text.RegularExpressions.Regex(@"^[^\s@]+@[^\s@]+\.[^\s@]+$");
+}
+
+
+
+<script src="~/libraries/jquery/jquery.js"></script>
+<script src="~/libraries/jquery-validate/jquery.validate.js"></script>
+<script src="~/libraries/jquery-validate-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+<script type="text/javascript">
+    function copyVisitID(VisitID) {
+        document.querySelector('input[name="FindVisitID"]').value = VisitID;
+    }
+</script>
+
+<form name="FindPendingApplicationForm" method="post">
+    <h4>Review Lease Applications</h4>
+    <div style="display: flex; align-content: center">
+        <table style="border-collapse: collapse; text-align: left; width: 100%;">
+            <thead>
+                <tr style="border: 1px solid #ddd; background-color:black;">
+                    <th style="border: 1px solid #ddd;">PropertyVisitID</th>
+                    <th style="border: 1px solid #ddd;">PropertyID</th>
+                    <th style="border: 1px solid #ddd;">ProposedVisitDate</th>
+                    <th style="border: 1px solid #ddd;">ProposedVisitTime</th>
+                    <th style="border: 1px solid #ddd;">VisitStatus</th>
+                    <th style="border: 1px solid #ddd;">FirstName</th>
+                    <th style="border: 1px solid #ddd;">LastName</th>
+                    <th style="border: 1px solid #ddd;">Email</th>
+                    <th style="border: 1px solid #ddd;">PhoneNumber</th>
+                    <th style="border: 1px solid #ddd;">DateRecorded</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var record in Model.ListOfPendingVisits)
+                {
+                    <tr>
+                        <td style="border: 1px solid #ddd;"><a href="#" onclick="copyTenantID('@record.PropertyVisitID')">@record.PropertyVisitID</a></td>
+                        <td style="border: 1px solid #ddd;">@record.PropertyID</td>
+                        <td style="border: 1px solid #ddd;">@record.ProposedVisitDate</td>
+                        <td style="border: 1px solid #ddd;">@record.ProposedVisitTime</td>
+                        <td style="border: 1px solid #ddd;">@record.VisitStatus</td>
+                        <td style="border: 1px solid #ddd;">@record.FirstName</td>
+                        <td style="border: 1px solid #ddd;">@record.LastName</td>
+                        <td style="border: 1px solid #ddd;">@record.Email</td>
+                        <td style="border: 1px solid #ddd;">@record.PhoneNumber</td>
+                        <td style="border: 1px solid #ddd;">@record.DateRecorded</td>
+                    </tr>
+                }
+            </tbody>
+            </tr>
+            <tr>
+                <td>Tenant ID</td>
+                <td><input type="text" name="FindVisitID" /></td>
+            </tr>
+            <tr>
+                <td><input type="submit" name="Submit" value="Find" class="btn" /></td>
+                <td><input type="submit" name="Submit" value="Close" class="btn" /></td>
+            </tr>
+
+        </table>
+    </div>
+</form>
+
+@if (Model.ViewFormNow == true)
+{
+
+    <form name="PropertyVisitForm" method="post" class="form property_form transition-fade-down">
+        <span style="font-size: larger; font-style: italic;">@Model.Message</span>
+            <fieldset>
+                <legend>Request Property Visit</legend>
+                <div>
+                    <label for="PropertyID">Property ID:</label><br />
+                    <input type="text" name="PropertyID" maxlength="7" required /><br />
+
+                    <label for="FirstName">First Name:</label><br />
+                    <input type="text" name="FirstName" maxlength="30" required /><br />
+
+                    <label for="LastName">Last Name:</label><br />
+                    <input type="text" name="LastName" maxlength="30" required /><br />
+
+                    <label for="Email">Email:</label><br />
+                    <input type="email" name="Email" maxlength="100" required /><br />
+
+                    <label for="PhoneNumber">Phone Number:</label><br />
+                    <input type="tel" name="PhoneNumber" maxlength="14" required /><br />
+
+                    <label for="ProposedVisitDate">Proposed Visit Date:</label><br />
+                    <input type="date" name="ProposedVisitDate" required /><br />
+
+                    <label for="ProposedVisitTime">Proposed Visit Time:</label><br />
+                    <input type="time" name="ProposedVisitTime" required /><br />
+
+                    <input type="text" name="VisitStatus" maxlength="20" required value="Open" hidden /><br />
+                </div>
+            </fieldset>
+
+            <input type="submit" name="Submit" value="Request Property Visit" class="btn" />
+             
+    </form>
+
+}
