@@ -27,14 +27,14 @@ namespace CNMaisons.Pages
        
         public void OnGet()
         {
-            CNMS controller = new CNMS();
+            CNMPMS controller = new CNMPMS();
             PropertyList = controller.GetProperties();
             DisplayedPropertyList = PropertyList.ToList();
         }
 
         public IActionResult OnPost()
         {
-            CNMS controller = new CNMS();
+            CNMPMS controller = new CNMPMS();
             PropertyList = controller.GetProperties();
             DisplayedPropertyList = PropertyList.ToList();
             switch (Submit)
@@ -64,7 +64,7 @@ namespace CNMaisons.Pages
             
                 case "Update Property":
                     HttpContext.Session.Clear();
-                    controller = new CNMS();
+                    controller = new CNMPMS();
                     if (PropertyID != null)
                     {
                         HttpContext.Session.SetString("PropertyID", PropertyID);

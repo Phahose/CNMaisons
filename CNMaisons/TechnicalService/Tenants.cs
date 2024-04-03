@@ -285,9 +285,9 @@ namespace CNMaisons.TechnicalService
 
 
 
-        public Tenant GetTenantLeaseApplicationForReview(String aTenantID)
+        public Tenant GetTenant(String aTenantID)
         {
-            Tenant aTenantPendingReview = new();
+            Tenant aTenant = new();
             
             //connection
             SqlConnection MyDataSource = new();
@@ -313,12 +313,12 @@ namespace CNMaisons.TechnicalService
 
 
             SqlDataReader MyDataReader = MyCommand.ExecuteReader();
-             
+
             if (MyDataReader.HasRows)
             {
                 while (MyDataReader.Read())
                 {
-                    aTenantPendingReview = new()
+                    aTenant = new()
                     {
                         //Passport = MyDataReader["Passport"] == DBNull.Value ? null! : (byte[])MyDataReader["Passport"],
                         TenantID = MyDataReader["TenantID"]?.ToString(),
@@ -374,11 +374,12 @@ namespace CNMaisons.TechnicalService
                         ApprovalStatus = MyDataReader["ApprovalStatus"]?.ToString()
                     };
                 }
-            }
+             
+        }
             MyDataReader.Close();
             MyDataSource.Close();
 
-            return aTenantPendingReview;
+            return aTenant;
         }
 
 

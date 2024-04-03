@@ -9,9 +9,9 @@ namespace CNMaisons.Pages
     {
         public bool ViewFormNow = false;
         public string Message { get; set; } = string.Empty;
-        public CNMS RequestDirector;
+        public CNMPMS RequestDirector;
 
-        public Tenant tenantForReview = new();
+        public Tenant aTenant = new();
 
         [BindProperty]
         public string FindTenantID { get; set; } = string.Empty;
@@ -30,7 +30,7 @@ namespace CNMaisons.Pages
 
         public void OnGet()
         {
-            CNMS tenantController = new();
+            CNMPMS tenantController = new();
             ListOfTenantsPendingReview = tenantController.GetPendingLeaseApplication();
             if (ListOfTenantsPendingReview == null)
             {
@@ -55,14 +55,20 @@ namespace CNMaisons.Pages
                         if (ModelState.IsValid)
                         {
                             SetSessionString("FindTenantID1", FindTenantID);  // save content for furtre retreival
-
-                            CNMS RequestDirector = new();
-                            tenantForReview = RequestDirector.ViewTenant(FindTenantID);
-                            if (tenantForReview != null)
+                            ViewFormNow = false;
+                            CNMPMS RequestDirector = new();
+                            aTenant = RequestDirector.ViewTenant(FindTenantID);
+                            string check = aTenant.TenantID;
+                            if (check != "")
                             {
                                 ViewFormNow = true;
                                 Message = "Below are the detail of the Tenant's Lease application.";
                                 return Page();
+                            }
+                            else
+                            {
+                                Message = "This record does not exist.";
+                                ViewFormNow = false;
                             }
                         }
                     }

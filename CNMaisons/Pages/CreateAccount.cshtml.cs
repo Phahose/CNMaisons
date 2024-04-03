@@ -75,7 +75,7 @@ namespace CNMaisons.Pages
 
             if (ModelState.IsValid)
             {
-                CNMS RequestDirector = new();
+                CNMPMS RequestDirector = new();
 
                 User newUser = new();
                 newUser.FirstName = UserFirstName;

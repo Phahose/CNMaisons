@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace CNMaisons.Controller
 {
-    public class CNMS
+    public class CNMPMS
     {
         public bool AddProperty(Property property)
         {
@@ -64,32 +64,32 @@ namespace CNMaisons.Controller
         public string SubmitLeaseApplication(Tenant aTenant)
         {
             string Success;
-            Tenants RequestManager = new();
-            Success = RequestManager.AddLeaseApplication(aTenant);
+            Tenants TenantRequestManager = new();
+            Success = TenantRequestManager.AddLeaseApplication(aTenant);
             return Success;
         }
 
         public string UpdateTenant(Tenant aTenant)
         {
             string Success;
-            Tenants RequestManager = new();
-            Success = RequestManager.ModifyTenant(aTenant);
+            Tenants TenantRequestManager = new();
+            Success = TenantRequestManager.ModifyTenant(aTenant);
             return Success;
         }
 
         public List<Tenant> GetPendingLeaseApplication()
         {
             List<Tenant> TenantsPendingApplicationReview = new();
-            Tenants RequestManager = new();
-            TenantsPendingApplicationReview = RequestManager.RetrievePendingLeaseApplication();
+            Tenants TenantRequestManager = new();
+            TenantsPendingApplicationReview = TenantRequestManager.RetrievePendingLeaseApplication();
             return TenantsPendingApplicationReview;
         }
 
         public Tenant ViewTenant(String aTenantID)
         {
             Tenant aTenants = new();
-            Tenants RequestManager = new();
-            aTenants = RequestManager.GetTenantLeaseApplicationForReview(aTenantID);
+            Tenants TenantRequestManager = new();
+            aTenants = TenantRequestManager.GetTenant(aTenantID);
             return aTenants;
         }
 
@@ -97,10 +97,19 @@ namespace CNMaisons.Controller
         public String ReviewApplication(String findTenantID, String approvalStatus)
         {
              String Success;
-            Tenants RequestManager = new();
-            Success = RequestManager.UpdateApplication(findTenantID, approvalStatus);
+            Tenants TenantRequestManager = new();
+            Success = TenantRequestManager.UpdateApplication(findTenantID, approvalStatus);
             return Success;
         }
 
-}
+        public String AddPropertyVisit(Visit propertyVisit)
+        {
+            String Success;
+            Visits VisitsRequestManager = new();
+            Success = VisitsRequestManager.CreatePropertyVisit(propertyVisit);
+            return Success;
+        }
+
+
+    }
 }

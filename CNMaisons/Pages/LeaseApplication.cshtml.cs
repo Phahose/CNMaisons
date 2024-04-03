@@ -532,7 +532,7 @@ namespace CNMaisons.Pages
 
                 };
 
-                CNMS RequestDirector = new();
+                CNMPMS RequestDirector = new();
                 string Confirmation = RequestDirector.SubmitLeaseApplication(aTenant);
                 if (Confirmation == "Successful!")
                 {
