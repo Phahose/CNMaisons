@@ -1820,3 +1820,53 @@ AS
 
 
 	EXec GetAllEmployees 'ekwomnick@gmail.com'
+
+
+
+
+CREATE PROCEDURE UpdateEmployee
+(
+    @EmployeeImage VARBINARY(MAX),
+    @FirstName VARCHAR(50),
+    @LastName VARCHAR(50),
+    @Email VARCHAR(100),
+    @EmployeeID INT
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    UPDATE Employee
+    SET 
+        EmployeeImage = @EmployeeImage,
+        FirstName = @FirstName,
+        LastName = @LastName,
+        Email = @Email
+    WHERE EmployeeID = @EmployeeID;
+END
+
+
+CREATE PROCEDURE UpdateUsers
+(
+    @Email VARCHAR(100),
+    @Password VARCHAR(100),
+    @Role VARCHAR(25),
+    @DeactivateAccountStatus BIT,
+    @DefaultPassword NVARCHAR(255),
+    @UserSalt NVARCHAR(255)
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    UPDATE Users
+    SET 
+        Password = @Password,
+        Role = @Role,
+        DeactivateAccountStatus = @DeactivateAccountStatus,
+        DefaultPassword = @DefaultPassword,
+        UserSalt = @UserSalt
+    WHERE Email = @Email;
+END
+
+	

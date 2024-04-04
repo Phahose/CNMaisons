@@ -112,5 +112,13 @@ namespace CNMaisons.Controller
 
             return tenant;
         }
+
+        public bool ModifyUser (User user)
+        {
+            bool result = false;
+            Users users = new Users();
+            result = users.UpdateUser(user);
+            return result;
+        }
     }
 }

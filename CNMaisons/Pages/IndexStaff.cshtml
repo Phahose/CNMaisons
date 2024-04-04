@@ -84,7 +84,18 @@
                         <input type="text" name="FirstName" value="@Model.Users.Email" class="val" />
                         <p class="title">Date Joined</p>
                     </div>
-                </div>              
+                </div>   
+                @if (Model.IsPasswordChaned == false)
+                {
+                    <div class="update-password transition-fade-down">
+                        <p>Default Password Update Your Password to Secure Your Account</p>
+                        <label for="Password">New Password</label><br/>
+                        <input type="password" name="Password" required><br/>
+                        <label for="ConfirmPassword">Re-enter Password</label><br/>
+                        <input type="password" name="ConfirmPassword" required><br />
+                        <input type="submit" name="Submit" value="Update Password">
+                    </div>
+                }
             </form>
         </div>
     </div>
