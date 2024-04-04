@@ -1,5 +1,4 @@
-﻿#nullable disable
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
 using System.Data;
 using CNMaisons.Domain;
 using Microsoft.AspNetCore.Rewrite;
@@ -282,9 +281,13 @@ namespace CNMaisons.TechnicalService
             return myTenantPendingReviewList;
         }
 
-        public Tenant GetTenantLeaseApplicationForReview(String aTenantID)
+
+
+
+
+        public Tenant GetTenant(String aTenantID)
         {
-            Tenant aTenantPendingReview = new();
+            Tenant aTenant = new();
             
             //connection
             SqlConnection MyDataSource = new();
@@ -310,12 +313,12 @@ namespace CNMaisons.TechnicalService
 
 
             SqlDataReader MyDataReader = MyCommand.ExecuteReader();
-             
+
             if (MyDataReader.HasRows)
             {
                 while (MyDataReader.Read())
                 {
-                    aTenantPendingReview = new()
+                    aTenant = new()
                     {
                         //Passport = MyDataReader["Passport"] == DBNull.Value ? null! : (byte[])MyDataReader["Passport"],
                         TenantID = MyDataReader["TenantID"]?.ToString(),
@@ -371,12 +374,14 @@ namespace CNMaisons.TechnicalService
                         ApprovalStatus = MyDataReader["ApprovalStatus"]?.ToString()
                     };
                 }
-            }
+             
+        }
             MyDataReader.Close();
             MyDataSource.Close();
 
-            return aTenantPendingReview;
+            return aTenant;
         }
+
 
         public String UpdateApplication(String findTenantID, String approvalStatus)
         {
@@ -434,96 +439,6 @@ namespace CNMaisons.TechnicalService
             }
             return Success;
         }      
-
-        public Tenant GetTenant (string Email)
-        {
-            Tenant tenant = new Tenant();
-            SqlConnection cnMaisonsConnection = new SqlConnection();
-            cnMaisonsConnection.ConnectionString = connectionString;
-            cnMaisonsConnection.Open();
-            SqlCommand GetTenant = new()
-            {
-                CommandType = CommandType.StoredProcedure,
-                Connection = cnMaisonsConnection,
-                CommandText = "GetAllTenants"
-            };
-
-            SqlParameter EmailParameter = new()
-            {
-                ParameterName = "@Email",
-                SqlDbType = SqlDbType.VarChar,
-                Direction = ParameterDirection.Input,
-                SqlValue = Email
-            };
-
-            GetTenant.Parameters.Add(EmailParameter);
-            SqlDataReader MyDataReader = GetTenant.ExecuteReader();
-
-            if (MyDataReader.HasRows)
-            {
-                while (MyDataReader.Read())
-                {
-                    tenant = new()
-                    {
-                        Passport = MyDataReader["Passport"] == DBNull.Value ? null! : (byte[])MyDataReader["Passport"],
-                        TenantID = MyDataReader["TenantID"]?.ToString(),
-                        PropertyID = MyDataReader["PropertyID"]?.ToString(),
-                        FirstName = MyDataReader["FirstName"]?.ToString(),
-                        LastName = MyDataReader["LastName"]?.ToString(),
-                        PhoneNumber = MyDataReader["PhoneNumber"]?.ToString(),
-                        Email = MyDataReader["Email"]?.ToString(),
-                        DOB = MyDataReader["DOB"] == DBNull.Value ? default(DateTime) : (DateTime)MyDataReader["DOB"],
-                        Nationality = MyDataReader["Nationality"]?.ToString(),
-                        StateofOrigin = MyDataReader["StateofOrigin"]?.ToString(),
-                        LGA = MyDataReader["LGA"]?.ToString(),
-                        HomeTown = MyDataReader["HomeTown"]?.ToString(),
-                        PermanentHomeAddress = MyDataReader["PermanentHomeAddress"]?.ToString(),
-                        Occupation = MyDataReader["Occupation"]?.ToString(),
-                        SelfEmployed = MyDataReader["SelfEmployed"]?.ToString(),
-                        BusinessRegistrationNumber = MyDataReader["BusinessRegistrationNumber"]?.ToString(),
-                        CoporateAffairsCertificate = MyDataReader["CoporateAffairsCertificate"] == DBNull.Value ? null! : (byte[])MyDataReader["CoporateAffairsCertificate"],
-                        NameofEmployer = MyDataReader["NameofEmployer"]?.ToString(),
-                        AddressOfEmployer = MyDataReader["AddressOfEmployer"]?.ToString(),
-                        LengthOnJob = (int)MyDataReader["LengthOnJob"],
-                        CurrentPositionHeld = MyDataReader["CurrentPositionHeld"]?.ToString(),
-                        NatureOfJob = MyDataReader["NatureOfJob"]?.ToString(),
-                        FormerResidenceAddress = MyDataReader["FormerResidenceAddress"]?.ToString(),
-                        ReasonForMoving = MyDataReader["ReasonForMoving"]?.ToString(),
-                        LengthOfStayAtOldResidence = (int)MyDataReader["LengthOfStayAtOldResidence"],
-                        NameOfFormerResidentManager = MyDataReader["NameOfFormerResidentManager"]?.ToString(),
-                        ObjectionsToReasonsForMoving = MyDataReader["ObjectionsToReasonsForMoving"]?.ToString(),
-                        MaritalStatus = MyDataReader["MaritalStatus"]?.ToString(),
-                        SpouseFirstName = MyDataReader["SpouseFirstName"]?.ToString(),
-                        SpouseLastName = MyDataReader["SpouseLastName"]?.ToString(),
-                        SpouseOccupation = MyDataReader["SpouseOccupation"]?.ToString(),
-                        NumberOfOccupants = (int)MyDataReader["NumberOfOccupants"],
-                        NextOfKinFirstName = MyDataReader["NextOfKinFirstName"]?.ToString(),
-                        NextOfKinLastName = MyDataReader["NextOfKinLastName"]?.ToString(),
-                        NextOfKinAddress = MyDataReader["NextOfKinAddress"]?.ToString(),
-                        NextOfKinPhoneNumber = MyDataReader["NextOfKinPhoneNumber"]?.ToString(),
-                        Guarantor1FirstName = MyDataReader["Guarantor1FirstName"]?.ToString(),
-                        Guarantor1LastName = MyDataReader["Guarantor1LastName"]?.ToString(),
-                        Guarantor1Address = MyDataReader["Guarantor1Address"]?.ToString(),
-                        Guarantor1Occupation = MyDataReader["Guarantor1Occupation"]?.ToString(),
-                        Guarantor1PhoneNumber = MyDataReader["Guarantor1PhoneNumber"]?.ToString(),
-                        Guarantor1AlternatePhoneNumber = MyDataReader["Guarantor1AlternatePhoneNumber"]?.ToString(),
-                        Guarantor2FirstName = MyDataReader["Guarantor2FirstName"]?.ToString(),
-                        Guarantor2LastName = MyDataReader["Guarantor2LastName"]?.ToString(),
-                        Guarantor2Address = MyDataReader["Guarantor2Address"]?.ToString(),
-                        Guarantor2Occupation = MyDataReader["Guarantor2Occupation"]?.ToString(),
-                        Guarantor2PhoneNumber = MyDataReader["Guarantor2PhoneNumber"]?.ToString(),
-                        Guarantor2AlternatePhoneNumber = MyDataReader["Guarantor2AlternatePhoneNumber"]?.ToString(),
-                        Declaration = MyDataReader["Declaration"]?.ToString(),
-                        YourSignature = MyDataReader["YourSignature"]?.ToString(),
-                        DeleteFlag = (bool)MyDataReader["DeleteFlag"],
-                        ApprovalStatus = MyDataReader["ApprovalStatus"]?.ToString()
-                    };
-                }
-            }
-            MyDataReader.Close();
-            cnMaisonsConnection.Close();
-            return tenant;
-        }
 
     }
 }
