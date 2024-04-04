@@ -761,3 +761,18 @@ input.filter-btn{
 .update-password input[type='submit']:hover{
     padding: 0.7rem;
 }
+.val {
+    width: 95%;
+    margin-left: auto;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border: 1px solid #fff;
+    background-color: rgba(255, 255, 255, 0.5);
+    caret-color: #fff;
+    color: black;
+    font-weight: bold;
+}
+.infodiv fieldset{
+    width: 90%;
+    margin: auto;
+}

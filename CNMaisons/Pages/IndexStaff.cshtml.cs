@@ -7,7 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace CNMaisons.Pages
 {
-    [Authorize]
+    [Authorize (Roles ="LandLord,Staff")]
     public class IndexStaffModel : PageModel
     {
         public string Email { get; set; } = string.Empty;
@@ -15,7 +15,7 @@ namespace CNMaisons.Pages
         public string Submit { get; set; } = string.Empty;
         public User Users { get; set; } = new User();
         public Employee Employee { get; set; } = new Employee();
-        public bool IsPasswordChaned { get; set; } = true;
+        public bool IsPasswordChaned { get; set; }
         [BindProperty]
         public string Password { get; set; } = string.Empty;
         [BindProperty]
@@ -29,9 +29,9 @@ namespace CNMaisons.Pages
            Users = controller.GetUserByEmail(Email);
 
            Employee = controller.GetAllEmployees(Email);
-           if (Users.DefaultPassword == "true")
+           if (Users.DefaultPassword != "true")
            {
-               IsPasswordChaned = false;
+               IsPasswordChaned = true;
            }
         }
 
@@ -55,7 +55,7 @@ namespace CNMaisons.Pages
                     }
                     if (ConfirmPassword != Password)
                     {
-                        ModelState.AddModelError("PasswordError", "Passwords Must Match");
+                        ModelState.AddModelError("PasswordMatchError", "Passwords Must Match");
                     }
 
                     if (ModelState.IsValid)
@@ -82,6 +82,44 @@ namespace CNMaisons.Pages
                         }
                     }
                 break;
+                case "Update":
+                    if (Password == string.Empty)
+                    {
+                        ModelState.AddModelError("PasswordError", "Must Enter a Value for Password");
+                    }
+                    if (ConfirmPassword == string.Empty)
+                    {
+                        ModelState.AddModelError("ConfirmPasswordError", "Must Confirm Your Password");
+                    }
+                    if (ConfirmPassword != Password)
+                    {
+                        ModelState.AddModelError("PasswordMatchError", "Passwords Must Match");
+                    }
+
+                    if (ModelState.IsValid)
+                    {
+
+                        User modifiedUser = new()
+                        {
+                            Email = Users.Email,
+                            Password = Password,
+                            Role = Users.Role,
+                            DeactivateAccountStatus = Users.DeactivateAccountStatus,
+                            DefaultPassword = "false",
+                        };
+                        bool success = controller.ModifyUser(modifiedUser);
+                        if (success == true)
+                        {
+                            IsPasswordChaned = true;
+                            SuccessMessage = "Account Secured Successfully";
+                        }
+                        else
+                        {
+                            IsPasswordChaned = false;
+                            ErrorMessage = "Failed Error Occured";
+                        }
+                    }
+                    break;
             }
         }
     }
