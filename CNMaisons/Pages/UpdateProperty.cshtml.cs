@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using Microsoft.AspNetCore.Authorization;
+using CNMaisons.TechnicalService;
 
 namespace CNMaisons.Pages
 {
@@ -61,6 +62,11 @@ namespace CNMaisons.Pages
         [BindProperty]
         public decimal PropertyPrice { get; set; }
         public Property Property { get; set; } = new();
+        public bool Occupied { get; set; }
+        public string Email { get; set; } 
+        public User Users { get; set; } = new User();
+        [BindProperty]
+        public string MyCheckBox { get; set; }
         public void OnGet()
         {
             if (HttpContext.Session.GetString("PropertyID") != null)
@@ -68,7 +74,12 @@ namespace CNMaisons.Pages
                 PropertyID = HttpContext.Session.GetString("PropertyID")!;
             }
 
+            if (HttpContext.Session.GetString("Email") != null)
+            {
+                Email = HttpContext.Session.GetString("Email")!;
+            }           
             CNMPMS controller = new CNMPMS();
+            Users = controller.GetUserByEmail(Email);
             Property = controller.GetPropertyByID(PropertyID);
         }
         public void OnPost()
@@ -150,6 +161,14 @@ namespace CNMaisons.Pages
                 byte[] image9Bytes = ConvertToByteArray(Image9);
                 byte[] image10Bytes = ConvertToByteArray(Image10);
 
+                if (MyCheckBox == "on") 
+                {
+                    Occupied = true;
+                }
+                else
+                {
+                    Occupied = false;
+                }
                 property = new()
                 {
                     PropertyID = PropertyID!,
@@ -171,6 +190,7 @@ namespace CNMaisons.Pages
                     Image8 = image8Bytes,
                     Image9 = image9Bytes,
                     Image10 = image10Bytes,
+                    Occupied = Occupied
                 };
                 if (Image1 == null || Image2 == null || Image3 == null || Image4== null || Image5 == null || Image6 == null || Image7 == null || Image8 == null || Image9 == null || Image10 == null)
                 {
@@ -185,6 +205,7 @@ namespace CNMaisons.Pages
                     property.NumberOfRooms = RoomNumber;
                     property.PropertyDescription = Description!;
                     property.PropertyPrice = PropertyPrice;
+                    property.Occupied = Occupied;
                     if (Image1 == null)
                     {
                         property.Image1 = Property.Image1!;
@@ -234,6 +255,14 @@ namespace CNMaisons.Pages
                     {
                         property.Image6 = ConvertToByteArray(Image7);
                     }
+                    if (Image7 == null)
+                    {
+                        property.Image7 = Property.Image7!;
+                    }
+                    else
+                    {
+                        property.Image7 = ConvertToByteArray(Image7);
+                    }
                     if (Image8 == null)
                     {
                         property.Image8 = Property.Image8!;
@@ -241,14 +270,6 @@ namespace CNMaisons.Pages
                     else
                     {
                         property.Image8 = ConvertToByteArray(Image8);
-                    }
-                    if (Image3 == null)
-                    {
-                        property.Image3 = Property.Image3!;
-                    }
-                    else
-                    {
-                        property.Image3 = ConvertToByteArray(Image3);
                     }
                     if (Image9 == null)
                     {

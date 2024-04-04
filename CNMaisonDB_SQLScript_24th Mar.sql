@@ -25,10 +25,12 @@ CREATE TABLE Property
 	Image9  VARBINARY(MAX),
 	Image10  VARBINARY(MAX),
 	DeleteFlag  BIT NOT NULL,
-	DateAdded  DATE DEFAULT GETDATE() NOT NULL
+	DateAdded  DATE DEFAULT GETDATE() NOT NULL,
+	Occupied BIT 
 )
 
 ALTER TABLE Property
+	ADD Occupied BIT 
 	ADD CONSTRAINT PK_PropertyID PRIMARY KEY (PropertyID)
 
 
@@ -125,8 +127,8 @@ BEGIN
 		RETURN;
 	END
     -- Insert the property into the table
-    INSERT INTO Property (PropertyID, PropertyName, PropertyLocationState, PropertyLocationCountry, PropertyAddress, PropertyPrice, PropertyType, NumberOfRooms, PropertyDescription, Image1, Image2, Image3, Image4, Image5, Image6, Image7, Image8, Image9, Image10, DeleteFlag, DateAdded)
-    VALUES (@PropertyID, @PropertyName, @PropertyLocationState, @PropertyLocationCountry, @PropertyAddress,@PropertyPrice, @PropertyType, @NumberOfRooms, @PropertyDescription, @Image1, @Image2, @Image3, @Image4, @Image5, @Image6, @Image7, @Image8, @Image9, @Image10, @DeleteFlag, GETDATE())
+    INSERT INTO Property (PropertyID, PropertyName, PropertyLocationState, PropertyLocationCountry, PropertyAddress, PropertyPrice, PropertyType, NumberOfRooms, PropertyDescription, Image1, Image2, Image3, Image4, Image5, Image6, Image7, Image8, Image9, Image10, DeleteFlag, DateAdded, Occupied)
+    VALUES (@PropertyID, @PropertyName, @PropertyLocationState, @PropertyLocationCountry, @PropertyAddress,@PropertyPrice, @PropertyType, @NumberOfRooms, @PropertyDescription, @Image1, @Image2, @Image3, @Image4, @Image5, @Image6, @Image7, @Image8, @Image9, @Image10, @DeleteFlag, GETDATE(), 0)
 END
 
 
@@ -138,7 +140,7 @@ END
 CREATE PROCEDURE GetProperty
 AS
 	BEGIN
-		SELECT PropertyID, PropertyName, PropertyLocationState, PropertyLocationCountry, PropertyAddress, PropertyPrice, PropertyType, NumberOfRooms, PropertyDescription, Image1, Image2, Image3, Image4, Image5, Image6, Image7, Image8, Image9, Image10
+		SELECT PropertyID, PropertyName, PropertyLocationState, PropertyLocationCountry, PropertyAddress, PropertyPrice, PropertyType, NumberOfRooms, PropertyDescription, Image1, Image2, Image3, Image4, Image5, Image6, Image7, Image8, Image9, Image10, Occupied
 		FROM
 		Property 
 		WHERE DeleteFlag = 0
@@ -153,12 +155,12 @@ DROP PROCEDURE GetProperty
 
 
 
-
+DROP PROCEDURE GetPropertyByID
 CREATE PROCEDURE GetPropertyByID
     @PropertyID VARCHAR(7)
 AS
 BEGIN
-    SELECT PropertyID, PropertyName, PropertyLocationState, PropertyLocationCountry, PropertyAddress, PropertyPrice, PropertyType, NumberOfRooms, PropertyDescription, Image1, Image2, Image3, Image4, Image5, Image6, Image7, Image8, Image9, Image10
+    SELECT PropertyID, PropertyName, PropertyLocationState, PropertyLocationCountry, PropertyAddress, PropertyPrice, PropertyType, NumberOfRooms, PropertyDescription, Image1, Image2, Image3, Image4, Image5, Image6, Image7, Image8, Image9, Image10, Occupied
     FROM Property
     WHERE PropertyID = @PropertyID AND DeleteFlag = 0;
 END
@@ -169,7 +171,7 @@ EXEC GetPropertyByID 'CN00001'
 
 
 
-
+DROP PROCEDURE UpdateProperty
 
 CREATE PROCEDURE UpdateProperty
     @PropertyID VARCHAR(7),
@@ -190,7 +192,8 @@ CREATE PROCEDURE UpdateProperty
     @Image7 VARBINARY(MAX),
     @Image8 VARBINARY(MAX),
     @Image9 VARBINARY(MAX),
-    @Image10 VARBINARY(MAX)
+    @Image10 VARBINARY(MAX),
+	@Occupied BIT
 AS
 BEGIN
     UPDATE Property
@@ -211,7 +214,8 @@ BEGIN
         Image7 = @Image7,
         Image8 = @Image8,
         Image9 = @Image9,
-        Image10 = @Image10
+        Image10 = @Image10,
+		Occupied = @Occupied
     WHERE PropertyID = @PropertyID;
 END;
 
@@ -1801,3 +1805,53 @@ AS
 
 
 	EXec GetAllEmployees 'ekwomnick@gmail.com'
+
+
+
+
+CREATE PROCEDURE UpdateEmployee
+(
+    @EmployeeImage VARBINARY(MAX),
+    @FirstName VARCHAR(50),
+    @LastName VARCHAR(50),
+    @Email VARCHAR(100),
+    @EmployeeID INT
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    UPDATE Employee
+    SET 
+        EmployeeImage = @EmployeeImage,
+        FirstName = @FirstName,
+        LastName = @LastName,
+        Email = @Email
+    WHERE EmployeeID = @EmployeeID;
+END
+
+
+CREATE PROCEDURE UpdateUsers
+(
+    @Email VARCHAR(100),
+    @Password VARCHAR(100),
+    @Role VARCHAR(25),
+    @DeactivateAccountStatus BIT,
+    @DefaultPassword NVARCHAR(255),
+    @UserSalt NVARCHAR(255)
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    UPDATE Users
+    SET 
+        Password = @Password,
+        Role = @Role,
+        DeactivateAccountStatus = @DeactivateAccountStatus,
+        DefaultPassword = @DefaultPassword,
+        UserSalt = @UserSalt
+    WHERE Email = @Email;
+END
+
+	

@@ -685,3 +685,94 @@ input.filter-btn{
     color: #fff;
     font-size: 1rem;
 }
+
+.loggedin-pages {
+   background-color: #e39a3b;
+   display: flex;
+}
+.loggedin-nav {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.loggedin-list{
+    display: flex;
+    margin-top: 0;
+}
+.loggedin-list li {
+    list-style: none;
+    margin-left: 1rem;   
+    font-size: 1.2rem;
+    font-family: "Raleway", sans-serif;
+    padding: 0.5rem;
+    padding-bottom: 0;
+}
+.loggedin-list li:not(:last-child){
+    margin-top: 1.5rem;
+}
+.loggedin-list a {
+    text-decoration: none;
+    margin-top: 1rem;
+    color: white;
+}
+.loggedin-nav>a{
+    margin-top: 2.5rem;
+    margin-left: 1rem;
+}
+.loggedin-icon_div {
+    background-size: cover;
+    height: 5rem;
+    width: 5rem;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 50%;
+    display: flex;
+}
+.loggedin-list li:hover {
+    border-bottom: 1.4px solid white;
+}
+.update-password {
+    position: absolute;
+    width: 60%;
+    max-width: 35rem;
+    left: 35%;
+    right: 50%;
+    top: 30%;
+    padding: 0.5rem;
+    background-color: #282a2e;
+    border: 1px solid white;
+}
+.update-password input[type='submit']{
+    padding: 0.5rem;
+    margin-right: auto;
+    width: fit-content;
+    display: flex;
+    margin-left: 12rem;
+    background-color: #d6db9c;
+    transition: 0.5s ease-in-out;
+}
+.update-password > p{
+    width: 32rem;
+    margin: auto;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    font-size: 1rem;
+}
+.update-password input[type='submit']:hover{
+    padding: 0.7rem;
+}
+.val {
+    width: 95%;
+    margin-left: auto;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border: 1px solid #fff;
+    background-color: rgba(255, 255, 255, 0.5);
+    caret-color: #fff;
+    color: black;
+    font-weight: bold;
+}
+.infodiv fieldset{
+    width: 90%;
+    margin: auto;
+}

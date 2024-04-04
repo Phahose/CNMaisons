@@ -1,5 +1,7 @@
 ﻿using CNMaisons.Domain;
 using CNMaisons.TechnicalService;
+using System.Net.Mail;
+using System.Net;
 using System.Security.Cryptography;
 
 namespace CNMaisons.Controller
@@ -111,6 +113,44 @@ namespace CNMaisons.Controller
             tenant = Tennants.GetTenant(email);
 
             return tenant;
+        }
+
+        public bool ModifyUser (User user)
+        {
+            bool result = false;
+            Users users = new Users();
+            result = users.UpdateUser(user);
+            return result;
+        }
+        static void SendReminderEmail(string TO_EMAIL_ADDRESS, string FROM_EMAIL_ADDRESS, string messageBody, string messageSubject)
+        {
+            try
+            {
+
+
+                // Create the email client object
+                using (SmtpClient client = new SmtpClient("smtp.gmail.com"))
+                {
+                    client.Port = 587;
+                    client.EnableSsl = true;
+                    client.Credentials = new NetworkCredential(FROM_EMAIL_ADDRESS, "ublu yfxa glrj esne ");
+
+                    // Create the email message
+                    MailMessage message = new MailMessage(FROM_EMAIL_ADDRESS, TO_EMAIL_ADDRESS);
+                    message.Subject = messageSubject;
+                    message.Body = messageBody;
+
+
+                    // Send the email
+                    client.Send(message);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error sending email: {ex.Message}");
+            }
+
         }
     }
 }

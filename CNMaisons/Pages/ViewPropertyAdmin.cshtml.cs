@@ -25,20 +25,28 @@ namespace CNMaisons.Pages
         public string StateFilter {  get; set; } = string.Empty;
         public string Message {  get; set; } = string.Empty;
         public bool DeleteRequest { get; set; } = false;
-        public bool Success { get; set; } = false;  
-       
+        public bool Success { get; set; } = false;
+        public User Users { get; set; } = new User();
+        public string Email { get; set; } = string.Empty;
+        public Employee Employee { get; set; } = new Employee();
         public void OnGet()
         {
+            Email = HttpContext.Session.GetString("Email")!;
             CNMPMS controller = new CNMPMS();
             PropertyList = controller.GetProperties();
             DisplayedPropertyList = PropertyList.ToList();
+            Users = controller.GetUserByEmail(Email);
+            Employee = controller.GetAllEmployees(Email);
         }
 
         public IActionResult OnPost()
         {
+            Email = HttpContext.Session.GetString("Email")!;
             CNMPMS controller = new CNMPMS();
             PropertyList = controller.GetProperties();
             DisplayedPropertyList = PropertyList.ToList();
+            Users = controller.GetUserByEmail(Email);
+            Employee = controller.GetAllEmployees(Email);
             switch (Submit)
             {
                 case "Filter":
@@ -65,7 +73,6 @@ namespace CNMaisons.Pages
                     return Page();
             
                 case "Update Property":
-                    HttpContext.Session.Clear();
                     controller = new CNMPMS();
                     if (PropertyID != null)
                     {
