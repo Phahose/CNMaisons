@@ -1180,7 +1180,11 @@ END;
 
 --DROP PROCEDURE ViewTenant
 CREATE PROCEDURE ViewTenant(
-	@TenantID VARCHAR(5) = NULL)
+	@TenantID VARCHAR(5) = NULL,
+	@FirstName VARCHAR(30) = NULL,  
+	@LastName VARCHAR(30) = NULL,
+	@PhoneNumber VARCHAR(14) = NULL, 
+	@Email VARCHAR(100) = NULL)
 AS
 BEGIN
     DECLARE @ReturnCode INT
@@ -1188,11 +1192,19 @@ BEGIN
 	
 	IF @TenantID IS NULL
         RAISERROR('ViewTenant - required parameter: @TenantID.', 16, 1);
+    ELSE IF @FirstName IS NULL
+        RAISERROR('ViewTenant - required parameter: @FirstName.', 16, 1);
+    ELSE IF @LastName IS NULL
+        RAISERROR('ViewTenant - required parameter: @LastName.', 16, 1);
+    ELSE IF @PhoneNumber IS NULL
+        RAISERROR('ViewTenant - required parameter: @PhoneNumber.', 16, 1);
+    ELSE IF @Email IS NULL
+        RAISERROR('ViewTenant - required parameter: @Email.', 16, 1);
     ELSE
 
 		BEGIN
 		    SELECT 
-				TenantID, PropertyID, Passport, FirstName, LastName, PhoneNumber, Email, DOB, Nationality, StateofOrigin, 
+				TenantID, Passport, FirstName, LastName, PhoneNumber, Email, DOB, Nationality, StateofOrigin, 
 				LGA, HomeTown, PermanentHomeAddress, Occupation, SelfEmployed, BusinessRegistrationNumber, 
 				CoporateAffairsCertificate, NameofEmployer, AddressOfEmployer, LengthOnJob, CurrentPositionHeld, 
 				NatureOfJob, FormerResidenceAddress, ReasonForMoving, LengthOfStayAtOldResidence, NameOfFormerResidentManager, 
@@ -1203,8 +1215,11 @@ BEGIN
 				Declaration, YourSignature, ApprovalStatus, DeleteFlag
 			FROM Tenant
 			WHERE 
-			   TenantID = @TenantID
-
+			   TenantID = @TenantID OR
+			   FirstName = @FirstName OR
+			   LastName = @LastName OR
+			   PhoneNumber = @PhoneNumber OR
+			   Email = @Email;
 			IF @@ERROR = 0
 				SET @ReturnCode = 0
 			ELSE
