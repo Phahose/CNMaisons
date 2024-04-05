@@ -277,72 +277,142 @@ namespace CNMaisons.TechnicalService
             {
                 ParameterName = "@Image1",
                 SqlDbType = SqlDbType.VarBinary,
-                SqlValue = Property.Image1,
                 Direction = ParameterDirection.Input,
             };
+            if (Property.Image1 != null)
+            {
+                Image1.Value = Property.Image1;
+            }
+            else
+            {
+                Image1.Value = DBNull.Value;
+            }
             SqlParameter Image2 = new()
             {
                 ParameterName = "@Image2",
                 SqlDbType = SqlDbType.VarBinary,
-                SqlValue = Property.Image2,
                 Direction = ParameterDirection.Input,
             };
+            if (Property.Image2 != null)
+            {
+                Image2.Value = Property.Image2;
+            }
+            else
+            {
+                Image2.Value = DBNull.Value;
+            }
             SqlParameter Image3 = new()
             {
                 ParameterName = "@Image3",
                 SqlDbType = SqlDbType.VarBinary,
-                SqlValue = Property.Image3,
                 Direction = ParameterDirection.Input,
             };
+            if (Property.Image3 != null)
+            {
+                Image3.Value = Property.Image3;
+            }
+            else
+            {
+                Image3.Value = DBNull.Value;
+            }
             SqlParameter Image4 = new()
             {
                 ParameterName = "@Image4",
                 SqlDbType = SqlDbType.VarBinary,
-                SqlValue = Property.Image4,
                 Direction = ParameterDirection.Input,
             };
+            if (Property.Image4 != null)
+            {
+                Image4.Value = Property.Image4;
+            }
+            else
+            {
+                Image4.Value = DBNull.Value;
+            }
             SqlParameter Image5 = new()
             {
                 ParameterName = "@Image5",
                 SqlDbType = SqlDbType.VarBinary,
-                SqlValue = Property.Image5,
                 Direction = ParameterDirection.Input,
             };
+            if (Property.Image5 != null)
+            {
+                Image5.Value = Property.Image5;
+            }
+            else
+            {
+                Image5.Value = DBNull.Value;
+            }
             SqlParameter Image6 = new()
             {
                 ParameterName = "@Image6",
                 SqlDbType = SqlDbType.VarBinary,
-                SqlValue = Property.Image6,
                 Direction = ParameterDirection.Input,
             };
+            if (Property.Image6 != null)
+            {
+                Image6.Value = Property.Image6;
+            }
+            else
+            {
+                Image4.Value = DBNull.Value;
+            }
             SqlParameter Image7 = new()
             {
                 ParameterName = "@Image7",
                 SqlDbType = SqlDbType.VarBinary,
-                SqlValue = Property.Image7,
                 Direction = ParameterDirection.Input,
             };
+            if (Property.Image7 != null)
+            {
+                Image7.Value = Property.Image7;
+            }
+            else
+            {
+                Image7.Value = DBNull.Value;
+            }
             SqlParameter Image8 = new()
             {
                 ParameterName = "@Image8",
                 SqlDbType = SqlDbType.VarBinary,
-                SqlValue = Property.Image8,
                 Direction = ParameterDirection.Input,
             };
+            if (Property.Image8 != null)
+            {
+                Image8.Value = Property.Image8;
+            }
+            else
+            {
+                Image8.Value = DBNull.Value;
+            }
             SqlParameter Image9 = new()
             {
                 ParameterName = "@Image9",
                 SqlDbType = SqlDbType.VarBinary,
-                SqlValue = Property.Image9,
                 Direction = ParameterDirection.Input,
             };
+            if (Property.Image9 != null)
+            {
+                Image9.Value = Property.Image9;
+            }
+            else
+            {
+                Image9.Value = DBNull.Value;
+            }
             SqlParameter Image10 = new()
             {
                 ParameterName = "@Image10",
                 SqlDbType = SqlDbType.VarBinary,
-                SqlValue = Property.Image10,
                 Direction = ParameterDirection.Input,
             };
+            if (Property.Image10 != null)
+            {
+                Image10.Value = Property.Image10;
+            }
+            else
+            {
+                Image10.Value = DBNull.Value;
+            }
             SqlParameter Occupied = new()
             {
                 ParameterName = "@Occupied",

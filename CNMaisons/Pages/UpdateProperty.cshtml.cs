@@ -291,8 +291,16 @@ namespace CNMaisons.Pages
                     #endregion
 
                 }
-                controller.UpdateProperty(property);
-                SucceessMessage = "The Property Updated SuccessFully";
+                bool success = controller.UpdateProperty(property);
+
+                if (success)
+                {
+                    SucceessMessage = "The Property Updated SuccessFully";
+                }
+                else
+                {
+                    SucceessMessage = "An Error Occured When trying to Update this Property";
+                }
               
             }
         }
