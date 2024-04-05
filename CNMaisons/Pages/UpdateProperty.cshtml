@@ -1,17 +1,81 @@
 ﻿@page
 @model CNMaisons.Pages.UpdatePropertyModel
 @{
-    Layout = "_Header";
+    //Layout = "_Header";
     ViewData["Title"] = "Update Property";
 }
 <div>
+    <div class="loggedin-pages">
+        <nav class="loggedin-nav">
+            <a href="~/Index"><img src="~/img/png/logo-no-background.png" width="150" class="intro_image" /></a>
+            <ul class="loggedin-list">
+                @if (Model.Users.Role == "LandLord")
+                {
+
+                    <li>
+                        <a href="~/IndexStaff">My Account</a>
+                    </li>
+                    <li>
+                        <a href="~/AddProperty">Add Property</a>
+                    </li>
+                    <li>
+                        <a href="#">View Maintainance Requests</a>
+                    </li>
+                    <li>
+                        <a href="~/CreateAccount">Create New Employee Account</a>
+                    </li>
+                    <li>
+                        <a href="#">View Visit Requests</a>
+                    </li>
+                    <li>
+                        <a href="~/ViewPropertyAdmin">View Properties</a>
+                    </li>
+
+
+                }
+                @if (Model.Users.Role == "Staff")
+                {
+
+                    <li>
+                        <a href="~/IndexStaff">My Account</a>
+                    </li>
+                    <li>
+                        <a href="~/AddProperty">Add Property</a>
+                    </li>
+                    <li>
+                        <a href="#">View Visit Requests</a>
+                    </li>
+                    <li>
+                        <a href="#">Edit Account</a>
+                    </li>
+
+                }
+                <li class="loggedin-icon_div">
+                    @if (Model.Employee.EmployeeImage != null)
+                    {
+                        <img src="data:image;base64,@Convert.ToBase64String(Model.Employee.EmployeeImage)" alt="Property Image" />
+                    }
+                    else
+                    {
+                        <a href="~/Index"><img src="~/img/profile_icon" width="150" class="intro_image" /></a>
+                    }
+                </li>
+            </ul>
+        </nav>
+    </div>
     <form name="UpdateProperty" method="post" class="form property_form transition-fade-down" onsubmit="enableField()" enctype="multipart/form-data">
         <p>@Model.SucceessMessage</p>
         <p>@Model.ErrorMessage</p>
         <fieldset>
             <legend>Update Property</legend>
             <label for="Occupied">Mark As Occupied</label><br />
-            <input type="checkbox" name="MyCheckbox" /><br />
+            @if (Model.Property.Occupied == true)
+            {
+                <input type="checkbox" name="MyCheckbox" checked/><br />
+            }
+            else{
+                <input type="checkbox" name="MyCheckbox" /><br />
+            }
             <label for="PropertyID">Property ID Format CN00001</label>
             <br />
             <input type="text" name="PropertyID" required pattern="[A-Za-z]{2}\d{5}" value="@Model.Property.PropertyID" disabled/>
