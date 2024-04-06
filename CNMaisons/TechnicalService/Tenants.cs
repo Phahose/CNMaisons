@@ -3,12 +3,18 @@ using Microsoft.Data.SqlClient;
 using System.Data;
 using CNMaisons.Domain;
 using Microsoft.AspNetCore.Rewrite;
+using System.Reflection.Metadata.Ecma335;
+using System.Net.Mail;
+using System.Net;
 
 namespace CNMaisons.TechnicalService
 {
     public class Tenants
     {
         private string? connectionString;
+
+
+        
         public Tenants()
         {
             ConfigurationBuilder DatabaseUserBuilder = new ConfigurationBuilder();
@@ -18,7 +24,7 @@ namespace CNMaisons.TechnicalService
             connectionString = DatabaseUserConfiguration.GetConnectionString("CNMaisons");
         }
 
-
+        
 
         public string AddLeaseApplication(Tenant aTenant)
         {
@@ -49,7 +55,7 @@ namespace CNMaisons.TechnicalService
                 }
 
                 // Adding parameters
-                AddParameter("@TenantID", SqlDbType.VarChar, aTenant.TenantID);
+                //AddParameter("@TenantID", SqlDbType.VarChar, aTenant.TenantID);
                 AddParameter("@PropertyID", SqlDbType.VarChar, aTenant.PropertyID);
                 AddParameter("@Passport", SqlDbType.VarBinary, aTenant.Passport);
                 AddParameter("@FirstName", SqlDbType.VarChar, aTenant.FirstName);
@@ -58,19 +64,19 @@ namespace CNMaisons.TechnicalService
                 AddParameter("@Email", SqlDbType.VarChar, aTenant.Email);
                 AddParameter("@DOB", SqlDbType.DateTime, aTenant.DOB);
                 AddParameter("@Nationality", SqlDbType.VarChar, aTenant.Nationality);
-
                 AddParameter("@StateofOrigin", SqlDbType.VarChar, aTenant.StateofOrigin);
+
                 AddParameter("@LGA", SqlDbType.VarChar, aTenant.LGA);
                 AddParameter("@HomeTown", SqlDbType.VarChar, aTenant.HomeTown);
                 AddParameter("@PermanentHomeAddress", SqlDbType.VarChar, aTenant.PermanentHomeAddress);
                 AddParameter("@Occupation", SqlDbType.VarChar, aTenant.Occupation);
                 AddParameter("@SelfEmployed", SqlDbType.VarChar, aTenant.SelfEmployed);
                 AddParameter("@BusinessRegistrationNumber", SqlDbType.VarChar, aTenant.BusinessRegistrationNumber);
-                AddParameter("@CoporateAffairsCertificate", SqlDbType.VarBinary, aTenant.CoporateAffairsCertificate);
+                AddParameter("@CorporateAffairsCertificate", SqlDbType.VarBinary, aTenant.CorporateAffairsCertificate);
                 AddParameter("@NameofEmployer", SqlDbType.VarChar, aTenant.NameofEmployer);
                 AddParameter("@AddressOfEmployer", SqlDbType.VarChar, aTenant.AddressOfEmployer);
-
                 AddParameter("@LengthOnJob", SqlDbType.Int, aTenant.LengthOnJob);
+
                 AddParameter("@CurrentPositionHeld", SqlDbType.VarChar, aTenant.CurrentPositionHeld);
                 AddParameter("@NatureOfJob", SqlDbType.VarChar, aTenant.NatureOfJob);
                 AddParameter("@FormerResidenceAddress", SqlDbType.VarChar, aTenant.FormerResidenceAddress);
@@ -80,8 +86,8 @@ namespace CNMaisons.TechnicalService
                 AddParameter("@ObjectionsToReasonsForMoving", SqlDbType.VarChar, aTenant.ObjectionsToReasonsForMoving);
                 AddParameter("@MaritalStatus", SqlDbType.VarChar, aTenant.MaritalStatus);
                 AddParameter("@SpouseFirstName", SqlDbType.VarChar, aTenant.SpouseFirstName);
-
                 AddParameter("@SpouseLastName", SqlDbType.VarChar, aTenant.SpouseLastName);
+
                 AddParameter("@SpouseOccupation", SqlDbType.VarChar, aTenant.SpouseOccupation);
                 AddParameter("@NumberOfOccupants", SqlDbType.Int, aTenant.NumberOfOccupants);
                 AddParameter("@NextOfKinFirstName", SqlDbType.VarChar, aTenant.NextOfKinFirstName);
@@ -91,8 +97,8 @@ namespace CNMaisons.TechnicalService
                 AddParameter("@Guarantor1FirstName", SqlDbType.VarChar, aTenant.Guarantor1FirstName);
                 AddParameter("@Guarantor1LastName", SqlDbType.VarChar, aTenant.Guarantor1LastName);
                 AddParameter("@Guarantor1Address", SqlDbType.VarChar, aTenant.Guarantor1Address);
-
                 AddParameter("@Guarantor1Occupation", SqlDbType.VarChar, aTenant.Guarantor1Occupation);
+
                 AddParameter("@Guarantor1PhoneNumber", SqlDbType.VarChar, aTenant.Guarantor1PhoneNumber);
                 AddParameter("@Guarantor1AlternatePhoneNumber", SqlDbType.VarChar, aTenant.Guarantor1AlternatePhoneNumber);
                 AddParameter("@Guarantor2FirstName", SqlDbType.VarChar, aTenant.Guarantor2FirstName);
@@ -102,14 +108,15 @@ namespace CNMaisons.TechnicalService
                 AddParameter("@Guarantor2PhoneNumber", SqlDbType.VarChar, aTenant.Guarantor2PhoneNumber);
                 AddParameter("@Guarantor2AlternatePhoneNumber", SqlDbType.VarChar, aTenant.Guarantor2AlternatePhoneNumber);
                 AddParameter("@Declaration", SqlDbType.VarChar, aTenant.Declaration);
-
                 AddParameter("@YourSignature", SqlDbType.VarChar, aTenant.YourSignature);
+
                 AddParameter("@ApprovalStatus", SqlDbType.VarChar, aTenant.ApprovalStatus);
                 AddParameter("@DeleteFlag", SqlDbType.Bit, aTenant.DeleteFlag);
+                
 
                 MyCommand.ExecuteNonQuery();
                 MyDataSource.Close();
-                Success = "Successful!";
+                Success = "Successful.";
             }
 
             catch (SqlException ex)
@@ -122,7 +129,7 @@ namespace CNMaisons.TechnicalService
                 }
                 else
                 {
-                    Success = $"An error occurred: {ex.Message}";
+                    Success =  $"An error occurred: {ex.Message}";
                 }
             }
             catch (Exception ex)
@@ -131,6 +138,12 @@ namespace CNMaisons.TechnicalService
             }
             return Success;
         }
+
+
+
+
+
+
         public string ModifyTenant(Tenant aTenant)
         {
             string Success;
@@ -160,7 +173,7 @@ namespace CNMaisons.TechnicalService
                 }
 
                 // Adding parameters
-                AddParameter("@TenantID", SqlDbType.VarChar, aTenant.TenantID);
+                //AddParameter("@TenantID", SqlDbType.VarChar, aTenant.TenantID);
                 AddParameter("@PropertyID", SqlDbType.VarChar, aTenant.PropertyID);
                 AddParameter("@Passport", SqlDbType.VarBinary, aTenant.Passport);
                 AddParameter("@FirstName", SqlDbType.VarChar, aTenant.FirstName);
@@ -169,19 +182,19 @@ namespace CNMaisons.TechnicalService
                 AddParameter("@Email", SqlDbType.VarChar, aTenant.Email);
                 AddParameter("@DOB", SqlDbType.DateTime, aTenant.DOB);
                 AddParameter("@Nationality", SqlDbType.VarChar, aTenant.Nationality);
-
                 AddParameter("@StateofOrigin", SqlDbType.VarChar, aTenant.StateofOrigin);
+
                 AddParameter("@LGA", SqlDbType.VarChar, aTenant.LGA);
                 AddParameter("@HomeTown", SqlDbType.VarChar, aTenant.HomeTown);
                 AddParameter("@PermanentHomeAddress", SqlDbType.VarChar, aTenant.PermanentHomeAddress);
                 AddParameter("@Occupation", SqlDbType.VarChar, aTenant.Occupation);
                 AddParameter("@SelfEmployed", SqlDbType.VarChar, aTenant.SelfEmployed);
                 AddParameter("@BusinessRegistrationNumber", SqlDbType.VarChar, aTenant.BusinessRegistrationNumber);
-                AddParameter("@CoporateAffairsCertificate", SqlDbType.VarBinary, aTenant.CoporateAffairsCertificate);
+                AddParameter("@CorporateAffairsCertificate", SqlDbType.VarBinary, aTenant.CorporateAffairsCertificate);
                 AddParameter("@NameofEmployer", SqlDbType.VarChar, aTenant.NameofEmployer);
                 AddParameter("@AddressOfEmployer", SqlDbType.VarChar, aTenant.AddressOfEmployer);
-
                 AddParameter("@LengthOnJob", SqlDbType.Int, aTenant.LengthOnJob);
+
                 AddParameter("@CurrentPositionHeld", SqlDbType.VarChar, aTenant.CurrentPositionHeld);
                 AddParameter("@NatureOfJob", SqlDbType.VarChar, aTenant.NatureOfJob);
                 AddParameter("@FormerResidenceAddress", SqlDbType.VarChar, aTenant.FormerResidenceAddress);
@@ -191,8 +204,8 @@ namespace CNMaisons.TechnicalService
                 AddParameter("@ObjectionsToReasonsForMoving", SqlDbType.VarChar, aTenant.ObjectionsToReasonsForMoving);
                 AddParameter("@MaritalStatus", SqlDbType.VarChar, aTenant.MaritalStatus);
                 AddParameter("@SpouseFirstName", SqlDbType.VarChar, aTenant.SpouseFirstName);
-
                 AddParameter("@SpouseLastName", SqlDbType.VarChar, aTenant.SpouseLastName);
+
                 AddParameter("@SpouseOccupation", SqlDbType.VarChar, aTenant.SpouseOccupation);
                 AddParameter("@NumberOfOccupants", SqlDbType.Int, aTenant.NumberOfOccupants);
                 AddParameter("@NextOfKinFirstName", SqlDbType.VarChar, aTenant.NextOfKinFirstName);
@@ -202,8 +215,8 @@ namespace CNMaisons.TechnicalService
                 AddParameter("@Guarantor1FirstName", SqlDbType.VarChar, aTenant.Guarantor1FirstName);
                 AddParameter("@Guarantor1LastName", SqlDbType.VarChar, aTenant.Guarantor1LastName);
                 AddParameter("@Guarantor1Address", SqlDbType.VarChar, aTenant.Guarantor1Address);
-
                 AddParameter("@Guarantor1Occupation", SqlDbType.VarChar, aTenant.Guarantor1Occupation);
+
                 AddParameter("@Guarantor1PhoneNumber", SqlDbType.VarChar, aTenant.Guarantor1PhoneNumber);
                 AddParameter("@Guarantor1AlternatePhoneNumber", SqlDbType.VarChar, aTenant.Guarantor1AlternatePhoneNumber);
                 AddParameter("@Guarantor2FirstName", SqlDbType.VarChar, aTenant.Guarantor2FirstName);
@@ -213,10 +226,11 @@ namespace CNMaisons.TechnicalService
                 AddParameter("@Guarantor2PhoneNumber", SqlDbType.VarChar, aTenant.Guarantor2PhoneNumber);
                 AddParameter("@Guarantor2AlternatePhoneNumber", SqlDbType.VarChar, aTenant.Guarantor2AlternatePhoneNumber);
                 AddParameter("@Declaration", SqlDbType.VarChar, aTenant.Declaration);
-
                 AddParameter("@YourSignature", SqlDbType.VarChar, aTenant.YourSignature);
+
                 AddParameter("@ApprovalStatus", SqlDbType.VarChar, aTenant.ApprovalStatus);
                 AddParameter("@DeleteFlag", SqlDbType.Bit, aTenant.DeleteFlag);
+                AddParameter("@LeaseFormForSigning", SqlDbType.VarBinary, aTenant.LeaseFormForSigning);
 
                 MyCommand.ExecuteNonQuery();
                 MyDataSource.Close();
@@ -242,6 +256,12 @@ namespace CNMaisons.TechnicalService
             }
             return Success;
         }
+
+
+
+
+
+
 
         public List<Tenant> RetrievePendingLeaseApplication()
         {
@@ -282,6 +302,11 @@ namespace CNMaisons.TechnicalService
             return myTenantPendingReviewList;
         }
 
+        
+        
+        
+        
+        
         public Tenant GetTenantLeaseApplicationForReview(String aTenantID)
         {
             Tenant aTenantPendingReview = new();
@@ -333,7 +358,7 @@ namespace CNMaisons.TechnicalService
                         Occupation = MyDataReader["Occupation"]?.ToString(),
                         SelfEmployed = MyDataReader["SelfEmployed"]?.ToString(),
                         BusinessRegistrationNumber = MyDataReader["BusinessRegistrationNumber"]?.ToString(),
-                        CoporateAffairsCertificate = MyDataReader["CoporateAffairsCertificate"] == DBNull.Value ? null! : (byte[])MyDataReader["CoporateAffairsCertificate"],
+                        CorporateAffairsCertificate = MyDataReader["CorporateAffairsCertificate"] == DBNull.Value ? null! : (byte[])MyDataReader["CorporateAffairsCertificate"],
                         NameofEmployer = MyDataReader["NameofEmployer"]?.ToString(),
                         AddressOfEmployer = MyDataReader["AddressOfEmployer"]?.ToString(),
                         LengthOnJob = (int)MyDataReader["LengthOnJob"],
@@ -368,7 +393,9 @@ namespace CNMaisons.TechnicalService
                         Declaration = MyDataReader["Declaration"]?.ToString(),
                         YourSignature = MyDataReader["YourSignature"]?.ToString(),
                         DeleteFlag = (bool)MyDataReader["DeleteFlag"],
-                        ApprovalStatus = MyDataReader["ApprovalStatus"]?.ToString()
+                        ApprovalStatus = MyDataReader["ApprovalStatus"]?.ToString(),
+                        LeaseFormForSigning = MyDataReader["LeaseFormForSigning"] == DBNull.Value ? null! : (byte[])MyDataReader["LeaseFormForSigning"]
+
                     };
                 }
             }
@@ -377,6 +404,11 @@ namespace CNMaisons.TechnicalService
 
             return aTenantPendingReview;
         }
+
+
+
+
+
 
         public String UpdateApplication(String findTenantID, String approvalStatus)
         {
@@ -435,6 +467,18 @@ namespace CNMaisons.TechnicalService
             return Success;
         }      
 
+
+
+
+
+
+
+
+
+
+
+
+
         public Tenant GetTenant (string Email)
         {
             Tenant tenant = new Tenant();
@@ -455,6 +499,7 @@ namespace CNMaisons.TechnicalService
                 Direction = ParameterDirection.Input,
                 SqlValue = Email
             };
+
 
             GetTenant.Parameters.Add(EmailParameter);
             SqlDataReader MyDataReader = GetTenant.ExecuteReader();
@@ -481,7 +526,7 @@ namespace CNMaisons.TechnicalService
                         Occupation = MyDataReader["Occupation"]?.ToString(),
                         SelfEmployed = MyDataReader["SelfEmployed"]?.ToString(),
                         BusinessRegistrationNumber = MyDataReader["BusinessRegistrationNumber"]?.ToString(),
-                        CoporateAffairsCertificate = MyDataReader["CoporateAffairsCertificate"] == DBNull.Value ? null! : (byte[])MyDataReader["CoporateAffairsCertificate"],
+                        CorporateAffairsCertificate = MyDataReader["CorporateAffairsCertificate"] == DBNull.Value ? null! : (byte[])MyDataReader["CorporateAffairsCertificate"],
                         NameofEmployer = MyDataReader["NameofEmployer"]?.ToString(),
                         AddressOfEmployer = MyDataReader["AddressOfEmployer"]?.ToString(),
                         LengthOnJob = (int)MyDataReader["LengthOnJob"],
@@ -516,7 +561,8 @@ namespace CNMaisons.TechnicalService
                         Declaration = MyDataReader["Declaration"]?.ToString(),
                         YourSignature = MyDataReader["YourSignature"]?.ToString(),
                         DeleteFlag = (bool)MyDataReader["DeleteFlag"],
-                        ApprovalStatus = MyDataReader["ApprovalStatus"]?.ToString()
+                        ApprovalStatus = MyDataReader["ApprovalStatus"]?.ToString(),
+                        LeaseFormForSigning = MyDataReader["LeaseFormForSigning"] == DBNull.Value ? null! : (byte[])MyDataReader["LeaseFormForSigning"]
                     };
                 }
             }
@@ -524,6 +570,46 @@ namespace CNMaisons.TechnicalService
             cnMaisonsConnection.Close();
             return tenant;
         }
+
+
+        public bool CheckIfEmailAlreadyExistInTenantTable(string email)
+        {
+            //connection
+            SqlConnection MyDataSource = new();
+            MyDataSource.ConnectionString = connectionString;
+            MyDataSource.Open();
+
+            //Command
+            SqlCommand MyCommand = new()
+            {
+                Connection = MyDataSource,
+                CommandType = CommandType.StoredProcedure,
+                CommandText = "CheckIfEmailAlreadyExistInTenantTable"
+            };
+
+            SqlParameter MyParameter = new()
+            {
+                ParameterName = "@Email",
+                SqlDbType = SqlDbType.VarChar,
+                SqlValue = email,
+                Direction = ParameterDirection.Input,
+            };
+            MyCommand.Parameters.Add(MyParameter);
+            
+            SqlDataReader MyDataReader = MyCommand.ExecuteReader();
+            bool Success = false;
+
+            if (MyDataReader.HasRows)
+            {
+                Success = true;
+            }
+            return Success;
+        }
+
+
+
+
+        
 
     }
 }

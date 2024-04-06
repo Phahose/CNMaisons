@@ -230,5 +230,40 @@ namespace CNMaisons.TechnicalService
             return new Rfc2898DeriveBytes(password, salt, 100000, HashAlgorithmName.SHA256).GetBytes(32);
         }
 
+
+        public bool CheckIfEmailAlreadyExistInUsersTable(string email)
+        {
+            //connection
+            SqlConnection MyDataSource = new();
+            MyDataSource.ConnectionString = connectionString;
+            MyDataSource.Open();
+
+            //Command
+            SqlCommand MyCommand = new()
+            {
+                Connection = MyDataSource,
+                CommandType = CommandType.StoredProcedure,
+                CommandText = "CheckIfEmailAlreadyExistInUsersTable"
+            };
+
+            SqlParameter MyParameter = new()
+            {
+                ParameterName = "@Email",
+                SqlDbType = SqlDbType.VarChar,
+                SqlValue = email,
+                Direction = ParameterDirection.Input,
+            };
+            MyCommand.Parameters.Add(MyParameter);
+
+            SqlDataReader MyDataReader = MyCommand.ExecuteReader();
+            bool Success = false;
+
+            if (MyDataReader.HasRows)
+            {
+                Success = true;
+            }
+            return Success;
+        }
+
     }
 }

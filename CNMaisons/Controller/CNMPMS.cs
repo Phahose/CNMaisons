@@ -8,6 +8,8 @@ namespace CNMaisons.Controller
 {
     public class CNMPMS
     {
+
+        
         public bool AddProperty(Property property)
         {
             bool success = false;
@@ -115,6 +117,8 @@ namespace CNMaisons.Controller
             return tenant;
         }
 
+
+
         public bool ModifyUser (User user)
         {
             bool result = false;
@@ -122,18 +126,19 @@ namespace CNMaisons.Controller
             result = users.UpdateUser(user);
             return result;
         }
-        static void SendReminderEmail(string TO_EMAIL_ADDRESS, string FROM_EMAIL_ADDRESS, string messageBody, string messageSubject)
+
+
+        public static void SendReminderEmail(string TO_EMAIL_ADDRESS, string FROM_EMAIL_ADDRESS, string messageBody, string messageSubject)
         {
             try
             {
-
-
                 // Create the email client object
                 using (SmtpClient client = new SmtpClient("smtp.gmail.com"))
                 {
                     client.Port = 587;
                     client.EnableSsl = true;
-                    client.Credentials = new NetworkCredential(FROM_EMAIL_ADDRESS, "ublu yfxa glrj esne ");
+                    client.Credentials = new NetworkCredential(FROM_EMAIL_ADDRESS, "ublu yfxa glrj esne "); //NIcholas
+                     
 
                     // Create the email message
                     MailMessage message = new MailMessage(FROM_EMAIL_ADDRESS, TO_EMAIL_ADDRESS);
@@ -152,5 +157,42 @@ namespace CNMaisons.Controller
             }
 
         }
+
+
+
+        public bool ValidateEmailTenant(string email)
+        {
+            bool success = false;
+            Tenants TenantRequestManager= new Tenants();
+            success = TenantRequestManager.CheckIfEmailAlreadyExistInTenantTable(email);
+            return success;
+        }
+
+
+        public bool ValidateEmailUsers(string email)
+        {
+            bool success = false;
+            Users UsersRequestManager = new Users();
+            success = UsersRequestManager.CheckIfEmailAlreadyExistInUsersTable(email);
+            return success;
+        }
+
+        public bool ValidateProperty(string propertyID)
+        {
+            bool success = false;
+            Properties PropertyRequestManager= new Properties();
+            success = PropertyRequestManager.CheckIfPropertyExist(propertyID);
+            return success;
+        }
+
+        public string PostEmail(string toEmailAddress, string messageBody, string messageSubject)
+        {
+            string success;
+            Mails MailRequestManager = new Mails();
+            success = MailRequestManager.SendEmail(toEmailAddress, messageBody, messageSubject);
+            return success;
+        }
+
+
     }
 }

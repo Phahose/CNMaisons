@@ -79,7 +79,7 @@ namespace CNMaisons.Pages
         public string BusinessRegistrationNumber { get; set; } = string.Empty;
 
         [BindProperty]
-        public byte[] CoporateAffairsCertificate { get; set; } = new byte[0];
+        public byte[] CorporateAffairsCertificate { get; set; } = new byte[0];
 
         [BindProperty]
         public string NameofEmployer { get; set; } = string.Empty;

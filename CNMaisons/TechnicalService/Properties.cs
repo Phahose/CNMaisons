@@ -616,5 +616,44 @@ namespace CNMaisons.TechnicalService
             }
             return success;
         }
+
+
+        public bool CheckIfPropertyExist(string propertyID)
+        {
+            //connection
+            SqlConnection MyDataSource = new();
+            MyDataSource.ConnectionString = connectionString;
+            MyDataSource.Open();
+
+            //Command
+            SqlCommand MyCommand = new()
+            {
+                Connection = MyDataSource,
+                CommandType = CommandType.StoredProcedure,
+                CommandText = "CheckIfPropertyExist"
+            };
+
+
+            SqlParameter MyParameter = new()
+            {
+                ParameterName = "@PropertyID",
+                SqlDbType = SqlDbType.VarChar,
+                SqlValue = propertyID,
+                Direction = ParameterDirection.Input,
+            };
+
+            MyCommand.Parameters.Add(MyParameter);
+
+
+            SqlDataReader MyDataReader = MyCommand.ExecuteReader();
+            bool Success = false;
+
+            if (MyDataReader.HasRows)
+            {
+                Success = true;
+            }
+            return Success;
+        }
+
     }
 }

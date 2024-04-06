@@ -15,8 +15,7 @@
 <script type="text/javascript">
     //to popuate values. To be removed later
     function populateValue() {
-        document.querySelector('input[name="TenantID"]').value = "CN01";
-        document.querySelector('input[name="PropertyID"]').value = "CNP0001";
+        document.querySelector('input[name="PropertyID"]').value = "CN00001";
         document.querySelector('input[name="FirstName"]').value = "Ezra";
         document.querySelector('input[name="LastName"]').value = "Mallo";
         document.querySelector('input[name="PhoneNumber"]').value = "0803857564";
@@ -67,12 +66,6 @@
 
 
 
-        // Validate TennatID
-        var tenantID = event.TenantID.value;
-        if (tenantID === "" || !textOnly.test(tenantID)) {
-            var tenantIDError = "Enter a valid tenant ID.";
-            isValid = false;
-        }
 
 
         // Validate PropertyID
@@ -317,10 +310,21 @@
         <!--<form name="Application" method="post" class="form property_form transition-fade-down" onsubmit="return isFormValid(this);" enctype="multipart/form-data" action="ViewHTTPRequest">-->
         <input type="submit" name="Submit" value="Submit Lease Application" class="btn" />
         <br />
-        <span style="font-size: larger; font-style: italic;">@Model.Message</span>
 
         <br />
-        <span style="font-size: larger; font-style: italic;">@Model.errorMessage</span>
+        <span style="font-size: larger; font-style: italic;">
+            @if (Model.errorMessage != "")
+            {
+                // Replace \n characters with HTML line breaks
+                var errorMessageWithLineBreaks = Model.errorMessage.Replace("\n", "<br />");
+                @Html.Raw(errorMessageWithLineBreaks)
+            }
+            <span style="font-size: larger; font-style: italic;">
+                @Model.Message
+
+            </span>
+
+
         <br />
         <fieldset>
             <legend>Personal Information</legend>
@@ -330,13 +334,9 @@
                 <input type="file" name="Passport" />
                 <br />
 
-                <label for="Tenant ID">Tenant ID</label>
-                <br />
-                <input type="text" name="TenantID" required maxlength="5" />
-                <br />
                 <label for="Property ID">Which Property ID are you interested in:</label>
                 <br />
-                <input type="text" name="PropertyID" required maxlength="7" />
+                <input type="text" name="PropertyID" maxlength="7" />
                 <br />
 
                 Email:
@@ -601,7 +601,7 @@
 
                 <input type="checkbox" value="Yes" name="Declaration" checked />
                 <br />
-                <input type="text" name="ApprovalStatus" value="Pending" hidden />
+  
                 <input type="text" name="DeleteFlag" value="0" hidden />
             </div>
         </fieldset>
