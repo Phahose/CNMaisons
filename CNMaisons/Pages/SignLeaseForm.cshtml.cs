@@ -1,11 +1,15 @@
 using CNMaisons.Controller;
 using CNMaisons.Domain;
 using CNMaisons.TechnicalService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Security.Claims;
 
 namespace CNMaisons.Pages
 {
+    [Authorize(Roles = "Tenant")]   // Restrict access to specified roles
+
     public class SignLeaseFormModel : PageModel
     {
         public bool ViewFormNow = false;
@@ -15,6 +19,9 @@ namespace CNMaisons.Pages
 
         public Tenant tenantForReview = new();
 
+        [BindProperty]
+        public string FindEmail { get; set; } = string.Empty; 
+        
         [BindProperty]
         public string FindTenantID { get; set; } = string.Empty;
 
@@ -41,10 +48,12 @@ namespace CNMaisons.Pages
 
 
         [BindProperty]
-        public IFormFile? LeaseFormForSigningCopy { get; set; }
+        public IFormFile? YourSignedForm { get; set; }
         public void OnGet()
         {
             Email = HttpContext.Session.GetString("Email")!;
+            var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+
             CNMPMS tenantController = new();
             aTenantsPendingReview = tenantController.GetSpecificTenantApplication(Email);
             if (aTenantsPendingReview == null)
@@ -70,6 +79,8 @@ namespace CNMaisons.Pages
                         if (ModelState.IsValid)
                         {
                             SetSessionString("FindTenantID1", FindTenantID);  // save content for furtre retreival
+                            SetSessionString("FindEmail1", FindEmail);  // save content for furtre retreival
+
 
                             CNMPMS RequestDirector = new();
                             tenantForReview = RequestDirector.ViewTenant(FindTenantID);
@@ -91,44 +102,34 @@ namespace CNMaisons.Pages
 
 
                 case "Submit Review":
-                    if (ApprovalStatus != "--Make your selection--")
+                    if (ApprovalStatus == "Signed" && YourSignedForm != null)
                     {
                         if (ModelState.IsValid)
                         {
                             FindTenantID = HttpContext.Session.GetString("FindTenantID1") ?? string.Empty;
 
-
-                            if (ApprovalStatus == "Awaiting Signature" && LeaseFormForSigning != null)
-                            {
-                                byte[] LeaseForm = ConvertToByteArray(LeaseFormForSigning);
+ 
+                                byte[] SignedForm = ConvertToByteArray(YourSignedForm);
 
                                 CNMPMS RequestDirector = new();
-                                String Confirmation = RequestDirector.ReviewAwaitingApplication(FindTenantID, ApprovalStatus, LeaseForm);
+                                String Confirmation = RequestDirector.SubmitSignedCopy(FindTenantID, ApprovalStatus, SignedForm);
                                 if (Confirmation == "Successful!")
                                 {
                                     ViewFormNow = false;
-                                    MessageForFile = "Tenant's Lease application updaed for him to sign.";
+                                    MessageForFile = "Tenant's Lease application uploaded him to sign.";
                                     OnGet();
                                     return Page();
                                 }
-                            }
-                            else
-                            {
-                                Message = "Please attach the lease form.";
-                                ViewFormNow = true;
-                                return Page();
-                            }
-
-
-
-
-
                         }
-
-
                     }
+                    else
+                    {
+                        Message = "Please attach the signed lease form.";
+                        ViewFormNow = true;
+                        return Page();
+                    }
+            
                     return Page();
-
             }
             return Page();
         }

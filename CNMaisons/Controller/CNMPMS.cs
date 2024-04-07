@@ -109,6 +109,23 @@ namespace CNMaisons.Controller
             Success = RequestManager.UpdateApplication(findTenantID, approvalStatus, LeaseForm);
             return Success;
         }
+
+        public String ApproveOrRejectLeaseApplication(string findTenantID, string approvalStatus)
+        {
+            String Success;
+            Tenants RequestManager = new();
+            Success = RequestManager.ApproveOrRejectApplication(findTenantID, approvalStatus);
+            return Success;
+        }
+
+        
+        public String SubmitSignedCopy(String findTenantID, String approvalStatus, byte[] signedForm)
+        {
+            String Success;
+            Tenants RequestManager = new();
+            Success = RequestManager.UpdateSignedApplication(findTenantID, approvalStatus, signedForm);
+            return Success;
+        }
         
         public Employee GetAllEmployees(string Email)
         {

@@ -107,8 +107,7 @@ namespace CNMaisons.TechnicalService
                 AddParameter("@Guarantor2Occupation", SqlDbType.VarChar, aTenant.Guarantor2Occupation);
                 AddParameter("@Guarantor2PhoneNumber", SqlDbType.VarChar, aTenant.Guarantor2PhoneNumber);
                 AddParameter("@Guarantor2AlternatePhoneNumber", SqlDbType.VarChar, aTenant.Guarantor2AlternatePhoneNumber);
-                AddParameter("@Declaration", SqlDbType.VarChar, aTenant.Declaration);
-                AddParameter("@YourSignedForm", SqlDbType.VarBinary, aTenant.YourSignedForm);
+                AddParameter("@Declaration", SqlDbType.VarChar, aTenant.Declaration); 
                 AddParameter("@ApprovalStatus", SqlDbType.VarChar, aTenant.ApprovalStatus);
                 AddParameter("@DeleteFlag", SqlDbType.Bit, aTenant.DeleteFlag);
                 
@@ -295,7 +294,8 @@ namespace CNMaisons.TechnicalService
                         FirstName = (string)MyDataReader["FirstName"],
                         LastName = (string)MyDataReader["LastName"],
                         Email = (string)MyDataReader["Email"],
-                        LeaseFormForSigning = MyDataReader["LeaseFormForSigning"] == DBNull.Value ? null! : (byte[])MyDataReader["LeaseFormForSigning"]
+                        LeaseFormForSigning = MyDataReader["LeaseFormForSigning"] == DBNull.Value ? null! : (byte[])MyDataReader["LeaseFormForSigning"],
+                        YourSignedForm = MyDataReader["YourSignedForm"] == DBNull.Value ? null! : (byte[])MyDataReader["YourSignedForm"]
 
                     };
                     myTenantPendingReviewList.Add(aTenantPendingReview);
@@ -348,9 +348,9 @@ namespace CNMaisons.TechnicalService
                         FirstName = (string)MyDataReader["FirstName"],
                         LastName = (string)MyDataReader["LastName"],
                         Email = (string)MyDataReader["Email"],
-                        LeaseFormForSigning = MyDataReader["LeaseFormForSigning"] == DBNull.Value ? null! : (byte[])MyDataReader["LeaseFormForSigning"]
-
-                };
+                        LeaseFormForSigning = MyDataReader["LeaseFormForSigning"] == DBNull.Value ? null! : (byte[])MyDataReader["LeaseFormForSigning"],
+                        YourSignedForm = MyDataReader["YourSignedForm"] == DBNull.Value ? null! : (byte[])MyDataReader["YourSignedForm"]
+                    };
                 }
             }
             return aTenantPendingReview;
@@ -536,9 +536,126 @@ namespace CNMaisons.TechnicalService
         }
 
 
-     
+
+        public String ApproveOrRejectApplication(String findTenantID, String approvalStatus)
+        {
+            String Success;
+
+            try
+            {
+                // Connection
+                SqlConnection MyDataSource = new SqlConnection();
+                MyDataSource.ConnectionString = connectionString;
+                MyDataSource.Open();
+
+                // Command
+                SqlCommand MyCommand = new SqlCommand();
+                MyCommand.Connection = MyDataSource;
+                MyCommand.CommandType = CommandType.StoredProcedure;
+                MyCommand.CommandText = "UpdateFinalApplicationStatus";
+
+                void AddParameter(string parameterName, SqlDbType sqlDbType, object value)
+                {
+                    MyCommand.Parameters.Add(new SqlParameter
+                    {
+                        ParameterName = parameterName,
+                        SqlDbType = sqlDbType,
+                        Direction = ParameterDirection.Input,
+                        Value = value
+                    });
+                }
+
+                // Adding parameters
+                AddParameter("@TenantID", SqlDbType.VarChar, findTenantID);
+                AddParameter("@ApprovalStatus", SqlDbType.VarChar, approvalStatus); 
 
 
+                MyCommand.ExecuteNonQuery();
+                MyDataSource.Close();
+                Success = "Successful!";
+            }
+
+            catch (SqlException ex)
+            {
+
+                if (ex.Number == 2627) // Unique constraint violation error number
+                {
+
+                    Success = "This Tenant ID or the Email already exist. ";
+                }
+                else
+                {
+                    Success = $"An error occurred: {ex.Message}";
+                }
+            }
+            catch (Exception ex)
+            {
+                Success = $"An error occurred: {ex.Message}";
+            }
+            return Success;
+        }
+
+
+
+
+        public String UpdateSignedApplication(String findTenantID, String approvalStatus, byte[] signedForm)
+        {
+            String Success;
+
+            try
+            {
+                // Connection
+                SqlConnection MyDataSource = new SqlConnection();
+                MyDataSource.ConnectionString = connectionString;
+                MyDataSource.Open();
+
+                // Command
+                SqlCommand MyCommand = new SqlCommand();
+                MyCommand.Connection = MyDataSource;
+                MyCommand.CommandType = CommandType.StoredProcedure;
+                MyCommand.CommandText = "UpdateSignedApplication";
+
+                void AddParameter(string parameterName, SqlDbType sqlDbType, object value)
+                {
+                    MyCommand.Parameters.Add(new SqlParameter
+                    {
+                        ParameterName = parameterName,
+                        SqlDbType = sqlDbType,
+                        Direction = ParameterDirection.Input,
+                        Value = value
+                    });
+                }
+
+                // Adding parameters
+                AddParameter("@TenantID", SqlDbType.VarChar, findTenantID);
+                AddParameter("@ApprovalStatus", SqlDbType.VarChar, approvalStatus);
+                AddParameter("@YourSignedForm", SqlDbType.VarBinary, signedForm);
+
+
+                MyCommand.ExecuteNonQuery();
+                MyDataSource.Close();
+                Success = "Successful!";
+            }
+
+            catch (SqlException ex)
+            {
+
+                if (ex.Number == 2627) // Unique constraint violation error number
+                {
+
+                    Success = "This Tenant ID or the Email already exist. ";
+                }
+                else
+                {
+                    Success = $"An error occurred: {ex.Message}";
+                }
+            }
+            catch (Exception ex)
+            {
+                Success = $"An error occurred: {ex.Message}";
+            }
+            return Success;
+        }
 
 
 

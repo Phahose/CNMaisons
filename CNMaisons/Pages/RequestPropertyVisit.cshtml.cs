@@ -103,7 +103,7 @@ namespace CNMaisons.Pages
                                 if (Confirmation == "Successful!")
                                 {
                                     ViewFormNow = false;
-                                    MessageForFile = "Tenant's Lease application updaed for him to sign.";
+                                    MessageForFile = "Tenant's Lease application uploaded him to sign.";
                                     OnGet();
                                     return Page();
                                 }

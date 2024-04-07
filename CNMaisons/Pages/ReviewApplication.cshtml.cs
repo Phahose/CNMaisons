@@ -8,12 +8,15 @@ using CNMaisons.TechnicalService;
 using Microsoft.AspNetCore.Mvc.Razor;
 using static System.Net.Mime.MediaTypeNames;
 using System.Reflection;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace CNMaisons.Pages
 {
+     
+    [Authorize(Roles = "LandLord")]   // Restrict access to specified roles
 
-
-    public class ReviewModel : PageModel
+    public class ReviewApplicationModel : PageModel
     {
         public bool ViewFormNow = false;
         public string Message { get; set; } = string.Empty;
@@ -36,7 +39,9 @@ namespace CNMaisons.Pages
         public string FindEmail { get; set; } = string.Empty; 
 
         public string ListMessage { get; set; } = string.Empty;
+        
         public bool ShowForm = false;
+        
         public List<Tenant> ListOfTenantsPendingReview = new List<Tenant>();
 
         [BindProperty]
@@ -46,12 +51,14 @@ namespace CNMaisons.Pages
         [BindProperty]
         public IFormFile? LeaseFormForSigning { get; set; }
 
+        public string UserRole { get; set; } = string.Empty;
 
         [BindProperty]
         public IFormFile? LeaseFormForSigningCopy { get; set; }
         public void OnGet()
         {
-            
+            var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+
             CNMPMS tenantController = new();
             ListOfTenantsPendingReview = tenantController.GetPendingLeaseApplication();
             if (ListOfTenantsPendingReview == null)
@@ -68,7 +75,11 @@ namespace CNMaisons.Pages
             {
                 case "Close":
                     return RedirectToPage("/Index");
+                    
                 
+                case "Refresh":
+                    OnGet();
+                    break;
 
                 case "Find":
                     if (FindTenantID != null)
@@ -87,6 +98,7 @@ namespace CNMaisons.Pages
                             {
                                 ViewFormNow = true;
                                 Message = "Below are the detail of the Tenant's Lease application.";
+                                OnGet();
                                 return Page();
                             }
                             else
@@ -105,43 +117,70 @@ namespace CNMaisons.Pages
                         if (ModelState.IsValid)
                         {
                             FindTenantID = HttpContext.Session.GetString("FindTenantID1") ?? string.Empty;
-                            FindEmail= HttpContext.Session.GetString("FindEmail1") ?? string.Empty;
-
+                            FindEmail = HttpContext.Session.GetString("FindEmail1") ?? string.Empty;
+                            string messageBody;
+                            string messageSubject;
+                            string mailConfirmation;
+                            CNMPMS MailRequestManager = new CNMPMS();
+                            String Confirmation;
+                            CNMPMS RequestDirector = new CNMPMS();
 
                             if (ApprovalStatus == "Awaiting Signature" && LeaseFormForSigning != null)
                             {
                                 byte[] LeaseForm = ConvertToByteArray(LeaseFormForSigning);
 
-                                string messageBody = "Hello,\n\nYour Lease Form is ready. You need to \n\t1. login, \n\t2. Download the Lease Form,\n\t3. Sign and upload it ...\n\nOnce Uploaded, the contract will be finaised.\n\nRegards\nCN Maisons Management";
-                                string messageSubject = "Sign this Lease Form and revert.";
-                                string mailConfirmation;
-                                CNMPMS MailRequestManager = new CNMPMS();
+                                messageBody = "Hello,\n\nYour Lease Form is ready. You need to \n\t1. login, \n\t2. Download the Lease Form,\n\t3. Sign and upload it ...\n\nOnce Uploaded, the contract will be finaised.\n\nRegards\nCN Maisons Management";
+                                messageSubject = "Sign this Lease Form and revert.";
                                 mailConfirmation = MailRequestManager.PostEmail(FindEmail, messageBody, messageSubject);
-                                 
 
 
 
-                                CNMPMS RequestDirector = new();
-                                String Confirmation = RequestDirector.ReviewAwaitingApplication(FindTenantID, ApprovalStatus, LeaseForm);
+
+                                Confirmation = RequestDirector.ReviewAwaitingApplication(FindTenantID, ApprovalStatus, LeaseForm);
                                 if (Confirmation == "Successful!")
                                 {
                                     ViewFormNow = false;
-                                    MessageForFile = "Tenant's Lease application updaed for him to sign.";
+                                    MessageForFile = "Tenant's Lease application uploaded for him to sign.";
                                     OnGet();
                                     return Page();
                                 }
                             }
-                            else
+                            //else
+                            //{
+                            //    Message = "Please attach the lease form.";
+                            //    ViewFormNow = true;
+                            //    return Page();
+                            //}
+
+                            if (ApprovalStatus == "Approved")
                             {
-                                Message = "Please attach the lease form.";
-                                ViewFormNow = true;
+                                //byte[] LeaseForm = ConvertToByteArray(LeaseFormForSigning);
+                                messageBody = "Hello,\n\nYour Lease Form has been APPROVED.\n\nYou can proceed with the payment.\n\tpay to :..........\n\nRegards\nCN Maisons Management";
+                                messageSubject = "Lease Application Approved.";
+                                MailRequestManager = new CNMPMS();
+                                mailConfirmation = MailRequestManager.PostEmail(FindEmail, messageBody, messageSubject);
+
+                            }
+
+                            if (ApprovalStatus == "Rejected")
+                            {
+                                //byte[] LeaseForm = ConvertToByteArray(LeaseFormForSigning);
+                                messageBody = "Hello,\n\nSorry we are unable toproceed with this lease agreement.\n\nRegards\nCN Maisons Management";
+                                messageSubject = "Lease Agreement reject.";
+                                MailRequestManager = new CNMPMS();
+                                mailConfirmation = MailRequestManager.PostEmail(FindEmail, messageBody, messageSubject);
+
+                            }
+
+                            RequestDirector = new();
+                            Confirmation = RequestDirector.ApproveOrRejectLeaseApplication(FindTenantID, ApprovalStatus);
+                            if (Confirmation == "Successful!")
+                            {
+                                ViewFormNow = false;
+                                MessageForFile = "Tenant's Lease application uploaded for him to sign.";
+                                OnGet();
                                 return Page();
                             }
-                              
-
-
-
-
                         }
 
 

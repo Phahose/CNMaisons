@@ -1,9 +1,12 @@
 ﻿@page
 @model CNMaisons.Pages.SignLeaseFormModel
+@using System.Security.Claims
+
 @{
     Layout = "_Header";
     ViewData["Title"] = "Sign Lease Application";
     var emailPattern = new System.Text.RegularExpressions.Regex(@"^[^\s@]+@[^\s@]+\.[^\s@]+$");
+    var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
 }
 
 
@@ -13,8 +16,9 @@
 <script src="~/libraries/jquery-validate-unobtrusive/jquery.validate.unobtrusive.js"></script>
 
 <script type="text/javascript">
-    function copyTenantID(tenantID) {
+    function copyTenantID(tenantID, email) {
         document.querySelector('input[name="FindTenantID"]').value = tenantID;
+        document.querySelector('input[name="FindEmail"]').value = email;
     }
 
     function GoBack() {
@@ -26,8 +30,8 @@
     function validateForm() {
         // Get the selected ApprovalStatus
         var approvalStatus = document.getElementsByName('ApprovalStatus')[0].value;
-        // Get the LeaseFormForSigning file input
-        var leaseFormFile = document.getElementsByName('LeaseFormForSigning')[0];
+        // Get the YourSignedForm file input
+        var leaseFormFile = document.getElementsByName('YourSignedForm')[0];
 
         // Check if ApprovalStatus is selected and LeaseFormForSigning is attached
         if (approvalStatus !== "0" && leaseFormFile.files.length > 0) {
@@ -41,7 +45,10 @@
                 button.disabled = true;
             });
         }
-    }
+    } // This is the missing closing curly brace
+    // Call validateForm whenever relevant fields change
+    document.getElementsByName('ApprovalStatus')[0].addEventListener('change', validateForm);
+    document.getElementsByName('YourSignedForm')[0].addEventListener('change', validateForm);
 </script>
 
 @if (Model.ViewFormNow == false)
@@ -58,18 +65,20 @@
                         <th style="border: 1px solid #ddd;">Last Name</th>
                         <th style="border: 1px solid #ddd;">Approval Status</th>
                         <th style="border: 1px solid #ddd;">Lease Form</th>
+                        <th style="border: 1px solid #ddd;">Signed Form</th>
+                        <th style="border: 1px solid #ddd;">Email</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td style="border: 1px solid #ddd;"><a href="#" onclick="copyTenantID('@Model.aTenantsPendingReview.TenantID')">@Model.aTenantsPendingReview.TenantID</a></td>
+                        <td style="border: 1px solid #ddd;"><a href="#" onclick="copyTenantID('@Model.aTenantsPendingReview.TenantID', '@Model.aTenantsPendingReview.Email')">@Model.aTenantsPendingReview.TenantID</a></td>
                         <td style="border: 1px solid #ddd;">@Model.aTenantsPendingReview.PropertyID</td>
                         <td style="border: 1px solid #ddd;">@Model.aTenantsPendingReview.FirstName</td>
                         <td style="border: 1px solid #ddd;">@Model.aTenantsPendingReview.LastName</td>
                         <td style="border: 1px solid #ddd;">@Model.aTenantsPendingReview.ApprovalStatus</td>
-                        @* //<td style="border: 1px solid #ddd;">@record.LeaseFormForSigning</td> *@
+                         
                         <td style="border: 1px solid #ddd;">
-                            @if (@Model.aTenantsPendingReview.LeaseFormForSigning != null && @Model.aTenantsPendingReview.LeaseFormForSigning.Length > 0)
+                            @if (Model.aTenantsPendingReview.LeaseFormForSigning != null && Model.aTenantsPendingReview.LeaseFormForSigning.Length > 0)
                             {
                                 var fileName = "LeaseForm_" + Model.aTenantsPendingReview.TenantID + ".pdf"; // Example file name
                                 <a href="@Url.Action("DownloadLeaseForm", "YourController", new { id = Model.aTenantsPendingReview.TenantID })" download="@fileName">Download Lease Form</a>
@@ -79,11 +88,25 @@
                                 <span>No Lease Form Available</span>
                             }
                         </td>
+
+                        <td style="border: 1px solid #ddd;">
+                            @if (Model.aTenantsPendingReview.YourSignedForm != null && Model.aTenantsPendingReview.YourSignedForm.Length > 0)
+                            {
+                                var fileName = "Signed_LeaseForm_" + Model.aTenantsPendingReview.TenantID + ".pdf"; // Example file name
+                                <a href="@Url.Action("DownloadLeaseForm", "YourController", new { id = Model.aTenantsPendingReview.TenantID })" download="@fileName">Download Signed Lease Form</a>
+                            }
+                            else
+                            {
+                                <span>No Signed Lease Form Available</span>
+                            }
+                        </td>
+                        <td style="border: 1px solid #ddd;">@Model.aTenantsPendingReview.Email</td>         
                     </tr>                    
                 </tbody>
                 <tr>
                     <td>Tenant ID</td>
                     <td><input type="text" name="FindTenantID" readonly /></td>
+                    <td><input type="text" name="FindEmail" readonly /></td>
                 </tr>
                 <tr>
                     <td><input type="submit" name="Submit" value="Find" class="btn" /></td>
@@ -113,13 +136,12 @@
                     <label>Approval Status:</label>
                     <select name="ApprovalStatus" onchange="validateForm()">
                         <option value="0" @{if (Model.tenantForReview.ApprovalStatus == "--Make your selection--"){<text>selected</text>}}>--Make your selection--</option>
-                        <option value="Awaiting Signature" @{if (Model.tenantForReview.ApprovalStatus == "Awaiting Signature"){<text>selected</text>}}>Awaiting Signature</option>
                         <option value="Signed" @{if (Model.tenantForReview.ApprovalStatus == "Signed"){<text>selected</text>}}>Signed </option>
                     </select>
                     <br />
-                    <label>Attach Lease Form For Signing</label>
+                    <label>Attach Signed Lease Form For Signing</label>
                     <br />
-                    <input type="file" name="LeaseFormForSigning" accept="application/pdf" onchange="validateForm()" /> <br />
+                    <input type="file" name="YourSignedForm" accept="application/pdf" onchange="validateForm()" /> <br />
                     <br />
                     <span style="font-size: larger; font-style: italic;">@Model.MessageForFile</span>
 
