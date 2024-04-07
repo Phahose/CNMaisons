@@ -87,6 +87,14 @@ namespace CNMaisons.Controller
             TenantsPendingApplicationReview = tenatManager.RetrievePendingLeaseApplication();
             return TenantsPendingApplicationReview;
         }
+
+        public Tenant GetSpecificTenantApplication(string email)
+        {
+            Tenant aTenantForReview = new();
+            Tenants tenatRequestManager = new();
+            aTenantForReview = tenatRequestManager.RetrieveSpecificTenantApplication(email);
+            return aTenantForReview;
+        }
         public Tenant ViewTenant(String aTenantID)
         {
             Tenant aTenants = new();
@@ -94,13 +102,14 @@ namespace CNMaisons.Controller
             aTenants = RequestManager.GetTenantLeaseApplicationForReview(aTenantID);
             return aTenants;
         }
-        public String ReviewApplication(String findTenantID, String approvalStatus)
+        public String ReviewAwaitingApplication(String findTenantID, String approvalStatus, byte[] LeaseForm)
         {
             String Success;
             Tenants RequestManager = new();
-            Success = RequestManager.UpdateApplication(findTenantID, approvalStatus);
+            Success = RequestManager.UpdateApplication(findTenantID, approvalStatus, LeaseForm);
             return Success;
         }
+        
         public Employee GetAllEmployees(string Email)
         {
             Employee employee = new Employee();
@@ -191,6 +200,18 @@ namespace CNMaisons.Controller
             Mails MailRequestManager = new Mails();
             success = MailRequestManager.SendEmail(toEmailAddress, messageBody, messageSubject);
             return success;
+        }
+        
+
+         
+
+
+        public String AddPropertyVisit(Visit aPropertyVisit)
+        {
+            String Success;
+            Visits PropertyVisitRequestManager = new();
+            Success = PropertyVisitRequestManager.CreatePropertyVisit(aPropertyVisit);
+            return Success;
         }
 
 

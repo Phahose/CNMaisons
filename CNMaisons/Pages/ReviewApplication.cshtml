@@ -2,7 +2,7 @@
 @model CNMaisons.Pages.ReviewModel
 @{
     Layout = "_Header";
-    ViewData["Title"] = "Lease Application";
+    ViewData["Title"] = "Review Application";
     var emailPattern = new System.Text.RegularExpressions.Regex(@"^[^\s@]+@[^\s@]+\.[^\s@]+$");
 
 }
@@ -15,70 +15,129 @@
 
 <script type="text/javascript">
     function copyTenantID(tenantID) {  
-        document.querySelector('input[name="FindTenantID"]').value = tenantID;
+    document.querySelector('input[name="FindTenantID"]').value = tenantID;
+    }
+    
+    function GoBack() {
+            // Find the hidden field with id="ViewFormNow" and set its value to false
+            document.getElementById('ViewFormNow').value = 'false';
+    }
+
+
+    function validateForm() {
+        // Get the selected ApprovalStatus
+        var approvalStatus = document.getElementsByName('ApprovalStatus')[0].value;
+        // Get the LeaseFormForSigning file input
+        var leaseFormFile = document.getElementsByName('LeaseFormForSigning')[0];
+
+        // Check if ApprovalStatus is selected and LeaseFormForSigning is attached
+        if (approvalStatus !== "0" && leaseFormFile.files.length > 0) {
+            // Enable the submit buttons
+            document.getElementsByName('Submit').forEach(function (button) {
+                button.disabled = false;
+            });
+        } else {
+            // Disable the submit buttons
+            document.getElementsByName('Submit').forEach(function (button) {
+                button.disabled = true;
+            });
+        }
     }
 </script>
 
-<form name="FindPendingApplicationForm" method="post">
-    <h4>Review Lease Applications</h4>
-    <div style="display: flex; align-content: center">
-        <table style="border-collapse: collapse; text-align: left; width: 100%;">
-            <thead>
-                <tr style="border: 1px solid #ddd; background-color:black;">
-                    <th style="border: 1px solid #ddd;">TenantID</th>
-                    <th style="border: 1px solid #ddd;">PropertyID</th>
-                    <th style="border: 1px solid #ddd;">FirstName</th>
-                    <th style="border: 1px solid #ddd;">LastName</th>
-                    <th style="border: 1px solid #ddd;">ApprovalStatus</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var record in Model.ListOfTenantsPendingReview)
-                {
-                    <tr>
-                        <td style="border: 1px solid #ddd;"><a href="#" onclick="copyTenantID('@record.TenantID')">@record.TenantID</a></td>
-                        <td style="border: 1px solid #ddd;">@record.PropertyID</td>
-                        <td style="border: 1px solid #ddd;">@record.FirstName</td>
-                        <td style="border: 1px solid #ddd;">@record.LastName</td>
-                        <td style="border: 1px solid #ddd;">@record.ApprovalStatus</td>
+@if (Model.ViewFormNow == false)
+{
+    <form name="FindPendingApplicationForm" method="post">
+        <h4>Review Lease Applications</h4>
+        <div style="display: flex; align-content: center">
+            <table style="border-collapse: collapse; text-align: left; width: 100%;">
+                <thead>
+                    <tr style="border: 1px solid #ddd; background-color:black;">
+                        <th style="border: 1px solid #ddd;">Tenant ID</th>
+                        <th style="border: 1px solid #ddd;">Property ID</th>
+                        <th style="border: 1px solid #ddd;">First Name</th>
+                        <th style="border: 1px solid #ddd;">Last Name</th>
+                        <th style="border: 1px solid #ddd;">Approval Status</th>
+                        <th style="border: 1px solid #ddd;">Lease Form</th>
                     </tr>
-                }
-            </tbody>
-            </tr>
-            <tr>
-                <td>Tenant ID</td>
-                <td><input type="text" name="FindTenantID" /></td>
-            </tr>
-            <tr>
-                <td><input type="submit" name="Submit" value="Find" class="btn" /></td>
-                <td><input type="submit" name="Submit" value="Close" class="btn"/></td>
-            </tr>
+                </thead>
+                <tbody>
+                    @foreach (var record in Model.ListOfTenantsPendingReview)
+                    {
+                        <tr>
+                            <td style="border: 1px solid #ddd;"><a href="#" onclick="copyTenantID('@record.TenantID')">@record.TenantID</a></td>
+                            <td style="border: 1px solid #ddd;">@record.PropertyID</td>
+                            <td style="border: 1px solid #ddd;">@record.FirstName</td>
+                            <td style="border: 1px solid #ddd;">@record.LastName</td>
+                            <td style="border: 1px solid #ddd;">@record.ApprovalStatus</td>
+                            @* //<td style="border: 1px solid #ddd;">@record.LeaseFormForSigning</td> *@
+                            <td style="border: 1px solid #ddd;">
+                                @if (record.LeaseFormForSigning != null && record.LeaseFormForSigning.Length > 0)
+                                {
+                                    var fileName = "LeaseForm_" + record.TenantID + ".pdf"; // Example file name
+                                    <a href="@Url.Action("DownloadLeaseForm", "YourController", new { id = record.TenantID })" download="@fileName">Download Lease Form</a>
+                                }
+                                else
+                                {
+                                    <span>No Lease Form Available</span>
+                                }
+                            </td>
 
-        </table>
-    </div>
-</form>
+                        </tr>
+                    }
+                </tbody>
+                <tr>
+                    <td>Tenant ID</td>
+                    <td><input type="text" name="FindTenantID" readonly /></td>
+                </tr>
+                <tr>
+                    <td><input type="submit" name="Submit" value="Find" class="btn" /></td>
+                    <td><input type="submit" name="Submit" value="Close" class="btn" /></td>
+                </tr>
+                
+
+            </table>
+        </div>
+    </form>
+}
+
+
+
 
 @if (Model.ViewFormNow == true)
 {
 
-    <form name="Application" method="post" class="form property_form transition-fade-down" enctype="multipart/form-data">
+    <form name="Application" method="post" class="form property_form transition-fade-down" enctype="multipart/form-data" onsubmit="return validateForm()">
+
         <span style="font-size: larger; font-style: italic;">@Model.Message</span>
         <table>
             <fieldset>
                 <legend>Declaration, Signature, and Approval</legend>
                 <div>
+                    
                     <label>Approval Status:</label>
-                    <select name="ApprovalStatus">
-                        <option value="Pending" @{ if(Model.tenantForReview.ApprovalStatus == "Pending") { <text>selected</text> } }>Pending</option>
+                    <select name="ApprovalStatus" onchange="validateForm()">
+                        <option value="0" @{ if(Model.tenantForReview.ApprovalStatus == "--Make your selection--") { <text>selected</text> } }>--Make your selection--</option>
+                        <option value="Awaiting Signature" @{ if(Model.tenantForReview.ApprovalStatus == "Awaiting Signature") { <text>selected</text> } }>Awaiting Signature</option>
                         <option value="Approved" @{ if(Model.tenantForReview.ApprovalStatus == "Approved") { <text>selected</text> } }>Approved</option>
                         <option value="Rejected" @{ if(Model.tenantForReview.ApprovalStatus == "Rejected") { <text>selected</text> } }>Rejected</option>
                     </select>           <br/>
-                    <label>Declaration: @Model.tenantForReview.Declaration</label> <br />
-                    <label>Your Signature: @Model.tenantForReview.YourSignature</label><br />
+                    <label>Attach Lease Form For Signing</label>
                     <br />
-                    <input type="submit" name="Submit" value="Submit Review" class="btn" /> <br />
-                </div>
-            </fieldset>
+                    <input type="file" name="LeaseFormForSigning" accept="application/pdf" onchange="validateForm()" /> <br />
+                    <br />
+                    <span style="font-size: larger; font-style: italic;">@Model.MessageForFile</span>
+
+                    <input type="submit" name="Submit" value="Submit Review" disabled /> <br />
+
+                    <!-- Button element -->
+                    <button type="submit" name="Submit" style="text-align: center;" value="Submit Review" disabled>
+                        <img src="../img/buttons/primary-submit.svg" alt="Save Icon" width="24" height="24" style="vertical-align: middle;">
+                        <span style="vertical-align: middle;">Submit Review</span>
+                    </button>
+                </div>                
+            </fieldset> 
+
 
             <fieldset>
                 <legend>Personal Information</legend>

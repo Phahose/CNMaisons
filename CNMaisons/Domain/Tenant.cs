@@ -58,6 +58,5 @@ namespace CNMaisons.Domain
         public byte[] LeaseFormForSigning { get; set; } = new byte[0];        
         public bool DeleteFlag { get; set; }
 
-
     }
 }

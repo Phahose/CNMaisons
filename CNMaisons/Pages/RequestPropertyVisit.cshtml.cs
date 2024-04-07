@@ -1,19 +1,12 @@
 using CNMaisons.Controller;
+using CNMaisons.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using CNMaisons.Domain;
-using System.Security.Cryptography.X509Certificates;
-using Microsoft.AspNetCore.Mvc.ViewFeatures.Buffers;
-using CNMaisons.TechnicalService;
-using Microsoft.AspNetCore.Mvc.Razor;
-using static System.Net.Mime.MediaTypeNames;
-using System.Reflection;
+using System.Data;
 
 namespace CNMaisons.Pages
 {
-
-
-    public class ReviewModel : PageModel
+    public class RequestPropertyVisitModel : PageModel
     {
         public bool ViewFormNow = false;
         public string Message { get; set; } = string.Empty;
@@ -27,8 +20,8 @@ namespace CNMaisons.Pages
 
         [BindProperty]
         public string CurrentStatus { get; set; } = string.Empty;
-        
-        
+
+
         [BindProperty]
         public string Submit { get; set; } = string.Empty;
 
@@ -64,7 +57,7 @@ namespace CNMaisons.Pages
             {
                 case "Close":
                     return RedirectToPage("/Index");
-                
+
 
                 case "Find":
                     if (FindTenantID != null)
@@ -73,7 +66,7 @@ namespace CNMaisons.Pages
                         if (ModelState.IsValid)
                         {
                             SetSessionString("FindTenantID1", FindTenantID);  // save content for furtre retreival
-                            
+
                             CNMPMS RequestDirector = new();
                             tenantForReview = RequestDirector.ViewTenant(FindTenantID);
                             string name = tenantForReview.FirstName;
@@ -91,20 +84,20 @@ namespace CNMaisons.Pages
                         }
                     }
                     return Page();
-                 
+
 
                 case "Submit Review":
-                    if (ApprovalStatus  != "--Make your selection--")
+                    if (ApprovalStatus != "--Make your selection--")
                     {
                         if (ModelState.IsValid)
                         {
                             FindTenantID = HttpContext.Session.GetString("FindTenantID1") ?? string.Empty;
 
-                            
+
                             if (ApprovalStatus == "Awaiting Signature" && LeaseFormForSigning != null)
                             {
                                 byte[] LeaseForm = ConvertToByteArray(LeaseFormForSigning);
-                                
+
                                 CNMPMS RequestDirector = new();
                                 String Confirmation = RequestDirector.ReviewAwaitingApplication(FindTenantID, ApprovalStatus, LeaseForm);
                                 if (Confirmation == "Successful!")
@@ -121,7 +114,7 @@ namespace CNMaisons.Pages
                                 ViewFormNow = true;
                                 return Page();
                             }
-                              
+
 
 
 
@@ -130,8 +123,8 @@ namespace CNMaisons.Pages
 
 
                     }
-                    return Page(); 
-                  
+                    return Page();
+
             }
             return Page();
         }
@@ -158,7 +151,5 @@ namespace CNMaisons.Pages
             }
             else { return null; }
         }
-
     }
 }
-

@@ -1,23 +1,15 @@
 using CNMaisons.Controller;
+using CNMaisons.Domain;
+using CNMaisons.TechnicalService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using CNMaisons.Domain;
-using System.Security.Cryptography.X509Certificates;
-using Microsoft.AspNetCore.Mvc.ViewFeatures.Buffers;
-using CNMaisons.TechnicalService;
-using Microsoft.AspNetCore.Mvc.Razor;
-using static System.Net.Mime.MediaTypeNames;
-using System.Reflection;
 
 namespace CNMaisons.Pages
 {
-
-
-    public class ReviewModel : PageModel
+    public class SignLeaseFormModel : PageModel
     {
         public bool ViewFormNow = false;
         public string Message { get; set; } = string.Empty;
-        public string MessageForFile { get; set; } = string.Empty;
         public CNMPMS RequestDirector { get; set; } = new();
 
         public Tenant tenantForReview = new();
@@ -25,34 +17,34 @@ namespace CNMaisons.Pages
         [BindProperty]
         public string FindTenantID { get; set; } = string.Empty;
 
-        [BindProperty]
-        public string CurrentStatus { get; set; } = string.Empty;
-        
-        
+
         [BindProperty]
         public string Submit { get; set; } = string.Empty;
 
         public string ListMessage { get; set; } = string.Empty;
         public bool ShowForm = false;
-        public List<Tenant> ListOfTenantsPendingReview = new List<Tenant>();
+        public Tenant aTenantForReview = new Tenant();
 
         [BindProperty]
         public string ApprovalStatus { get; set; } = string.Empty;
 
+        [BindProperty]
+        public string Email { get; set; } = string.Empty;
+
+        [BindProperty]
+        public string User { get; set; } = string.Empty;
 
         [BindProperty]
         public IFormFile? LeaseFormForSigning { get; set; }
 
-
-        [BindProperty]
-        public IFormFile? LeaseFormForSigningCopy { get; set; }
         public void OnGet()
         {
-            CNMPMS tenantController = new();
-            ListOfTenantsPendingReview = tenantController.GetPendingLeaseApplication();
-            if (ListOfTenantsPendingReview == null)
+            Email = HttpContext.Session.GetString("Email")!;
+            CNMPMS TenantRequestDirector = new();
+            aTenantForReview = TenantRequestDirector.GetSpecificTenantApplication(Email);
+            if (aTenantForReview == null)
             {
-                ListMessage = "All have been reviewed";
+                ListMessage = "You have been reviewed";
             }
         }
         public IActionResult OnPost()
@@ -64,7 +56,7 @@ namespace CNMaisons.Pages
             {
                 case "Close":
                     return RedirectToPage("/Index");
-                
+
 
                 case "Find":
                     if (FindTenantID != null)
@@ -73,7 +65,7 @@ namespace CNMaisons.Pages
                         if (ModelState.IsValid)
                         {
                             SetSessionString("FindTenantID1", FindTenantID);  // save content for furtre retreival
-                            
+
                             CNMPMS RequestDirector = new();
                             tenantForReview = RequestDirector.ViewTenant(FindTenantID);
                             string name = tenantForReview.FirstName;
@@ -91,37 +83,35 @@ namespace CNMaisons.Pages
                         }
                     }
                     return Page();
-                 
+
 
                 case "Submit Review":
-                    if (ApprovalStatus  != "--Make your selection--")
+                    if (ApprovalStatus != "Pending")
                     {
+                        ViewFormNow = false;
                         if (ModelState.IsValid)
                         {
                             FindTenantID = HttpContext.Session.GetString("FindTenantID1") ?? string.Empty;
 
-                            
-                            if (ApprovalStatus == "Awaiting Signature" && LeaseFormForSigning != null)
+                            byte[] LeaseForm = ConvertToByteArray(LeaseFormForSigning);
+
+                            //Form Signed
+                            //Approved
+                            //Rejected
+                            if (ApprovalStatus == "Awaiting Signature")
                             {
-                                byte[] LeaseForm = ConvertToByteArray(LeaseFormForSigning);
-                                
                                 CNMPMS RequestDirector = new();
                                 String Confirmation = RequestDirector.ReviewAwaitingApplication(FindTenantID, ApprovalStatus, LeaseForm);
                                 if (Confirmation == "Successful!")
                                 {
                                     ViewFormNow = false;
-                                    MessageForFile = "Tenant's Lease application updaed for him to sign.";
+                                    Message = "Tenant's Lease application reviewed.";
                                     OnGet();
                                     return Page();
                                 }
                             }
-                            else
-                            {
-                                Message = "Please attach the lease form.";
-                                ViewFormNow = true;
-                                return Page();
-                            }
-                              
+                            
+
 
 
 
@@ -130,8 +120,8 @@ namespace CNMaisons.Pages
 
 
                     }
-                    return Page(); 
-                  
+                    return Page();
+
             }
             return Page();
         }
@@ -161,4 +151,3 @@ namespace CNMaisons.Pages
 
     }
 }
-

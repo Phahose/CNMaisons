@@ -18,12 +18,12 @@
         document.querySelector('input[name="PropertyID"]').value = "CN00001";
         document.querySelector('input[name="FirstName"]').value = "Ezra";
         document.querySelector('input[name="LastName"]').value = "Mallo";
-        document.querySelector('input[name="PhoneNumber"]').value = "0803857564";
+        document.querySelector('input[name="PhoneNumber"]').value = "0803854364";
         document.querySelector('input[name="Email"]').value = "ezra.mallo@gmail.com";
         document.querySelector('input[name="DOB"]').value = "1982-01-01";
         document.querySelector('input[name="Password"]').value = "abc123";
         document.querySelector('input[name="Nationality"]').value = "Nigeria";
-        document.querySelector('input[name="PermanentHomeAddress"]').value = "Isiokwe";
+        document.querySelector('input[name="PermanentHomeAddress"]').value = "Udenu";
         document.querySelector('input[name="Occupation"]').value = "Engineer";
         document.querySelector('input[name="SelfEmployed"][value="yes"]').checked = true;
         document.querySelector('select[name="MaritalStatus"]').value = "Single";
@@ -331,7 +331,8 @@
             <div>
                 <label for="Passport Photo">Passport Photo</label>
                 <br />
-                <input type="file" name="Passport" />
+                <input type="file" name="Passport" accept="image/*" />
+
                 <br />
 
                 <label for="Property ID">Which Property ID are you interested in:</label>
@@ -400,7 +401,7 @@
 
                         <label for="CorporateAffairsCertificate">Corporate Affairs Certificate</label>
                         <br />
-                        <input type="text" name="CorporateAffairsCertificate" />
+                        <input type="file" name="CorporateAffairsCertificate" />
                         <br />
                     </div>
                     <!----------------------------------------------------------------------->
@@ -603,6 +604,13 @@
                 <br />
   
                 <input type="text" name="DeleteFlag" value="0" hidden />
+
+
+                     
+                    <label for="LeaseFormForSigning" hidden> Lease Form For Signing</label>
+                    <br />
+                    <input type="file" name="LeaseFormForSigning" hidden />
+                    <br />
             </div>
         </fieldset>
     </form>

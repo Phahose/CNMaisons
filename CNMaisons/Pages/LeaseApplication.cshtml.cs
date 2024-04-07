@@ -7,17 +7,19 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data;
 using System.Globalization;
 using System.Security.Cryptography;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace CNMaisons.Pages
 {
     public class LeaseApplicationModel : PageModel
     {
+        #region AllDeclarations
         public string Message { get; set; } = string.Empty;
         public string errorMessage { get; set; } = string.Empty;
 
         [BindProperty]
         public IFormFile Passport { get; set; }
-
+        
 
         [BindProperty]
         public string PropertyID { get; set; } 
@@ -64,8 +66,13 @@ namespace CNMaisons.Pages
         [BindProperty]
         public string BusinessRegistrationNumber { get; set; } 
 
+
+
         [BindProperty]
-        public byte[] CorporateAffairsCertificate { get; set; } = new byte[0];
+        public IFormFile? CorporateAffairsCertificate { get; set; }
+
+
+
 
         [BindProperty]
         public string NameofEmployer { get; set; } 
@@ -177,7 +184,9 @@ namespace CNMaisons.Pages
 
 
         [BindProperty]
-        public byte[] LeaseFormForSigning { get; set; } = new byte[0];
+        public IFormFile? LeaseFormForSigning { get; set; }
+        #endregion
+
 
         public void OnGet()
         {
@@ -199,7 +208,8 @@ namespace CNMaisons.Pages
             //{
             //    errorMessage += "Passport is Required.\n";
             //}
-
+            
+            #region All Validations
             errorMessage = "";
             ModelState.Clear();
 
@@ -429,8 +439,11 @@ namespace CNMaisons.Pages
                     HttpContext.Session.SetString(key, "");
                 }
             }
+            #endregion
 
 
+
+            #region SettingUpSession
             //0-10
             SetSessionString("PropertyID1", PropertyID);
             SetSessionString("FirstName1", FirstName);
@@ -495,7 +508,7 @@ namespace CNMaisons.Pages
             SetSessionString("ApprovalStatus1", ApprovalStatus);
             
             SetSessionString("DeleteFlag1", DeleteFlag.ToString());
-
+            #endregion
 
 
 
@@ -505,6 +518,8 @@ namespace CNMaisons.Pages
 
                 Tenant aTenant;
                 byte[] PassportBytes = ConvertToByteArray(Passport);
+                byte[] CorporateAffairs = ConvertToByteArray(CorporateAffairsCertificate);
+                byte[] LeaseForm = ConvertToByteArray(LeaseFormForSigning);
 
                 aTenant = new()
                 {
@@ -523,7 +538,7 @@ namespace CNMaisons.Pages
                     Occupation = Occupation,
                     SelfEmployed = SelfEmployed,
                     BusinessRegistrationNumber = BusinessRegistrationNumber,
-                    CorporateAffairsCertificate = CorporateAffairsCertificate,
+                    CorporateAffairsCertificate = CorporateAffairs,
                     NameofEmployer = NameofEmployer,
                     AddressOfEmployer = AddressOfEmployer,
                     LengthOnJob = LengthOnJob,
@@ -557,11 +572,9 @@ namespace CNMaisons.Pages
                     Guarantor2AlternatePhoneNumber = Guarantor2AlternatePhoneNumber,
                     Declaration = Declaration,
                     YourSignature = YourSignature,
-                    ApprovalStatus = "Stage_1",
+                    ApprovalStatus = "Just Applied",
                     DeleteFlag = DeleteFlag,
-                    LeaseFormForSigning = LeaseFormForSigning
-
-
+                    LeaseFormForSigning = LeaseForm
                 };
 
 
@@ -612,10 +625,7 @@ namespace CNMaisons.Pages
 
             RePopulate();
             //return Page();
-        }
-
-
-
+        } 
 
         private byte[] ConvertToByteArray(IFormFile file)
         {

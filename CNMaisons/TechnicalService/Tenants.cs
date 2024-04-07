@@ -295,6 +295,8 @@ namespace CNMaisons.TechnicalService
                         PropertyID = (string)MyDataReader["PropertyID"],
                         FirstName = (string)MyDataReader["FirstName"],
                         LastName = (string)MyDataReader["LastName"],
+                        LeaseFormForSigning = MyDataReader["LeaseFormForSigning"] == DBNull.Value ? null! : (byte[])MyDataReader["LeaseFormForSigning"]
+
                     };
                     myTenantPendingReviewList.Add(aTenantPendingReview);
                 }
@@ -302,15 +304,11 @@ namespace CNMaisons.TechnicalService
             return myTenantPendingReviewList;
         }
 
-        
-        
-        
-        
-        
-        public Tenant GetTenantLeaseApplicationForReview(String aTenantID)
+
+
+        public Tenant RetrieveSpecificTenantApplication(String email)
         {
-            Tenant aTenantPendingReview = new();
-            
+
             //connection
             SqlConnection MyDataSource = new();
             MyDataSource.ConnectionString = connectionString;
@@ -321,86 +319,153 @@ namespace CNMaisons.TechnicalService
             {
                 Connection = MyDataSource,
                 CommandType = CommandType.StoredProcedure,
-                CommandText = "ViewTenant"
+                CommandText = "GetSpecificTenantApplication"
             };
 
             SqlParameter MyParameter = new()
             {
-                ParameterName = "@TenantID",
+                ParameterName = "@Email",
                 SqlDbType = SqlDbType.VarChar,
                 Direction = ParameterDirection.Input,
-                SqlValue = aTenantID
+                SqlValue = email
             };
             MyCommand.Parameters.Add(MyParameter);
 
-
+ 
             SqlDataReader MyDataReader = MyCommand.ExecuteReader();
-             
+
+            Tenant aTenantPendingReview = new();
+
             if (MyDataReader.HasRows)
             {
                 while (MyDataReader.Read())
                 {
                     aTenantPendingReview = new()
                     {
-                        //Passport = MyDataReader["Passport"] == DBNull.Value ? null! : (byte[])MyDataReader["Passport"],
-                        TenantID = MyDataReader["TenantID"]?.ToString(),
-                        PropertyID = MyDataReader["PropertyID"]?.ToString(),
-                        FirstName = MyDataReader["FirstName"]?.ToString(),
-                        LastName = MyDataReader["LastName"]?.ToString(),
-                        PhoneNumber = MyDataReader["PhoneNumber"]?.ToString(),
-                        Email = MyDataReader["Email"]?.ToString(),
-                        DOB = MyDataReader["DOB"] == DBNull.Value ? default(DateTime) : (DateTime)MyDataReader["DOB"],
-                        Nationality = MyDataReader["Nationality"]?.ToString(),
-                        StateofOrigin = MyDataReader["StateofOrigin"]?.ToString(),
-                        LGA = MyDataReader["LGA"]?.ToString(),
-                        HomeTown = MyDataReader["HomeTown"]?.ToString(),
-                        PermanentHomeAddress = MyDataReader["PermanentHomeAddress"]?.ToString(),
-                        Occupation = MyDataReader["Occupation"]?.ToString(),
-                        SelfEmployed = MyDataReader["SelfEmployed"]?.ToString(),
-                        BusinessRegistrationNumber = MyDataReader["BusinessRegistrationNumber"]?.ToString(),
-                        CorporateAffairsCertificate = MyDataReader["CorporateAffairsCertificate"] == DBNull.Value ? null! : (byte[])MyDataReader["CorporateAffairsCertificate"],
-                        NameofEmployer = MyDataReader["NameofEmployer"]?.ToString(),
-                        AddressOfEmployer = MyDataReader["AddressOfEmployer"]?.ToString(),
-                        LengthOnJob = (int)MyDataReader["LengthOnJob"],
-                        CurrentPositionHeld = MyDataReader["CurrentPositionHeld"]?.ToString(),
-                        NatureOfJob = MyDataReader["NatureOfJob"]?.ToString(),
-                        FormerResidenceAddress = MyDataReader["FormerResidenceAddress"]?.ToString(),
-                        ReasonForMoving = MyDataReader["ReasonForMoving"]?.ToString(),
-                        LengthOfStayAtOldResidence = (int)MyDataReader["LengthOfStayAtOldResidence"],
-                        NameOfFormerResidentManager = MyDataReader["NameOfFormerResidentManager"]?.ToString(),
-                        ObjectionsToReasonsForMoving = MyDataReader["ObjectionsToReasonsForMoving"]?.ToString(),
-                        MaritalStatus = MyDataReader["MaritalStatus"]?.ToString(),
-                        SpouseFirstName = MyDataReader["SpouseFirstName"]?.ToString(),
-                        SpouseLastName = MyDataReader["SpouseLastName"]?.ToString(),
-                        SpouseOccupation = MyDataReader["SpouseOccupation"]?.ToString(),
-                        NumberOfOccupants = (int)MyDataReader["NumberOfOccupants"],
-                        NextOfKinFirstName = MyDataReader["NextOfKinFirstName"]?.ToString(),
-                        NextOfKinLastName = MyDataReader["NextOfKinLastName"]?.ToString(),
-                        NextOfKinAddress = MyDataReader["NextOfKinAddress"]?.ToString(),
-                        NextOfKinPhoneNumber = MyDataReader["NextOfKinPhoneNumber"]?.ToString(),
-                        Guarantor1FirstName = MyDataReader["Guarantor1FirstName"]?.ToString(),
-                        Guarantor1LastName = MyDataReader["Guarantor1LastName"]?.ToString(),
-                        Guarantor1Address = MyDataReader["Guarantor1Address"]?.ToString(),
-                        Guarantor1Occupation = MyDataReader["Guarantor1Occupation"]?.ToString(),
-                        Guarantor1PhoneNumber = MyDataReader["Guarantor1PhoneNumber"]?.ToString(),
-                        Guarantor1AlternatePhoneNumber = MyDataReader["Guarantor1AlternatePhoneNumber"]?.ToString(),
-                        Guarantor2FirstName = MyDataReader["Guarantor2FirstName"]?.ToString(),
-                        Guarantor2LastName = MyDataReader["Guarantor2LastName"]?.ToString(),
-                        Guarantor2Address = MyDataReader["Guarantor2Address"]?.ToString(),
-                        Guarantor2Occupation = MyDataReader["Guarantor2Occupation"]?.ToString(),
-                        Guarantor2PhoneNumber = MyDataReader["Guarantor2PhoneNumber"]?.ToString(),
-                        Guarantor2AlternatePhoneNumber = MyDataReader["Guarantor2AlternatePhoneNumber"]?.ToString(),
-                        Declaration = MyDataReader["Declaration"]?.ToString(),
-                        YourSignature = MyDataReader["YourSignature"]?.ToString(),
-                        DeleteFlag = (bool)MyDataReader["DeleteFlag"],
-                        ApprovalStatus = MyDataReader["ApprovalStatus"]?.ToString(),
+                        ApprovalStatus = (string)MyDataReader["ApprovalStatus"],
+                        TenantID = (string)MyDataReader["TenantID"],
+                        PropertyID = (string)MyDataReader["PropertyID"],
+                        FirstName = (string)MyDataReader["FirstName"],
+                        LastName = (string)MyDataReader["LastName"],
                         LeaseFormForSigning = MyDataReader["LeaseFormForSigning"] == DBNull.Value ? null! : (byte[])MyDataReader["LeaseFormForSigning"]
 
-                    };
+                };
                 }
             }
-            MyDataReader.Close();
-            MyDataSource.Close();
+            return aTenantPendingReview;
+        }
+
+
+
+
+
+
+        public Tenant GetTenantLeaseApplicationForReview(String aTenantID)
+        {
+            Tenant aTenantPendingReview = new();
+
+            try
+            {
+                //connection
+                SqlConnection MyDataSource = new();
+                MyDataSource.ConnectionString = connectionString;
+                MyDataSource.Open();
+
+                //Command
+                SqlCommand MyCommand = new()
+                {
+                    Connection = MyDataSource,
+                    CommandType = CommandType.StoredProcedure,
+                    CommandText = "ViewTenant"
+                };
+
+                SqlParameter MyParameter = new()
+                {
+                    ParameterName = "@TenantID",
+                    SqlDbType = SqlDbType.VarChar,
+                    Direction = ParameterDirection.Input,
+                    SqlValue = aTenantID
+                };
+                MyCommand.Parameters.Add(MyParameter);
+
+
+                SqlDataReader MyDataReader = MyCommand.ExecuteReader();
+                int Count = 0;
+                if (MyDataReader.HasRows)
+                {
+                    while (MyDataReader.Read())
+                    {
+                        aTenantPendingReview.Passport = MyDataReader["Passport"] == DBNull.Value ? null! : (byte[])MyDataReader["Passport"];
+                        aTenantPendingReview.TenantID = MyDataReader["TenantID"]?.ToString();
+                        aTenantPendingReview.PropertyID = MyDataReader["PropertyID"]?.ToString();
+                        aTenantPendingReview.FirstName = MyDataReader["FirstName"]?.ToString();
+                        aTenantPendingReview.LastName = MyDataReader["LastName"]?.ToString();
+                        aTenantPendingReview.PhoneNumber = MyDataReader["PhoneNumber"]?.ToString();
+                        aTenantPendingReview.Email = MyDataReader["Email"]?.ToString();
+                        aTenantPendingReview.DOB = MyDataReader["DOB"] == DBNull.Value ? default(DateTime) : (DateTime)MyDataReader["DOB"];
+                        aTenantPendingReview.Nationality = MyDataReader["Nationality"]?.ToString();
+                        aTenantPendingReview.StateofOrigin = MyDataReader["StateofOrigin"]?.ToString();
+                        aTenantPendingReview.LGA = MyDataReader["LGA"]?.ToString();
+                        aTenantPendingReview.HomeTown = MyDataReader["HomeTown"]?.ToString();
+                        aTenantPendingReview.PermanentHomeAddress = MyDataReader["PermanentHomeAddress"]?.ToString();
+                        aTenantPendingReview.Occupation = MyDataReader["Occupation"]?.ToString();
+                        aTenantPendingReview.SelfEmployed = MyDataReader["SelfEmployed"]?.ToString();
+                        aTenantPendingReview.BusinessRegistrationNumber = MyDataReader["BusinessRegistrationNumber"]?.ToString();
+                        aTenantPendingReview.CorporateAffairsCertificate = MyDataReader["CorporateAffairsCertificate"] == DBNull.Value ? null! : (byte[])MyDataReader["CorporateAffairsCertificate"];
+                        aTenantPendingReview.NameofEmployer = MyDataReader["NameofEmployer"]?.ToString();
+                        aTenantPendingReview.AddressOfEmployer = MyDataReader["AddressOfEmployer"]?.ToString();
+                        aTenantPendingReview.LengthOnJob = (int)MyDataReader["LengthOnJob"];
+                        aTenantPendingReview.CurrentPositionHeld = MyDataReader["CurrentPositionHeld"]?.ToString();
+                        aTenantPendingReview.NatureOfJob = MyDataReader["NatureOfJob"]?.ToString();
+                        aTenantPendingReview.FormerResidenceAddress = MyDataReader["FormerResidenceAddress"]?.ToString();
+                        aTenantPendingReview.ReasonForMoving = MyDataReader["ReasonForMoving"]?.ToString();
+                        aTenantPendingReview.LengthOfStayAtOldResidence = (int)MyDataReader["LengthOfStayAtOldResidence"];
+                        aTenantPendingReview.NameOfFormerResidentManager = MyDataReader["NameOfFormerResidentManager"]?.ToString();
+                        aTenantPendingReview.ObjectionsToReasonsForMoving = MyDataReader["ObjectionsToReasonsForMoving"]?.ToString();
+                        aTenantPendingReview.MaritalStatus = MyDataReader["MaritalStatus"]?.ToString();
+                        aTenantPendingReview.SpouseFirstName = MyDataReader["SpouseFirstName"]?.ToString();
+                        aTenantPendingReview.SpouseLastName = MyDataReader["SpouseLastName"]?.ToString();
+                        aTenantPendingReview.SpouseOccupation = MyDataReader["SpouseOccupation"]?.ToString();
+                        aTenantPendingReview.NumberOfOccupants = (int)MyDataReader["NumberOfOccupants"];
+                        aTenantPendingReview.NextOfKinFirstName = MyDataReader["NextOfKinFirstName"]?.ToString();
+                        aTenantPendingReview.NextOfKinLastName = MyDataReader["NextOfKinLastName"]?.ToString();
+                        aTenantPendingReview.NextOfKinAddress = MyDataReader["NextOfKinAddress"]?.ToString();
+                        aTenantPendingReview.NextOfKinPhoneNumber = MyDataReader["NextOfKinPhoneNumber"]?.ToString();
+                        aTenantPendingReview.Guarantor1FirstName = MyDataReader["Guarantor1FirstName"]?.ToString();
+                        aTenantPendingReview.Guarantor1LastName = MyDataReader["Guarantor1LastName"]?.ToString();
+                        aTenantPendingReview.Guarantor1Address = MyDataReader["Guarantor1Address"]?.ToString();
+                        aTenantPendingReview.Guarantor1Occupation = MyDataReader["Guarantor1Occupation"]?.ToString();
+                        aTenantPendingReview.Guarantor1PhoneNumber = MyDataReader["Guarantor1PhoneNumber"]?.ToString();
+                        aTenantPendingReview.Guarantor1AlternatePhoneNumber = MyDataReader["Guarantor1AlternatePhoneNumber"]?.ToString();
+                        aTenantPendingReview.Guarantor2FirstName = MyDataReader["Guarantor2FirstName"]?.ToString();
+                        aTenantPendingReview.Guarantor2LastName = MyDataReader["Guarantor2LastName"]?.ToString();
+                        aTenantPendingReview.Guarantor2Address = MyDataReader["Guarantor2Address"]?.ToString();
+                        aTenantPendingReview.Guarantor2Occupation = MyDataReader["Guarantor2Occupation"]?.ToString();
+                        aTenantPendingReview.Guarantor2PhoneNumber = MyDataReader["Guarantor2PhoneNumber"]?.ToString();
+                        aTenantPendingReview.Guarantor2AlternatePhoneNumber = MyDataReader["Guarantor2AlternatePhoneNumber"]?.ToString();
+                        aTenantPendingReview.Declaration = MyDataReader["Declaration"]?.ToString();
+                        aTenantPendingReview.YourSignature = MyDataReader["YourSignature"]?.ToString();
+                        aTenantPendingReview.DeleteFlag = (bool)MyDataReader["DeleteFlag"];
+                        aTenantPendingReview.ApprovalStatus = MyDataReader["ApprovalStatus"]?.ToString();
+                        aTenantPendingReview.LeaseFormForSigning = MyDataReader["LeaseFormForSigning"] == DBNull.Value ? null! : (byte[])MyDataReader["LeaseFormForSigning"];
+
+                    }
+                    Count++;
+                    MyDataReader.Close();
+                    MyDataSource.Close();
+                }
+            }
+                
+            catch (SqlException ex)
+            {
+                // Handle SQL Server exceptions here
+                Console.WriteLine($"An SQL error occurred. Error number: {ex.Number}, Message: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                // Handle other exceptions here
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
 
             return aTenantPendingReview;
         }
@@ -410,7 +475,7 @@ namespace CNMaisons.TechnicalService
 
 
 
-        public String UpdateApplication(String findTenantID, String approvalStatus)
+        public String UpdateApplication(String findTenantID, String approvalStatus, byte[] LeaseForm)
         {
             String Success;
 
@@ -441,7 +506,9 @@ namespace CNMaisons.TechnicalService
                 // Adding parameters
                 AddParameter("@TenantID", SqlDbType.VarChar, findTenantID);
                 AddParameter("@ApprovalStatus", SqlDbType.VarChar, approvalStatus);
-        
+                AddParameter("@LeaseFormForSigning", SqlDbType.VarBinary, LeaseForm);
+
+
                 MyCommand.ExecuteNonQuery();
                 MyDataSource.Close();
                 Success = "Successful!";
@@ -465,13 +532,10 @@ namespace CNMaisons.TechnicalService
                 Success = $"An error occurred: {ex.Message}";
             }
             return Success;
-        }      
+        }
 
 
-
-
-
-
+     
 
 
 
