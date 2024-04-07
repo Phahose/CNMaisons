@@ -32,6 +32,9 @@ namespace CNMaisons.Pages
         [BindProperty]
         public string Submit { get; set; } = string.Empty;
 
+        [BindProperty]
+        public string FindEmail { get; set; } = string.Empty; 
+
         public string ListMessage { get; set; } = string.Empty;
         public bool ShowForm = false;
         public List<Tenant> ListOfTenantsPendingReview = new List<Tenant>();
@@ -48,6 +51,7 @@ namespace CNMaisons.Pages
         public IFormFile? LeaseFormForSigningCopy { get; set; }
         public void OnGet()
         {
+            
             CNMPMS tenantController = new();
             ListOfTenantsPendingReview = tenantController.GetPendingLeaseApplication();
             if (ListOfTenantsPendingReview == null)
@@ -73,7 +77,9 @@ namespace CNMaisons.Pages
                         if (ModelState.IsValid)
                         {
                             SetSessionString("FindTenantID1", FindTenantID);  // save content for furtre retreival
+                            SetSessionString("FindEmail1", FindEmail);  // save content for furtre retreival
                             
+
                             CNMPMS RequestDirector = new();
                             tenantForReview = RequestDirector.ViewTenant(FindTenantID);
                             string name = tenantForReview.FirstName;
@@ -99,12 +105,22 @@ namespace CNMaisons.Pages
                         if (ModelState.IsValid)
                         {
                             FindTenantID = HttpContext.Session.GetString("FindTenantID1") ?? string.Empty;
+                            FindEmail= HttpContext.Session.GetString("FindEmail1") ?? string.Empty;
 
-                            
+
                             if (ApprovalStatus == "Awaiting Signature" && LeaseFormForSigning != null)
                             {
                                 byte[] LeaseForm = ConvertToByteArray(LeaseFormForSigning);
-                                
+
+                                string messageBody = "Hello,\n\nYour Lease Form is ready. You need to \n\t1. login, \n\t2. Download the Lease Form,\n\t3. Sign and upload it ...\n\nOnce Uploaded, the contract will be finaised.\n\nRegards\nCN Maisons Management";
+                                string messageSubject = "Sign this Lease Form and revert.";
+                                string mailConfirmation;
+                                CNMPMS MailRequestManager = new CNMPMS();
+                                mailConfirmation = MailRequestManager.PostEmail(FindEmail, messageBody, messageSubject);
+                                 
+
+
+
                                 CNMPMS RequestDirector = new();
                                 String Confirmation = RequestDirector.ReviewAwaitingApplication(FindTenantID, ApprovalStatus, LeaseForm);
                                 if (Confirmation == "Successful!")

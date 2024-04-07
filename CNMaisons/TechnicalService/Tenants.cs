@@ -108,8 +108,7 @@ namespace CNMaisons.TechnicalService
                 AddParameter("@Guarantor2PhoneNumber", SqlDbType.VarChar, aTenant.Guarantor2PhoneNumber);
                 AddParameter("@Guarantor2AlternatePhoneNumber", SqlDbType.VarChar, aTenant.Guarantor2AlternatePhoneNumber);
                 AddParameter("@Declaration", SqlDbType.VarChar, aTenant.Declaration);
-                AddParameter("@YourSignature", SqlDbType.VarChar, aTenant.YourSignature);
-
+                AddParameter("@YourSignedForm", SqlDbType.VarBinary, aTenant.YourSignedForm);
                 AddParameter("@ApprovalStatus", SqlDbType.VarChar, aTenant.ApprovalStatus);
                 AddParameter("@DeleteFlag", SqlDbType.Bit, aTenant.DeleteFlag);
                 
@@ -226,7 +225,7 @@ namespace CNMaisons.TechnicalService
                 AddParameter("@Guarantor2PhoneNumber", SqlDbType.VarChar, aTenant.Guarantor2PhoneNumber);
                 AddParameter("@Guarantor2AlternatePhoneNumber", SqlDbType.VarChar, aTenant.Guarantor2AlternatePhoneNumber);
                 AddParameter("@Declaration", SqlDbType.VarChar, aTenant.Declaration);
-                AddParameter("@YourSignature", SqlDbType.VarChar, aTenant.YourSignature);
+                AddParameter("@YourSignedForm", SqlDbType.VarChar, aTenant.YourSignedForm);
 
                 AddParameter("@ApprovalStatus", SqlDbType.VarChar, aTenant.ApprovalStatus);
                 AddParameter("@DeleteFlag", SqlDbType.Bit, aTenant.DeleteFlag);
@@ -295,6 +294,7 @@ namespace CNMaisons.TechnicalService
                         PropertyID = (string)MyDataReader["PropertyID"],
                         FirstName = (string)MyDataReader["FirstName"],
                         LastName = (string)MyDataReader["LastName"],
+                        Email = (string)MyDataReader["Email"],
                         LeaseFormForSigning = MyDataReader["LeaseFormForSigning"] == DBNull.Value ? null! : (byte[])MyDataReader["LeaseFormForSigning"]
 
                     };
@@ -347,6 +347,7 @@ namespace CNMaisons.TechnicalService
                         PropertyID = (string)MyDataReader["PropertyID"],
                         FirstName = (string)MyDataReader["FirstName"],
                         LastName = (string)MyDataReader["LastName"],
+                        Email = (string)MyDataReader["Email"],
                         LeaseFormForSigning = MyDataReader["LeaseFormForSigning"] == DBNull.Value ? null! : (byte[])MyDataReader["LeaseFormForSigning"]
 
                 };
@@ -444,7 +445,7 @@ namespace CNMaisons.TechnicalService
                         aTenantPendingReview.Guarantor2PhoneNumber = MyDataReader["Guarantor2PhoneNumber"]?.ToString();
                         aTenantPendingReview.Guarantor2AlternatePhoneNumber = MyDataReader["Guarantor2AlternatePhoneNumber"]?.ToString();
                         aTenantPendingReview.Declaration = MyDataReader["Declaration"]?.ToString();
-                        aTenantPendingReview.YourSignature = MyDataReader["YourSignature"]?.ToString();
+                        aTenantPendingReview.YourSignedForm = MyDataReader["YourSignedForm"] == DBNull.Value ? null! : (byte[])MyDataReader["YourSignedForm"];
                         aTenantPendingReview.DeleteFlag = (bool)MyDataReader["DeleteFlag"];
                         aTenantPendingReview.ApprovalStatus = MyDataReader["ApprovalStatus"]?.ToString();
                         aTenantPendingReview.LeaseFormForSigning = MyDataReader["LeaseFormForSigning"] == DBNull.Value ? null! : (byte[])MyDataReader["LeaseFormForSigning"];
@@ -623,7 +624,7 @@ namespace CNMaisons.TechnicalService
                         Guarantor2PhoneNumber = MyDataReader["Guarantor2PhoneNumber"]?.ToString(),
                         Guarantor2AlternatePhoneNumber = MyDataReader["Guarantor2AlternatePhoneNumber"]?.ToString(),
                         Declaration = MyDataReader["Declaration"]?.ToString(),
-                        YourSignature = MyDataReader["YourSignature"]?.ToString(),
+                        YourSignedForm = MyDataReader["YourSignedForm"] == DBNull.Value ? null! : (byte[])MyDataReader["YourSignedForm"],
                         DeleteFlag = (bool)MyDataReader["DeleteFlag"],
                         ApprovalStatus = MyDataReader["ApprovalStatus"]?.ToString(),
                         LeaseFormForSigning = MyDataReader["LeaseFormForSigning"] == DBNull.Value ? null! : (byte[])MyDataReader["LeaseFormForSigning"]

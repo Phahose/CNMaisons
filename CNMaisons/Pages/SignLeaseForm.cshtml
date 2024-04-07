@@ -5,6 +5,9 @@
     ViewData["Title"] = "Sign Lease Application";
     var emailPattern = new System.Text.RegularExpressions.Regex(@"^[^\s@]+@[^\s@]+\.[^\s@]+$");
 }
+
+
+
 <script src="~/libraries/jquery/jquery.js"></script>
 <script src="~/libraries/jquery-validate/jquery.validate.js"></script>
 <script src="~/libraries/jquery-validate-unobtrusive/jquery.validate.unobtrusive.js"></script>
@@ -58,29 +61,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var record in Model.ListOfTenantsPendingReview)
-                    {
-                        <tr>
-                            <td style="border: 1px solid #ddd;"><a href="#" onclick="copyTenantID('@record.TenantID')">@record.TenantID</a></td>
-                            <td style="border: 1px solid #ddd;">@record.PropertyID</td>
-                            <td style="border: 1px solid #ddd;">@record.FirstName</td>
-                            <td style="border: 1px solid #ddd;">@record.LastName</td>
-                            <td style="border: 1px solid #ddd;">@record.ApprovalStatus</td>
-                            @* //<td style="border: 1px solid #ddd;">@record.LeaseFormForSigning</td> *@
-                            <td style="border: 1px solid #ddd;">
-                                @if (record.LeaseFormForSigning != null && record.LeaseFormForSigning.Length > 0)
-                                {
-                                    var fileName = "LeaseForm_" + record.TenantID + ".pdf"; // Example file name
-                                    <a href="@Url.Action("DownloadLeaseForm", "YourController", new { id = record.TenantID })" download="@fileName">Download Lease Form</a>
-                                }
-                                else
-                                {
-                                    <span>No Lease Form Available</span>
-                                }
-                            </td>
-
-                        </tr>
-                    }
+                    <tr>
+                        <td style="border: 1px solid #ddd;"><a href="#" onclick="copyTenantID('@Model.aTenantsPendingReview.TenantID')">@Model.aTenantsPendingReview.TenantID</a></td>
+                        <td style="border: 1px solid #ddd;">@Model.aTenantsPendingReview.PropertyID</td>
+                        <td style="border: 1px solid #ddd;">@Model.aTenantsPendingReview.FirstName</td>
+                        <td style="border: 1px solid #ddd;">@Model.aTenantsPendingReview.LastName</td>
+                        <td style="border: 1px solid #ddd;">@Model.aTenantsPendingReview.ApprovalStatus</td>
+                        @* //<td style="border: 1px solid #ddd;">@record.LeaseFormForSigning</td> *@
+                        <td style="border: 1px solid #ddd;">
+                            @if (@Model.aTenantsPendingReview.LeaseFormForSigning != null && @Model.aTenantsPendingReview.LeaseFormForSigning.Length > 0)
+                            {
+                                var fileName = "LeaseForm_" + Model.aTenantsPendingReview.TenantID + ".pdf"; // Example file name
+                                <a href="@Url.Action("DownloadLeaseForm", "YourController", new { id = Model.aTenantsPendingReview.TenantID })" download="@fileName">Download Lease Form</a>
+                            }
+                            else
+                            {
+                                <span>No Lease Form Available</span>
+                            }
+                        </td>
+                    </tr>                    
                 </tbody>
                 <tr>
                     <td>Tenant ID</td>
@@ -113,31 +112,11 @@
 
                     <label>Approval Status:</label>
                     <select name="ApprovalStatus" onchange="validateForm()">
-                        <option value="0" @{
-                            if (Model.tenantForReview.ApprovalStatus == "--Make your selection--")
-                            {
-                                <text>selected</text>
-                            }
-                        }>--Make your selection--</option>
-                        <option value="Awaiting Signature" @{
-                            if (Model.tenantForReview.ApprovalStatus == "Awaiting Signature")
-                            {
-                                <text>selected</text>
-                            }
-                        }>Awaiting Signature</option>
-                        <option value="Approved" @{
-                            if (Model.tenantForReview.ApprovalStatus == "Approved")
-                            {
-                                <text>selected</text>
-                            }
-                        }>Approved</option>
-                        <option value="Rejected" @{
-                            if (Model.tenantForReview.ApprovalStatus == "Rejected")
-                            {
-                                <text>selected</text>
-                            }
-                        }>Rejected</option>
-                    </select>           <br />
+                        <option value="0" @{if (Model.tenantForReview.ApprovalStatus == "--Make your selection--"){<text>selected</text>}}>--Make your selection--</option>
+                        <option value="Awaiting Signature" @{if (Model.tenantForReview.ApprovalStatus == "Awaiting Signature"){<text>selected</text>}}>Awaiting Signature</option>
+                        <option value="Signed" @{if (Model.tenantForReview.ApprovalStatus == "Signed"){<text>selected</text>}}>Signed </option>
+                    </select>
+                    <br />
                     <label>Attach Lease Form For Signing</label>
                     <br />
                     <input type="file" name="LeaseFormForSigning" accept="application/pdf" onchange="validateForm()" /> <br />

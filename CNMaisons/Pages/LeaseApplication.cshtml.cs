@@ -169,10 +169,11 @@ namespace CNMaisons.Pages
         public string Guarantor2AlternatePhoneNumber { get; set; } 
 
         [BindProperty]
-        public string Declaration { get; set; } 
+        public string Declaration { get; set; }
+
 
         [BindProperty]
-        public string YourSignature { get; set; } 
+        public IFormFile? YourSignedForm { get; set; } 
 
 
         [BindProperty]
@@ -401,11 +402,6 @@ namespace CNMaisons.Pages
             }
 
 
-            // Validate YourSignature
-            if (string.IsNullOrEmpty(YourSignature))
-            {
-                errorMessage += "Your full name is required as signature.\n";
-            }
 
             // Validate Declaration
             if (string.IsNullOrEmpty(Declaration))
@@ -501,8 +497,7 @@ namespace CNMaisons.Pages
             SetSessionString("Guarantor2PhoneNumber1", Guarantor2PhoneNumber);
             SetSessionString("Guarantor2AlternatePhoneNumber1", Guarantor2AlternatePhoneNumber);
             SetSessionString("Declaration1", Declaration);
-            SetSessionString("YourSignature1", YourSignature);
-
+            
             //51-52
 
             SetSessionString("ApprovalStatus1", ApprovalStatus);
@@ -520,6 +515,7 @@ namespace CNMaisons.Pages
                 byte[] PassportBytes = ConvertToByteArray(Passport);
                 byte[] CorporateAffairs = ConvertToByteArray(CorporateAffairsCertificate);
                 byte[] LeaseForm = ConvertToByteArray(LeaseFormForSigning);
+                byte[] SignedForm = ConvertToByteArray(YourSignedForm);
 
                 aTenant = new()
                 {
@@ -571,7 +567,7 @@ namespace CNMaisons.Pages
                     Guarantor2PhoneNumber = Guarantor2PhoneNumber,
                     Guarantor2AlternatePhoneNumber = Guarantor2AlternatePhoneNumber,
                     Declaration = Declaration,
-                    YourSignature = YourSignature,
+                    YourSignedForm = SignedForm,
                     ApprovalStatus = "Just Applied",
                     DeleteFlag = DeleteFlag,
                     LeaseFormForSigning = LeaseForm
@@ -701,8 +697,7 @@ namespace CNMaisons.Pages
             Guarantor2PhoneNumber = HttpContext.Session.GetString("Guarantor2PhoneNumber1") ?? string.Empty;
             Guarantor2AlternatePhoneNumber = HttpContext.Session.GetString("Guarantor2AlternatePhoneNumber1") ?? string.Empty;
             Declaration = HttpContext.Session.GetString("Declaration1") ?? string.Empty;
-            YourSignature = HttpContext.Session.GetString("YourSignature1") ?? string.Empty;
-
+             
             //51-52
             ApprovalStatus = HttpContext.Session.GetString("ApprovalStatus1") ?? string.Empty;
             DeleteFlag = Convert.ToBoolean(HttpContext.Session.GetString("DeleteFlag1") ?? "false");

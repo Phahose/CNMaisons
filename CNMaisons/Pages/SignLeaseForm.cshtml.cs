@@ -10,6 +10,7 @@ namespace CNMaisons.Pages
     {
         public bool ViewFormNow = false;
         public string Message { get; set; } = string.Empty;
+        public string MessageForFile { get; set; } = string.Empty;
         public CNMPMS RequestDirector { get; set; } = new();
 
         public Tenant tenantForReview = new();
@@ -17,13 +18,16 @@ namespace CNMaisons.Pages
         [BindProperty]
         public string FindTenantID { get; set; } = string.Empty;
 
+        [BindProperty]
+        public string CurrentStatus { get; set; } = string.Empty;
+
 
         [BindProperty]
         public string Submit { get; set; } = string.Empty;
 
         public string ListMessage { get; set; } = string.Empty;
         public bool ShowForm = false;
-        public Tenant aTenantForReview = new Tenant();
+        public Tenant aTenantsPendingReview = new Tenant();
 
         [BindProperty]
         public string ApprovalStatus { get; set; } = string.Empty;
@@ -31,20 +35,21 @@ namespace CNMaisons.Pages
         [BindProperty]
         public string Email { get; set; } = string.Empty;
 
-        [BindProperty]
-        public string User { get; set; } = string.Empty;
 
         [BindProperty]
         public IFormFile? LeaseFormForSigning { get; set; }
 
+
+        [BindProperty]
+        public IFormFile? LeaseFormForSigningCopy { get; set; }
         public void OnGet()
         {
             Email = HttpContext.Session.GetString("Email")!;
-            CNMPMS TenantRequestDirector = new();
-            aTenantForReview = TenantRequestDirector.GetSpecificTenantApplication(Email);
-            if (aTenantForReview == null)
+            CNMPMS tenantController = new();
+            aTenantsPendingReview = tenantController.GetSpecificTenantApplication(Email);
+            if (aTenantsPendingReview == null)
             {
-                ListMessage = "You have been reviewed";
+                ListMessage = "All have been reviewed";
             }
         }
         public IActionResult OnPost()
@@ -86,31 +91,33 @@ namespace CNMaisons.Pages
 
 
                 case "Submit Review":
-                    if (ApprovalStatus != "Pending")
+                    if (ApprovalStatus != "--Make your selection--")
                     {
-                        ViewFormNow = false;
                         if (ModelState.IsValid)
                         {
                             FindTenantID = HttpContext.Session.GetString("FindTenantID1") ?? string.Empty;
 
-                            byte[] LeaseForm = ConvertToByteArray(LeaseFormForSigning);
 
-                            //Form Signed
-                            //Approved
-                            //Rejected
-                            if (ApprovalStatus == "Awaiting Signature")
+                            if (ApprovalStatus == "Awaiting Signature" && LeaseFormForSigning != null)
                             {
+                                byte[] LeaseForm = ConvertToByteArray(LeaseFormForSigning);
+
                                 CNMPMS RequestDirector = new();
                                 String Confirmation = RequestDirector.ReviewAwaitingApplication(FindTenantID, ApprovalStatus, LeaseForm);
                                 if (Confirmation == "Successful!")
                                 {
                                     ViewFormNow = false;
-                                    Message = "Tenant's Lease application reviewed.";
+                                    MessageForFile = "Tenant's Lease application updaed for him to sign.";
                                     OnGet();
                                     return Page();
                                 }
                             }
-                            
+                            else
+                            {
+                                Message = "Please attach the lease form.";
+                                ViewFormNow = true;
+                                return Page();
+                            }
 
 
 
@@ -148,6 +155,5 @@ namespace CNMaisons.Pages
             }
             else { return null; }
         }
-
     }
 }

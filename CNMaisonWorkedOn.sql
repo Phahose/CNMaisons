@@ -50,10 +50,10 @@ CREATE TABLE Tenant(
 	Guarantor2Occupation VARCHAR(25) NOT NULL,
 	Guarantor2PhoneNumber VARCHAR(14) NOT NULL,
 	Guarantor2AlternatePhoneNumber VARCHAR(14),
-	Declaration VARCHAR(60) NOT NULL,
-	YourSignature VARCHAR(60) NOT NULL,		
+	Declaration VARCHAR(60) NOT NULL,	
 	ApprovalStatus VARCHAR(20) NOT NULL,
 	DeleteFlag BIT NOT NULL,
+	YourSignedForm VARBINARY(MAX),		
 	LeaseFormForSigning VARBINARY(MAX)
 );
 
@@ -592,7 +592,7 @@ BEGIN
     SET @ReturnCode = 1	
 	
 	BEGIN
-		SELECT ApprovalStatus, TenantID, PropertyID, FirstName, LastName FROM Tenant
+		SELECT ApprovalStatus, TenantID, PropertyID, FirstName, LastName, Email, LeaseFormForSigning FROM Tenant
 		WHERE ApprovalStatus != 'Approved';
 
 		IF @@ERROR = 0
@@ -622,7 +622,7 @@ BEGIN
 	
 	ELSE
 		BEGIN
-			SELECT ApprovalStatus, TenantID, PropertyID, FirstName, LastName FROM Tenant
+			SELECT ApprovalStatus, TenantID, PropertyID, FirstName, LastName, Email, LeaseFormForSigning FROM Tenant
 			WHERE ApprovalStatus != 'Approved' AND
 				  Email = @Email;
 
@@ -850,8 +850,7 @@ BEGIN
 
     RETURN @ReturnCode
 END;
-
-
+Go;
 
 
 
@@ -895,7 +894,7 @@ BEGIN
 
     RETURN @ReturnCode
 END;
-
+GO;
 
 exec ViewTenant 'CN006'
 
@@ -932,7 +931,7 @@ BEGIN
 
     RETURN @ReturnCode
 END;
-
+GO;
 
 
 
@@ -972,7 +971,7 @@ BEGIN
 
     RETURN @ReturnCode
 END;
-
+GO;
 
 
 

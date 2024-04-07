@@ -14,13 +14,9 @@
 <script src="~/libraries/jquery-validate-unobtrusive/jquery.validate.unobtrusive.js"></script>
 
 <script type="text/javascript">
-    function copyTenantID(tenantID) {  
-    document.querySelector('input[name="FindTenantID"]').value = tenantID;
-    }
-    
-    function GoBack() {
-            // Find the hidden field with id="ViewFormNow" and set its value to false
-            document.getElementById('ViewFormNow').value = 'false';
+    function copyTenantID(tenantID, email) {
+        document.querySelector('input[name="FindTenantID"]').value = tenantID;
+        document.querySelector('input[name="FindEmail"]').value = email;
     }
 
 
@@ -59,13 +55,16 @@
                         <th style="border: 1px solid #ddd;">Last Name</th>
                         <th style="border: 1px solid #ddd;">Approval Status</th>
                         <th style="border: 1px solid #ddd;">Lease Form</th>
+                        <th style="border: 1px solid #ddd;">Email</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var record in Model.ListOfTenantsPendingReview)
                     {
                         <tr>
-                            <td style="border: 1px solid #ddd;"><a href="#" onclick="copyTenantID('@record.TenantID')">@record.TenantID</a></td>
+                            <td style="border: 1px solid #ddd;">
+                                <a href="#" onclick="copyTenantID('@record.TenantID', '@record.Email')">@record.TenantID</a>
+                            </td>
                             <td style="border: 1px solid #ddd;">@record.PropertyID</td>
                             <td style="border: 1px solid #ddd;">@record.FirstName</td>
                             <td style="border: 1px solid #ddd;">@record.LastName</td>
@@ -82,6 +81,7 @@
                                     <span>No Lease Form Available</span>
                                 }
                             </td>
+                            <td style="border: 1px solid #ddd;">@record.Email</td>
 
                         </tr>
                     }
@@ -89,6 +89,7 @@
                 <tr>
                     <td>Tenant ID</td>
                     <td><input type="text" name="FindTenantID" readonly /></td>
+                    <td><input type="text" name="FindEmail" readonly /></td>
                 </tr>
                 <tr>
                     <td><input type="submit" name="Submit" value="Find" class="btn" /></td>
@@ -119,6 +120,7 @@
                     <select name="ApprovalStatus" onchange="validateForm()">
                         <option value="0" @{ if(Model.tenantForReview.ApprovalStatus == "--Make your selection--") { <text>selected</text> } }>--Make your selection--</option>
                         <option value="Awaiting Signature" @{ if(Model.tenantForReview.ApprovalStatus == "Awaiting Signature") { <text>selected</text> } }>Awaiting Signature</option>
+                        <option value="Signed" @{ if(Model.tenantForReview.ApprovalStatus == "Signed") { <text>selected</text> } }>Signed</option>
                         <option value="Approved" @{ if(Model.tenantForReview.ApprovalStatus == "Approved") { <text>selected</text> } }>Approved</option>
                         <option value="Rejected" @{ if(Model.tenantForReview.ApprovalStatus == "Rejected") { <text>selected</text> } }>Rejected</option>
                     </select>           <br/>
