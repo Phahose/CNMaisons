@@ -1,20 +1,13 @@
 using CNMaisons.Controller;
 using CNMaisons.Domain;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
-using System.Data;
-using System.Reflection;
 
 namespace CNMaisons.Pages
 {
-    [AllowAnonymous] 
-
-    public class RequestPropertyVisitModel : PageModel
+    public class BookVisitModel : PageModel
     {
-
-
         public string Message { get; set; } = string.Empty;
         public string errorMessage { get; set; } = string.Empty;
         public bool FlagError;
@@ -72,7 +65,7 @@ namespace CNMaisons.Pages
                 errorMessage += "The PhoneNumber is Required.\n";
             }
 
-           
+
             if (ProposedVisitDate == default(DateTime))
             {
                 errorMessage += "The ProposedVisitDate is Required.\n";
@@ -110,13 +103,13 @@ namespace CNMaisons.Pages
                 ModelState.AddModelError("AllError", errorMessage);
                 Message = errorMessage;
             }
-            
-            
-            
+
+
+
             if (ModelState.IsValid)
-            {             
-                
-                
+            {
+
+
                 CNMPMS PropertyVisitRequestDirector = new();
 
                 Visit newVisit = new();
@@ -144,7 +137,5 @@ namespace CNMaisons.Pages
 
             }
         }
-
-
     }
 }

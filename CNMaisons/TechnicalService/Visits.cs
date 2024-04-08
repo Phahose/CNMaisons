@@ -74,5 +74,111 @@ namespace CNMaisons.TechnicalService
             return Success;
 
         }
+
+
+        public List<Visit> GetAllOpenPropertyVisit()
+        {
+
+            //connection
+            SqlConnection MyDataSource = new();
+            MyDataSource.ConnectionString = connectionString;
+            MyDataSource.Open();
+
+            //Command
+            SqlCommand MyCommand = new()
+            {
+                Connection = MyDataSource,
+                CommandType = CommandType.StoredProcedure,
+                CommandText = "GetAllOpenPropertyVisit"
+            };
+
+            SqlDataReader MyDataReader = MyCommand.ExecuteReader();
+
+            List<Visit> myOpenVisitList = new();
+            Visit myOpenVisit = new();
+
+            if (MyDataReader.HasRows)
+            {
+                while (MyDataReader.Read())
+                {
+                    myOpenVisit = new()
+                    {
+                        PropertyVisitID = (int)MyDataReader["PropertyVisitID"],
+                        PropertyID = (string)MyDataReader["PropertyID"],
+                        FirstName = (string)MyDataReader["FirstName"],
+                        LastName = (string)MyDataReader["LastName"],
+                        Email = (string)MyDataReader["Email"],
+                        PhoneNumber = (string)MyDataReader["PhoneNumber"],
+                        DateRecorded = (DateTime)MyDataReader["DateRecorded"],
+                        ProposedVisitDate = (DateTime)MyDataReader["ProposedVisitDate"],
+                        ProposedVisitTime = (TimeSpan)MyDataReader["ProposedVisitTime"],
+                        VisitStatus = (string)MyDataReader["VisitStatus"]
+                };
+                    myOpenVisitList.Add(myOpenVisit);
+                }
+            }
+            return myOpenVisitList;
+        }
+
+
+        
+        public String ConfirmOrClosePropertyVisit(String findVisitID, string visitStatus)
+        {
+            String Success;
+
+            try
+            {
+                // Connection
+                SqlConnection MyDataSource = new SqlConnection();
+                MyDataSource.ConnectionString = connectionString;
+                MyDataSource.Open();
+
+                // Command
+                SqlCommand MyCommand = new SqlCommand();
+                MyCommand.Connection = MyDataSource;
+                MyCommand.CommandType = CommandType.StoredProcedure;
+                MyCommand.CommandText = "ConfirmOrClosePropertyVisit";
+
+                void AddParameter(string parameterName, SqlDbType sqlDbType, object value)
+                {
+                    MyCommand.Parameters.Add(new SqlParameter
+                    {
+                        ParameterName = parameterName,
+                        SqlDbType = sqlDbType,
+                        Direction = ParameterDirection.Input,
+                        Value = value
+                    });
+                }
+
+                // Adding parameters
+                AddParameter("@PropertyVisitID", SqlDbType.VarChar, findVisitID);  
+                AddParameter("@VisitStatus", SqlDbType.VarChar, visitStatus);
+
+
+                MyCommand.ExecuteNonQuery();
+                MyDataSource.Close();
+                Success = "Successful!";
+            }
+
+            catch (SqlException ex)
+            {
+
+                if (ex.Number == 2627) // Unique constraint violation error number
+                {
+
+                    Success = "This Tenant ID or the Email already exist. ";
+                }
+                else
+                {
+                    Success = $"An error occurred: {ex.Message}";
+                }
+            }
+            catch (Exception ex)
+            {
+                Success = $"An error occurred: {ex.Message}";
+            }
+            return Success;
+        }
+
     }
 }

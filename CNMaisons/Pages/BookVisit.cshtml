@@ -1,8 +1,8 @@
 ﻿@page
-@model CNMaisons.Pages.RequestPropertyVisitModel
+@model CNMaisons.Pages.BookVisitModel
 @{
     Layout = "_Header";
-    ViewData["Title"] = "Property Vist";
+    ViewData["Title"] = "Book Property Vist";
     var emailPattern = new System.Text.RegularExpressions.Regex(@"^[^\s@]+@[^\s@]+\.[^\s@]+$");
 
 }
@@ -13,8 +13,8 @@
 <script src="~/libraries/jquery-validate-unobtrusive/jquery.validate.unobtrusive.js"></script>
 
 <script type="text/javascript">
-      // Get the current time
-        var now = new Date();
+    // Get the current time
+    var now = new Date();
     var hours = now.getHours().toString().padStart(2, '0'); // Ensure two digits for hours
     var minutes = now.getMinutes().toString().padStart(2, '0'); // Ensure two digits for minutes
     var currentTime = hours + ':' + minutes;
@@ -29,7 +29,7 @@
         Your browser does not support the video tag.
     </video>
 
-    <form name="RequestPropertyVisitForm" method="post" class="form property_form transition-fade-down" >
+    <form name="RequestPropertyVisitForm" method="post" class="form property_form transition-fade-down">
         <br />
         <fieldset>
             <span style="font-size: larger; font-style: italic;">
@@ -63,11 +63,11 @@
 
 
 
-                 <input type="text" name="VisitStatus" maxlength="20" required value="Open" hidden/><br />
+                <input type="text" name="VisitStatus" maxlength="20" required value="Open" hidden /><br />
             </div>
         </fieldset>
- 
-         <input type="submit" name="Submit" value="Request Property Visit" class="btn" />
-        
+
+        <input type="submit" name="Submit" value="Request Property Visit" class="btn" />
+
     </form>
 </div>

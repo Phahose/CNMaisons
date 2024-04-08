@@ -8,15 +8,11 @@
 
   <ItemGroup>
     <Compile Remove="Controller\BCS.cs" />
-    <Compile Remove="Pages\InquireVisit.cshtml.cs" />
-    <Compile Remove="Pages\UpdateTenant.cshtml.cs" />
     <Compile Remove="Pages\UserCreateTest.cshtml.cs" />
     <Compile Remove="TechnicalService\UsersManager.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="Pages\InquireVisit.cshtml" />
-    <Content Remove="Pages\UpdateTenant.cshtml" />
     <Content Remove="Pages\UserCreateTest.cshtml" />
   </ItemGroup>
 

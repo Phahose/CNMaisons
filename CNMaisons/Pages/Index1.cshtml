@@ -1,0 +1,22 @@
+﻿@page
+@model CNMaisons.Pages.Index1Model
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/css/bootstrap-timepicker.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/js/bootstrap-timepicker.min.js"></script>
+
+<div class="input-group date" id="timepicker">
+    <input type="text" class="form-control" name="ProposedVisitTime">
+    <div class="input-group-append">
+        <span class="input-group-text"><i class="fa fa-clock"></i></span>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#timepicker').timepicker();
+    });
+</script>

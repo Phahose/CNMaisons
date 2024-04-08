@@ -80,6 +80,15 @@ namespace CNMaisons.Controller
             Success = tenatManager.AddLeaseApplication(aTenant);
             return Success;
         }
+
+        public string UpdateLeaseApplication(Tenant aTenant)
+        {
+            string Success;
+            Tenants tenatManager = new();
+            Success = tenatManager.ModifyLeaseApplication(aTenant);
+            return Success;
+        }
+
         public List<Tenant> GetPendingLeaseApplication()
         {
             List<Tenant> TenantsPendingApplicationReview=new();
@@ -87,6 +96,7 @@ namespace CNMaisons.Controller
             TenantsPendingApplicationReview = tenatManager.RetrievePendingLeaseApplication();
             return TenantsPendingApplicationReview;
         }
+         
 
         public Tenant GetSpecificTenantApplication(string email)
         {
@@ -95,11 +105,11 @@ namespace CNMaisons.Controller
             aTenantForReview = tenatRequestManager.RetrieveSpecificTenantApplication(email);
             return aTenantForReview;
         }
-        public Tenant ViewTenant(String aTenantID)
+        public Tenant ViewTenant(String email)
         {
             Tenant aTenants = new();
             Tenants RequestManager = new();
-            aTenants = RequestManager.GetTenantLeaseApplicationForReview(aTenantID);
+            aTenants = RequestManager.GetTenantLeaseApplicationForReview(email);
             return aTenants;
         }
         public String ReviewAwaitingApplication(String findTenantID, String approvalStatus, byte[] LeaseForm)
@@ -228,6 +238,22 @@ namespace CNMaisons.Controller
             String Success;
             Visits PropertyVisitRequestManager = new();
             Success = PropertyVisitRequestManager.CreatePropertyVisit(aPropertyVisit);
+            return Success;
+        }
+
+        public List<Visit> RetrieveOpenPropertyVisit()
+        {
+            List<Visit> OpenVisitList = new();
+            Visits VisitRequestManager= new();
+            OpenVisitList = VisitRequestManager.GetAllOpenPropertyVisit();
+            return OpenVisitList;
+        }
+
+        public string UpdateVisitStatus(string findVisitID, string visitStatus)
+        {
+            String Success;
+            Visits PropertyVisitRequestManager = new();
+            Success = PropertyVisitRequestManager.ConfirmOrClosePropertyVisit(findVisitID, visitStatus);
             return Success;
         }
 
