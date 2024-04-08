@@ -3,7 +3,6 @@
 @using System.Security.Claims
 
 @{
-    Layout = "_Header";
     ViewData["Title"] = "Sign Lease Application";
     var emailPattern = new System.Text.RegularExpressions.Regex(@"^[^\s@]+@[^\s@]+\.[^\s@]+$");
     var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
@@ -51,194 +50,269 @@
     document.getElementsByName('YourSignedForm')[0].addEventListener('change', validateForm);
 </script>
 
-@if (Model.ViewFormNow == false)
-{
-    <form name="FindPendingApplicationForm" method="post">
-        <h4>Review Lease Applications</h4>
-        <div style="display: flex; align-content: center">
-            <table style="border-collapse: collapse; text-align: left; width: 100%;">
-                <thead>
-                    <tr style="border: 1px solid #ddd; background-color:black;">
-                        <th style="border: 1px solid #ddd;">Tenant ID</th>
-                        <th style="border: 1px solid #ddd;">Property ID</th>
-                        <th style="border: 1px solid #ddd;">First Name</th>
-                        <th style="border: 1px solid #ddd;">Last Name</th>
-                        <th style="border: 1px solid #ddd;">Approval Status</th>
-                        <th style="border: 1px solid #ddd;">Lease Form</th>
-                        <th style="border: 1px solid #ddd;">Signed Form</th>
-                        <th style="border: 1px solid #ddd;">Email</th>
-                    </tr>
-                </thead>
-                <tbody>
+<div>
+    <div class="loggedin-pages">
+        <nav class="loggedin-nav">
+            <a href="~/Index"><img src="~/img/png/logo-no-background.png" width="150" class="intro_image" /></a>
+            <ul class="loggedin-list">
+                @if (Model.Users.Role == "LandLord")
+                {
+
+                    <li>
+                        <a href="~/IndexStaff">My Account</a>
+                    </li>
+                    <li>
+                        <a href="~/AddProperty">Add Property</a>
+                    </li>
+                    <li>
+                        <a href="#">View Maintainance Requests</a>
+                    </li>
+                    <li>
+                        <a href="~/CreateAccount">Create New Employee Account</a>
+                    </li>
+                    <li>
+                        <a href="#">View Visit Requests</a>
+                    </li>
+                    <li>
+                        <a href="~/ViewPropertyAdmin">View Properties</a>
+                    </li>
+                    <li>
+                        <a href="~/ViewTenantbyLandLord">View Tenant </a>
+                    </li>
+                    <li>
+                        <a href="~/ViewInquiry">View Inquiry </a>
+                    </li>
+
+                }
+                @if (Model.Users.Role == "Staff")
+                {
+
+                    <li>
+                        <a href="~/IndexStaff">My Account</a>
+                    </li>
+                    <li>
+                        <a href="~/AddProperty">Add Property</a>
+                    </li>
+                    <li>
+                        <a href="#">View Visit Requests</a>
+                    </li>
+                    <li>
+                        <a href="#">Edit Account</a>
+                    </li>
+
+                }
+                <li class="loggedin-icon_div">
+                    @if (Model.Employee.EmployeeImage.Length > 0)
+                    {
+                        <img src="data:image;base64,@Convert.ToBase64String(Model.Employee.EmployeeImage)" alt="Property Image" />
+                    }
+                    else
+                    {
+                        <img src="~/img/profile_icon.png" width="150" class="intro_image" />
+                    }
+                </li>
+            </ul>
+        </nav>
+    </div>
+    @if (Model.ViewFormNow == false)
+    {
+        <form name="FindPendingApplicationForm" method="post">
+            <h4>Review Lease Applications</h4>
+            <div style="display: flex; align-content: center">
+                <table style="border-collapse: collapse; text-align: left; width: 100%;">
+                    <thead>
+                        <tr style="border: 1px solid #ddd; background-color:black;">
+                            <th style="border: 1px solid #ddd;">Tenant ID</th>
+                            <th style="border: 1px solid #ddd;">Property ID</th>
+                            <th style="border: 1px solid #ddd;">First Name</th>
+                            <th style="border: 1px solid #ddd;">Last Name</th>
+                            <th style="border: 1px solid #ddd;">Approval Status</th>
+                            <th style="border: 1px solid #ddd;">Lease Form</th>
+                            <th style="border: 1px solid #ddd;">Signed Form</th>
+                            <th style="border: 1px solid #ddd;">Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="border: 1px solid #ddd;"><a href="#" onclick="copyTenantID('@Model.aTenantsPendingReview.TenantID', '@Model.aTenantsPendingReview.Email')">@Model.aTenantsPendingReview.TenantID</a></td>
+                            <td style="border: 1px solid #ddd;">@Model.aTenantsPendingReview.PropertyID</td>
+                            <td style="border: 1px solid #ddd;">@Model.aTenantsPendingReview.FirstName</td>
+                            <td style="border: 1px solid #ddd;">@Model.aTenantsPendingReview.LastName</td>
+                            <td style="border: 1px solid #ddd;">@Model.aTenantsPendingReview.ApprovalStatus</td>
+
+                            <td style="border: 1px solid #ddd;">
+                                @if (Model.aTenantsPendingReview.LeaseFormForSigning != null && Model.aTenantsPendingReview.LeaseFormForSigning.Length > 0)
+                                {
+                                    var fileName = "LeaseForm_" + Model.aTenantsPendingReview.TenantID + ".pdf"; // Example file name
+                                    <a href="@Url.Action("DownloadLeaseForm", "YourController", new { id = Model.aTenantsPendingReview.TenantID })" download="@fileName">Download Lease Form</a>
+                                }
+                                else
+                                {
+                                    <span>No Lease Form Available</span>
+                                }
+                            </td>
+
+                            <td style="border: 1px solid #ddd;">
+                                @if (Model.aTenantsPendingReview.YourSignedForm != null && Model.aTenantsPendingReview.YourSignedForm.Length > 0)
+                                {
+                                    var fileName = "Signed_LeaseForm_" + Model.aTenantsPendingReview.TenantID + ".pdf"; // Example file name
+                                    <a href="@Url.Action("DownloadLeaseForm", "YourController", new { id = Model.aTenantsPendingReview.TenantID })" download="@fileName">Download Signed Lease Form</a>
+                                }
+                                else
+                                {
+                                    <span>No Signed Lease Form Available</span>
+                                }
+                            </td>
+                            <td style="border: 1px solid #ddd;">@Model.aTenantsPendingReview.Email</td>
+                        </tr>
+                    </tbody>
                     <tr>
-                        <td style="border: 1px solid #ddd;"><a href="#" onclick="copyTenantID('@Model.aTenantsPendingReview.TenantID', '@Model.aTenantsPendingReview.Email')">@Model.aTenantsPendingReview.TenantID</a></td>
-                        <td style="border: 1px solid #ddd;">@Model.aTenantsPendingReview.PropertyID</td>
-                        <td style="border: 1px solid #ddd;">@Model.aTenantsPendingReview.FirstName</td>
-                        <td style="border: 1px solid #ddd;">@Model.aTenantsPendingReview.LastName</td>
-                        <td style="border: 1px solid #ddd;">@Model.aTenantsPendingReview.ApprovalStatus</td>
-                         
-                        <td style="border: 1px solid #ddd;">
-                            @if (Model.aTenantsPendingReview.LeaseFormForSigning != null && Model.aTenantsPendingReview.LeaseFormForSigning.Length > 0)
-                            {
-                                var fileName = "LeaseForm_" + Model.aTenantsPendingReview.TenantID + ".pdf"; // Example file name
-                                <a href="@Url.Action("DownloadLeaseForm", "YourController", new { id = Model.aTenantsPendingReview.TenantID })" download="@fileName">Download Lease Form</a>
-                            }
-                            else
-                            {
-                                <span>No Lease Form Available</span>
-                            }
-                        </td>
-
-                        <td style="border: 1px solid #ddd;">
-                            @if (Model.aTenantsPendingReview.YourSignedForm != null && Model.aTenantsPendingReview.YourSignedForm.Length > 0)
-                            {
-                                var fileName = "Signed_LeaseForm_" + Model.aTenantsPendingReview.TenantID + ".pdf"; // Example file name
-                                <a href="@Url.Action("DownloadLeaseForm", "YourController", new { id = Model.aTenantsPendingReview.TenantID })" download="@fileName">Download Signed Lease Form</a>
-                            }
-                            else
-                            {
-                                <span>No Signed Lease Form Available</span>
-                            }
-                        </td>
-                        <td style="border: 1px solid #ddd;">@Model.aTenantsPendingReview.Email</td>         
-                    </tr>                    
-                </tbody>
-                <tr>
-                    <td>Tenant ID</td>
-                    <td><input type="text" name="FindTenantID" readonly /></td>
-                    <td><input type="text" name="FindEmail" readonly /></td>
-                </tr>
-                <tr>
-                    <td><input type="submit" name="Submit" value="Find" class="btn" /></td>
-                    <td><input type="submit" name="Submit" value="Close" class="btn" /></td>
-                </tr>
+                        <td>Tenant ID</td>
+                        <td><input type="text" name="FindTenantID" readonly /></td>
+                        <td><input type="text" name="FindEmail" readonly /></td>
+                    </tr>
+                    <tr>
+                        <td><input type="submit" name="Submit" value="Find" class="btn" /></td>
+                        <td><input type="submit" name="Submit" value="Close" class="btn" /></td>
+                    </tr>
 
 
+                </table>
+            </div>
+        </form>
+    }
+
+
+
+
+    @if (Model.ViewFormNow == true)
+    {
+
+        <form name="Application" method="post" class="form property_form transition-fade-down" enctype="multipart/form-data" onsubmit="return validateForm()">
+
+            <span style="font-size: larger; font-style: italic;">@Model.Message</span>
+            <table>
+                <fieldset>
+                    <legend>Declaration, Signature, and Approval</legend>
+                    <div>
+
+                        <label>Approval Status:</label>
+                        <select name="ApprovalStatus" onchange="validateForm()">
+                            <option value="0" @{
+                                if (Model.tenantForReview.ApprovalStatus == "--Make your selection--")
+                                {
+                                    <text>selected</text>
+                                }
+                            }>--Make your selection--</option>
+                            <option value="Signed" @{
+                                if (Model.tenantForReview.ApprovalStatus == "Signed")
+                                {
+                                    <text>selected</text>
+                                }
+                            }>Signed </option>
+                        </select>
+                        <br />
+                        <label>Attach Signed Lease Form For Signing</label>
+                        <br />
+                        <input type="file" name="YourSignedForm" accept="application/pdf" onchange="validateForm()" /> <br />
+                        <br />
+                        <span style="font-size: larger; font-style: italic;">@Model.MessageForFile</span>
+
+                        <input type="submit" name="Submit" value="Submit Review" disabled /> <br />
+
+                        <!-- Button element -->
+                        <button type="submit" name="Submit" style="text-align: center;" value="Submit Review" disabled>
+                            <img src="../img/buttons/primary-submit.svg" alt="Save Icon" width="24" height="24" style="vertical-align: middle;">
+                            <span style="vertical-align: middle;">Submit Review</span>
+                        </button>
+                    </div>
+                </fieldset>
+
+
+                <fieldset>
+                    <legend>Personal Information</legend>
+                    <div>
+                        <label>Tenant ID:                    @Model.tenantForReview.TenantID</label><br />
+                        <label>Property ID:                @Model.tenantForReview.PropertyID</label><br />
+                        <label>First Name:                 @Model.tenantForReview.FirstName</label><br />
+                        <label>Last Name:                  @Model.tenantForReview.LastName</label><br />
+                        <label>Phone Number:         @Model.tenantForReview.PhoneNumber</label><br />
+                        <label>Email:                          @Model.tenantForReview.Email</label><br />
+                        <label>Date of Birth:             @Model.tenantForReview.DOB</label><br />
+                        <label>Nationality:                @Model.tenantForReview.Nationality</label><br />
+                        <label>State of Origin:          @Model.tenantForReview.StateofOrigin</label><br />
+                        <label>Local Govt. Area:      @Model.tenantForReview.LGA</label><br />
+                        <label>Home Town:              @Model.tenantForReview.HomeTown</label><br />
+                        <label>Permanent Home Add: @Model.tenantForReview.PermanentHomeAddress</label><br />
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Occupation Info</legend>
+                    <div>
+                        <label>Occupation: @Model.tenantForReview.Occupation</label><br />
+                        <label>SelfEmployed: @Model.tenantForReview.SelfEmployed</label><br />
+                        <label>Business Registration Number: @Model.tenantForReview.BusinessRegistrationNumber</label><br />
+                        <label>Coporate Affairs Certificate: @Model.tenantForReview.CorporateAffairsCertificate</label><br />
+                        <label>Name of Employer: @Model.tenantForReview.NameofEmployer</label><br />
+                        <label>Address Of Employer: @Model.tenantForReview.AddressOfEmployer</label><br />
+                        <label>Length On Job: @Model.tenantForReview.LengthOnJob</label><br />
+                        <label>Current Position Held: @Model.tenantForReview.CurrentPositionHeld</label><br />
+                        <label>Nature Of Job: @Model.tenantForReview.NatureOfJob</label><br />
+                    </div>
+                </fieldset>
+
+
+
+
+                <fieldset>
+                    <legend>Past Rental Information</legend>
+                    <div>
+                        <label>Former Residence Address: @Model.tenantForReview.FormerResidenceAddress</label><br />
+                        <label>Reason For Moving: @Model.tenantForReview.ReasonForMoving</label><br />
+                        <label>Length Of Stay At Old Residence: @Model.tenantForReview.LengthOfStayAtOldResidence</label><br />
+                        <label>Name Of Former Resident Manager: @Model.tenantForReview.NameOfFormerResidentManager</label><br />
+                        <label>Objections To Reasons For Moving: @Model.tenantForReview.ObjectionsToReasonsForMoving</label><br />
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Marital Information</legend>
+                    <div>
+                        <label>Marital Status: @Model.tenantForReview.MaritalStatus</label><br />
+                        <label>Spouse First Name: @Model.tenantForReview.SpouseFirstName</label><br />
+                        <label>Spouse Last Name: @Model.tenantForReview.SpouseLastName</label><br />
+                        <label>Spouse Occupation: @Model.tenantForReview.SpouseOccupation</label><br />
+                        <label>Number Of Occupants: @Model.tenantForReview.NumberOfOccupants</label><br />
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Next of Kin Information</legend>
+                    <div>
+                        <label>Next Of Kin First Name: @Model.tenantForReview.NextOfKinFirstName</label><br />
+                        <label>Next Of Kin Last Name: @Model.tenantForReview.NextOfKinLastName</label><br />
+                        <label>Next Of Kin Address: @Model.tenantForReview.NextOfKinAddress</label><br />
+                        <label>Next Of Kin Phone Number: @Model.tenantForReview.NextOfKinPhoneNumber</label><br />
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Guarantor Information</legend>
+                    <div>
+                        <label>Guarantor1 First Name: @Model.tenantForReview.Guarantor1FirstName</label><br />
+                        <label>Guarantor1 Last Name: @Model.tenantForReview.Guarantor1LastName</label><br />
+                        <label>Guarantor1 Address: @Model.tenantForReview.Guarantor1Address</label><br />
+                        <label>Guarantor1 Occupation: @Model.tenantForReview.Guarantor1Occupation</label><br />
+                        <label>Guarantor1 Phone Number: @Model.tenantForReview.Guarantor1PhoneNumber</label><br />
+                        <label>Guarantor1 Alternate Phone Number: @Model.tenantForReview.Guarantor1AlternatePhoneNumber</label><br />
+                        <label>Guarantor2 First Name: @Model.tenantForReview.Guarantor2FirstName</label><br />
+                        <label>Guarantor2 Last Name: @Model.tenantForReview.Guarantor2LastName</label><br />
+                        <label>Guarantor2 Address: @Model.tenantForReview.Guarantor2Address</label><br />
+                        <label>Guarantor2 Occupation: @Model.tenantForReview.Guarantor2Occupation</label><br />
+                        <label>Guarantor2 Phone Number: @Model.tenantForReview.Guarantor2PhoneNumber</label><br />
+                        <label>Guarantor2 Alternate Phone Number: @Model.tenantForReview.Guarantor2AlternatePhoneNumber</label><br />
+                    </div>
+                </fieldset>
             </table>
-        </div>
-    </form>
-}
+        </form>
 
-
-
-
-@if (Model.ViewFormNow == true)
-{
-
-    <form name="Application" method="post" class="form property_form transition-fade-down" enctype="multipart/form-data" onsubmit="return validateForm()">
-
-        <span style="font-size: larger; font-style: italic;">@Model.Message</span>
-        <table>
-            <fieldset>
-                <legend>Declaration, Signature, and Approval</legend>
-                <div>
-
-                    <label>Approval Status:</label>
-                    <select name="ApprovalStatus" onchange="validateForm()">
-                        <option value="0" @{if (Model.tenantForReview.ApprovalStatus == "--Make your selection--"){<text>selected</text>}}>--Make your selection--</option>
-                        <option value="Signed" @{if (Model.tenantForReview.ApprovalStatus == "Signed"){<text>selected</text>}}>Signed </option>
-                    </select>
-                    <br />
-                    <label>Attach Signed Lease Form For Signing</label>
-                    <br />
-                    <input type="file" name="YourSignedForm" accept="application/pdf" onchange="validateForm()" /> <br />
-                    <br />
-                    <span style="font-size: larger; font-style: italic;">@Model.MessageForFile</span>
-
-                    <input type="submit" name="Submit" value="Submit Review" disabled /> <br />
-
-                    <!-- Button element -->
-                    <button type="submit" name="Submit" style="text-align: center;" value="Submit Review" disabled>
-                        <img src="../img/buttons/primary-submit.svg" alt="Save Icon" width="24" height="24" style="vertical-align: middle;">
-                        <span style="vertical-align: middle;">Submit Review</span>
-                    </button>
-                </div>
-            </fieldset>
-
-
-            <fieldset>
-                <legend>Personal Information</legend>
-                <div>
-                    <label>Tenant ID:                    @Model.tenantForReview.TenantID</label><br />
-                    <label>Property ID:                @Model.tenantForReview.PropertyID</label><br />
-                    <label>First Name:                 @Model.tenantForReview.FirstName</label><br />
-                    <label>Last Name:                  @Model.tenantForReview.LastName</label><br />
-                    <label>Phone Number:         @Model.tenantForReview.PhoneNumber</label><br />
-                    <label>Email:                          @Model.tenantForReview.Email</label><br />
-                    <label>Date of Birth:             @Model.tenantForReview.DOB</label><br />
-                    <label>Nationality:                @Model.tenantForReview.Nationality</label><br />
-                    <label>State of Origin:          @Model.tenantForReview.StateofOrigin</label><br />
-                    <label>Local Govt. Area:      @Model.tenantForReview.LGA</label><br />
-                    <label>Home Town:              @Model.tenantForReview.HomeTown</label><br />
-                    <label>Permanent Home Add: @Model.tenantForReview.PermanentHomeAddress</label><br />
-                </div>
-            </fieldset>
-            <fieldset>
-                <legend>Occupation Info</legend>
-                <div>
-                    <label>Occupation: @Model.tenantForReview.Occupation</label><br />
-                    <label>SelfEmployed: @Model.tenantForReview.SelfEmployed</label><br />
-                    <label>Business Registration Number: @Model.tenantForReview.BusinessRegistrationNumber</label><br />
-                    <label>Coporate Affairs Certificate: @Model.tenantForReview.CorporateAffairsCertificate</label><br />
-                    <label>Name of Employer: @Model.tenantForReview.NameofEmployer</label><br />
-                    <label>Address Of Employer: @Model.tenantForReview.AddressOfEmployer</label><br />
-                    <label>Length On Job: @Model.tenantForReview.LengthOnJob</label><br />
-                    <label>Current Position Held: @Model.tenantForReview.CurrentPositionHeld</label><br />
-                    <label>Nature Of Job: @Model.tenantForReview.NatureOfJob</label><br />
-                </div>
-            </fieldset>
-
-
-
-
-            <fieldset>
-                <legend>Past Rental Information</legend>
-                <div>
-                    <label>Former Residence Address: @Model.tenantForReview.FormerResidenceAddress</label><br />
-                    <label>Reason For Moving: @Model.tenantForReview.ReasonForMoving</label><br />
-                    <label>Length Of Stay At Old Residence: @Model.tenantForReview.LengthOfStayAtOldResidence</label><br />
-                    <label>Name Of Former Resident Manager: @Model.tenantForReview.NameOfFormerResidentManager</label><br />
-                    <label>Objections To Reasons For Moving: @Model.tenantForReview.ObjectionsToReasonsForMoving</label><br />
-                </div>
-            </fieldset>
-
-            <fieldset>
-                <legend>Marital Information</legend>
-                <div>
-                    <label>Marital Status: @Model.tenantForReview.MaritalStatus</label><br />
-                    <label>Spouse First Name: @Model.tenantForReview.SpouseFirstName</label><br />
-                    <label>Spouse Last Name: @Model.tenantForReview.SpouseLastName</label><br />
-                    <label>Spouse Occupation: @Model.tenantForReview.SpouseOccupation</label><br />
-                    <label>Number Of Occupants: @Model.tenantForReview.NumberOfOccupants</label><br />
-                </div>
-            </fieldset>
-            <fieldset>
-                <legend>Next of Kin Information</legend>
-                <div>
-                    <label>Next Of Kin First Name: @Model.tenantForReview.NextOfKinFirstName</label><br />
-                    <label>Next Of Kin Last Name: @Model.tenantForReview.NextOfKinLastName</label><br />
-                    <label>Next Of Kin Address: @Model.tenantForReview.NextOfKinAddress</label><br />
-                    <label>Next Of Kin Phone Number: @Model.tenantForReview.NextOfKinPhoneNumber</label><br />
-                </div>
-            </fieldset>
-            <fieldset>
-                <legend>Guarantor Information</legend>
-                <div>
-                    <label>Guarantor1 First Name: @Model.tenantForReview.Guarantor1FirstName</label><br />
-                    <label>Guarantor1 Last Name: @Model.tenantForReview.Guarantor1LastName</label><br />
-                    <label>Guarantor1 Address: @Model.tenantForReview.Guarantor1Address</label><br />
-                    <label>Guarantor1 Occupation: @Model.tenantForReview.Guarantor1Occupation</label><br />
-                    <label>Guarantor1 Phone Number: @Model.tenantForReview.Guarantor1PhoneNumber</label><br />
-                    <label>Guarantor1 Alternate Phone Number: @Model.tenantForReview.Guarantor1AlternatePhoneNumber</label><br />
-                    <label>Guarantor2 First Name: @Model.tenantForReview.Guarantor2FirstName</label><br />
-                    <label>Guarantor2 Last Name: @Model.tenantForReview.Guarantor2LastName</label><br />
-                    <label>Guarantor2 Address: @Model.tenantForReview.Guarantor2Address</label><br />
-                    <label>Guarantor2 Occupation: @Model.tenantForReview.Guarantor2Occupation</label><br />
-                    <label>Guarantor2 Phone Number: @Model.tenantForReview.Guarantor2PhoneNumber</label><br />
-                    <label>Guarantor2 Alternate Phone Number: @Model.tenantForReview.Guarantor2AlternatePhoneNumber</label><br />
-                </div>
-            </fieldset>
-        </table>
-    </form>
-
-}
+    }
+</div>

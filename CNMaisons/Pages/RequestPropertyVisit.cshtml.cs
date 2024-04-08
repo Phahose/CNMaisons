@@ -134,7 +134,7 @@ namespace CNMaisons.Pages
                 string UserAccountConfirmation = PropertyVisitRequestDirector.AddPropertyVisit(newVisit);
                 if (UserAccountConfirmation == "Successful!")
                 {
-                    Message = "User Account has been created succesfully.";
+                    Message = "Visit Booked SuccessFully";
                     errorMessage = "";
                 }
                 else

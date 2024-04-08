@@ -25,11 +25,11 @@
 
 <div>
     <video autoplay muted loop id="video-background">
-        <source src="~/img/backvideos.mp4" type="video/mp4">
+        <source src="~/img/loopvideo.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
 
-    <form name="RequestPropertyVisitForm" method="post" class="form property_form transition-fade-down" >
+    <form name="RequestPropertyVisitForm" method="post" class="view_form">
         <br />
         <fieldset>
             <span style="font-size: larger; font-style: italic;">
@@ -59,15 +59,12 @@
 
                 <label for="ProposedVisitTime">Proposed Visit Time:</label><br />
                 <input type="time" id="timePicker" name="ProposedVisitTime" required /><br />
-
-
-
-
-                 <input type="text" name="VisitStatus" maxlength="20" required value="Open" hidden/><br />
+                <input type="text" name="VisitStatus" maxlength="20" required value="Open" hidden/><br />
+                <input type="submit" name="Submit" value="Request Property Visit" class="btn" />
             </div>
         </fieldset>
  
-         <input type="submit" name="Submit" value="Request Property Visit" class="btn" />
+        
         
     </form>
 </div>

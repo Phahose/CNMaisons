@@ -18,7 +18,7 @@ namespace CNMaisons.Pages
  
         [BindProperty]
         public string FindVisitID { get; set; } = string.Empty;
-
+        public User Users { get; set; } = new User();
 
         [BindProperty]
         public string Submit { get; set; } = string.Empty;
@@ -30,9 +30,11 @@ namespace CNMaisons.Pages
 
         [BindProperty]
         public string Email { get; set; } = string.Empty;
+        public string UserEmail { get; set; } = string.Empty;
         [BindProperty]
         public string FirstName { get; set; } = string.Empty;
         public bool ShowForm = false;
+        public Employee Employee { get; set; } = new Employee();
         public void OnGet()
         {
               
@@ -42,6 +44,12 @@ namespace CNMaisons.Pages
             {
                 Message = "All have been reviewed";
             }
+            if (HttpContext.Session.GetString("Email") != null)
+            {
+                UserEmail = HttpContext.Session.GetString("Email")!;
+            }
+            Users = VisitRequestDirector.GetUserByEmail(UserEmail);
+            Employee = VisitRequestDirector.GetAllEmployees(UserEmail);
         }
         public IActionResult OnPost()
         {

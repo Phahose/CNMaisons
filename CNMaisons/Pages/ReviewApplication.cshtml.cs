@@ -55,6 +55,9 @@ namespace CNMaisons.Pages
 
         [BindProperty]
         public IFormFile? LeaseFormForSigningCopy { get; set; }
+        public string UserEmail { get; set; } = string.Empty;
+        public Employee Employee { get; set; } = new Employee();
+        public User Users { get; set; } = new User();
         public void OnGet()
         {
             var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
@@ -65,6 +68,12 @@ namespace CNMaisons.Pages
             {
                 ListMessage = "All have been reviewed";
             }
+            if (HttpContext.Session.GetString("Email") != null)
+            {
+                UserEmail = HttpContext.Session.GetString("Email")!;
+            }
+            Users = tenantController.GetUserByEmail(UserEmail);
+            Employee = tenantController.GetAllEmployees(UserEmail);
         }
         public IActionResult OnPost()
         {
