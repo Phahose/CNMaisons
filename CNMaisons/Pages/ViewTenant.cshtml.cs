@@ -1,21 +1,24 @@
 using CNMaisons.Controller;
 using CNMaisons.Domain;
+using CNMaisons.TechnicalService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Security.Claims;
 
 namespace CNMaisons.Pages
 {
+    [Authorize(Roles = "Tenant")]   // Restrict access to specified roles
+
     public class ViewTenantModel : PageModel
     {
         public bool ViewFormNow = false;
         public string Message { get; set; } = string.Empty;
-        public CNMPMS RequestDirector { get; set; } = new();
+        public CNMPMS RequestDirector;
 
-        public Tenant tenantForReview = new();
+        public Tenant aTenant = new();
 
-        [BindProperty]
-        public string FindTenantID { get; set; } = string.Empty;
-
+     
 
         [BindProperty]
         public string Submit { get; set; } = string.Empty;
@@ -30,13 +33,15 @@ namespace CNMaisons.Pages
 
         public void OnGet()
         {
-            CNMPMS tenantController = new();
-            ListOfTenantsPendingReview = tenantController.GetPendingLeaseApplication();
-            if (ListOfTenantsPendingReview == null)
-            {
-                ListMessage = "All have been reviewed";
-            }
+            string Email = HttpContext.Session.GetString("Email")!;
+            var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            
+            CNMPMS RequestDirector = new();
+            aTenant = RequestDirector.ViewTenant(Email);
+            string check = aTenant.TenantID;           
         }
+
+
         public IActionResult OnPost()
         {
             ModelState.Clear();
@@ -46,27 +51,8 @@ namespace CNMaisons.Pages
             {
                 case "Close":
                     return RedirectToPage("Index");                    
-                   
+                    break;
 
-                case "Find":
-                    if (FindTenantID != null)
-                    {
-                        ViewFormNow = false;
-                        if (ModelState.IsValid)
-                        {
-                            SetSessionString("FindTenantID1", FindTenantID);  // save content for furtre retreival
-
-                            CNMPMS RequestDirector = new();
-                            tenantForReview = RequestDirector.ViewTenant(FindTenantID);
-                            if (tenantForReview != null)
-                            {
-                                ViewFormNow = true;
-                                Message = "Below are the detail of the Tenant's Lease application.";
-                                return Page();
-                            }
-                        }
-                    }
-                    return Page();
             }
             return Page();
         }

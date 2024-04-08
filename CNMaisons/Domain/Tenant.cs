@@ -20,7 +20,7 @@ namespace CNMaisons.Domain
         public string Occupation { get; set; } = string.Empty;
         public string SelfEmployed { get; set; } = string.Empty;
         public string BusinessRegistrationNumber { get; set; } = string.Empty;
-        public byte[] CoporateAffairsCertificate { get; set; } = new byte[0];
+        public byte[] CorporateAffairsCertificate { get; set; } = new byte[0];
         public string NameofEmployer { get; set; } = string.Empty;
         public string AddressOfEmployer { get; set; } = string.Empty;
         public int LengthOnJob { get; set; }
@@ -53,10 +53,10 @@ namespace CNMaisons.Domain
         public string Guarantor2PhoneNumber { get; set; } = string.Empty;
         public string Guarantor2AlternatePhoneNumber { get; set; } = string.Empty;
         public string Declaration { get; set; } = string.Empty;
-        public string YourSignature { get; set; } = string.Empty;
+        public byte[] YourSignedForm { get; set; } = new byte[0];
         public string ApprovalStatus { get; set; } = string.Empty;
+        public byte[] LeaseFormForSigning { get; set; } = new byte[0];        
         public bool DeleteFlag { get; set; }
-
 
     }
 }

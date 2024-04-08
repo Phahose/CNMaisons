@@ -25,12 +25,10 @@ CREATE TABLE Property
 	Image9  VARBINARY(MAX),
 	Image10  VARBINARY(MAX),
 	DeleteFlag  BIT NOT NULL,
-	DateAdded  DATE DEFAULT GETDATE() NOT NULL,
-	Occupied BIT 
+	DateAdded  DATE DEFAULT GETDATE() NOT NULL
 )
 
 ALTER TABLE Property
-	ADD Occupied BIT 
 	ADD CONSTRAINT PK_PropertyID PRIMARY KEY (PropertyID)
 
 
@@ -127,8 +125,8 @@ BEGIN
 		RETURN;
 	END
     -- Insert the property into the table
-    INSERT INTO Property (PropertyID, PropertyName, PropertyLocationState, PropertyLocationCountry, PropertyAddress, PropertyPrice, PropertyType, NumberOfRooms, PropertyDescription, Image1, Image2, Image3, Image4, Image5, Image6, Image7, Image8, Image9, Image10, DeleteFlag, DateAdded, Occupied)
-    VALUES (@PropertyID, @PropertyName, @PropertyLocationState, @PropertyLocationCountry, @PropertyAddress,@PropertyPrice, @PropertyType, @NumberOfRooms, @PropertyDescription, @Image1, @Image2, @Image3, @Image4, @Image5, @Image6, @Image7, @Image8, @Image9, @Image10, @DeleteFlag, GETDATE(), 0)
+    INSERT INTO Property (PropertyID, PropertyName, PropertyLocationState, PropertyLocationCountry, PropertyAddress, PropertyPrice, PropertyType, NumberOfRooms, PropertyDescription, Image1, Image2, Image3, Image4, Image5, Image6, Image7, Image8, Image9, Image10, DeleteFlag, DateAdded)
+    VALUES (@PropertyID, @PropertyName, @PropertyLocationState, @PropertyLocationCountry, @PropertyAddress,@PropertyPrice, @PropertyType, @NumberOfRooms, @PropertyDescription, @Image1, @Image2, @Image3, @Image4, @Image5, @Image6, @Image7, @Image8, @Image9, @Image10, @DeleteFlag, GETDATE())
 END
 
 
@@ -140,7 +138,7 @@ END
 CREATE PROCEDURE GetProperty
 AS
 	BEGIN
-		SELECT PropertyID, PropertyName, PropertyLocationState, PropertyLocationCountry, PropertyAddress, PropertyPrice, PropertyType, NumberOfRooms, PropertyDescription, Image1, Image2, Image3, Image4, Image5, Image6, Image7, Image8, Image9, Image10, Occupied
+		SELECT PropertyID, PropertyName, PropertyLocationState, PropertyLocationCountry, PropertyAddress, PropertyPrice, PropertyType, NumberOfRooms, PropertyDescription, Image1, Image2, Image3, Image4, Image5, Image6, Image7, Image8, Image9, Image10
 		FROM
 		Property 
 		WHERE DeleteFlag = 0
@@ -155,12 +153,12 @@ DROP PROCEDURE GetProperty
 
 
 
-DROP PROCEDURE GetPropertyByID
+
 CREATE PROCEDURE GetPropertyByID
     @PropertyID VARCHAR(7)
 AS
 BEGIN
-    SELECT PropertyID, PropertyName, PropertyLocationState, PropertyLocationCountry, PropertyAddress, PropertyPrice, PropertyType, NumberOfRooms, PropertyDescription, Image1, Image2, Image3, Image4, Image5, Image6, Image7, Image8, Image9, Image10, Occupied
+    SELECT PropertyID, PropertyName, PropertyLocationState, PropertyLocationCountry, PropertyAddress, PropertyPrice, PropertyType, NumberOfRooms, PropertyDescription, Image1, Image2, Image3, Image4, Image5, Image6, Image7, Image8, Image9, Image10
     FROM Property
     WHERE PropertyID = @PropertyID AND DeleteFlag = 0;
 END
@@ -171,7 +169,7 @@ EXEC GetPropertyByID 'CN00001'
 
 
 
-DROP PROCEDURE UpdateProperty
+
 
 CREATE PROCEDURE UpdateProperty
     @PropertyID VARCHAR(7),
@@ -192,8 +190,7 @@ CREATE PROCEDURE UpdateProperty
     @Image7 VARBINARY(MAX),
     @Image8 VARBINARY(MAX),
     @Image9 VARBINARY(MAX),
-    @Image10 VARBINARY(MAX),
-	@Occupied BIT
+    @Image10 VARBINARY(MAX)
 AS
 BEGIN
     UPDATE Property
@@ -214,8 +211,7 @@ BEGIN
         Image7 = @Image7,
         Image8 = @Image8,
         Image9 = @Image9,
-        Image10 = @Image10,
-		Occupied = @Occupied
+        Image10 = @Image10
     WHERE PropertyID = @PropertyID;
 END;
 
@@ -245,7 +241,7 @@ AS
 
 
 
-DROP Table Employee
+--DROP Table Users
 CREATE TABLE Users(
 	Email VARCHAR(100) NOT NULL,
 	Password  VARCHAR(100) NOT NULL,
@@ -253,6 +249,7 @@ CREATE TABLE Users(
 	DeactivateAccountStatus  BIT NOT NULL,
 	DefaultPassword  NVARCHAR(255) NOT NULL,
 	UserSalt  NVARCHAR(255) NOT NULL,
+	DateOfCreation  DATETIME DEFAULT GETDATE() NOT NULL
 )
 
 ALTER TABLE Users
@@ -260,10 +257,24 @@ ALTER TABLE Users
 
 
 
+	 
 
 
 
-
+--DROP PROCEDURE AddUser
+CREATE PROCEDURE AddUser
+	@FirstName VARCHAR(30),
+	@LastName VARCHAR(30),
+    @Email VARCHAR(100),
+    @Password VARCHAR(100),
+    @Role VARCHAR(25),
+    @DefaultPassword NVARCHAR(255),
+    @UserSalt NVARCHAR(255)
+AS
+BEGIN
+    INSERT INTO Users (FirstName, LastName, Email, Password, Role, DeactivateAccountStatus, DefaultPassword, UserSalt, DateOfCreation)
+    VALUES (@FirstName, @LastName, @Email, @Password, @Role, 0, @DefaultPassword, @UserSalt, GETDATE())
+END
 
 
 
@@ -275,7 +286,6 @@ AS
 	BEGIN 
 		SELECT * FROM Users WHERE Email = @Email AND DeactivateAccountStatus = 0
 	END
-
 
 
 
@@ -1180,11 +1190,7 @@ END;
 
 --DROP PROCEDURE ViewTenant
 CREATE PROCEDURE ViewTenant(
-	@TenantID VARCHAR(5) = NULL,
-	@FirstName VARCHAR(30) = NULL,  
-	@LastName VARCHAR(30) = NULL,
-	@PhoneNumber VARCHAR(14) = NULL, 
-	@Email VARCHAR(100) = NULL)
+	@TenantID VARCHAR(5) = NULL)
 AS
 BEGIN
     DECLARE @ReturnCode INT
@@ -1192,19 +1198,11 @@ BEGIN
 	
 	IF @TenantID IS NULL
         RAISERROR('ViewTenant - required parameter: @TenantID.', 16, 1);
-    ELSE IF @FirstName IS NULL
-        RAISERROR('ViewTenant - required parameter: @FirstName.', 16, 1);
-    ELSE IF @LastName IS NULL
-        RAISERROR('ViewTenant - required parameter: @LastName.', 16, 1);
-    ELSE IF @PhoneNumber IS NULL
-        RAISERROR('ViewTenant - required parameter: @PhoneNumber.', 16, 1);
-    ELSE IF @Email IS NULL
-        RAISERROR('ViewTenant - required parameter: @Email.', 16, 1);
     ELSE
 
 		BEGIN
 		    SELECT 
-				TenantID, Passport, FirstName, LastName, PhoneNumber, Email, DOB, Nationality, StateofOrigin, 
+				TenantID, PropertyID, Passport, FirstName, LastName, PhoneNumber, Email, DOB, Nationality, StateofOrigin, 
 				LGA, HomeTown, PermanentHomeAddress, Occupation, SelfEmployed, BusinessRegistrationNumber, 
 				CoporateAffairsCertificate, NameofEmployer, AddressOfEmployer, LengthOnJob, CurrentPositionHeld, 
 				NatureOfJob, FormerResidenceAddress, ReasonForMoving, LengthOfStayAtOldResidence, NameOfFormerResidentManager, 
@@ -1215,11 +1213,8 @@ BEGIN
 				Declaration, YourSignature, ApprovalStatus, DeleteFlag
 			FROM Tenant
 			WHERE 
-			   TenantID = @TenantID OR
-			   FirstName = @FirstName OR
-			   LastName = @LastName OR
-			   PhoneNumber = @PhoneNumber OR
-			   Email = @Email;
+			   TenantID = @TenantID
+
 			IF @@ERROR = 0
 				SET @ReturnCode = 0
 			ELSE
@@ -1259,6 +1254,20 @@ BEGIN
 
     RETURN @ReturnCode
 END;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 --Maintenance
@@ -1643,7 +1652,7 @@ ALTER TABLE Reminders
 
 
 
-		
+
 
 
 
@@ -1756,117 +1765,4 @@ BEGIN
     RETURN @ReturnCode;
 END;
 
-DROP PROCEDURE AddUser
-CREATE PROCEDURE AddUser
-    @Email VARCHAR(100),
-    @Password VARCHAR(100),
-    @Role VARCHAR(25),
-    @DefaultPassword NVARCHAR(255),
-    @UserSalt NVARCHAR(255)
-AS
-BEGIN
-    INSERT INTO Users (Email, Password, Role, DeactivateAccountStatus,UserSalt, DefaultPassword)
-    VALUES (@Email, @Password, @Role, 0, @UserSalt, @DefaultPassword)
-END
 
-CREATE TABLE Employee(
-	EmployeeID INT IDENTITY(1,1) NOT NULL,
-	EmployeeImage VARBINARY(MAX) NULL,
-	FirstName VARCHAR(50) NOT NULL,
-	LastName VARCHAR(50) NOT NULL,
-	Email VARCHAR(100) NOT NULL,
-	DateJoined DATE NOT NULL
-)
-
-
-
---DROP TABLE Employee
-DROP PROCEDURE AddEmployee
-CREATE PROCEDURE AddEmployee (@FirstName VARCHAR(50), 
-							  @LastName VARCHAR(50), 
-							  @Email VARCHAR(100), 
-							  @Password VARCHAR(100), 
-							  @Role VARCHAR(25),
-							  @DefaultPassword NVARCHAR(255),
-							  @UserSalt NVARCHAR(255),
-							  @EmployeeImage VARBINARY(MAX))
-AS 
-	BEGIN 
-	 EXEC AddUser @Email, @Password, @Role, @DefaultPassword, @UserSalt
-
-	 INSERT INTO Employee(EmployeeImage,FirstName, LastName, Email, DateJoined)
-	 VALUES (@EmployeeImage,@FirstName, @LastName, @Email, GETDATE())
-	END
-
-CREATE PROCEDURE GetAllTenants(@Email VARCHAR(100))
-AS 
-	BEGIN 
-	 SELECT * FROM Tenant
-	 WHERE Email = @Email
-	END
-
-CREATE PROCEDURE GetAllEmployees(@Email VARCHAR(100))
-AS 
-	BEGIN 
-	 SELECT * FROM Employee
-	 WHERE Email = @Email
-	END
-
-	SELECT * FROm USERs
-	SELECT * FROM EMployee
-
-	DELETE FROM Employee
-	DELETE FROM USERs
-
-
-	EXec GetAllEmployees 'ekwomnick@gmail.com'
-
-
-
-
-CREATE PROCEDURE UpdateEmployee
-(
-    @EmployeeImage VARBINARY(MAX),
-    @FirstName VARCHAR(50),
-    @LastName VARCHAR(50),
-    @Email VARCHAR(100),
-    @EmployeeID INT
-)
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-    UPDATE Employee
-    SET 
-        EmployeeImage = @EmployeeImage,
-        FirstName = @FirstName,
-        LastName = @LastName,
-        Email = @Email
-    WHERE EmployeeID = @EmployeeID;
-END
-
-
-CREATE PROCEDURE UpdateUsers
-(
-    @Email VARCHAR(100),
-    @Password VARCHAR(100),
-    @Role VARCHAR(25),
-    @DeactivateAccountStatus BIT,
-    @DefaultPassword NVARCHAR(255),
-    @UserSalt NVARCHAR(255)
-)
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-    UPDATE Users
-    SET 
-        Password = @Password,
-        Role = @Role,
-        DeactivateAccountStatus = @DeactivateAccountStatus,
-        DefaultPassword = @DefaultPassword,
-        UserSalt = @UserSalt
-    WHERE Email = @Email;
-END
-
-	

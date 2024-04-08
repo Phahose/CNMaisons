@@ -19,7 +19,7 @@
     }
 </script>
 
-<form name="FindPendingApplicationForm" method="post">
+<form name="FindPendingApplicationForm" method="post" class="form property_form transition-fade-down">
     <h4>Update Tenant</h4>
     <div style="display: flex; align-content: center">
         <table style="border-collapse: collapse; text-align: left; width: 100%;">
@@ -28,7 +28,7 @@
                 <td><input type="text" name="FindTenantID" /></td>
             </tr>
             <tr>
-                <td><input type="submit" name="Submit" value="Find" class="btn" /></td>                
+                <td><input type="submit" name="Submit" value="Find" class="btn" /></td>
             </tr>
 
         </table>
@@ -41,34 +41,16 @@
     <form name="Application" method="post" class="form property_form transition-fade-down" enctype="multipart/form-data">
         <span style="font-size: larger; font-style: italic;">@Model.Message</span>
         <table>
-            <fieldset>
-                <legend>Declaration, Signature, and Approval</legend>
-
-                <div>
-                    <label>Approval Status:   </label><br />
-                    <input type="text" name="ApprovalStatus" value="@Model.tenantForReview.ApprovalStatus" /><br />
-
-                    <label>Declaration:          </label><br />
-                    <input type="text" name="Declaration" value="@Model.tenantForReview.Declaration" /><br />
-
-                    <label>Your Signature:     </label><br />
-                    <input type="text" name="YourSignature" value="@Model.tenantForReview.YourSignature" />
-                    <br />                    
-                    <br />
-
-                    <input type="submit" name="Submit" value="Close" class="btn" />
-
-                </div>
-            </fieldset>
+             
 
             <fieldset>
                 <legend>Personal Information</legend>
                 <div>
                     <label>Tenant ID:                    </label><br />
-                    <input type="text" name="TenantID" value="@Model.tenantForReview.TenantID" /><br />
+                    <input type="text" name="TenantID" value="@Model.tenantForReview.TenantID" readonly/><br />
 
                     <label>Property ID:                </label><br />
-                    <input type="text" name="Property ID" value="@Model.tenantForReview.PropertyID" /><br />
+                    <input type="text" name="Property ID" value="@Model.tenantForReview.PropertyID" readonly/><br />
 
                     <label>First Name:                 </label><br />
                     <input type="text" name="FirsrName" value="@Model.tenantForReview.FirstName" /><br />
@@ -92,7 +74,7 @@
                     <input type="text" name="StateofOrigin" value="@Model.tenantForReview.StateofOrigin" /><br />
 
                     <label>Local Govt. Area:      </label><br />
-                    <input type="text" name ="LGA" value="@Model.tenantForReview.LGA" /><br />
+                    <input type="text" name="LGA" value="@Model.tenantForReview.LGA" /><br />
 
                     <label>Home Town:              </label><br />
                     <input type="text" name="HomeTown" value="@Model.tenantForReview.HomeTown" /><br />
@@ -119,7 +101,7 @@
                     <input type="text" name="BusinessRegistrationNumber" value="@Model.tenantForReview.BusinessRegistrationNumber" /><br />
 
                     <label>Coporate Affairs Certificate: </label><br />
-                    <input type="text" name="CoporateAffairsCertificate" value="@Model.tenantForReview.CoporateAffairsCertificate" /><br />
+                    <input type="text" name="CorporateAffairsCertificate" value="@Model.tenantForReview.CorporateAffairsCertificate" /><br />
 
                     <label>Name of Employer: </label><br />
                     <input type="text" name="NameOfEmployer" value="@Model.tenantForReview.NameofEmployer" /><br />
@@ -238,7 +220,9 @@
                     <label>Guarantor2 Alternate Phone Number: </label><br />
                     <input type="text" name="Guarantor2AlternatePhoneNumber" value="@Model.tenantForReview.Guarantor2AlternatePhoneNumber" /><br />
                     <br />
+                    <input type="submit" name="Submit" value="Submit" class="btn" />
                     <input type="submit" name="Submit" value="Close" class="btn" />
+
                 </div>
             </fieldset>
         </table>

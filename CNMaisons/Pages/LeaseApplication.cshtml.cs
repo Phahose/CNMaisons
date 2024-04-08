@@ -7,168 +7,173 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data;
 using System.Globalization;
 using System.Security.Cryptography;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace CNMaisons.Pages
 {
     public class LeaseApplicationModel : PageModel
     {
+        #region AllDeclarations
         public string Message { get; set; } = string.Empty;
         public string errorMessage { get; set; } = string.Empty;
 
         [BindProperty]
         public IFormFile Passport { get; set; }
+        
 
         [BindProperty]
-        public string TenantID { get; set; } = string.Empty;
-
-
-        [BindProperty]
-        public string PropertyID { get; set; } = string.Empty;
+        public string PropertyID { get; set; } 
 
         [BindProperty]
-        public string FirstName { get; set; } = string.Empty;
+        public string FirstName { get; set; } 
 
         [BindProperty]
-        public string LastName { get; set; } = string.Empty;
+        public string LastName { get; set; } 
 
         [BindProperty]
-        public string PhoneNumber { get; set; } = string.Empty;
+        public string PhoneNumber { get; set; } 
 
         [BindProperty]
-        public string Email { get; set; } = string.Empty;
+        public string Email { get; set; } 
 
         [BindProperty]
         public DateTime DOB { get; set; }
 
         [BindProperty]
-        public string Password { get; set; } = string.Empty;
+        public string Password { get; set; } 
 
         [BindProperty]
-        public string Nationality { get; set; } = string.Empty;
+        public string Nationality { get; set; } 
 
         [BindProperty]
-        public string StateofOrigin { get; set; } = string.Empty;
+        public string StateofOrigin { get; set; } 
 
         [BindProperty]
-        public string LGA { get; set; } = string.Empty;
+        public string LGA { get; set; } 
 
         [BindProperty]
-        public string HomeTown { get; set; } = string.Empty;
+        public string HomeTown { get; set; } 
 
         [BindProperty]
-        public string PermanentHomeAddress { get; set; } = string.Empty;
+        public string PermanentHomeAddress { get; set; } 
 
         [BindProperty]
-        public string Occupation { get; set; } = string.Empty;
+        public string Occupation { get; set; } 
 
         [BindProperty]
-        public string SelfEmployed { get; set; } = string.Empty;
+        public string SelfEmployed { get; set; } 
 
         [BindProperty]
-        public string BusinessRegistrationNumber { get; set; } = string.Empty;
+        public string BusinessRegistrationNumber { get; set; } 
+
+
 
         [BindProperty]
-        public byte[] CoporateAffairsCertificate { get; set; } = new byte[0];
+        public IFormFile? CorporateAffairsCertificate { get; set; }
+
+
+
 
         [BindProperty]
-        public string NameofEmployer { get; set; } = string.Empty;
+        public string NameofEmployer { get; set; } 
 
         [BindProperty]
-        public string AddressOfEmployer { get; set; } = string.Empty;
+        public string AddressOfEmployer { get; set; } 
 
         [BindProperty]
         public int LengthOnJob { get; set; }
 
         [BindProperty]
-        public string CurrentPositionHeld { get; set; } = string.Empty;
+        public string CurrentPositionHeld { get; set; } 
 
         [BindProperty]
-        public string NatureOfJob { get; set; } = string.Empty;
+        public string NatureOfJob { get; set; } 
 
         [BindProperty]
-        public string FormerResidenceAddress { get; set; } = string.Empty;
+        public string FormerResidenceAddress { get; set; } 
 
         [BindProperty]
-        public string ReasonForMoving { get; set; } = string.Empty;
+        public string ReasonForMoving { get; set; } 
 
         [BindProperty]
         public int LengthOfStayAtOldResidence { get; set; }
 
         [BindProperty]
-        public string NameOfFormerResidentManager { get; set; } = string.Empty;
+        public string NameOfFormerResidentManager { get; set; } 
 
         [BindProperty]
-        public string ObjectionsToReasonsForMoving { get; set; } = string.Empty;
+        public string ObjectionsToReasonsForMoving { get; set; } 
 
         [BindProperty]
-        public string MaritalStatus { get; set; } = string.Empty;
+        public string MaritalStatus { get; set; } 
 
         [BindProperty]
-        public string SpouseFirstName { get; set; } = string.Empty;
+        public string SpouseFirstName { get; set; } 
 
         [BindProperty]
-        public string SpouseLastName { get; set; } = string.Empty;
+        public string SpouseLastName { get; set; } 
 
         [BindProperty]
-        public string SpouseOccupation { get; set; } = string.Empty;
+        public string SpouseOccupation { get; set; } 
 
         [BindProperty]
         public int NumberOfOccupants { get; set; }
 
         [BindProperty]
-        public string NextOfKinFirstName { get; set; } = string.Empty;
+        public string NextOfKinFirstName { get; set; } 
 
         [BindProperty]
-        public string NextOfKinLastName { get; set; } = string.Empty;
+        public string NextOfKinLastName { get; set; } 
 
         [BindProperty]
-        public string NextOfKinAddress { get; set; } = string.Empty;
+        public string NextOfKinAddress { get; set; } 
 
         [BindProperty]
-        public string NextOfKinPhoneNumber { get; set; } = string.Empty;
+        public string NextOfKinPhoneNumber { get; set; } 
 
         [BindProperty]
-        public string Guarantor1FirstName { get; set; } = string.Empty;
+        public string Guarantor1FirstName { get; set; } 
 
         [BindProperty]
-        public string Guarantor1LastName { get; set; } = string.Empty;
+        public string Guarantor1LastName { get; set; } 
 
 
         [BindProperty]
-        public string Guarantor1Address { get; set; } = string.Empty;
+        public string Guarantor1Address { get; set; } 
 
         [BindProperty]
-        public string Guarantor1Occupation { get; set; } = string.Empty;
+        public string Guarantor1Occupation { get; set; } 
 
         [BindProperty]
-        public string Guarantor1PhoneNumber { get; set; } = string.Empty;
+        public string Guarantor1PhoneNumber { get; set; } 
 
         [BindProperty]
-        public string Guarantor1AlternatePhoneNumber { get; set; } = string.Empty;
+        public string Guarantor1AlternatePhoneNumber { get; set; } 
 
         [BindProperty]
-        public string Guarantor2FirstName { get; set; } = string.Empty;
+        public string Guarantor2FirstName { get; set; } 
 
         [BindProperty]
-        public string Guarantor2LastName { get; set; } = string.Empty;
+        public string Guarantor2LastName { get; set; } 
 
         [BindProperty]
-        public string Guarantor2Address { get; set; } = string.Empty;
+        public string Guarantor2Address { get; set; } 
 
         [BindProperty]
-        public string Guarantor2Occupation { get; set; } = string.Empty;
+        public string Guarantor2Occupation { get; set; } 
 
         [BindProperty]
-        public string Guarantor2PhoneNumber { get; set; } = string.Empty;
+        public string Guarantor2PhoneNumber { get; set; } 
 
         [BindProperty]
-        public string Guarantor2AlternatePhoneNumber { get; set; } = string.Empty;
+        public string Guarantor2AlternatePhoneNumber { get; set; } 
 
         [BindProperty]
-        public string Declaration { get; set; } = string.Empty;
+        public string Declaration { get; set; }
+
 
         [BindProperty]
-        public string YourSignature { get; set; } = string.Empty;
+        public IFormFile? YourSignedForm { get; set; } 
 
 
         [BindProperty]
@@ -176,203 +181,232 @@ namespace CNMaisons.Pages
 
 
         [BindProperty]
-        public string ApprovalStatus { get; set; } = string.Empty;
+        public string ApprovalStatus { get; set; } 
+
+
+        [BindProperty]
+        public IFormFile? LeaseFormForSigning { get; set; }
+        #endregion
 
 
         public void OnGet()
         {
+            
             //RePopulate();
         }
 
+        CNMPMS PropertyRequestDirector = new CNMPMS();
+
+        CNMPMS TenantRequestDirector = new CNMPMS();
 
 
-        public IActionResult OnPost(IFormFile ApplicationForm)
+        //public IActionResult OnPost(IFormFile ApplicationForm)
+        public void OnPost(IFormFile ApplicationForm)
         {
-            errorMessage = "";
-            ModelState.Clear();
+
 
             //if (Passport == null)
             //{
-            //    errorMessage += "The Passport is Required.\n";
+            //    errorMessage += "Passport is Required.\n";
             //}
-
-            if (string.IsNullOrEmpty(TenantID))
-            {
-                errorMessage += "The TenantID is Required.\n";
-            }
+            
+            #region All Validations
+            errorMessage = "";
+            ModelState.Clear();
 
             if (string.IsNullOrEmpty(PropertyID))
             {
-                errorMessage += "The PropertyID is Required.\n";
+                errorMessage += "PropertyID is Required.\n";
             }
+            else
+            {
+                bool propertyIDConfirmation = PropertyRequestDirector.ValidateProperty(PropertyID);
+
+                if (propertyIDConfirmation == false)
+                {
+                    errorMessage += "This is not a valid PropertyID.\n";
+                }
+            }
+
+
+
+
+            // Validate Email
+            if (string.IsNullOrEmpty(Email))
+            {
+                errorMessage += "Email is Required.\n";
+            }
+            else
+            {
+                bool emailConfirmation1 = TenantRequestDirector.ValidateEmailTenant(Email); // checking in Tenant Table
+                bool emailConfirmation2 = TenantRequestDirector.ValidateEmailUsers(Email); // checking in Users table
+
+                if (emailConfirmation1 == true || emailConfirmation2 == true)
+                {
+                    errorMessage += "This email already exist in our system.\n";
+                } 
+            }
+
 
             if (string.IsNullOrEmpty(FirstName))
             {
-                errorMessage += "The FirstName is Required.\n";
+                errorMessage += "FirstName is Required.\n";
             }
 
             if (string.IsNullOrEmpty(LastName))
             {
-                errorMessage += "The LastName is Required.\n";
+                errorMessage += "LastName is Required.\n";
             }
 
             // Validate PhoneNumber
             if (string.IsNullOrEmpty(PhoneNumber))
             {
-                errorMessage += "The PhoneNumber is Required.\n";
+                errorMessage += "PhoneNumber is Required.\n";
             }
 
-            // Validate Email
-            if (string.IsNullOrEmpty(Email))
-            {
-                errorMessage += "The Email is Required.\n";
-            }
 
+
+            
             // Validate DOB
             if (DOB == DateTime.MinValue)
             {
-                errorMessage += "The DOB is Required.\n";
+                errorMessage += "DOB is Required.\n";
             }
 
             // Validate Password
             if (string.IsNullOrEmpty(Password))
             {
-                errorMessage += "The Password is Required.\n";
+                errorMessage += "Password is Required.\n";
             }
 
             // Validate Nationality
             if (string.IsNullOrEmpty(Nationality))
             {
-                errorMessage += "The Nationality is Required.\n";
+                errorMessage += "Nationality is Required.\n";
             }
             // Validate PermanentHomeAddress
             if (string.IsNullOrEmpty(PermanentHomeAddress))
             {
-                errorMessage += "The PermanentHomeAddress is Required.\n";
+                errorMessage += "PermanentHomeAddress is Required.\n";
             }
 
             // Validate Occupation
             if (string.IsNullOrEmpty(Occupation))
             {
-                errorMessage += "The Occupation is Required.\n";
+                errorMessage += "Occupation is Required.\n";
             }
 
             // Validate SelfEmployed
             if (string.IsNullOrEmpty(SelfEmployed))
             {
-                errorMessage += "The SelfEmployed is Required.\n";
+                errorMessage += "SelfEmployed is Required.\n";
             }
 
 
             // Validate MaritalStatus
             if (string.IsNullOrEmpty(MaritalStatus))
             {
-                errorMessage += "The MaritalStatus is Required.\n";
+                errorMessage += "MaritalStatus is Required.\n";
             }
 
             // Validate SpouseFirstName
             // Validate NumberOfOccupants
             if (NumberOfOccupants == 0)
             {
-                errorMessage += "The NumberOfOccupants is Required.\n";
+                errorMessage += "NumberOfOccupants is Required.\n";
             }
 
             // Validate NextOfKinFirstName
             if (string.IsNullOrEmpty(NextOfKinFirstName))
             {
-                errorMessage += "The NextOfKinFirstName is Required.\n";
+                errorMessage += "NextOfKinFirstName is Required.\n";
             }
 
             // Validate NextOfKinLastName
             if (string.IsNullOrEmpty(NextOfKinLastName))
             {
-                errorMessage += "The NextOfKinLastName is Required.\n";
+                errorMessage += "NextOfKinLastName is Required.\n";
             }
 
             // Validate NextOfKinAddress
             if (string.IsNullOrEmpty(NextOfKinAddress))
             {
-                errorMessage += "The NextOfKinAddress is Required.\n";
+                errorMessage += "NextOfKinAddress is Required.\n";
             }
 
             // Validate NextOfKinPhoneNumber
             if (string.IsNullOrEmpty(NextOfKinPhoneNumber))
             {
-                errorMessage += "The NextOfKinPhoneNumber is Required.\n";
+                errorMessage += "NextOfKinPhoneNumber is Required.\n";
             }
 
             // Validate Guarantor1FirstName
             if (string.IsNullOrEmpty(Guarantor1FirstName))
             {
-                errorMessage += "The Guarantor1FirstName is Required.\n";
+                errorMessage += "Guarantor1FirstName is Required.\n";
             }
 
             // Validate Guarantor1LastName
             if (string.IsNullOrEmpty(Guarantor1LastName))
             {
-                errorMessage += "The Guarantor1LastName is Required.\n";
+                errorMessage += "Guarantor1LastName is Required.\n";
             }
 
             // Validate Guarantor1Address
             if (string.IsNullOrEmpty(Guarantor1Address))
             {
-                errorMessage += "The Guarantor1Address is Required.\n";
+                errorMessage += "Guarantor1Address is Required.\n";
             }
 
             // Validate Guarantor1Occupation
             if (string.IsNullOrEmpty(Guarantor1Occupation))
             {
-                errorMessage += "The Guarantor1Occupation is Required.\n";
+                errorMessage += "Guarantor1Occupation is Required.\n";
             }
 
             // Validate Guarantor1PhoneNumber
             if (string.IsNullOrEmpty(Guarantor1PhoneNumber))
             {
-                errorMessage += "The Guarantor1PhoneNumber is Required.\n";
+                errorMessage += "Guarantor1PhoneNumber is Required.\n";
             }
 
 
             // Validate Guarantor2FirstName
             if (string.IsNullOrEmpty(Guarantor2FirstName))
             {
-                errorMessage += "The Guarantor2FirstName is Required.\n";
+                errorMessage += "Guarantor2FirstName is Required.\n";
             }
 
             // Validate Guarantor2LastName
             if (string.IsNullOrEmpty(Guarantor2LastName))
             {
-                errorMessage += "The Guarantor2LastName is Required.\n";
+                errorMessage += "Guarantor2LastName is Required.\n";
             }
 
             // Validate Guarantor2Address
             if (string.IsNullOrEmpty(Guarantor2Address))
             {
-                errorMessage += "The Guarantor2Address is Required.\n";
+                errorMessage += "Guarantor2Address is Required.\n";
             }
 
             // Validate Guarantor2Occupation
             if (string.IsNullOrEmpty(Guarantor2Occupation))
             {
-                errorMessage += "The Guarantor2Occupation is Required.\n";
+                errorMessage += "Guarantor2Occupation is Required.\n";
             }
 
             // Validate Guarantor2PhoneNumber
             if (string.IsNullOrEmpty(Guarantor2PhoneNumber))
             {
-                errorMessage += "The Guarantor2PhoneNumber is Required.\n";
+                errorMessage += "Guarantor2PhoneNumber is Required.\n";
             }
 
 
-            // Validate YourSignature
-            if (string.IsNullOrEmpty(YourSignature))
-            {
-                errorMessage += "Your full name is required as signature.\n";
-            }
 
             // Validate Declaration
             if (string.IsNullOrEmpty(Declaration))
             {
-                errorMessage += "The Declaration is Required.\n";
+                errorMessage += "Declaration is Required.\n";
             }
 
 
@@ -401,10 +435,12 @@ namespace CNMaisons.Pages
                     HttpContext.Session.SetString(key, "");
                 }
             }
+            #endregion
 
 
+
+            #region SettingUpSession
             //0-10
-            SetSessionString("TenantID1", TenantID);
             SetSessionString("PropertyID1", PropertyID);
             SetSessionString("FirstName1", FirstName);
             SetSessionString("LastName1", LastName);
@@ -422,7 +458,7 @@ namespace CNMaisons.Pages
             SetSessionString("Occupation1", Occupation);
             SetSessionString("SelfEmployed1", SelfEmployed);
             SetSessionString("BusinessRegistrationNumber1", BusinessRegistrationNumber);
-            //HttpContext.Session.Set("CoporateAffairsCertificate1", CoporateAffairsCertificate);
+            //HttpContext.Session.Set("CorporateAffairsCertificate1", CorporateAffairsCertificate);
             SetSessionString("NameofEmployer1", NameofEmployer);
             SetSessionString("AddressOfEmployer1", AddressOfEmployer);
             HttpContext.Session.SetInt32("LengthOnJob1", LengthOnJob); // Assuming LengthOnJob is an integer
@@ -461,12 +497,15 @@ namespace CNMaisons.Pages
             SetSessionString("Guarantor2PhoneNumber1", Guarantor2PhoneNumber);
             SetSessionString("Guarantor2AlternatePhoneNumber1", Guarantor2AlternatePhoneNumber);
             SetSessionString("Declaration1", Declaration);
-            SetSessionString("YourSignature1", YourSignature);
-
+            
             //51-52
 
             SetSessionString("ApprovalStatus1", ApprovalStatus);
+            
             SetSessionString("DeleteFlag1", DeleteFlag.ToString());
+            #endregion
+
+
 
             //if ModelState is true
             if (ModelState.IsValid == true)
@@ -474,10 +513,12 @@ namespace CNMaisons.Pages
 
                 Tenant aTenant;
                 byte[] PassportBytes = ConvertToByteArray(Passport);
+                byte[] CorporateAffairs = ConvertToByteArray(CorporateAffairsCertificate);
+                byte[] LeaseForm = ConvertToByteArray(LeaseFormForSigning);
+                byte[] SignedForm = ConvertToByteArray(YourSignedForm);
 
                 aTenant = new()
                 {
-                    TenantID = TenantID,
                     PropertyID = PropertyID,
                     Passport = PassportBytes,
                     FirstName = FirstName,
@@ -493,7 +534,7 @@ namespace CNMaisons.Pages
                     Occupation = Occupation,
                     SelfEmployed = SelfEmployed,
                     BusinessRegistrationNumber = BusinessRegistrationNumber,
-                    CoporateAffairsCertificate = CoporateAffairsCertificate,
+                    CorporateAffairsCertificate = CorporateAffairs,
                     NameofEmployer = NameofEmployer,
                     AddressOfEmployer = AddressOfEmployer,
                     LengthOnJob = LengthOnJob,
@@ -526,15 +567,18 @@ namespace CNMaisons.Pages
                     Guarantor2PhoneNumber = Guarantor2PhoneNumber,
                     Guarantor2AlternatePhoneNumber = Guarantor2AlternatePhoneNumber,
                     Declaration = Declaration,
-                    YourSignature = YourSignature,
-                    ApprovalStatus = ApprovalStatus,
-                    DeleteFlag = DeleteFlag
-
+                    YourSignedForm = SignedForm,
+                    ApprovalStatus = "Just Applied",
+                    DeleteFlag = DeleteFlag,
+                    LeaseFormForSigning = LeaseForm
                 };
 
-                CNMPMS RequestDirector = new();
-                string Confirmation = RequestDirector.SubmitLeaseApplication(aTenant);
-                if (Confirmation == "Successful!")
+
+
+
+                TenantRequestDirector = new();
+                string Confirmation = TenantRequestDirector.SubmitLeaseApplication(aTenant);
+                if (Confirmation == "Successful.")
                 {
                     Message = "Tenant's Lease application was successful saved.";
                     User newUser = new();
@@ -544,35 +588,40 @@ namespace CNMaisons.Pages
                     newUser.Role = "Tenant";
                     newUser.DefaultPassword = "0"; // 0 because user typed it by himself
 
-                    bool UserAccountConfirmation = RequestDirector.CreateUserAccount(newUser);
+                    bool UserAccountConfirmation = TenantRequestDirector.CreateUserAccount(newUser);
                     if (UserAccountConfirmation == true)
                     {
+                        string messageBody = "Hello " + FirstName + ",\n\nYour Login Credential are:\n\t\temail: "+ Email + "\n\t\tPassword: "+ Password +"\n\n Lease Application for " + PropertyID + " has been submitted.\n\nOnce Attemded to, you will get feedback onc completed.\n\nRegards";
+                        string messageSubject = "Application submitted.";
+
+                        string mailConfirmation;
+                        CNMPMS MailRequestManager = new CNMPMS();
+                        mailConfirmation = MailRequestManager.PostEmail(Email, messageBody, messageSubject); 
+                        
                         Message = "Tenant's Lease application was successful saved and Login Account created.";
                     }
                     else
                     {
+                         
                         Message = "Tenant's Lease application was successful saved. Login WAS NOT created. Admin need to create one for him";
                     }
-
-
-
-
-                    return Page();
+                    //return Page();
                 }
                 else
                 {
                     //repopulate the text
-                    Message = Confirmation;
+                    Message = Confirmation;  // "This was not saved.";
                     RePopulate();
-                    return Page();
+                    //return Page();
                 }
+                
+
+                
             }
+
             RePopulate();
-            return Page();
-        }
-
-
-
+            //return Page();
+        } 
 
         private byte[] ConvertToByteArray(IFormFile file)
         {
@@ -591,7 +640,6 @@ namespace CNMaisons.Pages
         {
             // Retrieving session values
             //0-10
-            TenantID = HttpContext.Session.GetString("TenantID1") ?? string.Empty;
             PropertyID = HttpContext.Session.GetString("PropertyID1") ?? string.Empty;
             //Passport = HttpContext.Session.GetString("Passport1") ?? string.Empty;
             FirstName = HttpContext.Session.GetString("FirstName1") ?? string.Empty;
@@ -610,7 +658,7 @@ namespace CNMaisons.Pages
             Occupation = HttpContext.Session.GetString("Occupation1") ?? string.Empty;
             SelfEmployed = HttpContext.Session.GetString("SelfEmployed1") ?? string.Empty;
             BusinessRegistrationNumber = HttpContext.Session.GetString("BusinessRegistrationNumber1") ?? string.Empty;
-            //CoporateAffairsCertificate = HttpContext.Session.Get<byte[]>("CoporateAffairsCertificate1") ?? new byte[0];
+            //CorporateAffairsCertificate = HttpContext.Session.Get<byte[]>("CorporateAffairsCertificate1") ?? new byte[0];
             NameofEmployer = HttpContext.Session.GetString("NameofEmployer1") ?? string.Empty;
             AddressOfEmployer = HttpContext.Session.GetString("AddressOfEmployer1") ?? string.Empty;
             LengthOnJob = HttpContext.Session.GetInt32("LengthOnJob1") ?? 0; // Assuming LengthOnJob is an integer
@@ -649,13 +697,13 @@ namespace CNMaisons.Pages
             Guarantor2PhoneNumber = HttpContext.Session.GetString("Guarantor2PhoneNumber1") ?? string.Empty;
             Guarantor2AlternatePhoneNumber = HttpContext.Session.GetString("Guarantor2AlternatePhoneNumber1") ?? string.Empty;
             Declaration = HttpContext.Session.GetString("Declaration1") ?? string.Empty;
-            YourSignature = HttpContext.Session.GetString("YourSignature1") ?? string.Empty;
-
+             
             //51-52
             ApprovalStatus = HttpContext.Session.GetString("ApprovalStatus1") ?? string.Empty;
             DeleteFlag = Convert.ToBoolean(HttpContext.Session.GetString("DeleteFlag1") ?? "false");
 
         }
+
 
     }
 

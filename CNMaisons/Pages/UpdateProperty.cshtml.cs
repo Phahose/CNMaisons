@@ -67,6 +67,7 @@ namespace CNMaisons.Pages
         public User Users { get; set; } = new User();
         [BindProperty]
         public string MyCheckBox { get; set; }
+        public Employee Employee { get; set; } = new Employee();
         public void OnGet()
         {
             if (HttpContext.Session.GetString("PropertyID") != null)
@@ -81,6 +82,7 @@ namespace CNMaisons.Pages
             CNMPMS controller = new CNMPMS();
             Users = controller.GetUserByEmail(Email);
             Property = controller.GetPropertyByID(PropertyID);
+            Employee = controller.GetAllEmployees(Email);
         }
         public void OnPost()
         {
@@ -90,6 +92,8 @@ namespace CNMaisons.Pages
             }
 
             CNMPMS controller = new CNMPMS();
+            Users = controller.GetUserByEmail(Email);
+            Employee = controller.GetAllEmployees(Email);
             Property = controller.GetPropertyByID(PropertyID);
             ModelState.Clear();
             #region Validation
@@ -129,22 +133,6 @@ namespace CNMaisons.Pages
             {
                 ModelState.AddModelError("DescriptionError", "The Description is Required");
             }
-            /*if (Image1 == null)
-            {
-                ModelState.AddModelError("Image1Error", "Image1 is required");
-            }
-            if (Image2 == null)
-            {
-                ModelState.AddModelError("Image2Error", "Image2 is required");
-            }
-            if (Image3 == null)
-            {
-                ModelState.AddModelError("Image3Error", "Image3 is required");
-            }
-            if (Image4 == null)
-            {
-                ModelState.AddModelError("Image4Error", "Image4 is required");
-            }*/
             #endregion
 
             if (ModelState.IsValid)
@@ -291,8 +279,16 @@ namespace CNMaisons.Pages
                     #endregion
 
                 }
-                controller.UpdateProperty(property);
-                SucceessMessage = "The Property Updated SuccessFully";
+                bool success = controller.UpdateProperty(property);
+
+                if (success)
+                {
+                    SucceessMessage = "The Property Updated SuccessFully";
+                }
+                else
+                {
+                    SucceessMessage = "An Error Occured When trying to Update this Property";
+                }
               
             }
         }

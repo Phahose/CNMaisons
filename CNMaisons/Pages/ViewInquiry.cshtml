@@ -1,0 +1,192 @@
+﻿@page
+@model CNMaisons.Pages.ViewInquiryModel
+@{
+    ViewData["Title"] = "View Visit Requests";
+    var emailPattern = new System.Text.RegularExpressions.Regex(@"^[^\s@]+@[^\s@]+\.[^\s@]+$");
+}
+
+
+
+<script src="~/libraries/jquery/jquery.js"></script>
+<script src="~/libraries/jquery-validate/jquery.validate.js"></script>
+<script src="~/libraries/jquery-validate-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+<script type="text/javascript">
+
+    function validateForm() {
+        // Get the selected VisitStatus
+        var visitStatus = document.getElementsByName('VisitStatus')[0].value;
+        // Get the submit button
+        var submitButtons = document.getElementsByName('Submit');
+
+        // Loop through all submit buttons and enable/disable them accordingly
+        for (var i = 0; i < submitButtons.length; i++) {
+            // Check if VisitStatus is not the default value and enable/disable the submit button accordingly
+            if (visitStatus !== "0") {
+                submitButtons[i].disabled = false;
+            } else {
+                submitButtons[i].disabled = true;
+            }
+        }
+    }
+
+
+    function copyData() {
+        // Get the arguments passed to the function
+        var args = Array.prototype.slice.call(arguments);
+
+        // Get the input fields by name
+        var inputFields = document.querySelectorAll('input[type="text"]');
+        var visitStatusDropdown = document.getElementsByName('VisitStatus')[0];
+
+        // Loop through the input fields and assign values
+        for (var i = 0; i < inputFields.length; i++) {
+            inputFields[i].value = args[i];
+        }
+
+        // Enable the VisitStatus dropdown
+        visitStatusDropdown.disabled = false;
+    }
+ </script>
+ <div>
+    <div class="loggedin-pages">
+        <nav class="loggedin-nav">
+            <a href="~/Index"><img src="~/img/png/logo-no-background.png" width="150" class="intro_image" /></a>
+            <ul class="loggedin-list">
+                @if (Model.Users.Role == "LandLord")
+                {
+
+                    <li>
+                        <a href="~/IndexStaff">My Account</a>
+                    </li>
+                    <li>
+                        <a href="~/AddProperty">Add Property</a>
+                    </li>
+                    <li>
+                        <a href="#">View Maintainance Requests</a>
+                    </li>
+                    <li>
+                        <a href="~/CreateAccount">Create New Employee Account</a>
+                    </li>
+                    <li>
+                        <a href="#">View Visit Requests</a>
+                    </li>
+                    <li>
+                        <a href="~/ViewPropertyAdmin">View Properties</a>
+                    </li>
+                    <li>
+                        <a href="~/ViewTenantbyLandLord">View Tenant </a>                   
+                    </li>
+                    <li>
+                        <a href="~/ViewInquiry">View Inquiry </a>
+                    </li>
+
+                }
+                @if (Model.Users.Role == "Staff")
+                {
+
+                    <li>
+                        <a href="~/IndexStaff">My Account</a>
+                    </li>
+                    <li>
+                        <a href="~/AddProperty">Add Property</a>
+                    </li>
+                    <li>
+                        <a href="#">View Visit Requests</a>
+                    </li>
+                    <li>
+                        <a href="#">Edit Account</a>
+                    </li>
+
+                }
+                <li class="loggedin-icon_div">
+                    @if (Model.Employee.EmployeeImage != null)
+                    {
+                        <img src="data:image;base64,@Convert.ToBase64String(Model.Employee.EmployeeImage)" alt="Property Image" />
+                    }
+                    else
+                    {
+                        <a href="~/Index"><img src="~/img/profile_icon" width="150" class="intro_image" /></a>
+                    }
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <form name="FindPendingApplicationForm" method="post">
+        <h4>Review Lease Applications</h4>
+        <div style="display: flex; align-content: center">
+            <table style="border-collapse: collapse; text-align: left; width: 100%;">
+                <thead>
+                    <tr style="border: 1px solid #ddd; background-color:black;">
+                        <th style="border: 1px solid #ddd;">VisitStatus</th>
+                        <th style="border: 1px solid #ddd;">PropertyVisitID</th>
+                        <th style="border: 1px solid #ddd;">PropertyID</th>
+                        <th style="border: 1px solid #ddd;">ProposedVisitDate</th>
+                        <th style="border: 1px solid #ddd;">ProposedVisitTime</th>
+                        <th style="border: 1px solid #ddd;">FirstName</th>
+                        <th style="border: 1px solid #ddd;">LastName</th>
+                        <th style="border: 1px solid #ddd;">Email</th>
+                        <th style="border: 1px solid #ddd;">PhoneNumber</th>
+                        <th style="border: 1px solid #ddd;">DateRecorded</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var record in Model.OpenVisitList)
+                    {
+                        <tr>
+
+                            <td style="border: 1px solid #ddd;"><a href="#" onclick="copyData('@record.PropertyVisitID', '@record.FirstName', '@record.Email')">@record.VisitStatus</a></td>
+                            <td style="border: 1px solid #ddd;"><a href="#" onclick="copyData('@record.PropertyVisitID', '@record.FirstName', '@record.Email')">@record.PropertyVisitID</a></td>
+
+                            <td style="border: 1px solid #ddd;">@record.PropertyID</td>
+                            <td style="border: 1px solid #ddd;">@record.ProposedVisitDate.ToString("dd/MM/yyyy")</td>
+
+                            <td style="border: 1px solid #ddd;">@record.ProposedVisitTime</td>
+                            <td style="border: 1px solid #ddd;">@record.FirstName</td>
+                            <td style="border: 1px solid #ddd;">@record.LastName</td>
+                            <td style="border: 1px solid #ddd;">@record.Email</td>
+                            <td style="border: 1px solid #ddd;">@record.PhoneNumber</td>
+                            <td style="border: 1px solid #ddd;">@record.DateRecorded.ToString("dd/MM/yyyy")</td>
+                        </tr>
+                    }
+                </tbody>
+                <tr>
+                    <td>Visit ID/PropertyID/Name</td>
+                    <td><input type="text" name="FindVisitID" readonly /></td>
+                    <td><input type="text" name="FirstName" readonly /></td>
+                    <td><input type="text" name="Email" readonly /></td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Approval Status:</label>
+                    </td>
+                    <td>
+
+
+                        <select name="VisitStatus" onchange="validateForm()" disabled>
+                            <option value="0">--Make your selection--</option>
+                            <option value="Confirm Visit">Confirm Visit</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Cancelled">Cancelled</option>
+                        </select>
+
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        <button type="submit" name="Submit" style="text-align: center;" value="Submit" disabled>
+                            <img src="../img/buttons/primary-submit.svg" alt="Save Icon" width="24" height="24" style="vertical-align: middle;">
+                            <span style="vertical-align: middle;">Submit Review</span>
+                        </button>
+                    </td>
+
+                    <td><input type="submit" name="Submit" value="Refresh" /></td>
+                    <td><input type="submit" name="Submit" value="Close" /></td>
+                </tr>
+
+            </table>
+        </div>
+    </form>
+ </div>

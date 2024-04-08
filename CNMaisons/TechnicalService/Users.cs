@@ -50,6 +50,7 @@ namespace CNMaisons.TechnicalService
                     user.Password = (string)UserReader["Password"];
                     user.UserSalt = (string)UserReader["UserSalt"];
                     user.Role = (string)UserReader["Role"];
+                    user.DefaultPassword = (string)UserReader["DefaultPassword"];
                     user.DeactivateAccountStatus = (bool)UserReader["DeactivateAccountStatus"];
                 }
             }
@@ -133,11 +134,135 @@ namespace CNMaisons.TechnicalService
             return Success;
 
         }
+
+        public bool UpdateUser(User user)
+        {
+            bool success = true;
+            SqlConnection cnMaisonsConnection = new SqlConnection();
+            cnMaisonsConnection.ConnectionString = connectionString;
+            cnMaisonsConnection.Open();
+
+            try
+            {
+                byte[] salt = new byte[128 / 8];
+                using (var rngCsp = new RNGCryptoServiceProvider())
+                {
+                    rngCsp.GetNonZeroBytes(salt);
+                }
+                byte[] hashedPassword = HashPasswordWithSalt(user.Password, salt);
+                // Convert the salt and hashed password to Base64 for storage
+                string saltBase64 = Convert.ToBase64String(salt);
+                string hashedPasswordBase64 = Convert.ToBase64String(hashedPassword);
+
+                SqlCommand UpdateUserCommand = new()
+                {
+                    CommandType = CommandType.StoredProcedure,
+                    Connection = cnMaisonsConnection,
+                    CommandText = "UpdateUsers"
+                };
+
+                SqlParameter EmailParameter = new()
+                {
+                    ParameterName = "@Email",
+                    SqlDbType = SqlDbType.VarChar,
+                    SqlValue = user.Email,
+                    Direction = ParameterDirection.Input,
+                };
+                SqlParameter PasswordParameter = new()
+                {
+                    ParameterName = "@Password",
+                    SqlDbType = SqlDbType.VarChar,
+                    SqlValue = hashedPasswordBase64,
+                    Direction = ParameterDirection.Input,
+                };
+                SqlParameter RoleParameter = new()
+                {
+                    ParameterName = "@Role",
+                    SqlDbType = SqlDbType.VarChar,
+                    SqlValue = user.Role,
+                    Direction = ParameterDirection.Input,
+                };
+                SqlParameter DeactivateParameter = new()
+                {
+                    ParameterName = "@DeactivateAccountStatus",
+                    SqlDbType = SqlDbType.Bit,
+                    SqlValue = user.DeactivateAccountStatus,
+                    Direction = ParameterDirection.Input,
+                };
+                SqlParameter DefaultPasswordParameter = new()
+                {
+                    ParameterName = "@DefaultPassword",
+                    SqlDbType = SqlDbType.NVarChar,
+                    SqlValue = user.DefaultPassword,
+                    Direction = ParameterDirection.Input,
+                };
+                SqlParameter UserSaltParameter = new()
+                {
+                    ParameterName = "@UserSalt",
+                    SqlDbType = SqlDbType.NVarChar,
+                    SqlValue = saltBase64,
+                    Direction = ParameterDirection.Input,
+                };
+
+                UpdateUserCommand.Parameters.Add(EmailParameter);
+                UpdateUserCommand.Parameters.Add(PasswordParameter);
+                UpdateUserCommand.Parameters.Add(RoleParameter);
+                UpdateUserCommand.Parameters.Add(DeactivateParameter);
+                UpdateUserCommand.Parameters.Add(DefaultPasswordParameter);
+                UpdateUserCommand.Parameters.Add(UserSaltParameter);
+
+                UpdateUserCommand.ExecuteNonQuery();
+
+                cnMaisonsConnection.Close();
+            }
+            catch (Exception)
+            {
+                success = false;
+                throw;
+            }
+
+            return success;
+        }
         
         private static byte[] HashPasswordWithSalt(string password, byte[] salt)
         {
             // Hash the password with PBKDF2 using HMACSHA256
             return new Rfc2898DeriveBytes(password, salt, 100000, HashAlgorithmName.SHA256).GetBytes(32);
+        }
+
+
+        public bool CheckIfEmailAlreadyExistInUsersTable(string email)
+        {
+            //connection
+            SqlConnection MyDataSource = new();
+            MyDataSource.ConnectionString = connectionString;
+            MyDataSource.Open();
+
+            //Command
+            SqlCommand MyCommand = new()
+            {
+                Connection = MyDataSource,
+                CommandType = CommandType.StoredProcedure,
+                CommandText = "CheckIfEmailAlreadyExistInUsersTable"
+            };
+
+            SqlParameter MyParameter = new()
+            {
+                ParameterName = "@Email",
+                SqlDbType = SqlDbType.VarChar,
+                SqlValue = email,
+                Direction = ParameterDirection.Input,
+            };
+            MyCommand.Parameters.Add(MyParameter);
+
+            SqlDataReader MyDataReader = MyCommand.ExecuteReader();
+            bool Success = false;
+
+            if (MyDataReader.HasRows)
+            {
+                Success = true;
+            }
+            return Success;
         }
 
     }

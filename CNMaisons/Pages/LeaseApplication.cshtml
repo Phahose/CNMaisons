@@ -15,16 +15,15 @@
 <script type="text/javascript">
     //to popuate values. To be removed later
     function populateValue() {
-        document.querySelector('input[name="TenantID"]').value = "CN01";
-        document.querySelector('input[name="PropertyID"]').value = "CNP0001";
+        document.querySelector('input[name="PropertyID"]').value = "CN00001";
         document.querySelector('input[name="FirstName"]').value = "Ezra";
         document.querySelector('input[name="LastName"]').value = "Mallo";
-        document.querySelector('input[name="PhoneNumber"]').value = "0803857564";
+        document.querySelector('input[name="PhoneNumber"]').value = "0803854364";
         document.querySelector('input[name="Email"]').value = "ezra.mallo@gmail.com";
         document.querySelector('input[name="DOB"]').value = "1982-01-01";
         document.querySelector('input[name="Password"]').value = "abc123";
         document.querySelector('input[name="Nationality"]').value = "Nigeria";
-        document.querySelector('input[name="PermanentHomeAddress"]').value = "Isiokwe";
+        document.querySelector('input[name="PermanentHomeAddress"]').value = "Udenu";
         document.querySelector('input[name="Occupation"]').value = "Engineer";
         document.querySelector('input[name="SelfEmployed"][value="yes"]').checked = true;
         document.querySelector('select[name="MaritalStatus"]').value = "Single";
@@ -43,8 +42,7 @@
         document.querySelector('input[name="Guarantor2Address"]').value = "placeholder";
         document.querySelector('input[name="Guarantor2Occupation"]').value = "placeholder";
         document.querySelector('input[name="Guarantor2PhoneNumber"]').value = "placeholder";
-        document.querySelector('input[name="YourSignature"]').value = "placeholder";
-
+       
     }
 
 
@@ -67,12 +65,6 @@
 
 
 
-        // Validate TennatID
-        var tenantID = event.TenantID.value;
-        if (tenantID === "" || !textOnly.test(tenantID)) {
-            var tenantIDError = "Enter a valid tenant ID.";
-            isValid = false;
-        }
 
 
         // Validate PropertyID
@@ -317,26 +309,34 @@
         <!--<form name="Application" method="post" class="form property_form transition-fade-down" onsubmit="return isFormValid(this);" enctype="multipart/form-data" action="ViewHTTPRequest">-->
         <input type="submit" name="Submit" value="Submit Lease Application" class="btn" />
         <br />
-        <span style="font-size: larger; font-style: italic;">@Model.Message</span>
 
         <br />
-        <span style="font-size: larger; font-style: italic;">@Model.errorMessage</span>
+        <span style="font-size: larger; font-style: italic;">
+            @if (Model.errorMessage != "")
+            {
+                // Replace \n characters with HTML line breaks
+                var errorMessageWithLineBreaks = Model.errorMessage.Replace("\n", "<br />");
+                @Html.Raw(errorMessageWithLineBreaks)
+            }
+            <span style="font-size: larger; font-style: italic;">
+                @Model.Message
+
+            </span>
+        </span>
+           
         <br />
         <fieldset>
             <legend>Personal Information</legend>
             <div>
                 <label for="Passport Photo">Passport Photo</label>
                 <br />
-                <input type="file" name="Passport" />
+                <input type="file" name="Passport" accept="image/*" />
+
                 <br />
 
-                <label for="Tenant ID">Tenant ID</label>
-                <br />
-                <input type="text" name="TenantID" required maxlength="5" />
-                <br />
                 <label for="Property ID">Which Property ID are you interested in:</label>
                 <br />
-                <input type="text" name="PropertyID" required maxlength="7" />
+                <input type="text" name="PropertyID" maxlength="7" />
                 <br />
 
                 Email:
@@ -400,7 +400,7 @@
 
                         <label for="CorporateAffairsCertificate">Corporate Affairs Certificate</label>
                         <br />
-                        <input type="text" name="CorporateAffairsCertificate" />
+                        <input type="file" name="CorporateAffairsCertificate" />
                         <br />
                     </div>
                     <!----------------------------------------------------------------------->
@@ -418,7 +418,7 @@
 
                         <label for="LengthOnJob">How long have you been on the job?</label>
                         <br />
-                        <input type="text" name="LengthOnJob" maxlength="2" />
+                        <input type="text" name="LengthOnJob" maxlength="10" />
                         <br />
 
                         <label for="CurrentPositionHeld">Current Position Held at Job</label>
@@ -431,6 +431,7 @@
                     <br />
                     <input type="text" name="NatureOfJob" maxlength="25" />
                 </div>
+           </div>
         </fieldset>
 
 
@@ -595,14 +596,18 @@
                         I accept to be held liable for any misrepresentation therein.*:
                     </label>
                 </div>
-                <label>Enter you name in full as a signature</label>
-                <br />
-                <input type="text" name="YourSignature" />
-
+               
                 <input type="checkbox" value="Yes" name="Declaration" checked />
                 <br />
-                <input type="text" name="ApprovalStatus" value="Pending" hidden />
+  
                 <input type="text" name="DeleteFlag" value="0" hidden />
+
+
+                     
+                    <label for="LeaseFormForSigning" hidden> Lease Form For Signing</label>
+                    <br />
+                    <input type="file" name="LeaseFormForSigning" hidden />
+                    <br />
             </div>
         </fieldset>
     </form>
