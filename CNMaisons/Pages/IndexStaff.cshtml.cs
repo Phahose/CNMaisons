@@ -20,6 +20,8 @@ namespace CNMaisons.Pages
         public string Password { get; set; } = string.Empty;
         [BindProperty]
         public string ConfirmPassword { get; set; } = string.Empty;
+        [BindProperty]
+        public string PasswordConfirm { get; set; } = string.Empty;
         public string SuccessMessage {  get; set; } = string.Empty;
         public string ErrorMessage {  get; set; } = string.Empty;
         public void OnGet()
@@ -42,6 +44,7 @@ namespace CNMaisons.Pages
             Users = controller.GetUserByEmail(Email);
             Employee = controller.GetAllEmployees(Email);
 
+            ModelState.Clear();
             switch (Submit)
             {
                 case "Update Password":
@@ -49,11 +52,11 @@ namespace CNMaisons.Pages
                     {
                         ModelState.AddModelError("PasswordError", "Must Enter a Value for Password");
                     }
-                    if (ConfirmPassword == string.Empty)
+                    if (PasswordConfirm == string.Empty)
                     {
                         ModelState.AddModelError("ConfirmPasswordError", "Must Confirm Your Password");
                     }
-                    if (ConfirmPassword != Password)
+                    if (PasswordConfirm != Password)
                     {
                         ModelState.AddModelError("PasswordMatchError", "Passwords Must Match");
                     }

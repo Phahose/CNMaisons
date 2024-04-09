@@ -416,6 +416,13 @@ namespace CNMaisons.Pages
                 ModelState.AddModelError("AllError", errorMessage);
             }
 
+            User testexistinguser = new User();
+            testexistinguser = TenantRequestDirector.GetUserByEmail(Email);
+
+            if (testexistinguser.Password != "")
+            {
+                errorMessage += "This account Already Exists in the System Use a Diffrent Email\n";
+            }
 
             // If ModelState is invalid, repopulate the model properties with the POSTed values
             // This will retain the form values when the page is rendered again
@@ -591,7 +598,7 @@ namespace CNMaisons.Pages
                     bool UserAccountConfirmation = TenantRequestDirector.CreateUserAccount(newUser);
                     if (UserAccountConfirmation == true)
                     {
-                        string messageBody = "Hello " + FirstName + ",\n\nYour Login Credential are:\n\t\temail: "+ Email + "\n\t\tPassword: "+ Password +"\n\n Lease Application for " + PropertyID + " has been submitted.\n\nOnce Attemded to, you will get feedback onc completed.\n\nRegards";
+                        string messageBody = "Hello " + FirstName + ",\n\nYour Login Credential are:\n\t\temail: "+ Email + "\n\t\tPassword: "+ Password +"\n\n Lease Application for " + PropertyID + " has been submitted.\n\nOnce Attended to, you will get a feedback.\n\nRegards";
                         string messageSubject = "Application submitted.";
 
                         string mailConfirmation;

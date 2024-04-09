@@ -103,8 +103,17 @@
                     <span class="value">@Model.aTenant.Declaration</span>
                 </div>
                 <div class="info-item">
-                    <span class="label">Your Signature:</span>
-                    <span class="value">@Model.aTenant.YourSignedForm</span>
+                    @{
+                        byte[] wordDocumentBytes = Model.aTenant.YourSignedForm!;
+                        string base64Document = Convert.ToBase64String(wordDocumentBytes!);
+                        <span class="label">Your Signature:</span>
+                        <span class="value">
+                            <a href="data:application/octet-stream;base64,@base64Document" download="@Model.aTenant.FirstName Membership ApplicatonFile">
+                                Signature
+                            </a>
+                        </span>
+                    }
+                    
                 </div>
 
             </div>

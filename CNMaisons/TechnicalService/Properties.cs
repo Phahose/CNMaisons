@@ -355,7 +355,7 @@ namespace CNMaisons.TechnicalService
             }
             else
             {
-                Image4.Value = DBNull.Value;
+                Image6.Value = DBNull.Value;
             }
             SqlParameter Image7 = new()
             {
