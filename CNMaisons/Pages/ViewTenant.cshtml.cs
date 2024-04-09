@@ -12,25 +12,11 @@ namespace CNMaisons.Pages
 
     public class ViewTenantModel : PageModel
     {
-        public bool ViewFormNow = false;
         public string Message { get; set; } = string.Empty;
-        public CNMPMS RequestDirector;
-
-        public Tenant aTenant = new();
-
-     
-
         [BindProperty]
         public string Submit { get; set; } = string.Empty;
-
-        public string ListMessage { get; set; } = string.Empty;
-        public bool ShowForm = false;
-        public List<Tenant> ListOfTenantsPendingReview = new List<Tenant>();
-
-        [BindProperty]
-        public string ApprovalStatus { get; set; } = string.Empty;
-
-
+        public Tenant aTenant { get; set; } = new();
+        public User Users { get; set; } = new User();
         public void OnGet()
         {
             string Email = HttpContext.Session.GetString("Email")!;
@@ -38,6 +24,7 @@ namespace CNMaisons.Pages
             
             CNMPMS RequestDirector = new();
             aTenant = RequestDirector.ViewTenant(Email);
+            Users = RequestDirector.GetUserByEmail(Email);
             string check = aTenant.TenantID;           
         }
 
@@ -50,23 +37,12 @@ namespace CNMaisons.Pages
             switch (Submit)
             {
                 case "Close":
-                    return RedirectToPage("Index");                    
-                    break;
+                    return RedirectToPage("IndexTenant");                    
 
             }
             return Page();
         }
-        void SetSessionString(string key, string value)
-        {
-            if (value != null)
-            {
-                HttpContext.Session.SetString(key, value);
-            }
-            else
-            {
-                HttpContext.Session.SetString(key, "");
-            }
-        }
+       
 
     }
 }

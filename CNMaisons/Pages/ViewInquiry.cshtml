@@ -56,31 +56,9 @@
                 @if (Model.Users.Role == "LandLord")
                 {
 
-                    <li>
-                        <a href="~/IndexStaff">My Account</a>
-                    </li>
-                    <li>
-                        <a href="~/AddProperty">Add Property</a>
-                    </li>
-                    <li>
-                        <a href="#">View Maintainance Requests</a>
-                    </li>
-                    <li>
-                        <a href="~/CreateAccount">Create New Employee Account</a>
-                    </li>
-                    <li>
-                        <a href="#">View Visit Requests</a>
-                    </li>
-                    <li>
-                        <a href="~/ViewPropertyAdmin">View Properties</a>
-                    </li>
-                    <li>
-                        <a href="~/ViewTenantbyLandLord">View Tenant </a>                   
-                    </li>
-                    <li>
-                        <a href="~/ViewInquiry">View Inquiry </a>
-                    </li>
-
+                    <li><a href="~/IndexStaff">My Account</a></li>
+                    <li><a href="~/ViewTenantbyLandLord">View Tenant </a></li>
+                    <li><a href="~/CreateAccount">Create New Employee Account</a></li>
                 }
                 @if (Model.Users.Role == "Staff")
                 {
@@ -89,15 +67,11 @@
                         <a href="~/IndexStaff">My Account</a>
                     </li>
                     <li>
-                        <a href="~/AddProperty">Add Property</a>
+                        <a href="~/IndexStaff">My Account</a>
                     </li>
                     <li>
-                        <a href="#">View Visit Requests</a>
+                        <a href="~/ViewInquiry">View Inquiry </a>
                     </li>
-                    <li>
-                        <a href="#">Edit Account</a>
-                    </li>
-
                 }
                 <li class="loggedin-icon_div">
                     @if (Model.Employee.EmployeeImage != null)
@@ -112,7 +86,7 @@
             </ul>
         </nav>
     </div>
-    <form name="FindPendingApplicationForm" method="post">
+    <form name="FindPendingApplicationForm" method="post" class="form">
         <h4>Review Lease Applications</h4>
         <div style="display: flex; align-content: center">
             <table style="border-collapse: collapse; text-align: left; width: 100%;">
@@ -136,8 +110,8 @@
                     {
                         <tr>
 
-                            <td style="border: 1px solid #ddd;"><a href="#" onclick="copyData('@record.PropertyVisitID', '@record.FirstName', '@record.Email')">@record.VisitStatus</a></td>
-                            <td style="border: 1px solid #ddd;"><a href="#" onclick="copyData('@record.PropertyVisitID', '@record.FirstName', '@record.Email')">@record.PropertyVisitID</a></td>
+                            <td style="border: 1px solid #ddd;" class="populating-link"><a href="#" onclick="copyData('@record.PropertyVisitID', '@record.FirstName', '@record.Email')">@record.VisitStatus</a></td>
+                            <td style="border: 1px solid #ddd;" class="populating-link"><a href="#" onclick="copyData('@record.PropertyVisitID', '@record.FirstName', '@record.Email')">@record.PropertyVisitID</a></td>
 
                             <td style="border: 1px solid #ddd;">@record.PropertyID</td>
                             <td style="border: 1px solid #ddd;">@record.ProposedVisitDate.ToString("dd/MM/yyyy")</td>
@@ -162,8 +136,6 @@
                         <label>Approval Status:</label>
                     </td>
                     <td>
-
-
                         <select name="VisitStatus" onchange="validateForm()" disabled>
                             <option value="0">--Make your selection--</option>
                             <option value="Confirm Visit">Confirm Visit</option>
@@ -172,7 +144,6 @@
                         </select>
 
                     </td>
-
                 </tr>
                 <tr>
                     <td>
@@ -182,8 +153,8 @@
                         </button>
                     </td>
 
-                    <td><input type="submit" name="Submit" value="Refresh" /></td>
-                    <td><input type="submit" name="Submit" value="Close" /></td>
+                    <td><input type="submit" name="Submit" value="Refresh" class="btn"/></td>
+                    <td><input type="submit" name="Submit" value="Close" class="btn"/></td>
                 </tr>
 
             </table>

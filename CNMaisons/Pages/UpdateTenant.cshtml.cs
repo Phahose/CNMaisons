@@ -1,31 +1,28 @@
 using CNMaisons.Controller;
 using CNMaisons.Domain;
+using CNMaisons.TechnicalService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace CNMaisons.Pages
 {
+    [Authorize]
     public class UpdateTenantModel : PageModel
     {
         public bool ViewFormNow = false;
         public string Message { get; set; } = string.Empty;
         public CNMPMS RequestDirector;
-
         public Tenant tenantForReview = new();
-
         [BindProperty]
         public string FindTenantID { get; set; } = string.Empty;
-
-
         [BindProperty]
         public string Submit { get; set; } = string.Empty;
-
         public string ListMessage { get; set; } = string.Empty;
         public bool ShowForm = false;
-
         public List<Tenant> ListOfTenantsPendingReview = new List<Tenant>();
         public string errorMessage { get; set; } = string.Empty;
-
+        #region Tenanat Fields
         [BindProperty]
         public IFormFile Passport { get; set; }
 
@@ -188,23 +185,24 @@ namespace CNMaisons.Pages
 
         [BindProperty]
         public string ApprovalStatus { get; set; } = string.Empty;
-
+        #endregion
         CNMPMS PropertyRequestDirector = new CNMPMS();
-
         CNMPMS TenantRequestDirector = new CNMPMS();
-
-
-
-
+        public User Users { get; set; } = new User();
+        public Tenant Tenant { get; set; } = new();
+        public string TenantEmail {  get; set; } = string.Empty;    
 
         public void OnGet()
         {
             CNMPMS tenantController = new();
+            TenantEmail = HttpContext.Session.GetString("Email")!;
             ListOfTenantsPendingReview = tenantController.GetPendingLeaseApplication();
             if (ListOfTenantsPendingReview == null)
             {
                 ListMessage = "All have been reviewed";
             }
+            Users = tenantController.GetUserByEmail(TenantEmail);
+            Tenant = tenantController.ViewTenant(TenantEmail);
         }
         public IActionResult OnPost()
         {
@@ -214,8 +212,7 @@ namespace CNMaisons.Pages
             switch (Submit)
             {
                 case "Close":
-                    return RedirectToPage("/Index");
-                    break;
+                    return RedirectToPage("/IndexTenant");
 
                 case "Find":
                     if (FindTenantID != null)

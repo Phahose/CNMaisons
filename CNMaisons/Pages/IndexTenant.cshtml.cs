@@ -18,6 +18,8 @@ namespace CNMaisons.Pages
            Email = HttpContext.Session.GetString("Email")!;
            CNMPMS controller = new CNMPMS();
            Users = controller.GetUserByEmail(Email);
+
+           Tenant = controller.ViewTenant(Email);
         }
     }
 }

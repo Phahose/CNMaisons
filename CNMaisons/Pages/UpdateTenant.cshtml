@@ -1,14 +1,9 @@
 ﻿@page
 @model CNMaisons.Pages.UpdateTenantModel
 @{
-    Layout = "_Header";
     ViewData["Title"] = "Update Tenant";
     var emailPattern = new System.Text.RegularExpressions.Regex(@"^[^\s@]+@[^\s@]+\.[^\s@]+$");
-
 }
-
-
-
 <script src="~/libraries/jquery/jquery.js"></script>
 <script src="~/libraries/jquery-validate/jquery.validate.js"></script>
 <script src="~/libraries/jquery-validate-unobtrusive/jquery.validate.unobtrusive.js"></script>
@@ -19,38 +14,105 @@
     }
 </script>
 
-<form name="FindPendingApplicationForm" method="post" class="form property_form transition-fade-down">
-    <h4>Update Tenant</h4>
-    <div style="display: flex; align-content: center">
-        <table style="border-collapse: collapse; text-align: left; width: 100%;">
-            <tr>
-                <td>Tenant ID</td>
-                <td><input type="text" name="FindTenantID" /></td>
-            </tr>
-            <tr>
-                <td><input type="submit" name="Submit" value="Find" class="btn" /></td>
-            </tr>
+<div>
+    <div class="loggedin-pages">
+        <nav class="loggedin-nav">
+            <a href="~/Index"><img src="~/img/png/logo-no-background.png" width="150" class="intro_image" /></a>
+            <ul class="loggedin-list">
+                @if (Model.Users.Role == "LandLord")
+                {
 
-        </table>
+                    <li>
+                        <a href="~/IndexStaff">My Account</a>
+                    </li>
+                    <li>
+                        <a href="~/AddProperty">Add Property</a>
+                    </li>
+                    <li>
+                        <a href="~/CreateAccount">Create New Employee Account</a>
+                    </li>
+                    <li>
+                        <a href="#">View Visit Requests</a>
+                    </li>
+                    <li>
+                        <a href="~/ViewPropertyAdmin">View Properties</a>
+                    </li>
+                    <li>
+                        <a href="~/ViewTenantbyLandLord">View Tenant </a>
+                    </li>
+                    <li>
+                        <a href="~/ViewInquiry">View Inquiry </a>
+                    </li>
+                    <li>
+                        <a href="~/UpdateTenant">Edit Account</a>
+                    </li>
+
+                }
+                @if (Model.Users.Role == "Staff")
+                {
+
+                    <li>
+                        <a href="~/IndexStaff">My Account</a>
+                    </li>
+                    <li>
+                        <a href="~/AddProperty">Add Property</a>
+                    </li>
+                    <li>
+                        <a href="~/ViewInquiry">View Inquiry </a>
+                    </li>
+                    <li>
+                        <a href="~/UpdateTenant">Edit Account</a>
+                    </li>
+
+                }
+                @if (Model.Users.Role == "Tenant")
+                {
+                    <li><a href="~/IndexTenant">My Account</a></li>
+                    <li><a href="~/SignLeaseForm">Sign Lease Form</a></li>
+                    <li><a href="#">Record Rent Payment</a></li>
+                }
+                <li class="loggedin-icon_div">
+                    @if (Model.Tenant.Passport.Length > 0)
+                    {
+                        <img src="data:image;base64,@Convert.ToBase64String(Model.Tenant.Passport)" alt="Property Image" />
+                    }
+                    else
+                    {
+                        <img src="~/img/profile_icon.png" width="150" class="intro_image" />
+                    }
+                </li>
+            </ul>
+        </nav>
     </div>
-</form>
+    <form name="FindPendingApplicationForm" method="post" class="form property_form transition-fade-down">
+        <h4>Update Tenant</h4>
+        <div style="display: flex; align-content: center">
+            <table style="border-collapse: collapse; text-align: left; width: 100%;">
+                <tr>
+                    <td>Tenant ID</td>
+                    <td><input type="text" name="FindTenantID" /></td>
+                </tr>
+                <tr>
+                    <td><input type="submit" name="Submit" value="Find" class="btn" /></td>
+                </tr>
 
-@if (Model.ViewFormNow == true)
-{
+            </table>
+        </div>
+    </form>
 
-    <form name="Application" method="post" class="form property_form transition-fade-down" enctype="multipart/form-data">
-        <span style="font-size: larger; font-style: italic;">@Model.Message</span>
-        <table>
-             
+    @if (Model.ViewFormNow == true)
+    {
 
+        <form name="Application" method="post" class="form property_form transition-fade-down" enctype="multipart/form-data">
+            <span style="font-size: larger; font-style: italic;">@Model.Message</span>
             <fieldset>
                 <legend>Personal Information</legend>
                 <div>
                     <label>Tenant ID:                    </label><br />
-                    <input type="text" name="TenantID" value="@Model.tenantForReview.TenantID" readonly/><br />
+                    <input type="text" name="TenantID" value="@Model.tenantForReview.TenantID" readonly /><br />
 
                     <label>Property ID:                </label><br />
-                    <input type="text" name="Property ID" value="@Model.tenantForReview.PropertyID" readonly/><br />
+                    <input type="text" name="Property ID" value="@Model.tenantForReview.PropertyID" readonly /><br />
 
                     <label>First Name:                 </label><br />
                     <input type="text" name="FirsrName" value="@Model.tenantForReview.FirstName" /><br />
@@ -225,7 +287,6 @@
 
                 </div>
             </fieldset>
-        </table>
-    </form>
-
-}
+        </form>
+    }
+</div>
