@@ -93,7 +93,7 @@ namespace CNMaisons.Pages
             switch (Submit)
             {
                 case "Close":
-                    return RedirectToPage("/Index");
+                    return RedirectToPage("/IndexTenant");
 
 
                 case "Find":
@@ -112,7 +112,7 @@ namespace CNMaisons.Pages
                             if (tenantForReview.FirstName != null)
                             {
                                 ViewFormNow = true;
-                                Message = "Below are the detail of the Tenant's Lease application.";
+                                Message = "";
                                 return Page();
                             }
                             else

@@ -77,6 +77,12 @@ namespace CNMaisons.Pages
         }
         public IActionResult OnPost()
         {
+            if (HttpContext.Session.GetString("Email") != null)
+            {
+                UserEmail = HttpContext.Session.GetString("Email")!;
+            }
+            Users = RequestDirector.GetUserByEmail(UserEmail);
+            Employee = RequestDirector.GetAllEmployees(UserEmail);
             ModelState.Clear();
             Message = "";
 

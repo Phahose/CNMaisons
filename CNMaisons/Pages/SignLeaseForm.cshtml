@@ -82,7 +82,9 @@
                     <li>
                         <a href="~/ViewInquiry">View Inquiry </a>
                     </li>
-
+                    <li>
+                        <a href="~/UpdateTenant">Edit Tenants</a>
+                    </li>
                 }
                 @if (Model.Users.Role == "Staff")
                 {
@@ -97,9 +99,15 @@
                         <a href="#">View Visit Requests</a>
                     </li>
                     <li>
-                        <a href="#">Edit Account</a>
+                        <a href="~/UpdateTenant">Edit Tenants</a>
                     </li>
 
+                }
+                @if (Model.Users.Role == "Tenant")
+                {
+                    <li><a href="~/IndexTenant">My Account</a></li>
+                    <li><a href="~/SignLeaseForm">Sign Lease Form</a></li>
+                    <li><a href="#">Record Rent Payment</a></li>
                 }
                 <li class="loggedin-icon_div">
                     @if (Model.Employee.EmployeeImage.Length > 0)
@@ -116,8 +124,8 @@
     </div>
     @if (Model.ViewFormNow == false)
     {
-        <form name="FindPendingApplicationForm" method="post">
-            <h4>Review Lease Applications</h4>
+        <form name="FindPendingApplicationForm" method="post" class="form">
+            <h2>Review Lease Applications</h2>
             <div style="display: flex; align-content: center">
                 <table style="border-collapse: collapse; text-align: left; width: 100%;">
                     <thead>
@@ -134,7 +142,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td style="border: 1px solid #ddd;"><a href="#" onclick="copyTenantID('@Model.aTenantsPendingReview.TenantID', '@Model.aTenantsPendingReview.Email')">@Model.aTenantsPendingReview.TenantID</a></td>
+                            <td style="border: 1px solid #ddd;" class="populating-link"><a href="#" onclick="copyTenantID('@Model.aTenantsPendingReview.TenantID', '@Model.aTenantsPendingReview.Email')">@Model.aTenantsPendingReview.TenantID</a></td>
                             <td style="border: 1px solid #ddd;">@Model.aTenantsPendingReview.PropertyID</td>
                             <td style="border: 1px solid #ddd;">@Model.aTenantsPendingReview.FirstName</td>
                             <td style="border: 1px solid #ddd;">@Model.aTenantsPendingReview.LastName</td>
@@ -182,20 +190,13 @@
         </form>
     }
 
-
-
-
     @if (Model.ViewFormNow == true)
     {
-
         <form name="Application" method="post" class="form property_form transition-fade-down" enctype="multipart/form-data" onsubmit="return validateForm()">
-
-            <span style="font-size: larger; font-style: italic;">@Model.Message</span>
-            <table>
+            <span style="font-size: larger; font-style: italic;">@Model.Message</span>         
                 <fieldset>
                     <legend>Declaration, Signature, and Approval</legend>
                     <div>
-
                         <label>Approval Status:</label>
                         <select name="ApprovalStatus" onchange="validateForm()">
                             <option value="0" @{
@@ -218,7 +219,7 @@
                         <br />
                         <span style="font-size: larger; font-style: italic;">@Model.MessageForFile</span>
 
-                        <input type="submit" name="Submit" value="Submit Review" disabled /> <br />
+                        @* <input type="submit" name="Submit" value="Submit Review" disabled /> <br /> *@
 
                         <!-- Button element -->
                         <button type="submit" name="Submit" style="text-align: center;" value="Submit Review" disabled>
@@ -229,90 +230,220 @@
                 </fieldset>
 
 
-                <fieldset>
-                    <legend>Personal Information</legend>
-                    <div>
-                        <label>Tenant ID:                    @Model.tenantForReview.TenantID</label><br />
-                        <label>Property ID:                @Model.tenantForReview.PropertyID</label><br />
-                        <label>First Name:                 @Model.tenantForReview.FirstName</label><br />
-                        <label>Last Name:                  @Model.tenantForReview.LastName</label><br />
-                        <label>Phone Number:         @Model.tenantForReview.PhoneNumber</label><br />
-                        <label>Email:                          @Model.tenantForReview.Email</label><br />
-                        <label>Date of Birth:             @Model.tenantForReview.DOB</label><br />
-                        <label>Nationality:                @Model.tenantForReview.Nationality</label><br />
-                        <label>State of Origin:          @Model.tenantForReview.StateofOrigin</label><br />
-                        <label>Local Govt. Area:      @Model.tenantForReview.LGA</label><br />
-                        <label>Home Town:              @Model.tenantForReview.HomeTown</label><br />
-                        <label>Permanent Home Add: @Model.tenantForReview.PermanentHomeAddress</label><br />
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <legend>Occupation Info</legend>
-                    <div>
-                        <label>Occupation: @Model.tenantForReview.Occupation</label><br />
-                        <label>SelfEmployed: @Model.tenantForReview.SelfEmployed</label><br />
-                        <label>Business Registration Number: @Model.tenantForReview.BusinessRegistrationNumber</label><br />
-                        <label>Coporate Affairs Certificate: @Model.tenantForReview.CorporateAffairsCertificate</label><br />
-                        <label>Name of Employer: @Model.tenantForReview.NameofEmployer</label><br />
-                        <label>Address Of Employer: @Model.tenantForReview.AddressOfEmployer</label><br />
-                        <label>Length On Job: @Model.tenantForReview.LengthOnJob</label><br />
-                        <label>Current Position Held: @Model.tenantForReview.CurrentPositionHeld</label><br />
-                        <label>Nature Of Job: @Model.tenantForReview.NatureOfJob</label><br />
-                    </div>
-                </fieldset>
+            <details>
+            <summary>Personal Information</summary>
+            <div class="tenant-info">
+                <div class="info-item">
+                    <span class="label">First Name:</span>
+                    <span class="value">@Model.tenantForReview.FirstName</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Last Name:</span>
+                    <span class="value">@Model.tenantForReview.LastName</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Phone Number:</span>
+                    <span class="value">@Model.tenantForReview.PhoneNumber</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Email:</span>
+                    <span class="value">@Model.tenantForReview.Email</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Date of Birth:</span>
+                    <span class="value">@Model.tenantForReview.DOB.ToString("dd MMMM, yyyy.")</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Nationality:</span>
+                    <span class="value">@Model.tenantForReview.Nationality</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">State of Origin:</span>
+                    <span class="value">@Model.tenantForReview.StateofOrigin</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Local Govt. Area:</span>
+                    <span class="value">@Model.tenantForReview.LGA</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Home Town:</span>
+                    <span class="value">@Model.tenantForReview.HomeTown</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Permanent Home Add:</span>
+                    <span class="value">@Model.tenantForReview.PermanentHomeAddress</span>
+                </div>
+            </div>
+        </details>
+        <details>
+            <summary>Occupation Info</summary>
+            <div class="tenant-info">
+                <div class="info-item">
+                    <span class="label">Occupation:</span>
+                    <span class="value">@Model.tenantForReview.Occupation</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Self Employed:</span>
+                    <span class="value">@Model.tenantForReview.SelfEmployed</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Business Registration Number:</span>
+                    <span class="value">@Model.tenantForReview.BusinessRegistrationNumber</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Corporate Affairs Certificate:</span>
+                    <span class="value">@Model.tenantForReview.CorporateAffairsCertificate</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Name of Employer:</span>
+                    <span class="value">@Model.tenantForReview.NameofEmployer</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Address Of Employer:</span>
+                    <span class="value">@Model.tenantForReview.AddressOfEmployer</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Length On Job:</span>
+                    <span class="value">@Model.tenantForReview.LengthOnJob</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Current Position Held:</span>
+                    <span class="value">@Model.tenantForReview.CurrentPositionHeld</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Nature Of Job:</span>
+                    <span class="value">@Model.tenantForReview.NatureOfJob</span>
+                </div>
+            </div>
+        </details>
 
+        <details>
+            <summary>Past Rental Information</summary>
+            <div class="tenant-info">
+                <div class="info-item">
+                    <span class="label">Former Residence Address:</span>
+                    <span class="value">@Model.tenantForReview.FormerResidenceAddress</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Reason For Moving:</span>
+                    <span class="value">@Model.tenantForReview.ReasonForMoving</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Length Of Stay At Old Residence:</span>
+                    <span class="value">@Model.tenantForReview.LengthOfStayAtOldResidence</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Name Of Former Resident Manager:</span>
+                    <span class="value">@Model.tenantForReview.NameOfFormerResidentManager</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Objections To Reasons For Moving:</span>
+                    <span class="value">@Model.tenantForReview.ObjectionsToReasonsForMoving</span>
+                </div>
+            </div>
+        </details>
 
+        <details>
+            <summary>Marital Information</summary>
+            <div class="tenant-info">
+                <div class="info-item">
+                    <span class="label">Marital Status:</span>
+                    <span class="value">@Model.tenantForReview.MaritalStatus</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Spouse First Name:</span>
+                    <span class="value">@Model.tenantForReview.SpouseFirstName</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Spouse Last Name:</span>
+                    <span class="value">@Model.tenantForReview.SpouseLastName</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Spouse Occupation:</span>
+                    <span class="value">@Model.tenantForReview.SpouseOccupation</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Number Of Occupants:</span>
+                    <span class="value">@Model.tenantForReview.NumberOfOccupants</span>
+                </div>
+            </div>
+        </details>
+        <details>
+            <summary>Next of Kin Information</summary>
+            <div class="tenant-info">
+                <div class="info-item">
+                    <span class="label">Next Of Kin First Name:</span>
+                    <span class="value">@Model.tenantForReview.NextOfKinFirstName</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Next Of Kin Last Name:</span>
+                    <span class="value">@Model.tenantForReview.NextOfKinLastName</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Next Of Kin Address:</span>
+                    <span class="value">@Model.tenantForReview.NextOfKinAddress</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Next Of Kin Phone Number:</span>
+                    <span class="value">@Model.tenantForReview.NextOfKinPhoneNumber</span>
+                </div>
+            </div>
+        </details>
+        <details>
+            <summary>Guarantor Information</summary>
+            <div class="tenant-info">
+                <div class="info-item">
+                    <span class="label">Guarantor1 First Name:</span>
+                    <span class="value">@Model.tenantForReview.Guarantor1FirstName</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Guarantor1 Last Name:</span>
+                    <span class="value">@Model.tenantForReview.Guarantor1LastName</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Guarantor1 Address:</span>
+                    <span class="value">@Model.tenantForReview.Guarantor1Address</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Guarantor1 Occupation:</span>
+                    <span class="value">@Model.tenantForReview.Guarantor1Occupation</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Guarantor1 Phone Number:</span>
+                    <span class="value">@Model.tenantForReview.Guarantor1PhoneNumber</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Guarantor1 Alternate Phone Number:</span>
+                    <span class="value">@Model.tenantForReview.Guarantor1AlternatePhoneNumber</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Guarantor2 First Name:</span>
+                    <span class="value">@Model.tenantForReview.Guarantor2FirstName</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Guarantor2 Last Name:</span>
+                    <span class="value">@Model.tenantForReview.Guarantor2LastName</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Guarantor2 Address:</span>
+                    <span class="value">@Model.tenantForReview.Guarantor2Address</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Guarantor2 Occupation:</span>
+                    <span class="value">@Model.tenantForReview.Guarantor2Occupation</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Guarantor2 Phone Number:</span>
+                    <span class="value">@Model.tenantForReview.Guarantor2PhoneNumber</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Guarantor2 Alternate Phone Number:</span>
+                    <span class="value">@Model.tenantForReview.Guarantor2AlternatePhoneNumber</span>
+                </div>
 
-
-                <fieldset>
-                    <legend>Past Rental Information</legend>
-                    <div>
-                        <label>Former Residence Address: @Model.tenantForReview.FormerResidenceAddress</label><br />
-                        <label>Reason For Moving: @Model.tenantForReview.ReasonForMoving</label><br />
-                        <label>Length Of Stay At Old Residence: @Model.tenantForReview.LengthOfStayAtOldResidence</label><br />
-                        <label>Name Of Former Resident Manager: @Model.tenantForReview.NameOfFormerResidentManager</label><br />
-                        <label>Objections To Reasons For Moving: @Model.tenantForReview.ObjectionsToReasonsForMoving</label><br />
-                    </div>
-                </fieldset>
-
-                <fieldset>
-                    <legend>Marital Information</legend>
-                    <div>
-                        <label>Marital Status: @Model.tenantForReview.MaritalStatus</label><br />
-                        <label>Spouse First Name: @Model.tenantForReview.SpouseFirstName</label><br />
-                        <label>Spouse Last Name: @Model.tenantForReview.SpouseLastName</label><br />
-                        <label>Spouse Occupation: @Model.tenantForReview.SpouseOccupation</label><br />
-                        <label>Number Of Occupants: @Model.tenantForReview.NumberOfOccupants</label><br />
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <legend>Next of Kin Information</legend>
-                    <div>
-                        <label>Next Of Kin First Name: @Model.tenantForReview.NextOfKinFirstName</label><br />
-                        <label>Next Of Kin Last Name: @Model.tenantForReview.NextOfKinLastName</label><br />
-                        <label>Next Of Kin Address: @Model.tenantForReview.NextOfKinAddress</label><br />
-                        <label>Next Of Kin Phone Number: @Model.tenantForReview.NextOfKinPhoneNumber</label><br />
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <legend>Guarantor Information</legend>
-                    <div>
-                        <label>Guarantor1 First Name: @Model.tenantForReview.Guarantor1FirstName</label><br />
-                        <label>Guarantor1 Last Name: @Model.tenantForReview.Guarantor1LastName</label><br />
-                        <label>Guarantor1 Address: @Model.tenantForReview.Guarantor1Address</label><br />
-                        <label>Guarantor1 Occupation: @Model.tenantForReview.Guarantor1Occupation</label><br />
-                        <label>Guarantor1 Phone Number: @Model.tenantForReview.Guarantor1PhoneNumber</label><br />
-                        <label>Guarantor1 Alternate Phone Number: @Model.tenantForReview.Guarantor1AlternatePhoneNumber</label><br />
-                        <label>Guarantor2 First Name: @Model.tenantForReview.Guarantor2FirstName</label><br />
-                        <label>Guarantor2 Last Name: @Model.tenantForReview.Guarantor2LastName</label><br />
-                        <label>Guarantor2 Address: @Model.tenantForReview.Guarantor2Address</label><br />
-                        <label>Guarantor2 Occupation: @Model.tenantForReview.Guarantor2Occupation</label><br />
-                        <label>Guarantor2 Phone Number: @Model.tenantForReview.Guarantor2PhoneNumber</label><br />
-                        <label>Guarantor2 Alternate Phone Number: @Model.tenantForReview.Guarantor2AlternatePhoneNumber</label><br />
-                    </div>
-                </fieldset>
-            </table>
+                
+            </div>
+            </details>
         </form>
-
     }
 </div>

@@ -11,27 +11,9 @@
             <ul class="loggedin-list">
                 @if (Model.Users.Role == "LandLord")
                 {
-
-                    <li>
-                        <a href="~/IndexStaff">My Account</a>
-                    </li>
-                    <li>
-                        <a href="~/AddProperty">Add Property</a>
-                    </li>
-                    <li>
-                        <a href="#">View Maintainance Requests</a>
-                    </li>
-                    <li>
-                        <a href="~/CreateAccount">Create New Employee Account</a>
-                    </li>
-                    <li>
-                        <a href="#">View Visit Requests</a>
-                    </li>
-                    <li>
-                        <a href="~/ViewPropertyAdmin">View Properties</a>
-                    </li>
-
-
+                    <li><a href="~/IndexStaff">My Account</a></li>
+                    <li><a href="~/ViewTenantbyLandLord">View Tenant </a></li>
+                    <li><a href="~/CreateAccount">Create New Employee Account</a></li>
                 }
                 @if (Model.Users.Role == "Staff")
                 {
@@ -40,15 +22,11 @@
                         <a href="~/IndexStaff">My Account</a>
                     </li>
                     <li>
-                        <a href="~/AddProperty">Add Property</a>
+                        <a href="~/IndexStaff">My Account</a>
                     </li>
                     <li>
-                        <a href="#">View Visit Requests</a>
+                        <a href="~/ViewInquiry">View Inquiry </a>
                     </li>
-                    <li>
-                        <a href="#">Edit Account</a>
-                    </li>
-
                 }
                 <li class="loggedin-icon_div">
                     @if (Model.Employee.EmployeeImage != null)
