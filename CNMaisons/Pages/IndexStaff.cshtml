@@ -34,9 +34,16 @@
             </nav>
             <div class="basic_info">
                 <div class="icon_div">
-                    @if (Model.Employee.EmployeeImage.Length > 0)
+                    @if (Model.Employee.EmployeeImage != null)
                     {
-                        <img src="data:image;base64,@Convert.ToBase64String(Model.Employee.EmployeeImage)" alt="Property Image" />
+                        @if (Model.Employee.EmployeeImage.Length > 0)
+                        {
+                            <img src="data:image;base64,@Convert.ToBase64String(Model.Employee.EmployeeImage)" alt="Property Image" />
+                        }
+                        else
+                        {
+                            <img src="~/img/profile_icon.png" width="150" class="intro_image" />
+                        }
                     }
                     else
                     {

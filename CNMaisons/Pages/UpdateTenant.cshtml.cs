@@ -232,8 +232,8 @@ namespace CNMaisons.Pages
                             }
                         }
                     }
-                    return Page();
-                    break;
+                return Page();
+
 
                 case "Submit":
                     #region All Validations

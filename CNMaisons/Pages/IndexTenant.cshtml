@@ -22,14 +22,22 @@
             </nav>
             <div class="basic_info">
                 <div class="icon_div">
-                    @if (Model.Tenant.Passport.Length > 0)
+                    @if (Model.Tenant.Passport != null)
                     {
-                        <img src="data:image;base64,@Convert.ToBase64String(Model.Tenant.Passport)" alt="Property Image" />
+                        @if (Model.Tenant.Passport.Length > 0)
+                        {
+                            <img src="data:image;base64,@Convert.ToBase64String(Model.Tenant.Passport)" alt="Property Image" />
+                        }
+                        else
+                        {
+                            <img src="~/img/profile_icon.png" width="150" class="intro_image" />
+                        }
                     }
                     else
                     {
                         <img src="~/img/profile_icon.png" width="150" class="intro_image" />
                     }
+
                 </div>
                 <h2>@Model.Tenant.FirstName @Model.Tenant.LastName</h2>
                 <p>@Model.Users.Role</p>

@@ -59,8 +59,8 @@ namespace CNMaisons.Pages
             switch (Submit)
             {
                 case "Close":
-                    return RedirectToPage("/IndexStaff");
-                    break;
+                return RedirectToPage("/IndexStaff");
+
 
 
                 case "Refresh":

@@ -311,26 +311,24 @@
         <br />
 
         <br />
-        <span style="font-size: larger; font-style: italic;">
-            @if (Model.errorMessage != "")
+        @foreach (var error in Model.errorMessage)
+        {
+            @if (error != null)
             {
-                // Replace \n characters with HTML line breaks
-                var errorMessageWithLineBreaks = Model.errorMessage.Replace("\n", "<br />");
-                @Html.Raw(errorMessageWithLineBreaks)
+                <p style="font-size: small; color: red; background-color:white; padding: 0.5rem;">@error</p>
             }
-            <span style="font-size: larger; font-style: italic;">
-                @Model.Message
-
-            </span>
-        </span>
-           
+        }
+        @if (Model.Message != "")
+        {
+            <p style="font-size: small; color: green; background-color:white; padding: 0.5rem;">@Model.Message</p>
+        }
         <br />
         <fieldset>
             <legend>Personal Information</legend>
             <div>
                 <label for="Passport Photo">Passport Photo</label>
                 <br />
-                <input type="file" name="Passport" accept="image/*" />
+                <input type="file" name="Passport" accept="image/*" required/>
 
                 <br />
 
@@ -341,8 +339,6 @@
 
                 Email:
                 <input type="email" name="Email" />
-
-
 
                 <label for="FirstName">First Name</label>
                 <br />
@@ -385,7 +381,7 @@
 
                     <input type="text" name="Occupation" />
 
-                    <label for="SelfEmployed">Are you self-employed or in employment of an establishment?*: </label>
+                    <label for="SelfEmployed">Are you self-employed*: </label>
                     <input type="radio" id="answer_yes" name="SelfEmployed" value="yes" onclick="showFields() " checked>
                     <label for="answer_yes">Yes</label>
                     <input type="radio" id="answer_no" name="SelfEmployed" value="no" onclick="hideFields()">
@@ -495,7 +491,7 @@
                     </div>
                     <!----------------------------------------------------------------------->
 
-                    <label for="NumberOfOccupants">Number of occupants*:</label>
+                    <label for="NumberOfOccupants">Number of Expected Occupants in House*:</label>
                     <br />
                     <input type="number" name="NumberOfOccupants"  maxlength="2">
                     <br />
