@@ -39,6 +39,10 @@
                         </div>
                     </div>
                 }
+                @if (Model.DisplayedPropertyList.Count < 1)
+                {
+                    <p>@Model.ErrorMessage</p>
+                }
             </div>
         </form>
     </div>

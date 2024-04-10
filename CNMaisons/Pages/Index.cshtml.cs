@@ -37,14 +37,15 @@ namespace CNMaisons.Pages
                     if (StateFilter !=null)
                     {
                         DisplayedPropertyList = DisplayedPropertyList.Where(p => p.PropertyLocationState == StateFilter).ToList();
+                        if (DisplayedPropertyList.Count < 1)
+                        {
+                            ErrorMessage = "No Properties Match the Set parameters";
+                        }
 
                         return Page();
                     }
 
-                    if (DisplayedPropertyList.Count < 1)
-                    {
-                        ErrorMessage = "No Properties Match the Set parameters";
-                    }
+                    
                 }
                 else if (FormType == "InfoForm")
                 {
