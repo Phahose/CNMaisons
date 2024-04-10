@@ -15,7 +15,6 @@
                     <li><a href="~/IndexStaff">My Account</a></li>
                     <li><a href="~/ViewTenantbyLandLord">View Tenant </a></li>
                     <li><a href="~/CreateAccount">Create New Employee Account</a></li>
-                    <li><a href="~/ViewPropertyAdmin">View Properties</a></li>
                 }
                 @if (Model.Users.Role == "Staff")
                 {
@@ -43,8 +42,8 @@
                     <a href="~/Index"><img src="~/img/profile_icon" width="150" class="intro_image" /></a>
                 }
             </div>
-            <h2>Nicholas Ekwom</h2>
-            <p>LandLord</p>
+            <h2>@Model.Employee.FirstName @Model.Employee.LastName</h2>
+            <p>@Model.Users.Role</p>
         </div>
     </div>
     <form name="Login" method="post" class="form loginForm" enctype="multipart/form-data">

@@ -170,9 +170,10 @@ header li a:hover{
     background-color: #007bff;
     color: #fff;
     border: none;
-    padding: 10px 20px;
+    padding: 10px 25px;
     border-radius: 5px;
     cursor: pointer;
+    margin-left: 1rem;
 }
 
 .btn:hover {
