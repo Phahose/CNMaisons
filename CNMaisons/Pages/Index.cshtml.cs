@@ -15,6 +15,8 @@ namespace CNMaisons.Pages
         public List<Property> DisplayedPropertyList { get; set; } = new();
         public string ErrorMessage { get; set; } = string.Empty;
         public string SuccessMessage { get; set; } = string.Empty;
+        [BindProperty]
+        public string StateFilter { get; set; } = string.Empty;
         public void OnGet()
         {
             CNMPMS controller = new CNMPMS();
@@ -24,23 +26,37 @@ namespace CNMaisons.Pages
 
         public IActionResult OnPost()
         {
+            CNMPMS controller = new CNMPMS();
+            PropertyList = controller.GetProperties();
+            DisplayedPropertyList = PropertyList.Where(p => p.Occupied == false).ToList();
+            ModelState.Clear();
             if (ModelState.IsValid)
             {
                 if (FormType == "SearchForm")
                 {
+                    if (StateFilter !=null)
+                    {
+                        DisplayedPropertyList = DisplayedPropertyList.Where(p => p.PropertyLocationState == StateFilter).ToList();
 
+                        return Page();
+                    }
+
+                    if (DisplayedPropertyList.Count < 1)
+                    {
+                        ErrorMessage = "No Properties Match the Set parameters";
+                    }
                 }
                 else if (FormType == "InfoForm")
                 {
                     HttpContext.Session.Clear();
-                    CNMPMS controller = new CNMPMS();
                     if (PropertyID != null)
                     {
                         HttpContext.Session.SetString("PropertyID", PropertyID);
                     }
+                    return RedirectToPage("/PropertyDetails");
                 }      
             }
-            return RedirectToPage("/PropertyDetails");
+            return Page();
         }
     }
 }
