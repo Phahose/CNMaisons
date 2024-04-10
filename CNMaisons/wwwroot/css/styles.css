@@ -670,7 +670,8 @@ input.filter-btn{
 .loggedin-nav {
     display: flex;
     justify-content: space-between;
-    width: 100%;
+    min-width: 100vw;
+    max-width: 100vw;
 }
 .loggedin-list{
     display: flex;
@@ -793,10 +794,18 @@ input.filter-btn{
     margin-right:auto;
     
 }
-table{
-
+.table-div {
+    display: block;
+    align-content: center;
+    width: 85vw;
 }
-tr{
+table {
+}
+.table-form {
+    width: 90%;
+    margin: auto;
+}
+tr {
     width: fit-content;
 }
 td {

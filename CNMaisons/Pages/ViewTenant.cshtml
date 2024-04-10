@@ -71,11 +71,11 @@
                 @if (Model.Users.Role == "Tenant")
                 {
                     <li><a href="~/IndexTenant">My Account</a></li>
-                    @if (Model.Tenant.ApprovalStatus != "Approved")
+                    @if (Model.aTenant.ApprovalStatus != "Approved")
                     {
                         <li><a href="~/SignLeaseForm">Sign Lease Form</a></li>
                     }
-                    @if (Model.Tenant.ApprovalStatus == "Approved")
+                    @if (Model.aTenant.ApprovalStatus == "Approved")
                     {
                         <li><a href="#">Record Rent Payment</a></li>
                     }

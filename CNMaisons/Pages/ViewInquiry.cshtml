@@ -47,6 +47,22 @@
         // Enable the VisitStatus dropdown
         visitStatusDropdown.disabled = false;
     }
+
+    function showConfirmation() {
+        var confirmationDiv = document.querySelector('.delConfirmation');
+        var confirmationvisitID = document.getElementById('confirmationvisitID');
+        var deletePropertyID = document.getElementById('deletePropertyID');
+        var visitID = document.getElementById('findVisitID').value;
+        confirmationvisitID.innerText = visitID;
+        console.log(visitID + "The Visit ID");
+        deletevisitID.value = visitID;
+        confirmationDiv.classList.remove('hideform');
+    }
+
+    function hideConfirmation() {
+        var confirmationDiv = document.querySelector('.delConfirmation');
+        confirmationDiv.classList.add('hideform');
+    }
  </script>
  <div>
     <div class="loggedin-pages">
@@ -86,10 +102,10 @@
             </ul>
         </nav>
     </div>
-    <form name="FindPendingApplicationForm" method="post" class="form">
+    <form name="FindPendingApplicationForm" method="post" class="table-form">
         <h4>Review Lease Applications</h4>
-        <div style="display: flex; align-content: center">
-            <table style="border-collapse: collapse; text-align: left; width: 100%;">
+        <div class="table-div">
+            <table style="border-collapse: collapse; text-align: left;">
                 <thead>
                     <tr style="border: 1px solid #ddd; background-color:black;">
                         <th style="border: 1px solid #ddd;">VisitStatus</th>
@@ -127,7 +143,7 @@
                 </tbody>
                 <tr>
                     <td>Visit ID/PropertyID/Name</td>
-                    <td><input type="text" name="FindVisitID" readonly /></td>
+                    <td><input type="text" name="FindVisitID" readonly id="findVisitID"/></td>
                     <td><input type="text" name="FirstName" readonly /></td>
                     <td><input type="text" name="Email" readonly /></td>
                 </tr>
@@ -153,11 +169,18 @@
                         </button>
                     </td>
 
-                    <td><input type="submit" name="Submit" value="Refresh" class="btn"/></td>
+                    <td><button type="button" class="delete-prop-button" onclick="showConfirmation()">Delete Visit</button></td>
                     <td><input type="submit" name="Submit" value="Close" class="btn"/></td>
                 </tr>
-
             </table>
+            <div class="delConfirmation hideform">
+                <h3>Are you sure you want to delete this Visit <span id="confirmationvisitID"></span></h3>
+                <div class="flex-buttons">
+                    <input type="hidden" name="DeletedPropertyID" id="deletevisitID" value="">
+                    <input type="submit" name="Submit" value="Delete" class="delete-prop-button">
+                    <button type="button" class="update-prop-button" onclick="hideConfirmation()">Cancel</button>
+                </div>
+            </div>
         </div>
     </form>
  </div>
