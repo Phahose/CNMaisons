@@ -6,7 +6,6 @@ namespace CNMaisons.TechnicalService
 {
     public class Mails
     {
-        private string email;
         private string password;
         private string smtpServer;
         private int port;

@@ -90,12 +90,10 @@ namespace CNMaisons.Pages
             {
                 case "Close":
                     return RedirectToPage("/IndexStaff");
-                    
-                
+                                   
                 case "Refresh":
                     OnGet();
                     break;
-
                 case "Find":
                     if (FindTenantID != null)
                     {
@@ -226,7 +224,10 @@ namespace CNMaisons.Pages
                     return memoryStream.ToArray();
                 }
             }
-            else { return null; }
+            else 
+            { 
+                return new byte[0]; 
+            }
         }
 
     }

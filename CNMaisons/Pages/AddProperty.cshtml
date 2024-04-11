@@ -182,10 +182,11 @@
 
             <label for="Description">Property Description</label>
             <br />
-            <textarea name="Description" style="max-height: 200px; max-width: 600px;" required></textarea>
+            <textarea name="Description" style="max-height: 200px; max-width: 600px;" required maxlength="100"></textarea>
             @Html.ValidationMessage("Description")
             <br />
 
+            <label>Must Add At least 4 Images </label><br />
             <label for="Image1"> Image 1</label>
             <br/>
             <input type="file" name="Image1" required accept=".jpg, .jpeg, .png"/>
@@ -210,11 +211,11 @@
             @Html.ValidationMessage("Image4Error")
             <br/>
 
-            <label for="Image5"> Image 5</label>
+             <label for="Image5"> Image 5</label>
             <br/>
             <input type="file" name="Image5" accept=".jpg, .jpeg, .png" />
             <br/>
-
+            @*
             <label for="Image6"> Image 6</label>
             <br/>
             <input type="file" name="Image6" accept=".jpg, .jpeg, .png" />
@@ -238,7 +239,7 @@
             <label for="Image10"> Image 10</label>
             <br/>
             <input type="file" name="Image10" accept=".jpg, .jpeg, .png" />
-            <br/>
+            <br/> *@
 
             <input type="submit" name="Submit" value="Add Property" class="btn"/>
         </fieldset>
