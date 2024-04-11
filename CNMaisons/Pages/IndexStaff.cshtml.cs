@@ -15,7 +15,7 @@ namespace CNMaisons.Pages
         public string Submit { get; set; } = string.Empty;
         public User Users { get; set; } = new User();
         public Employee Employee { get; set; } = new Employee();
-        public bool IsPasswordChaned { get; set; }
+        public bool IsPasswordChaned { get; set; } = true;
         [BindProperty]
         public string Password { get; set; } = string.Empty;
         [BindProperty]
@@ -31,7 +31,7 @@ namespace CNMaisons.Pages
            Users = controller.GetUserByEmail(Email);
 
            Employee = controller.GetAllEmployees(Email);
-           if (Users.DefaultPassword != "true")
+           if (Users.DefaultPassword == "false")
            {
                IsPasswordChaned = true;
            }

@@ -1,3 +1,4 @@
+#nullable disable
 using CNMaisons.Controller;
 using CNMaisons.Domain;
 using CNMaisons.TechnicalService;
@@ -77,7 +78,7 @@ namespace CNMaisons.Pages
 
  
         [BindProperty]
-        public IFormFile? CorporateAffairsCertificate { get; set; }
+        public IFormFile CorporateAffairsCertificate { get; set; }
         [BindProperty]
         public string NameofEmployer { get; set; } = string.Empty;
 
@@ -620,7 +621,6 @@ namespace CNMaisons.Pages
 
                     RePopulate();
                     return Page();
-                    break;
             }
             return Page();
         }
@@ -645,7 +645,7 @@ namespace CNMaisons.Pages
                     return memoryStream.ToArray();
                 }
             }
-            else { return null; }
+            else { return new byte[0]; }
         }
 
         private void RePopulate()

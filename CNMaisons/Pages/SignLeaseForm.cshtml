@@ -174,17 +174,13 @@
                             <td style="border: 1px solid #ddd;">
                                 @if (Model.aTenantsPendingReview.YourSignedForm != null && Model.aTenantsPendingReview.YourSignedForm.Length > 0)
                                 {
-                                    @if (Model.aTenantsPendingReview.YourSignedForm != null)
-                                    {
-                                        byte[] wordDocumentBytes = Model.aTenantsPendingReview.YourSignedForm!;
-                                        string base64Document = Convert.ToBase64String(wordDocumentBytes!);
-                                        <span class="label">Your Signature:</span>
-                                        <span class="value">
-                                            <a href="data:application/octet-stream;base64,@base64Document" download="@Model.aTenantsPendingReview.FirstName Signed Tenancy Contract">
-                                                Signed Contract
-                                            </a>
-                                        </span>
-                                    }
+                                    byte[] wordDocumentBytes = Model.aTenantsPendingReview.YourSignedForm!;
+                                    string base64Document = Convert.ToBase64String(wordDocumentBytes!);
+                                    <span class="value">
+                                        <a href="data:application/octet-stream;base64,@base64Document" download="@Model.aTenantsPendingReview.FirstName Signed Tenancy Contract">
+                                            Signed Contract
+                                        </a>
+                                    </span>
                                 }
                                 else
                                 {

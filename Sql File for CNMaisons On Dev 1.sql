@@ -1,8 +1,13 @@
-DROP DATABASE CNMaisonDB
-CREATE DATABASE CNMaisonDB
+CREATE TABLE [dbo].[Employee](
+	[EmployeeID] [int] IDENTITY(1,1) NOT NULL,
+	[EmployeeImage] [varbinary](max) NULL,
+	[FirstName] [varchar](50) NOT NULL,
+	[LastName] [varchar](50) NOT NULL,
+	[Email] [varchar](100) NOT NULL,
+	[DateJoined] [date] NOT NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
-USE CNMaisonDB
- 
+
 CREATE TABLE Property
 (
 	PropertyID  VARCHAR(7) NOT NULL,
@@ -30,10 +35,7 @@ CREATE TABLE Property
 )
 
 ALTER TABLE Property
-	ADD Occupied BIT 
 	ADD CONSTRAINT PK_PropertyID PRIMARY KEY (PropertyID)
-
-
 
 CREATE PROCEDURE AddProperty(
     @PropertyID VARCHAR(7),
@@ -132,11 +134,6 @@ BEGIN
 END
 
 
-
-
-
---DROP PROCEDURE AddProperty
-
 CREATE PROCEDURE GetProperty
 AS
 	BEGIN
@@ -148,14 +145,7 @@ AS
 
 DROP PROCEDURE GetProperty
 
-
-
-
-
-
-
-
-DROP PROCEDURE GetPropertyByID
+--DROP PROCEDURE GetPropertyByID
 CREATE PROCEDURE GetPropertyByID
     @PropertyID VARCHAR(7)
 AS
@@ -165,13 +155,16 @@ BEGIN
     WHERE PropertyID = @PropertyID AND DeleteFlag = 0;
 END
 
-EXEC GetPropertyByID 'CN00001'
 
+--DROP PROCEDURE GetProperty
+CREATE PROCEDURE GetProperty
+AS
+BEGIN
+    SELECT *
+    FROM Property
+    WHERE  DeleteFlag = 0;
+END
 
-
-
-
-DROP PROCEDURE UpdateProperty
 
 CREATE PROCEDURE UpdateProperty
     @PropertyID VARCHAR(7),
@@ -219,12 +212,7 @@ BEGIN
     WHERE PropertyID = @PropertyID;
 END;
 
-
-
-
-
-
-CREATE Procedure DeletProcedure (@PropertyID VARCHAR(7))
+CREATE Procedure DeleteProperty (@PropertyID VARCHAR(7))
 AS 
 	BEGIN
 		Update Property 
@@ -232,20 +220,6 @@ AS
 		WHERE PropertyID = @PropertyID
 	END
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-DROP Table Employee
 CREATE TABLE Users(
 	Email VARCHAR(100) NOT NULL,
 	Password  VARCHAR(100) NOT NULL,
@@ -259,67 +233,12 @@ ALTER TABLE Users
 	ADD CONSTRAINT PK_Users PRIMARY KEY (Email)
 
 
-
-
-
-
-
-
-
-
-
-
-
 CREATE PROCEDURE GetUserByEmail(@Email VARCHAR(100))
 AS
 	BEGIN 
 		SELECT * FROM Users WHERE Email = @Email AND DeactivateAccountStatus = 0
 	END
 
-
-
-
-
-
-
-
-
-
-
-DELETE FROM Property WHERE PropertyID = 'CN00002'
-UPDATE Property 
-SET PropertyPrice = 3202000.56
-WHERE PropertyID = 'CN00003'
-
-SElECT * From Users
-
-DELETE FROM Users
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
---drop TABLE PropertyVisit
 CREATE TABLE PropertyVisit(
     PropertyVisitID INT IDENTITY(1,1) NOT NULL,
 	PropertyID VARCHAR(7) NOT NULL,
@@ -337,9 +256,6 @@ ALTER TABLE PropertyVisit
 		CONSTRAINT FK_ProductKey_PropertyID FOREIGN KEY(PropertyID) REFERENCES Property(PropertyID)
 
 
-
-	
---AddPropertyVisit Procedure
 CREATE PROCEDURE AddPropertyVisit(
 	@PropertyID VARCHAR(7) = NULL,
     @FirstName VARCHAR(30) = NULL,
@@ -387,15 +303,6 @@ BEGIN
 END;
 
 
-
-
-
-
-
-
-
-
---UpdatePropertyVisit Procedure
 CREATE PROCEDURE UpdatePropertyVisit(
 	@PropertyID VARCHAR(7) = NULL,
     @FirstName VARCHAR(30) = NULL,
@@ -449,21 +356,8 @@ BEGIN
     RETURN @ReturnCode
 END;
 
-
-
-
-
-
-
-
-
-
-
---Tenant
---DROP TABLE Tenant
 CREATE TABLE Tenant(
-    ID INT IDENTITY(1,1), 
-	TenantID AS 'CN' + RIGHT('000' + CAST(ID AS VARCHAR(5)), 3) PERSISTED, -- Computed column for TenantID
+    TenantID VARCHAR(5) NOT NULL, 
 	PropertyID  VARCHAR(7) NOT NULL,
 	Passport VARBINARY(MAX),
 	FirstName VARCHAR(30) NOT NULL,  
@@ -471,6 +365,7 @@ CREATE TABLE Tenant(
 	PhoneNumber VARCHAR(14) NOT NULL, 
 	Email VARCHAR(100) NOT NULL,
 	DOB DATE NOT NULL, 
+	Password  VARCHAR(100) NOT NULL,
 	Nationality VARCHAR(20) NOT NULL,
 	StateofOrigin VARCHAR(20), 
 	LGA VARCHAR(20),
@@ -479,7 +374,7 @@ CREATE TABLE Tenant(
 	Occupation VARCHAR(25) NOT NULL, 
 	SelfEmployed VARCHAR(3) NOT NULL,
 	BusinessRegistrationNumber VARCHAR(15),
-	CorporateAffairsCertificate VARBINARY(MAX),
+	CoporateAffairsCertificate VARBINARY(MAX),
 	NameofEmployer VARCHAR(50), 
 	AddressOfEmployer VARCHAR(100),
 	LengthOnJob INT, 
@@ -511,46 +406,39 @@ CREATE TABLE Tenant(
 	Guarantor2Occupation VARCHAR(25) NOT NULL,
 	Guarantor2PhoneNumber VARCHAR(14) NOT NULL,
 	Guarantor2AlternatePhoneNumber VARCHAR(14),
-	Declaration VARCHAR(60) NOT NULL,	
-	ApprovalStatus VARCHAR(20) NOT NULL,
-	DeleteFlag BIT NOT NULL,
-	YourSignedForm VARBINARY(MAX),		
-	LeaseFormForSigning VARBINARY(MAX)
-);
+	Declaration VARCHAR(60) NOT NULL,
+	YourSignature VARCHAR(60) NOT NULL,	
+	ApprovalStatus VARCHAR(10) NOT NULL,
+	DeleteFlag BIT NOT NULL)
 
 ALTER TABLE Tenant
-	ADD	CONSTRAINT PK_Tenant_ID PRIMARY KEY (ID),
-		CONSTRAINT UK_Tenant_TenantID UNIQUE(TenantID),
-		CONSTRAINT UK_Tenant_Email UNIQUE(Email)
-GO
-		--FK propertyID 
+	ADD CONSTRAINT PK_Tenant PRIMARY KEY (TenantID),
+		CONSTRAINT UK_Email UNIQUE(Email)
 
-		;
-
-
-
-		select* from Tenant
---DROP PROCEDURE AddTenant
 CREATE PROCEDURE AddTenant(
+    @TenantID VARCHAR(5) = NULL, 
 	@Passport VARBINARY(MAX) = NULL,
 	@FirstName VARCHAR(30) = NULL,  
 	@LastName VARCHAR(30) = NULL,
 	@PhoneNumber VARCHAR(14) = NULL, 
 	@Email VARCHAR(100) = NULL,
 	@DOB DATE = NULL, 
+	@Password  VARCHAR(100) = NULL,
 	@Nationality VARCHAR(20) = NULL,	
 	@StateofOrigin VARCHAR(20) = NULL,
-	@LGA VARCHAR(20)  = NULL,	
+
+	@LGA VARCHAR(20)  = NULL,
 	@HomeTown VARCHAR(20)  = NULL,
 	@PermanentHomeAddress VARCHAR(100) = NULL,
 	@Occupation VARCHAR(25) = NULL, 
 	@SelfEmployed VARCHAR(1) = NULL,
 	@BusinessRegistrationNumber VARCHAR(15)  = NULL,
-	@CorporateAffairsCertificate VARBINARY(MAX)  = NULL,	
+	@CoporateAffairsCertificate VARBINARY(MAX)  = NULL,
 	@NameofEmployer VARCHAR(50) = NULL, 
 	@AddressOfEmployer VARCHAR(100) = NULL,
 	@LengthOnJob INT = NULL, 
-	@CurrentPositionHeld VARCHAR(25) = NULL,	
+
+	@CurrentPositionHeld VARCHAR(25) = NULL,
 	@NatureOfJob VARCHAR(25) = NULL, 
 	@FormerResidenceAddress VARCHAR(100) = NULL,
 	@ReasonForMoving VARCHAR(50) = NULL,
@@ -560,7 +448,8 @@ CREATE PROCEDURE AddTenant(
 	@MaritalStatus VARCHAR(10) = NULL,  
 	@SpouseFirstName VARCHAR(30) = NULL,
 	@SpouseLastName VARCHAR(30) = NULL,
-	@SpouseOccupation VARCHAR(25) = NULL,	
+	
+	@SpouseOccupation VARCHAR(25) = NULL,
 	@NumberOfOccupants INT = NULL, 
 	@NextOfKinFirstName VARCHAR(30) = NULL,
 	@NextOfKinLastName VARCHAR(30) = NULL, 
@@ -570,7 +459,8 @@ CREATE PROCEDURE AddTenant(
 	@Guarantor1LastName VARCHAR(30) = NULL, 
 	@Guarantor1Address VARCHAR(100) = NULL,
 	@Guarantor1Occupation VARCHAR(25) = NULL,
-	@Guarantor1PhoneNumber VARCHAR(14) = NULL,	
+	
+	@Guarantor1PhoneNumber VARCHAR(14) = NULL,
 	@Guarantor1AlternatePhoneNumber VARCHAR(14) = NULL,
 	@Guarantor2FirstName VARCHAR(30) = NULL,
 	@Guarantor2LastName VARCHAR(30) = NULL, 
@@ -579,15 +469,20 @@ CREATE PROCEDURE AddTenant(
 	@Guarantor2PhoneNumber VARCHAR(14) = NULL,
 	@Guarantor2AlternatePhoneNumber VARCHAR(14) = NULL,
 	@Declaration VARCHAR(60) = NULL,
-	@ApprovalStatus VARCHAR(20) = NULL,	
+	@YourSignature VARCHAR(60) = NULL,
+	
+	@ApprovalStatus VARCHAR(10) = NULL,
 	@DeleteFlag BIT = NULL,
 	@PropertyID VARCHAR(7) = NULL)
+
 AS
 BEGIN
     DECLARE @ReturnCode INT
     SET @ReturnCode = 1	
 	
-	IF @FirstName IS NULL
+	IF @TenantID IS NULL
+		RAISERROR('AddTenant - required parameter: TenantID.', 16, 1);
+	ELSE IF @FirstName IS NULL
 		RAISERROR('AddTenant - required parameter: FirstName.', 16, 1);
 	ELSE IF @LastName IS NULL
 		RAISERROR('AddTenant - required parameter: LastName.', 16, 1);
@@ -597,6 +492,8 @@ BEGIN
 		RAISERROR('AddTenant - required parameter: Email.', 16, 1);
 	ELSE IF @DOB IS NULL
 		RAISERROR('AddTenant - required parameter: DOB.', 16, 1);
+	ELSE IF @Password IS NULL
+		RAISERROR('AddTenant - required parameter: Password.', 16, 1);
 	ELSE IF @Nationality IS NULL
 		RAISERROR('AddTenant - required parameter: Nationality.', 16, 1);
 	ELSE IF @PermanentHomeAddress IS NULL
@@ -639,6 +536,8 @@ BEGIN
 		RAISERROR('AddTenant - required parameter: Guarantor2PhoneNumber.', 16, 1);
 	ELSE IF @Declaration IS NULL
 		RAISERROR('AddTenant - required parameter: Declaration.', 16, 1);
+	ELSE IF @YourSignature IS NULL
+		RAISERROR('AddTenant - required parameter: YourSignature.', 16, 1);
 	ELSE IF @ApprovalStatus IS NULL
 		RAISERROR('AddTenant - required parameter: ApprovalStatus.', 16, 1);
 	ELSE IF @DeleteFlag IS NULL
@@ -650,11 +549,11 @@ BEGIN
 
 		BEGIN
 			INSERT INTO Tenant 
-			   (Passport, FirstName, LastName, PhoneNumber, 
-			    Email, DOB, Nationality, StateofOrigin, 
+			   (TenantID, Passport, FirstName, LastName, PhoneNumber, 
+			    Email, DOB, Password, Nationality, StateofOrigin, 
 
 			    LGA, HomeTown, PermanentHomeAddress, Occupation, SelfEmployed, 
-				BusinessRegistrationNumber, CorporateAffairsCertificate, NameofEmployer, AddressOfEmployer,  LengthOnJob, 
+				BusinessRegistrationNumber, CoporateAffairsCertificate, NameofEmployer, AddressOfEmployer,  LengthOnJob, 
 
 				CurrentPositionHeld, NatureOfJob, FormerResidenceAddress, ReasonForMoving, LengthOfStayAtOldResidence, 
 				NameOfFormerResidentManager, ObjectionsToReasonsForMoving, MaritalStatus, SpouseFirstName, SpouseLastName,
@@ -663,16 +562,16 @@ BEGIN
 				NextOfKinPhoneNumber, Guarantor1FirstName, Guarantor1LastName, Guarantor1Address, Guarantor1Occupation, 
 
 				Guarantor1PhoneNumber, Guarantor1AlternatePhoneNumber, Guarantor2FirstName, Guarantor2LastName, Guarantor2Address,
-				Guarantor2Occupation, Guarantor2PhoneNumber, Guarantor2AlternatePhoneNumber, Declaration, 
+				Guarantor2Occupation, Guarantor2PhoneNumber, Guarantor2AlternatePhoneNumber, Declaration, YourSignature, 
 				
 				ApprovalStatus, DeleteFlag, PropertyID)
 
 			VALUES 
-			   (@Passport, @FirstName, @LastName, @PhoneNumber, 
-			    @Email, @DOB, @Nationality, @StateofOrigin, 
+			   (@TenantID, @Passport, @FirstName, @LastName, @PhoneNumber, 
+			    @Email, @DOB, @Password, @Nationality, @StateofOrigin, 
 				
 				@LGA, @HomeTown, @PermanentHomeAddress, @Occupation, @SelfEmployed, 
-				@BusinessRegistrationNumber, @CorporateAffairsCertificate, @NameofEmployer, @AddressOfEmployer, @LengthOnJob, 
+				@BusinessRegistrationNumber, @CoporateAffairsCertificate, @NameofEmployer, @AddressOfEmployer, @LengthOnJob, 
 				
 				@CurrentPositionHeld, @NatureOfJob, @FormerResidenceAddress, @ReasonForMoving, @LengthOfStayAtOldResidence, 
 				@NameOfFormerResidentManager, @ObjectionsToReasonsForMoving, @MaritalStatus, @SpouseFirstName, @SpouseLastName,
@@ -681,7 +580,7 @@ BEGIN
 				@NextOfKinPhoneNumber, @Guarantor1FirstName, @Guarantor1LastName, @Guarantor1Address, @Guarantor1Occupation, 
 				
 				@Guarantor1PhoneNumber, @Guarantor1AlternatePhoneNumber, @Guarantor2FirstName, @Guarantor2LastName, @Guarantor2Address,
-				@Guarantor2Occupation, @Guarantor2PhoneNumber, @Guarantor2AlternatePhoneNumber, @Declaration,  
+				@Guarantor2Occupation, @Guarantor2PhoneNumber, @Guarantor2AlternatePhoneNumber, @Declaration, @YourSignature, 
 				
 				@ApprovalStatus, @DeleteFlag, @PropertyID)
 
@@ -694,16 +593,7 @@ BEGIN
 
     RETURN @ReturnCode
 END;
-GO
 
-
-select * from Tenant
-
-
-
-
-
---DROP PROCEDURE GetPendingLeaseApplication
 CREATE PROCEDURE GetPendingLeaseApplication
 AS
 BEGIN
@@ -711,7 +601,7 @@ BEGIN
     SET @ReturnCode = 1	
 	
 	BEGIN
-		SELECT ApprovalStatus, TenantID, PropertyID, FirstName, LastName FROM Tenant
+		SELECT ApprovalStatus, TenantID, PropertyID, FirstName, LastName, Email, YourSignedForm, LeaseFormForSigning FROM Tenant
 		WHERE ApprovalStatus != 'Approved';
 
 		IF @@ERROR = 0
@@ -723,13 +613,12 @@ BEGIN
     RETURN @ReturnCode
 END;
 
+EXEC GetPendingLeaseApplication
 
-
-
-exec GetPendingLeaseApplication
 --DROP PROCEDURE ModifyTenant
+
 CREATE PROCEDURE ModifyTenant(
-    @TenantID VARCHAR(5) = NULL, 
+      @TenantID VARCHAR(5) = NULL, 
 	@Passport VARBINARY(MAX) = NULL,
 	@FirstName VARCHAR(30) = NULL,  
 	@LastName VARCHAR(30) = NULL,
@@ -744,7 +633,7 @@ CREATE PROCEDURE ModifyTenant(
 	@Occupation VARCHAR(25) = NULL, 
 	@SelfEmployed VARCHAR(1) = NULL,
 	@BusinessRegistrationNumber VARCHAR(15),
-	@CoporateAffairsCertificate VARBINARY(MAX),
+	@CorporateAffairsCertificate VARBINARY(MAX),
 	@NameofEmployer VARCHAR(50), 
 	@AddressOfEmployer VARCHAR(100),
 	@LengthOnJob INT, 
@@ -777,9 +666,9 @@ CREATE PROCEDURE ModifyTenant(
 	@Guarantor2PhoneNumber VARCHAR(14) = NULL,
 	@Guarantor2AlternatePhoneNumber VARCHAR(14),
 	@Declaration VARCHAR(60) = NULL,
-	@YourSignature VARBINARY(MAX) = NULL,	
-	@ApprovalStatus VARCHAR(10)  = NULL,
-
+	@YourSignedForm VARBINARY(MAX) = NULL,	
+	@ApprovalStatus VARCHAR(20)  = NULL,
+	@LeaseFormForSigning VARBINARY(MAX) = NULL,
 	@DeleteFlag BIT = NULL)
 AS
 BEGIN
@@ -885,7 +774,7 @@ BEGIN
 				Occupation = @Occupation,
 				SelfEmployed = @SelfEmployed,
 				BusinessRegistrationNumber = @BusinessRegistrationNumber,
-				CoporateAffairsCertificate = @CoporateAffairsCertificate,
+				CorporateAffairsCertificate = @CorporateAffairsCertificate,
 				NameofEmployer = @NameofEmployer,
 				AddressOfEmployer = @AddressOfEmployer,
 				LengthOnJob = @LengthOnJob,
@@ -918,9 +807,12 @@ BEGIN
 				Guarantor2PhoneNumber = @Guarantor2PhoneNumber,
 				Guarantor2AlternatePhoneNumber = @Guarantor2AlternatePhoneNumber,
 				Declaration = @Declaration,
-				YourSignature = @YourSignature,
+				YourSignedForm = @YourSignedForm ,
 				ApprovalStatus =@ApprovalStatus,
-				DeleteFlag = @DeleteFlag
+				LeaseFormForSigning= @LeaseFormForSigning,
+				DeleteFlag = @DeleteFlag				
+				 
+
 			WHERE TenantID = @TenantID;
 			IF @@ERROR = 0
 				SET @ReturnCode = 0
@@ -929,13 +821,10 @@ BEGIN
 		END
 
     RETURN @ReturnCode
-END;
+END
+GO
 
 
-
-
-
---DROP PROCEDURE ViewTenant
 CREATE PROCEDURE ViewTenant(
 	@TenantID VARCHAR(5) = NULL,
 	@FirstName VARCHAR(30) = NULL,  
@@ -986,12 +875,6 @@ BEGIN
     RETURN @ReturnCode
 END;
 
-
-
-
-
-
-
 --DROP PROCEDURE RemoveTenant
 CREATE PROCEDURE RemoveTenant(@TenantID VARCHAR(5) = NULL)
 AS
@@ -1016,170 +899,108 @@ BEGIN
 
     RETURN @ReturnCode
 END;
+GO
 
-
---Maintenance
---DROP TABLE Maintenance
-CREATE TABLE Maintenance(
-	MaintenanceID INT IDENTITY(1,1) NOT NULL,
-	TenantID VARCHAR(5) NOT NULL,
-	PropertyID VARCHAR(7) NOT NULL,
-	DateOfRequest DATE DEFAULT GETDATE() NOT NULL,
-	ProposedDateForFix DATE NOT NULL,
-	CommentOnMaintenance VARCHAR(100) NOT NULL,
-	Response VARCHAR(200),
-	DateOfResponse DATE,
-	DateOfFixing DATE,
-	ActualCost MONEY,
-	Image1  VARBINARY(MAX),
-	Image2  VARBINARY(MAX),
-	Status VARCHAR(10) NOT NULL)
-
-ALTER TABLE Maintenance
-	ADD CONSTRAINT PK_Maintenance PRIMARY KEY (MaintenanceID),
-		CONSTRAINT FK_Maintenance_TenantID FOREIGN KEY(TenantID) REFERENCES Tenant(TenantID),
-		CONSTRAINT FK_Maintenance_PropertyID FOREIGN KEY(PropertyID) REFERENCES Property(PropertyID)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
---DROP PROCEDURE AddMaintenance
-CREATE PROCEDURE AddMaintenance(
-    @TenantID VARCHAR(5),
-    @PropertyID VARCHAR(7),
-    @ProposedDateForFix DATE,
-    @CommentOnMaintenance VARCHAR(100),
-    @Response VARCHAR(200) = NULL,
-    @DateOfResponse DATE = NULL,
-    @DateOfFixing DATE = NULL,
-    @ActualCost MONEY = NULL,
-    Image1  VARBINARY(MAX),
-	Image2  VARBINARY(MAX),
-	@Status VARCHAR(10)
-)
+--DROP PROCEDURE UpdateApplication
+CREATE PROCEDURE UpdateApplication(
+    @TenantID VARCHAR(5) = NULL, 
+	@ApprovalStatus VARCHAR(20)  = NULL,
+	@LeaseFormForSigning VARBINARY(MAX) = NULL)
 AS
 BEGIN
-    DECLARE @ReturnCode INT;
-    SET @ReturnCode = 1;
+    DECLARE @ReturnCode INT
+    SET @ReturnCode = 1	
+	
+	IF @TenantID IS NULL
+        RAISERROR('UpdateApplicationAwaitingSignature - required parameter: @TenantID.', 16, 1);
+    ELSE IF @ApprovalStatus IS NULL
+		RAISERROR('UpdateApplicationAwaitingSignature - required parameter: @ApprovalStatus.', 16, 1);
+	ELSE IF @LeaseFormForSigning IS NULL
+		RAISERROR('UpdateApplicationAwaitingSignature - required parameter: @LeaseFormForSigning.', 16, 1);
+	ELSE
 
-    IF @TenantID IS NULL
-        RAISERROR('AddMaintenance - required parameter: @TenantID.', 16, 1);
-    ELSE IF @PropertyID IS NULL
-        RAISERROR('AddMaintenance - required parameter: @PropertyID.', 16, 1);
-    ELSE IF @ProposedDateForFix IS NULL
-        RAISERROR('AddMaintenance - required parameter: @ProposedDateForFix.', 16, 1);
-    ELSE IF @CommentOnMaintenance IS NULL
-        RAISERROR('AddMaintenance - required parameter: @CommentOnMaintenance.', 16, 1);
-    ELSE IF @Status IS NULL
-        RAISERROR('AddMaintenance - required parameter: @Status.', 16, 1);
+		BEGIN
+		    UPDATE Tenant
+			SET 
+				ApprovalStatus =@ApprovalStatus,
+				LeaseFormForSigning= @LeaseFormForSigning
+			WHERE TenantID = @TenantID;
 
-    ELSE
-    BEGIN
-        -- Insert the maintenance request into the Maintenance table
-        INSERT INTO Maintenance 
-           (TenantID, PropertyID, ProposedDateForFix, CommentOnMaintenance, Response, DateOfResponse, DateOfFixing, ActualCost, Image1, Image2, Status)
-        VALUES 
-           (@TenantID, @PropertyID, @ProposedDateForFix, @CommentOnMaintenance, @Response, @DateOfResponse, @DateOfFixing, @ActualCost,  @Image1, @Image2, @Status);
+			IF @@ERROR = 0
+				SET @ReturnCode = 0
+			ELSE
+				RAISERROR('UpdateApplicationAwaitingSignature - UPDATE Error occurred while adding tenant to tenant table.', 16, 1);
+		END
 
-        IF @@ERROR = 0
-            SET @ReturnCode = 0;
-        ELSE
-            RAISERROR('AddMaintenance - INSERT Error occurred while adding maintenance request.', 16, 1);
-    END;
-
-    RETURN @ReturnCode;
+    RETURN @ReturnCode
 END;
+GO
 
-
-
-
-
-
-
-
---DROP PROCEDURE UpdateMaintenance(
-CREATE PROCEDURE UpdateMaintenance(
-    @MaintenanceID INT,
-	@TenantID VARCHAR(5),
-    @PropertyID VARCHAR(7),
-    @ProposedDateForFix DATE,
-    @CommentOnMaintenance VARCHAR(100),
-    @Response VARCHAR(200) = NULL,
-    @DateOfResponse DATE = NULL,
-    @DateOfFixing DATE = NULL,
-    @ActualCost MONEY = NULL,
-	Image1  VARBINARY(MAX),
-	Image2  VARBINARY(MAX),
-    @Status VARCHAR(10)
-)
+CREATE PROCEDURE UpdateSignedApplication(
+    @TenantID VARCHAR(5) = NULL, 
+	@ApprovalStatus VARCHAR(20)  = NULL,
+	@YourSignedForm VARBINARY(MAX) = NULL)
 AS
 BEGIN
-    DECLARE @ReturnCode INT;
-    SET @ReturnCode = 1;
+    DECLARE @ReturnCode INT
+    SET @ReturnCode = 1	
+	
+	IF @TenantID IS NULL
+        RAISERROR('UpdateSignedApplication - required parameter: @TenantID.', 16, 1);
+    ELSE IF @ApprovalStatus IS NULL
+		RAISERROR('UpdateSignedApplication - required parameter: @ApprovalStatus.', 16, 1);
+	ELSE IF @YourSignedForm IS NULL
+		RAISERROR('UpdateSignedApplication - required parameter: @YourSignedForm.', 16, 1);
+	ELSE
 
-    IF @TenantID IS NULL
-        RAISERROR('UpdateMaintenance - required parameter: @TenantID.', 16, 1);
-    ELSE IF @PropertyID IS NULL
-        RAISERROR('UpdateMaintenance - required parameter: @PropertyID.', 16, 1);
-    ELSE IF @ProposedDateForFix IS NULL
-        RAISERROR('UpdateMaintenance - required parameter: @ProposedDateForFix.', 16, 1);
-    ELSE IF @CommentOnMaintenance IS NULL
-        RAISERROR('UpdateMaintenance - required parameter: @CommentOnMaintenance.', 16, 1);
-    ELSE IF @Status IS NULL
-        RAISERROR('UpdateMaintenance - required parameter: @Status.', 16, 1);
-    ELSE
-    BEGIN
-        UPDATE Maintenance
-        SET 
-            TenantID = @TenantID,
-            PropertyID = @PropertyID,
-            ProposedDateForFix = @ProposedDateForFix,
-            CommentOnMaintenance = @CommentOnMaintenance,
-            Response = @Response,
-            DateOfResponse = @DateOfResponse,
-            DateOfFixing = @DateOfFixing,
-            ActualCost = @ActualCost,
-			Image1 = @Image1,
-			Image2 = @Image2,
-            Status = @Status
+		BEGIN
+		    UPDATE Tenant
+			SET 
+				ApprovalStatus =@ApprovalStatus,
+				YourSignedForm= @YourSignedForm
+			WHERE TenantID = @TenantID;
 
-        WHERE MaintenanceID = @MaintenanceID;
+			IF @@ERROR = 0
+				SET @ReturnCode = 0
+			ELSE
+				RAISERROR('UpdateSignedApplication - UPDATE Error occurred while adding tenant to tenant table.', 16, 1);
+		END
 
-        IF @@ERROR = 0
-            SET @ReturnCode = 0;
-        ELSE
-            RAISERROR('UpdateMaintenance - INSERT Error occurred while adding maintenance request.', 16, 1);
-    END;
-
-    RETURN @ReturnCode;
+    RETURN @ReturnCode
 END;
+GO
 
 
+CREATE PROCEDURE UpdateFinalApplicationStatus(
+    @TenantID VARCHAR(5) = NULL, 
+	@ApprovalStatus VARCHAR(20)  = NULL)
+AS
+BEGIN
+    DECLARE @ReturnCode INT
+    SET @ReturnCode = 1	
+	
+	IF @TenantID IS NULL
+        RAISERROR('UpdateFinalApplicationStatus - required parameter: @TenantID.', 16, 1);
+    ELSE IF @ApprovalStatus IS NULL
+		RAISERROR('UpdateFinalApplicationStatus - required parameter: @ApprovalStatus.', 16, 1);
+	ELSE
 
+		BEGIN
+		    UPDATE Tenant
+			SET 
+				ApprovalStatus =@ApprovalStatus
+			WHERE TenantID = @TenantID;
 
+			IF @@ERROR = 0
+				SET @ReturnCode = 0
+			ELSE
+				RAISERROR('UpdateFinalApplicationStatus - UPDATE Error occurred while adding tenant to tenant table.', 16, 1);
+		END
 
+    RETURN @ReturnCode
+END;
+GO
 
-
-
-
-
-
-
---Payment
---DROP TABLE Payment
 CREATE TABLE Payment(
 	PaymentID INT IDENTITY(1,1) NOT NULL,
 	TenantID VARCHAR(5) NOT NULL,
@@ -1201,9 +1022,6 @@ ALTER TABLE Payment
 	ADD CONSTRAINT PK_Payment PRIMARY KEY (PaymentID),
 		CONSTRAINT FK_Payment_TenantID FOREIGN KEY(TenantID) REFERENCES Tenant(TenantID),
 		CONSTRAINT FK_Payment_PropertyID FOREIGN KEY(PropertyID) REFERENCES Property(PropertyID)
-
-
-
 
 
 CREATE PROCEDURE AddPayment(
@@ -1266,10 +1084,6 @@ BEGIN
     RETURN @ReturnCode;
 END;
 
-
-
-
-
 CREATE PROCEDURE ViewPayment(
 	@PaymentID INT = NULL,
 	@TenantID VARCHAR(5) = NULL,
@@ -1302,14 +1116,6 @@ BEGIN
 END;
 
 
-
-
-
-
-
-
-
---DROP PROCEDURE ViewSpecificPaymentByDateRange
 CREATE PROCEDURE ViewSpecificPaymentByDateRange(
     @PaymentID INT = NULL,
 	@TenantID VARCHAR(5) = NULL,
@@ -1344,10 +1150,6 @@ BEGIN
     RETURN @ReturnCode;
 END;
 
-
-
-
---DROP PROCEDURE ViewAllPaymentByDateRange
 CREATE PROCEDURE ViewAllPaymentByDateRange(
     @PaymentID INT = NULL,
 	@TenantID VARCHAR(5) = NULL,
@@ -1381,9 +1183,6 @@ BEGIN
 END;
 
 
-
-
---DROP TABLE Reminders
 CREATE TABLE Reminders(
 	RemindersID INT IDENTITY(1,1) NOT NULL,
 	TenantID VARCHAR(5) NOT NULL,
@@ -1395,13 +1194,6 @@ CREATE TABLE Reminders(
 ALTER TABLE Reminders
 	ADD CONSTRAINT PK_Reminders PRIMARY KEY (RemindersID),
 		CONSTRAINT FK_Reminders_TenantID FOREIGN KEY(TenantID) REFERENCES Tenant(TenantID)
-		
-
-
-
-
-		
-
 
 
 
@@ -1438,15 +1230,6 @@ BEGIN
     RETURN @ReturnCode;
 END;
 
-
-
-
-
-
-
-
-
-
 CREATE PROCEDURE ViewRemindersByTenantID(@TenantID VARCHAR(5) = NULL)
 AS
 BEGIN
@@ -1470,14 +1253,6 @@ BEGIN
     RETURN @ReturnCode;
 END;
 
-
-
-
-
-
-
-
---ViewRemindersByTenantIDAndDateRange
 CREATE PROCEDURE ViewRemindersByTenantIDAndDateRange(@TenantID VARCHAR(5) = NULL,
 	@StartDate DATE = NULL,
     @EndDate DATE = NULL)
@@ -1513,32 +1288,50 @@ BEGIN
     RETURN @ReturnCode;
 END;
 
-DROP PROCEDURE AddUser
+--DROP Table Users
+CREATE TABLE Users(
+	Email VARCHAR(100) NOT NULL,
+	Password  VARCHAR(100) NOT NULL,
+	Role  VARCHAR(25) NOT NULL,
+	DeactivateAccountStatus  BIT NOT NULL,
+	DefaultPassword  NVARCHAR(255) NOT NULL,
+	UserSalt  NVARCHAR(255) NOT NULL,
+	DateOfCreation  DATETIME DEFAULT GETDATE() NOT NULL
+)
+
+ALTER TABLE Users
+	ADD CONSTRAINT PK_Users PRIMARY KEY (Email)
+GO
+
+	
+
+--DROP PROCEDURE AddUser
 CREATE PROCEDURE AddUser
-    @Email VARCHAR(100),
+	@Email VARCHAR(100),
     @Password VARCHAR(100),
     @Role VARCHAR(25),
     @DefaultPassword NVARCHAR(255),
     @UserSalt NVARCHAR(255)
 AS
 BEGIN
-    INSERT INTO Users (Email, Password, Role, DeactivateAccountStatus,UserSalt, DefaultPassword)
-    VALUES (@Email, @Password, @Role, 0, @UserSalt, @DefaultPassword)
+    INSERT INTO Users (Email, Password, Role, DeactivateAccountStatus, DefaultPassword, UserSalt, DateOfCreation)
+    VALUES (@Email, @Password, @Role, 0, @DefaultPassword, @UserSalt, GETDATE())
 END
-
-CREATE TABLE Employee(
-	EmployeeID INT IDENTITY(1,1) NOT NULL,
-	EmployeeImage VARBINARY(MAX) NULL,
-	FirstName VARCHAR(50) NOT NULL,
-	LastName VARCHAR(50) NOT NULL,
-	Email VARCHAR(100) NOT NULL,
-	DateJoined DATE NOT NULL
-)
+GO
 
 
 
---DROP TABLE Employee
-DROP PROCEDURE AddEmployee
+
+
+CREATE PROCEDURE GetUserByEmail(@Email VARCHAR(100))
+AS
+	BEGIN 
+		SELECT * FROM Users WHERE Email = @Email AND DeactivateAccountStatus = 0
+	END
+GO;
+
+
+
 CREATE PROCEDURE AddEmployee (@FirstName VARCHAR(50), 
 							  @LastName VARCHAR(50), 
 							  @Email VARCHAR(100), 
@@ -1555,6 +1348,7 @@ AS
 	 VALUES (@EmployeeImage,@FirstName, @LastName, @Email, GETDATE())
 	END
 
+
 CREATE PROCEDURE GetAllTenants(@Email VARCHAR(100))
 AS 
 	BEGIN 
@@ -1562,21 +1356,13 @@ AS
 	 WHERE Email = @Email
 	END
 
+	DROP PROCEDURE GetAllEmployees
 CREATE PROCEDURE GetAllEmployees(@Email VARCHAR(100))
 AS 
 	BEGIN 
 	 SELECT * FROM Employee
 	 WHERE Email = @Email
 	END
-
-	SELECT * FROm USERs
-	SELECT * FROM EMployee
-
-	DELETE FROM Employee
-	DELETE FROM USERs
-
-
-	EXec GetAllEmployees 'ekwomnick@gmail.com'
 
 
 
@@ -1626,97 +1412,171 @@ BEGIN
     WHERE Email = @Email;
 END
 
-	
-CREATE PROCEDURE CheckIfEmailAlreadyExistInTenantTable(@Email VARCHAR(100) = NULL)
+--DROP TABLE PropertyVisit
+CREATE TABLE PropertyVisit(
+    PropertyVisitID INT IDENTITY(1,1) NOT NULL,
+	PropertyID VARCHAR(7) NOT NULL,
+    FirstName VARCHAR(30) NOT NULL,
+    LastName VARCHAR(30) NOT NULL,
+    Email VARCHAR(100) NOT NULL,
+    PhoneNumber VARCHAR(14) NOT NULL,
+	DateRecorded DATE DEFAULT GETDATE() NOT NULL,
+    ProposedVisitDate DATE NOT NULL,
+	ProposedVisitTime TIME NOT NULL,
+	VisitStatus VARCHAR(20) NOT NULL
+);
+ALTER TABLE PropertyVisit
+	ADD CONSTRAINT PK_PropertyVisit PRIMARY KEY (PropertyVisitID) 
+GO
+
+--DROP Procedure AddPropertyVisit Procedure
+CREATE PROCEDURE AddPropertyVisit(
+	@PropertyID VARCHAR(7) = NULL,
+    @FirstName VARCHAR(30) = NULL,
+    @LastName VARCHAR(30) = NULL,
+    @Email VARCHAR(100) = NULL,
+    @PhoneNumber VARCHAR(14) = NULL,	
+    @ProposedVisitDate DATE = NULL,
+	@ProposedVisitTime TIME = NULL,
+	@VisitStatus VARCHAR(20) = NULL)
 AS
 BEGIN
     DECLARE @ReturnCode INT
     SET @ReturnCode = 1
-	
-	IF @Email  IS NULL
-		RAISERROR('CheckIfEmailAlreadyExistInTenantTable - required parameter: Email.', 16, 1);
-	
+
+    IF @PropertyID IS NULL
+        RAISERROR('AddPropertyVisit- required parameter: @PropertyID.', 16, 1);
+    ELSE IF @FirstName IS NULL
+        RAISERROR('AddPropertyVisit- required parameter: @FirstName.', 16, 1);
+	ELSE IF @LastName IS NULL
+        RAISERROR('AddPropertyVisit- required parameter: @LastName.', 16, 1);
+    ELSE IF @Email IS NULL
+        RAISERROR('AddPropertyVisit- required parameter: @Email.', 16, 1);
+	ELSE IF @PhoneNumber IS NULL
+        RAISERROR('AddPropertyVisit- required parameter: @PhoneNumber.', 16, 1);
+    ELSE IF @ProposedVisitDate IS NULL
+        RAISERROR('AddPropertyVisit- required parameter: @ProposedVisitDate.', 16, 1);
+	ELSE IF @ProposedVisitTime IS NULL
+        RAISERROR('AddPropertyVisit- required parameter: @ProposedVisitTime.', 16, 1);
+    ELSE IF @VisitStatus IS NULL
+        RAISERROR('AddPropertyVisit- required parameter: @VisitStatus.', 16, 1);
 	ELSE
-		BEGIN
-			SELECT 	Email FROM Tenant
-			WHERE Email = @Email;
+		BEGIN    			
+			INSERT INTO PropertyVisit
+				(PropertyID, FirstName, LastName, Email, PhoneNumber, ProposedVisitDate, ProposedVisitTime, VisitStatus)
+			VALUES
+				(@PropertyID, @FirstName, @LastName, @Email, @PhoneNumber, @ProposedVisitDate, @ProposedVisitTime, @VisitStatus)
 
 			IF @@ERROR = 0
 				SET @ReturnCode = 0
 			ELSE
-				RAISERROR('CheckIfEmailAlreadyExistInTenantTable - SELECT Error occurred while reading tenant table.', 16, 1);
+				RAISERROR('AddPropertyVisit - INSERT Error: PropertyVisit table.', 16, 1)
 		END
 
     RETURN @ReturnCode
 END;
 GO
 
-CREATE PROCEDURE CheckIfPropertyExist(@PropertyID VARCHAR(7) = NULL)
+CREATE PROCEDURE GetAllOpenPropertyVisit 
 AS
 BEGIN
     DECLARE @ReturnCode INT
     SET @ReturnCode = 1
-	
-	IF @PropertyID  IS NULL
-		RAISERROR('CheckIfPropertyExist - required parameter: PropertyID.', 16, 1);
-	
-	ELSE
-		BEGIN
-			SELECT 	PropertyID FROM Property
-			WHERE PropertyID = @PropertyID;
 
-			IF @@ERROR = 0
-				SET @ReturnCode = 0
-			ELSE
-				RAISERROR('CheckIfPropertyExist - SELECT Error occurred while reading Property table.', 16, 1);
-		END
-
-    RETURN @ReturnCode
-END;
-GO
-
-
-CREATE PROCEDURE CheckIfEmailAlreadyExistInUsersTable(@Email VARCHAR(100) = NULL)
-AS
-BEGIN
-    DECLARE @ReturnCode INT
-    SET @ReturnCode = 1
-	
-	IF @Email  IS NULL
-		RAISERROR('CheckIfEmailAlreadyExistInUsersTable- required parameter: Email.', 16, 1);
-	
-	ELSE
-		BEGIN
-			SELECT 	Email FROM Users
-			WHERE Email = @Email;
-
-			IF @@ERROR = 0
-				SET @ReturnCode = 0
-			ELSE
-				RAISERROR('CheckIfEmailAlreadyExistInUsersTable - SELECT Error occurred while reading tenant table.', 16, 1);
-		END
-
-    RETURN @ReturnCode
-END;
-GO
-
-
-CREATE PROCEDURE GetPendingLeaseApplication
-AS
-BEGIN
-    DECLARE @ReturnCode INT
-    SET @ReturnCode = 1	
-	
-	BEGIN
-		SELECT ApprovalStatus, TenantID, PropertyID, FirstName, LastName, Email, YourSignedForm, LeaseFormForSigning FROM Tenant
-		WHERE ApprovalStatus != 'Approved';
+    
+	BEGIN    			
+		SELECT PropertyVisitID, PropertyID, FirstName, LastName, DateRecorded, Email, PhoneNumber, ProposedVisitDate, ProposedVisitTime, VisitStatus FROM PropertyVisit
 
 		IF @@ERROR = 0
 			SET @ReturnCode = 0
 		ELSE
-			RAISERROR('RemoveTenant - SELECT Error occurred while reading tenant table.', 16, 1);
+			RAISERROR('GetAllOpenPropertyVisit - UPDATE Error: PropertyVisit table.', 16, 1)
 	END
 
     RETURN @ReturnCode
 END;
+go
+
+
+CREATE PROCEDURE ConfirmOrClosePropertyVisit(@PropertyVisitID INT = NULL,
+	@VisitStatus VARCHAR(20) = NULL)
+
+AS
+BEGIN
+    DECLARE @ReturnCode INT
+    SET @ReturnCode = 1
+
+    IF @PropertyVisitID IS NULL
+        RAISERROR('ConfirmOrClosePropertyVisit- required parameter: @PropertyVisitID.', 16, 1);
+	ELSE
+		BEGIN    			
+			UPDATE PropertyVisit
+				SET VisitStatus = @VisitStatus
+				WHERE PropertyVisitID = @PropertyVisitID
+
+
+			IF @@ERROR = 0
+				SET @ReturnCode = 0
+			ELSE
+				RAISERROR('ConfirmOrClosePropertyVisit - UPDATE Error: PropertyVisit table.', 16, 1)
+		END
+
+    RETURN @ReturnCode
+END;
 GO
+
+
+-- DROP PROCEDURE UpdatePropertyVisit Procedure
+CREATE PROCEDURE UpdatePropertyVisit(
+	@PropertyID VARCHAR(7) = NULL,
+    @FirstName VARCHAR(30) = NULL,
+    @LastName VARCHAR(30) = NULL,
+    @Email VARCHAR(100) = NULL,
+    @PhoneNumber VARCHAR(14) = NULL,	
+    @ProposedVisitDate DATE = NULL,
+	@ProposedVisitTime TIME = NULL,
+	@VisitStatus VARCHAR(20) = NULL)
+AS
+BEGIN
+    DECLARE @ReturnCode INT
+    SET @ReturnCode = 1
+
+    IF @PropertyID IS NULL
+        RAISERROR('UpdatePropertyVisit- required parameter: @PropertyID.', 16, 1);
+    ELSE IF @FirstName IS NULL
+        RAISERROR('UpdatePropertyVisit- required parameter: @FirstName.', 16, 1);
+	ELSE IF @LastName IS NULL
+        RAISERROR('UpdatePropertyVisit- required parameter: @LastName.', 16, 1);
+    ELSE IF @Email IS NULL
+        RAISERROR('UpdatePropertyVisit- required parameter: @Email.', 16, 1);
+	ELSE IF @PhoneNumber IS NULL
+        RAISERROR('UpdatePropertyVisit- required parameter: @PhoneNumber.', 16, 1);
+    ELSE IF @ProposedVisitDate IS NULL
+        RAISERROR('UpdatePropertyVisit- required parameter: @ProposedVisitDate.', 16, 1);
+	ELSE IF @ProposedVisitTime IS NULL
+        RAISERROR('UpdatePropertyVisit- required parameter: @ProposedVisitTime.', 16, 1);
+    ELSE IF @VisitStatus IS NULL
+        RAISERROR('UpdatePropertyVisit- required parameter: @VisitStatus.', 16, 1);
+	ELSE
+		BEGIN    			
+			UPDATE PropertyVisit
+				SET PropertyID = @PropertyID, 
+					FirstName = @FirstName, 
+					LastName = @LastName, 
+					Email = @Email, 
+					PhoneNumber = @PhoneNumber, 
+					ProposedVisitDate = @ProposedVisitDate, 
+					ProposedVisitTime = @ProposedVisitTime, 
+					VisitStatus = @VisitStatus
+				WHERE PropertyID = @PropertyID
+
+
+			IF @@ERROR = 0
+				SET @ReturnCode = 0
+			ELSE
+				RAISERROR('UpdatePropertyVisit - UPDATE Error: PropertyVisit table.', 16, 1)
+		END
+
+    RETURN @ReturnCode
+END;
+go
