@@ -1,3 +1,4 @@
+#nullable disable
 using CNMaisons.Controller;
 using CNMaisons.Domain;
 using CNMaisons.TechnicalService;
@@ -15,165 +16,165 @@ namespace CNMaisons.Pages
     {
         #region AllDeclarations
         public string Message { get; set; } = string.Empty;
-        public string errorMessage { get; set; } = string.Empty;
+        public List<string> errorMessage { get; set; } = new();
 
         [BindProperty]
         public IFormFile Passport { get; set; }
-        
+
 
         [BindProperty]
-        public string PropertyID { get; set; } 
+        public string PropertyID { get; set; } = string.Empty;
 
         [BindProperty]
-        public string FirstName { get; set; } 
+        public string FirstName { get; set; } = string.Empty;
 
         [BindProperty]
-        public string LastName { get; set; } 
+        public string LastName { get; set; } = string.Empty;
 
         [BindProperty]
-        public string PhoneNumber { get; set; } 
+        public string PhoneNumber { get; set; } = string.Empty;
 
         [BindProperty]
-        public string Email { get; set; } 
+        public string Email { get; set; } = string.Empty;
 
         [BindProperty]
         public DateTime DOB { get; set; }
 
         [BindProperty]
-        public string Password { get; set; } 
+        public string Password { get; set; } = string.Empty;
 
         [BindProperty]
-        public string Nationality { get; set; } 
+        public string Nationality { get; set; } = string.Empty;
 
         [BindProperty]
-        public string StateofOrigin { get; set; } 
+        public string StateofOrigin { get; set; } = string.Empty;
 
         [BindProperty]
-        public string LGA { get; set; } 
+        public string LGA { get; set; } = string.Empty;
 
         [BindProperty]
-        public string HomeTown { get; set; } 
+        public string HomeTown { get; set; } = string.Empty;
 
         [BindProperty]
-        public string PermanentHomeAddress { get; set; } 
+        public string PermanentHomeAddress { get; set; } = string.Empty;
 
         [BindProperty]
-        public string Occupation { get; set; } 
+        public string Occupation { get; set; } = string.Empty;
 
         [BindProperty]
-        public string SelfEmployed { get; set; } 
+        public string SelfEmployed { get; set; } = string.Empty;
 
         [BindProperty]
-        public string BusinessRegistrationNumber { get; set; } 
-
-
-
-        [BindProperty]
-        public IFormFile? CorporateAffairsCertificate { get; set; }
-
+        public string BusinessRegistrationNumber { get; set; } = string.Empty;
 
 
 
         [BindProperty]
-        public string NameofEmployer { get; set; } 
+        public IFormFile CorporateAffairsCertificate { get; set; }
+
+
+
 
         [BindProperty]
-        public string AddressOfEmployer { get; set; } 
+        public string NameofEmployer { get; set; } = string.Empty;
+
+        [BindProperty]
+        public string AddressOfEmployer { get; set; } = string.Empty;
 
         [BindProperty]
         public int LengthOnJob { get; set; }
 
         [BindProperty]
-        public string CurrentPositionHeld { get; set; } 
+        public string CurrentPositionHeld { get; set; } = string.Empty;
 
         [BindProperty]
-        public string NatureOfJob { get; set; } 
+        public string NatureOfJob { get; set; } = string.Empty;
 
         [BindProperty]
-        public string FormerResidenceAddress { get; set; } 
+        public string FormerResidenceAddress { get; set; } = string.Empty;
 
         [BindProperty]
-        public string ReasonForMoving { get; set; } 
+        public string ReasonForMoving { get; set; } = string.Empty;
 
         [BindProperty]
         public int LengthOfStayAtOldResidence { get; set; }
 
         [BindProperty]
-        public string NameOfFormerResidentManager { get; set; } 
+        public string NameOfFormerResidentManager { get; set; } = string.Empty;
 
         [BindProperty]
-        public string ObjectionsToReasonsForMoving { get; set; } 
+        public string ObjectionsToReasonsForMoving { get; set; } = string.Empty;
 
         [BindProperty]
-        public string MaritalStatus { get; set; } 
+        public string MaritalStatus { get; set; } = string.Empty;
 
         [BindProperty]
-        public string SpouseFirstName { get; set; } 
+        public string SpouseFirstName { get; set; } = string.Empty;
 
         [BindProperty]
-        public string SpouseLastName { get; set; } 
+        public string SpouseLastName { get; set; } = string.Empty;
 
         [BindProperty]
-        public string SpouseOccupation { get; set; } 
+        public string SpouseOccupation { get; set; } = string.Empty;
 
         [BindProperty]
         public int NumberOfOccupants { get; set; }
 
         [BindProperty]
-        public string NextOfKinFirstName { get; set; } 
+        public string NextOfKinFirstName { get; set; } = string.Empty;
 
         [BindProperty]
-        public string NextOfKinLastName { get; set; } 
+        public string NextOfKinLastName { get; set; } = string.Empty;
 
         [BindProperty]
-        public string NextOfKinAddress { get; set; } 
+        public string NextOfKinAddress { get; set; } = string.Empty;
 
         [BindProperty]
-        public string NextOfKinPhoneNumber { get; set; } 
+        public string NextOfKinPhoneNumber { get; set; } = string.Empty;
 
         [BindProperty]
-        public string Guarantor1FirstName { get; set; } 
+        public string Guarantor1FirstName { get; set; } = string.Empty;
 
         [BindProperty]
-        public string Guarantor1LastName { get; set; } 
-
-
-        [BindProperty]
-        public string Guarantor1Address { get; set; } 
-
-        [BindProperty]
-        public string Guarantor1Occupation { get; set; } 
-
-        [BindProperty]
-        public string Guarantor1PhoneNumber { get; set; } 
-
-        [BindProperty]
-        public string Guarantor1AlternatePhoneNumber { get; set; } 
-
-        [BindProperty]
-        public string Guarantor2FirstName { get; set; } 
-
-        [BindProperty]
-        public string Guarantor2LastName { get; set; } 
-
-        [BindProperty]
-        public string Guarantor2Address { get; set; } 
-
-        [BindProperty]
-        public string Guarantor2Occupation { get; set; } 
-
-        [BindProperty]
-        public string Guarantor2PhoneNumber { get; set; } 
-
-        [BindProperty]
-        public string Guarantor2AlternatePhoneNumber { get; set; } 
-
-        [BindProperty]
-        public string Declaration { get; set; }
+        public string Guarantor1LastName { get; set; } = string.Empty;
 
 
         [BindProperty]
-        public IFormFile? YourSignedForm { get; set; } 
+        public string Guarantor1Address { get; set; } = string.Empty;
+
+        [BindProperty]
+        public string Guarantor1Occupation { get; set; } = string.Empty;
+
+        [BindProperty]
+        public string Guarantor1PhoneNumber { get; set; } = string.Empty;
+
+        [BindProperty]
+        public string Guarantor1AlternatePhoneNumber { get; set; } = string.Empty;
+
+        [BindProperty]
+        public string Guarantor2FirstName { get; set; } = string.Empty;
+
+        [BindProperty]
+        public string Guarantor2LastName { get; set; } = string.Empty;
+
+        [BindProperty]
+        public string Guarantor2Address { get; set; } = string.Empty;
+
+        [BindProperty]
+        public string Guarantor2Occupation { get; set; } = string.Empty;
+
+        [BindProperty]
+        public string Guarantor2PhoneNumber { get; set; } = string.Empty;
+
+        [BindProperty]
+        public string Guarantor2AlternatePhoneNumber { get; set; } = string.Empty;
+
+        [BindProperty]
+        public string Declaration { get; set; } = string.Empty;
+
+
+        [BindProperty]
+        public IFormFile YourSignedForm { get; set; } 
 
 
         [BindProperty]
@@ -181,11 +182,11 @@ namespace CNMaisons.Pages
 
 
         [BindProperty]
-        public string ApprovalStatus { get; set; } 
+        public string ApprovalStatus { get; set; } = string.Empty;
 
 
         [BindProperty]
-        public IFormFile? LeaseFormForSigning { get; set; }
+        public IFormFile LeaseFormForSigning { get; set; }
         #endregion
 
 
@@ -211,21 +212,27 @@ namespace CNMaisons.Pages
             //}
             
             #region All Validations
-            errorMessage = "";
             ModelState.Clear();
 
             if (string.IsNullOrEmpty(PropertyID))
             {
-                errorMessage += "PropertyID is Required.\n";
+                errorMessage.Add("PropertyID is Required");
             }
             else
             {
                 bool propertyIDConfirmation = PropertyRequestDirector.ValidateProperty(PropertyID);
+                Property occupiedProperty = PropertyRequestDirector.GetPropertyByID(PropertyID);
+                
 
                 if (propertyIDConfirmation == false)
                 {
-                    errorMessage += "This is not a valid PropertyID.\n";
+                    errorMessage.Add("This is not a valid PropertyID");
                 }
+                if (occupiedProperty.Occupied == true) 
+                {
+                    errorMessage.Add($"This Property {PropertyID} is Not Avalaible");
+                }
+
             }
 
 
@@ -234,7 +241,7 @@ namespace CNMaisons.Pages
             // Validate Email
             if (string.IsNullOrEmpty(Email))
             {
-                errorMessage += "Email is Required.\n";
+                errorMessage.Add("Email is Required");
             }
             else
             {
@@ -243,162 +250,158 @@ namespace CNMaisons.Pages
 
                 if (emailConfirmation1 == true || emailConfirmation2 == true)
                 {
-                    errorMessage += "This email already exist in our system.\n";
+                    errorMessage.Add("This email already exist in our system");
                 } 
             }
 
 
             if (string.IsNullOrEmpty(FirstName))
             {
-                errorMessage += "FirstName is Required.\n";
+                errorMessage.Add("FirstName is Required.");
             }
 
             if (string.IsNullOrEmpty(LastName))
             {
-                errorMessage += "LastName is Required.\n";
+                errorMessage.Add("LastName is Required.");
             }
 
             // Validate PhoneNumber
             if (string.IsNullOrEmpty(PhoneNumber))
             {
-                errorMessage += "PhoneNumber is Required.\n";
+                errorMessage.Add("PhoneNumber is Required");
             }
-
-
-
-            
             // Validate DOB
             if (DOB == DateTime.MinValue)
             {
-                errorMessage += "DOB is Required.\n";
+                errorMessage.Add("DOB is Required");
             }
 
             // Validate Password
             if (string.IsNullOrEmpty(Password))
             {
-                errorMessage += "Password is Required.\n";
+                errorMessage.Add("Password is Required");
             }
 
             // Validate Nationality
             if (string.IsNullOrEmpty(Nationality))
             {
-                errorMessage += "Nationality is Required.\n";
+                errorMessage.Add("Nationality is Required.");
             }
             // Validate PermanentHomeAddress
             if (string.IsNullOrEmpty(PermanentHomeAddress))
             {
-                errorMessage += "PermanentHomeAddress is Required.\n";
+                errorMessage.Add("PermanentHomeAddress is Required.");
             }
 
             // Validate Occupation
             if (string.IsNullOrEmpty(Occupation))
             {
-                errorMessage += "Occupation is Required.\n";
+                errorMessage.Add("Occupation is Required.");
             }
 
             // Validate SelfEmployed
             if (string.IsNullOrEmpty(SelfEmployed))
             {
-                errorMessage += "SelfEmployed is Required.\n";
+                errorMessage.Add("SelfEmployed is Required.");
             }
 
 
             // Validate MaritalStatus
             if (string.IsNullOrEmpty(MaritalStatus))
             {
-                errorMessage += "MaritalStatus is Required.\n";
+                errorMessage.Add("MaritalStatus is Required.");
             }
 
             // Validate SpouseFirstName
             // Validate NumberOfOccupants
             if (NumberOfOccupants == 0)
             {
-                errorMessage += "NumberOfOccupants is Required.\n";
+                errorMessage.Add("NumberOfOccupants is Required.");
             }
 
             // Validate NextOfKinFirstName
             if (string.IsNullOrEmpty(NextOfKinFirstName))
             {
-                errorMessage += "NextOfKinFirstName is Required.\n";
+                errorMessage.Add("NextOfKinFirstName is Required.");
             }
 
             // Validate NextOfKinLastName
             if (string.IsNullOrEmpty(NextOfKinLastName))
             {
-                errorMessage += "NextOfKinLastName is Required.\n";
+                errorMessage.Add("NextOfKinLastName is Required.");
             }
 
             // Validate NextOfKinAddress
             if (string.IsNullOrEmpty(NextOfKinAddress))
             {
-                errorMessage += "NextOfKinAddress is Required.\n";
+                errorMessage.Add("NextOfKinAddress is Required.");
             }
 
             // Validate NextOfKinPhoneNumber
             if (string.IsNullOrEmpty(NextOfKinPhoneNumber))
             {
-                errorMessage += "NextOfKinPhoneNumber is Required.\n";
+                errorMessage.Add("NextOfKinPhoneNumber is Required.");
             }
 
             // Validate Guarantor1FirstName
             if (string.IsNullOrEmpty(Guarantor1FirstName))
             {
-                errorMessage += "Guarantor1FirstName is Required.\n";
+                errorMessage.Add("Guarantor1FirstName is Required.");
             }
 
             // Validate Guarantor1LastName
             if (string.IsNullOrEmpty(Guarantor1LastName))
             {
-                errorMessage += "Guarantor1LastName is Required.\n";
+                errorMessage.Add("Guarantor1LastName is Required.");
             }
 
             // Validate Guarantor1Address
             if (string.IsNullOrEmpty(Guarantor1Address))
             {
-                errorMessage += "Guarantor1Address is Required.\n";
+                errorMessage.Add("Guarantor1Address is Required.");
             }
 
             // Validate Guarantor1Occupation
             if (string.IsNullOrEmpty(Guarantor1Occupation))
             {
-                errorMessage += "Guarantor1Occupation is Required.\n";
+                errorMessage.Add("Guarantor1Occupation is Required.");
             }
 
             // Validate Guarantor1PhoneNumber
             if (string.IsNullOrEmpty(Guarantor1PhoneNumber))
             {
-                errorMessage += "Guarantor1PhoneNumber is Required.\n";
+                errorMessage.Add("Guarantor1PhoneNumber is Required.");
             }
 
 
             // Validate Guarantor2FirstName
             if (string.IsNullOrEmpty(Guarantor2FirstName))
             {
-                errorMessage += "Guarantor2FirstName is Required.\n";
+                errorMessage.Add("Guarantor2FirstName is Required.");
             }
 
             // Validate Guarantor2LastName
             if (string.IsNullOrEmpty(Guarantor2LastName))
             {
-                errorMessage += "Guarantor2LastName is Required.\n";
+                errorMessage.Add("Guarantor2LastName is Required.");
             }
 
             // Validate Guarantor2Address
             if (string.IsNullOrEmpty(Guarantor2Address))
             {
-                errorMessage += "Guarantor2Address is Required.\n";
+                errorMessage.Add("Guarantor2Address is Required.");
             }
 
             // Validate Guarantor2Occupation
             if (string.IsNullOrEmpty(Guarantor2Occupation))
             {
-                errorMessage += "Guarantor2Occupation is Required.\n";
+                errorMessage.Add("Guarantor2Occupation is Required.");
             }
 
             // Validate Guarantor2PhoneNumber
             if (string.IsNullOrEmpty(Guarantor2PhoneNumber))
             {
-                errorMessage += "Guarantor2PhoneNumber is Required.\n";
+                errorMessage.Add("Guarantor2PhoneNumber is Required.");
             }
 
 
@@ -406,14 +409,14 @@ namespace CNMaisons.Pages
             // Validate Declaration
             if (string.IsNullOrEmpty(Declaration))
             {
-                errorMessage += "Declaration is Required.\n";
+                errorMessage.Add("Declaration is Required.");
             }
 
 
             // Check if any error occurred and add it to the model state
-            if (!string.IsNullOrEmpty(errorMessage))
+            if (errorMessage.Count > 0)
             {
-                ModelState.AddModelError("AllError", errorMessage);
+                ModelState.AddModelError("AllError", "Could Not Apply Errors Occured in the Form");
             }
 
 
@@ -586,12 +589,13 @@ namespace CNMaisons.Pages
                     newUser.Password = HttpContext.Session.GetString("Password1") ?? string.Empty;
                     newUser.UserSalt = "placeholder";
                     newUser.Role = "Tenant";
-                    newUser.DefaultPassword = "0"; // 0 because user typed it by himself
+                    newUser.DefaultPassword = "true"; // 0 because user typed it by himself
 
                     bool UserAccountConfirmation = TenantRequestDirector.CreateUserAccount(newUser);
                     if (UserAccountConfirmation == true)
                     {
-                        string messageBody = "Hello " + FirstName + ",\n\nYour Login Credential are:\n\t\temail: "+ Email + "\n\t\tPassword: "+ Password +"\n\n Lease Application for " + PropertyID + " has been submitted.\n\nOnce Attemded to, you will get feedback onc completed.\n\nRegards";
+                        string messageBody = "Hello " + FirstName + ",\n" +
+                                            "\nYour Login Credential are:\n\t\tEmail: "+ Email + "\n\t\tPassword: "+ Password +"\n\n Lease Application for " + PropertyID + " has been submitted.\n\nOnce Attended to, you will get a feedback.\n\nRegards";
                         string messageSubject = "Application submitted.";
 
                         string mailConfirmation;

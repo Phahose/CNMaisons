@@ -14,7 +14,7 @@ namespace CNMaisons.Pages
     {
         public Visit ListOfPendingVisits = new();
         public string Message { get; set; } = string.Empty;
-        public CNMPMS PropertyVisitRequestDirector;
+        public CNMPMS PropertyVisitRequestDirector = new();
  
         [BindProperty]
         public string FindVisitID { get; set; } = string.Empty;
@@ -53,19 +53,27 @@ namespace CNMaisons.Pages
         }
         public IActionResult OnPost()
         {
+            CNMPMS VisitRequestDirector = new CNMPMS();
+            OpenVisitList = VisitRequestDirector.RetrieveOpenPropertyVisit();
+            if (HttpContext.Session.GetString("Email") != null)
+            {
+                UserEmail = HttpContext.Session.GetString("Email")!;
+            }
+            Users = VisitRequestDirector.GetUserByEmail(UserEmail);
+            Employee = VisitRequestDirector.GetAllEmployees(UserEmail);
             ModelState.Clear();
             Message = "";
 
             switch (Submit)
             {
                 case "Close":
-                    return RedirectToPage("/IndexStaff");
-                    break;
+                return RedirectToPage("/IndexStaff");
+
 
 
                 case "Refresh":
                     OnGet();
-                    break;
+                break;
 
                 case "Submit":
                     if (FindVisitID != null)
@@ -81,7 +89,7 @@ namespace CNMaisons.Pages
                         if (ModelState.IsValid)
                         {
                             
-                            CNMPMS VisitRequestDirector = new CNMPMS();
+                            
                             string Confirmation = VisitRequestDirector.UpdateVisitStatus(FindVisitID, VisitStatus)
 ;
                             if (Confirmation == "Successful!")
@@ -102,8 +110,6 @@ namespace CNMaisons.Pages
                     }
                     OnGet(); 
                     return Page();
-                    break;
-
                  
             }
             return Page();

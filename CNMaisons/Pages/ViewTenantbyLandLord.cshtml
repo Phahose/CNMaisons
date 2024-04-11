@@ -25,27 +25,9 @@
             <ul class="loggedin-list">
                 @if (Model.Users.Role == "LandLord")
                 {
-
-                    <li>
-                        <a href="~/IndexStaff">My Account</a>
-                    </li>
-                    <li>
-                        <a href="~/AddProperty">Add Property</a>
-                    </li>
-                    <li>
-                        <a href="#">View Maintainance Requests</a>
-                    </li>
-                    <li>
-                        <a href="~/CreateAccount">Create New Employee Account</a>
-                    </li>
-                    <li>
-                        <a href="#">View Visit Requests</a>
-                    </li>
-                    <li>
-                        <a href="~/ViewPropertyAdmin">View Properties</a>
-                    </li>
-
-
+                    <li><a href="~/IndexStaff">My Account</a></li>
+                    <li><a href="~/ViewTenantbyLandLord">View Tenant </a></li>
+                    <li><a href="~/CreateAccount">Create New Employee Account</a></li>
                 }
                 @if (Model.Users.Role == "Staff")
                 {
@@ -103,7 +85,7 @@
     {
 
         <form name="Application" method="post" class="form property_form transition-fade-down" enctype="multipart/form-data">
-            <span style="font-size: larger; font-style: italic;">@Model.Message</span>
+            <p style="font-size: medium; padding-left: 1rem;">@Model.Message</p>
             <details>
                 <summary>Declaration, Signature, and Approval</summary>
 
@@ -335,7 +317,7 @@
                     </div>
                 </div>
             </details>
-            <input type="submit" name="Submit" value="Close" class="btn" />
+            <input type="submit" name="Submit" value="Close" class="btn"/>
         </form>
     }
 </div>

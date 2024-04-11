@@ -14,7 +14,6 @@
                         <li><a href="~/IndexStaff">My Account</a></li>
                         <li><a href="~/ViewTenantbyLandLord">View Tenant </a></li>
                         <li><a href="~/CreateAccount">Create New Employee Account</a></li>
-                        <li><a href="~/ViewPropertyAdmin">View Properties</a></li>
                     </ul>
                 }
                 @if (Model.Users.Role == "Staff")
@@ -34,9 +33,16 @@
             </nav>
             <div class="basic_info">
                 <div class="icon_div">
-                    @if (Model.Employee.EmployeeImage.Length > 0)
+                    @if (Model.Employee.EmployeeImage != null)
                     {
-                        <img src="data:image;base64,@Convert.ToBase64String(Model.Employee.EmployeeImage)" alt="Property Image" />
+                        @if (Model.Employee.EmployeeImage.Length > 0)
+                        {
+                            <img src="data:image;base64,@Convert.ToBase64String(Model.Employee.EmployeeImage)" alt="Property Image" />
+                        }
+                        else
+                        {
+                            <img src="~/img/profile_icon.png" width="150" class="intro_image" />
+                        }
                     }
                     else
                     {
@@ -90,7 +96,7 @@
                             <br />
                             <label for="ConfirmPassword">Confirm Password</label>
                             <br />
-                            <input type="password" name="ConfirmPassword" required />
+                            <input type="password" name="ConfirmPassword"/>
                             <br />
                             @Html.ValidationMessage("PasswordError")
                             @Html.ValidationMessage("ConfirmPasswordError")
@@ -106,8 +112,8 @@
                         <label for="Password">New Password</label><br/>
                         <input type="password" name="Password" required><br/>
                         @Html.ValidationMessage("PasswordError")
-                        <label for="ConfirmPassword">Re-enter Password</label><br/>
-                        <input type="password" name="ConfirmPassword" required><br />
+                        <label for="PasswordConfirm">Re-enter Password</label><br />
+                        <input type="password" name="PasswordConfirm" required><br />
                         @Html.ValidationMessage("ConfirmPasswordError")
                         @Html.ValidationMessage("PasswordMatchError")
                         <input type="submit" name="Submit" value="Update Password">

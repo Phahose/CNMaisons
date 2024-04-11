@@ -90,7 +90,10 @@ namespace CNMaisons.Pages
             {
                 PropertyID = HttpContext.Session.GetString("PropertyID")!;
             }
-
+            if (HttpContext.Session.GetString("Email") != null)
+            {
+                Email = HttpContext.Session.GetString("Email")!;
+            }
             CNMPMS controller = new CNMPMS();
             Users = controller.GetUserByEmail(Email);
             Employee = controller.GetAllEmployees(Email);

@@ -106,8 +106,14 @@
                 @if (Model.Users.Role == "Tenant")
                 {
                     <li><a href="~/IndexTenant">My Account</a></li>
-                    <li><a href="~/SignLeaseForm">Sign Lease Form</a></li>
-                    <li><a href="#">Record Rent Payment</a></li>
+                    @if (Model.tenantForReview.ApprovalStatus != "Approved")
+                    {
+                        <li><a href="~/SignLeaseForm">Sign Lease Form</a></li>
+                    }
+                    @if (Model.tenantForReview.ApprovalStatus == "Approved")
+                    {
+                        <li><a href="#">Record Rent Payment</a></li>
+                    }
                 }
                 <li class="loggedin-icon_div">
                     @if (Model.Employee.EmployeeImage.Length > 0)

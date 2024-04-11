@@ -1,15 +1,16 @@
-﻿using System.Net.Mail;
+﻿#nullable disable
+using System.Net.Mail;
 using System.Net;
 
 namespace CNMaisons.TechnicalService
 {
     public class Mails
     {
-        private string? email;
-        private string? password;
-        private string? smtpServer;
+        private string email;
+        private string password;
+        private string smtpServer;
         private int port;
-        private string? fromEmail;
+        private string fromEmail;
         public string ErrorMessage { get; set; } = string.Empty;
 
 
