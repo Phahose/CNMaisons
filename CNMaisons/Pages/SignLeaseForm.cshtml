@@ -157,8 +157,13 @@
                             <td style="border: 1px solid #ddd;">
                                 @if (Model.aTenantsPendingReview.LeaseFormForSigning != null && Model.aTenantsPendingReview.LeaseFormForSigning.Length > 0)
                                 {
-                                    var fileName = "LeaseForm_" + Model.aTenantsPendingReview.TenantID + ".pdf"; // Example file name
-                                    <a href="@Url.Action("DownloadLeaseForm", "YourController", new { id = Model.aTenantsPendingReview.TenantID })" download="@fileName">Download Lease Form</a>
+                                    byte[] wordDocumentBytes = Model.aTenantsPendingReview.LeaseFormForSigning!;
+                                    string base64Document = Convert.ToBase64String(wordDocumentBytes!);
+                                    <span class="value">
+                                        <a href="data:application/octet-stream;base64,@base64Document" download="@Model.aTenantsPendingReview.FirstName Tenancy Contract">
+                                            Download Lease Form
+                                        </a>
+                                    </span>
                                 }
                                 else
                                 {
@@ -169,8 +174,17 @@
                             <td style="border: 1px solid #ddd;">
                                 @if (Model.aTenantsPendingReview.YourSignedForm != null && Model.aTenantsPendingReview.YourSignedForm.Length > 0)
                                 {
-                                    var fileName = "Signed_LeaseForm_" + Model.aTenantsPendingReview.TenantID + ".pdf"; // Example file name
-                                    <a href="@Url.Action("DownloadLeaseForm", "YourController", new { id = Model.aTenantsPendingReview.TenantID })" download="@fileName">Download Signed Lease Form</a>
+                                    @if (Model.aTenantsPendingReview.YourSignedForm != null)
+                                    {
+                                        byte[] wordDocumentBytes = Model.aTenantsPendingReview.YourSignedForm!;
+                                        string base64Document = Convert.ToBase64String(wordDocumentBytes!);
+                                        <span class="label">Your Signature:</span>
+                                        <span class="value">
+                                            <a href="data:application/octet-stream;base64,@base64Document" download="@Model.aTenantsPendingReview.FirstName Signed Tenancy Contract">
+                                                Signed Contract
+                                            </a>
+                                        </span>
+                                    }
                                 }
                                 else
                                 {
