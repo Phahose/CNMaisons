@@ -130,8 +130,14 @@
                                 <td style="border: 1px solid #ddd;">
                                     @if (record.LeaseFormForSigning != null && record.LeaseFormForSigning.Length > 0)
                                     {
-                                        var fileName = "LeaseForm_" + record.TenantID + ".pdf"; // Example file name
-                                        <a href="@Url.Action("DownloadLeaseForm", "YourController", new { id = record.TenantID })" download="@fileName">Download Lease Form</a>
+                                        byte[] wordDocumentBytes = record.LeaseFormForSigning!;
+                                        string base64Document = Convert.ToBase64String(wordDocumentBytes!);
+                                        <span class="value">
+                                            <a href="data:application/octet-stream;base64,@base64Document" download="@record.FirstName Tenancy Contract">
+                                                Download Lease Form
+                                            </a>
+                                        </span>
+                                       
                                     }
                                     else
                                     {
@@ -141,8 +147,14 @@
                                 <td style="border: 1px solid #ddd;">
                                     @if (record.YourSignedForm != null && record.YourSignedForm.Length > 0)
                                     {
-                                        var fileName = "Signed_LeaseForm_" + record.TenantID + ".pdf"; // Example file name
-                                        <a href="@Url.Action("DownloadLeaseForm", "YourController", new { id = record.TenantID })" download="@fileName">Download Signed Form</a>
+                                        byte[] wordDocumentBytes = record.YourSignedForm!;
+                                        string base64Document = Convert.ToBase64String(wordDocumentBytes!);
+                                        <span class="label">Your Signature:</span>
+                                        <span class="value">
+                                            <a href="data:application/octet-stream;base64,@base64Document" download="@record.FirstName Signed Tenancy Contract">
+                                                Download Signed Form
+                                            </a>
+                                        </span>
                                     }
                                     else
                                     {
