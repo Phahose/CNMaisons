@@ -155,6 +155,8 @@ BEGIN
     WHERE PropertyID = @PropertyID AND DeleteFlag = 0;
 END
 
+
+--DROP PROCEDURE GetProperty
 CREATE PROCEDURE GetProperty
 AS
 BEGIN
