@@ -601,7 +601,7 @@ BEGIN
     SET @ReturnCode = 1	
 	
 	BEGIN
-		SELECT ApprovalStatus, TenantID, PropertyID, FirstName, LastName FROM Tenant
+		SELECT ApprovalStatus, TenantID, PropertyID, FirstName, LastName, Email, YourSignedForm, LeaseFormForSigning FROM Tenant
 		WHERE ApprovalStatus != 'Approved';
 
 		IF @@ERROR = 0
@@ -613,6 +613,7 @@ BEGIN
     RETURN @ReturnCode
 END;
 
+EXEC GetPendingLeaseApplication
 
 --DROP PROCEDURE ModifyTenant
 
