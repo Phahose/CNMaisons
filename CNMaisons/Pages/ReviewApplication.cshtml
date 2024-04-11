@@ -149,7 +149,6 @@
                                     {
                                         byte[] wordDocumentBytes = record.YourSignedForm!;
                                         string base64Document = Convert.ToBase64String(wordDocumentBytes!);
-                                        <span class="label">Your Signature:</span>
                                         <span class="value">
                                             <a href="data:application/octet-stream;base64,@base64Document" download="@record.FirstName Signed Tenancy Contract">
                                                 Download Signed Form

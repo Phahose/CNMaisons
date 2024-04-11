@@ -178,7 +178,7 @@ namespace CNMaisons.Pages
                     return memoryStream.ToArray();
                 }
             }
-            else { return null; }
+            else { return new byte[0]; }
         }
     }
 }

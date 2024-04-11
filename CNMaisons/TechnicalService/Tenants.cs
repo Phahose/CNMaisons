@@ -11,7 +11,7 @@ namespace CNMaisons.TechnicalService
 {
     public class Tenants
     {
-        private string? connectionString;
+        private string connectionString;
 
 
         
