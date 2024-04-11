@@ -145,7 +145,7 @@ AS
 
 DROP PROCEDURE GetProperty
 
-
+--DROP PROCEDURE GetPropertyByID
 CREATE PROCEDURE GetPropertyByID
     @PropertyID VARCHAR(7)
 AS
@@ -155,7 +155,13 @@ BEGIN
     WHERE PropertyID = @PropertyID AND DeleteFlag = 0;
 END
 
-EXEC GetPropertyByID 'CN00001'
+CREATE PROCEDURE GetProperty
+AS
+BEGIN
+    SELECT *
+    FROM Property
+    WHERE  DeleteFlag = 0;
+END
 
 
 CREATE PROCEDURE UpdateProperty
@@ -1347,6 +1353,7 @@ AS
 	 WHERE Email = @Email
 	END
 
+	DROP PROCEDURE GetAllEmployees
 CREATE PROCEDURE GetAllEmployees(@Email VARCHAR(100))
 AS 
 	BEGIN 
@@ -1354,11 +1361,7 @@ AS
 	 WHERE Email = @Email
 	END
 
-	SELECT * FROm USERs
-	SELECT * FROM EMployee
 
-	DELETE FROM Employee
-	DELETE FROM USERs
 
 
 CREATE PROCEDURE UpdateEmployee

@@ -89,7 +89,7 @@ namespace CNMaisons.TechnicalService
             {
                 ParameterName = "@PropertyDescription",
                 SqlDbType = SqlDbType.VarChar,
-                SqlValue = Property.PropertyType,
+                SqlValue = Property.PropertyDescription,
                 Direction = ParameterDirection.Input,
             };
             SqlParameter Image1 = new()
@@ -270,7 +270,7 @@ namespace CNMaisons.TechnicalService
             {
                 ParameterName = "@PropertyDescription",
                 SqlDbType = SqlDbType.VarChar,
-                SqlValue = Property.PropertyType,
+                SqlValue = Property.PropertyDescription,
                 Direction = ParameterDirection.Input,
             };
             SqlParameter Image1 = new()
@@ -545,32 +545,35 @@ namespace CNMaisons.TechnicalService
             {
                 
                 SqlDataReader propertyReader = GetPropertyByIDCommand.ExecuteReader();
-                while (propertyReader.Read())
+                if (propertyReader.HasRows)
                 {
-                    property = new Property
+                    while (propertyReader.Read())
                     {
-                        PropertyID = propertyReader["PropertyID"].ToString()!,
-                        PropertyName = propertyReader["PropertyName"].ToString()!,
-                        PropertyLocationState = propertyReader["PropertyLocationState"].ToString()!,
-                        PropertyLocationCountry = propertyReader["PropertyLocationCountry"].ToString()!,
-                        PropertyAddress = propertyReader["PropertyAddress"].ToString()!,
-                        PropertyType = propertyReader["PropertyType"].ToString()!,
-                        NumberOfRooms = Convert.ToInt32(propertyReader["NumberOfRooms"])!,
-                        PropertyDescription = propertyReader["PropertyDescription"].ToString()!,
-                        PropertyPrice = (decimal)propertyReader["PropertyPrice"],
-                        Image1 = propertyReader["Image1"] == DBNull.Value ? null! : (byte[])propertyReader["Image1"],
-                        Image2 = propertyReader["Image2"] == DBNull.Value ? null! : (byte[])propertyReader["Image2"],
-                        Image3 = propertyReader["Image3"] == DBNull.Value ? null! : (byte[])propertyReader["Image3"],
-                        Image4 = propertyReader["Image4"] == DBNull.Value ? null! : (byte[])propertyReader["Image4"],
-                        Image5 = propertyReader["Image5"] == DBNull.Value ? null! : (byte[])propertyReader["Image5"],
-                        Image6 = propertyReader["Image6"] == DBNull.Value ? null! : (byte[])propertyReader["Image6"],
-                        Image7 = propertyReader["Image7"] == DBNull.Value ? null! : (byte[])propertyReader["Image7"],
-                        Image8 = propertyReader["Image8"] == DBNull.Value ? null! : (byte[])propertyReader["Image8"],
-                        Image9 = propertyReader["Image9"] == DBNull.Value ? null! : (byte[])propertyReader["Image9"],
-                        Image10 = propertyReader["Image10"] == DBNull.Value ? null! : (byte[])propertyReader["Image10"],
-                        Occupied = (bool)propertyReader["Occupied"]
-                    };
-                }
+                        property = new Property
+                        {
+                            PropertyID = propertyReader["PropertyID"].ToString()!,
+                            PropertyName = propertyReader["PropertyName"].ToString()!,
+                            PropertyLocationState = propertyReader["PropertyLocationState"].ToString()!,
+                            PropertyLocationCountry = propertyReader["PropertyLocationCountry"].ToString()!,
+                            PropertyAddress = propertyReader["PropertyAddress"].ToString()!,
+                            PropertyType = propertyReader["PropertyType"].ToString()!,
+                            NumberOfRooms = Convert.ToInt32(propertyReader["NumberOfRooms"])!,
+                            PropertyDescription = propertyReader["PropertyDescription"].ToString()!,
+                            PropertyPrice = (decimal)propertyReader["PropertyPrice"],
+                            Image1 = propertyReader["Image1"] == DBNull.Value ? null! : (byte[])propertyReader["Image1"],
+                            Image2 = propertyReader["Image2"] == DBNull.Value ? null! : (byte[])propertyReader["Image2"],
+                            Image3 = propertyReader["Image3"] == DBNull.Value ? null! : (byte[])propertyReader["Image3"],
+                            Image4 = propertyReader["Image4"] == DBNull.Value ? null! : (byte[])propertyReader["Image4"],
+                            Image5 = propertyReader["Image5"] == DBNull.Value ? null! : (byte[])propertyReader["Image5"],
+                            Image6 = propertyReader["Image6"] == DBNull.Value ? null! : (byte[])propertyReader["Image6"],
+                            Image7 = propertyReader["Image7"] == DBNull.Value ? null! : (byte[])propertyReader["Image7"],
+                            Image8 = propertyReader["Image8"] == DBNull.Value ? null! : (byte[])propertyReader["Image8"],
+                            Image9 = propertyReader["Image9"] == DBNull.Value ? null! : (byte[])propertyReader["Image9"],
+                            Image10 = propertyReader["Image10"] == DBNull.Value ? null! : (byte[])propertyReader["Image10"],
+                            Occupied = (bool)propertyReader["Occupied"]
+                        };
+                    }
+                }              
                 propertyReader.Close();
             }
             catch (Exception)
