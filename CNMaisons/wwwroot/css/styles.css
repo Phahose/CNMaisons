@@ -706,6 +706,9 @@ input.filter-btn{
     border-radius: 50%;
     display: flex;
 }
+.loggedin-icon_div img {
+    border-radius: 50%;
+}
 .loggedin-list li:hover {
     border-bottom: 1.4px solid white;
 }
