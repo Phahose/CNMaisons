@@ -43,7 +43,7 @@ namespace CNMaisons.TechnicalService
                     client.EnableSsl = true;
 
 
-                    client.Credentials = new NetworkCredential(fromEmail, password);  //Ezra
+                    client.Credentials = new NetworkCredential(fromEmail, password);  //CN Maisons
 
 
                     // Create the email message

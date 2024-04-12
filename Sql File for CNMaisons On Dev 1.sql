@@ -1580,3 +1580,10 @@ BEGIN
     RETURN @ReturnCode
 END;
 go
+
+
+CREATE PROCEDURE GetTenants
+AS
+BEGIN
+ SELECT * FROM Tenant
+ END
