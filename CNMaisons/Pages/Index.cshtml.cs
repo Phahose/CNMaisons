@@ -1,7 +1,9 @@
 using CNMaisons.Controller;
 using CNMaisons.Domain;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Text.Json;
 
 namespace CNMaisons.Pages
 {
@@ -20,14 +22,14 @@ namespace CNMaisons.Pages
         public void OnGet()
         {
             CNMPMS controller = new CNMPMS();
-            PropertyList = controller.GetProperties();
+            PropertyList = GetListProperties();
             DisplayedPropertyList = PropertyList.Where(p => p.Occupied == false).ToList();
         }
 
         public IActionResult OnPost()
         {
             CNMPMS controller = new CNMPMS();
-            PropertyList = controller.GetProperties();
+            PropertyList = GetListProperties();
             DisplayedPropertyList = PropertyList.Where(p => p.Occupied == false).ToList();
             ModelState.Clear();
             if (ModelState.IsValid)
@@ -58,6 +60,27 @@ namespace CNMaisons.Pages
                 }      
             }
             return Page();
+        }
+
+        public List<Property> GetListProperties()
+        {
+            List<Property> properties = new List<Property>();
+            string propertyliststring;
+            if (HttpContext.Session.GetString("ListOfProperties") == null)
+            {
+                CNMPMS controller = new CNMPMS();
+                properties = controller.GetProperties();
+
+                propertyliststring = JsonSerializer.Serialize(properties);
+                HttpContext.Session.SetString("ListOfProperties", propertyliststring);
+
+            }
+            else
+            {
+                propertyliststring = HttpContext.Session.GetString("ListOfProperties")!;
+                properties = JsonSerializer.Deserialize<List<Property>>(propertyliststring)!;
+            }
+            return properties;
         }
     }
 }
