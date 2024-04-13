@@ -640,16 +640,17 @@ CREATE TABLE Payment(
 	TenantID VARCHAR(5) NOT NULL,
 	PropertyID VARCHAR(7) NOT NULL,
 	AmountPaid MONEY NOT NULL,
-	PaymentStartMonth VARCHAR NOT NULL,
+	PaymentStartMonth VARCHAR(3) NOT NULL,
+	PaymentEndMonth VARCHAR(3) NOT NULL,
 	PaymentStartYear INT NOT NULL,
 	MonthsPaidFor INT NOT NULL,
-	NextDueMonth INT NOT NULL,
+	NextDueMonth VARCHAR(3) NOT NULL,
 	NextDueYear INT NOT NULL,
 	NextDueDate DATE NOT NULL,
 	DateOfTenantsPayment DATE NOT NULL,
-	MethodOfPayment VARCHAR NOT NULL,
-	TenantPaymentBank DATE NOT NULL,
-	DateOfRecord DATE DEFAULT GETDATE() NOT NULL,
+	MethodOfPayment VARCHAR(15) NOT NULL,
+	TenantPaymentBank VARCHAR(25) NOT NULL,
+	DateOfRecord DATE DEFAULT GETDATE() NOT NULL
 )
 
 ALTER TABLE Payment
@@ -659,22 +660,22 @@ ALTER TABLE Payment
 
 
 
-
-
+ 
+--DROP PROCEDURE AddPayment
 CREATE PROCEDURE AddPayment(
 	@TenantID VARCHAR(5) = NULL,
 	@PropertyID VARCHAR(7) = NULL,
 	@AmountPaid MONEY = NULL,
-	@PaymentStartMonth VARCHAR = NULL,
+	@PaymentStartMonth VARCHAR(3) = NULL,
+	@PaymentEndMonth VARCHAR(3) =  NULL,	
 	@PaymentStartYear INT = NULL,
 	@MonthsPaidFor INT = NULL,
-	@NextDueMonth INT = NULL,
+	@NextDueMonth VARCHAR(3) = NULL,
 	@NextDueYear INT = NULL,
 	@NextDueDate DATE = NULL,
 	@DateOfTenantsPayment DATE = NULL,
-	@MethodOfPayment VARCHAR = NULL,
-	@TenantPaymentBank DATE = NULL
-)
+	@MethodOfPayment VARCHAR(15)= NULL,
+	@TenantPaymentBank VARCHAR(25) = NULL)
 AS
 BEGIN
     DECLARE @ReturnCode INT;
@@ -688,6 +689,8 @@ BEGIN
 		RAISERROR('AddPayment - required parameter: @AmountPaid.', 16, 1);
 	ELSE IF @PaymentStartMonth IS NULL
 		RAISERROR('AddPayment - required parameter: @PaymentStartMonth.', 16, 1);
+	ELSE IF @PaymentEndMonth IS NULL
+		RAISERROR('AddPayment - required parameter: @PaymentEdMonth.', 16, 1);
 	ELSE IF @PaymentStartYear IS NULL
 		RAISERROR('AddPayment - required parameter: @PaymentStartYear.', 16, 1);
 	ELSE IF @MonthsPaidFor IS NULL
@@ -708,10 +711,10 @@ BEGIN
     ELSE
 		BEGIN
 			INSERT INTO Payment 
-				(TenantID, PropertyID, AmountPaid, PaymentStartMonth, PaymentStartYear, MonthsPaidFor, NextDueMonth, NextDueYear, NextDueDate, DateOfTenantsPayment, MethodOfPayment, TenantPaymentBank)
+				(TenantID, PropertyID, AmountPaid, PaymentStartMonth, PaymentEndMonth, PaymentStartYear, MonthsPaidFor, NextDueMonth, NextDueYear, NextDueDate, DateOfTenantsPayment, MethodOfPayment, TenantPaymentBank)
 			VALUES 
-				(@TenantID, @PropertyID, @AmountPaid, @PaymentStartMonth, @PaymentStartYear, @MonthsPaidFor, @NextDueMonth, @NextDueYear, @NextDueDate, @DateOfTenantsPayment, @MethodOfPayment, @TenantPaymentBank);
-
+				(@TenantID, @PropertyID, @AmountPaid, @PaymentStartMonth, @PaymentEndMonth, @PaymentStartYear, @MonthsPaidFor,  @NextDueMonth, @NextDueYear, @NextDueDate, @DateOfTenantsPayment, @MethodOfPayment, @TenantPaymentBank);
+				 
 			IF @@ERROR = 0
 				SET @ReturnCode = 0;
 			ELSE
@@ -725,6 +728,7 @@ END;
 
 
 
+--DROP PROCEDURE ViewPayment
 CREATE PROCEDURE ViewPayment(
 	@PaymentID INT = NULL,
 	@TenantID VARCHAR(5) = NULL,
@@ -740,7 +744,7 @@ BEGIN
 
     ELSE
 		BEGIN
-			SELECT PaymentID, TenantID, PropertyID, AmountPaid, PaymentStartMonth, PaymentStartYear, MonthsPaidFor, NextDueMonth, NextDueYear, NextDueDate, DateOfTenantsPayment, MethodOfPayment, TenantPaymentBank, DateOfRecord
+			SELECT PaymentID, TenantID, PropertyID, AmountPaid, PaymentStartMonth, PaymentEndMonth, PaymentStartYear, MonthsPaidFor, NextDueMonth, NextDueYear, NextDueDate, DateOfTenantsPayment, MethodOfPayment, TenantPaymentBank, DateOfRecord
 			FROM Payment
 			WHERE
 				PaymentID = @PaymentID OR
@@ -783,7 +787,7 @@ BEGIN
         RAISERROR('ViewPaymentByDateRange - required parameter: @StartDate and @EndDate', 16, 1);
     ELSE
         BEGIN
-            SELECT PaymentID, TenantID, PropertyID, AmountPaid, PaymentStartMonth, PaymentStartYear, MonthsPaidFor, NextDueMonth, NextDueYear, NextDueDate, DateOfTenantsPayment, MethodOfPayment, TenantPaymentBank, DateOfRecord
+            SELECT PaymentID, TenantID, PropertyID, AmountPaid, PaymentStartMonth, PaymentEndMonth, PaymentStartYear, MonthsPaidFor, NextDueMonth, NextDueYear, NextDueDate, DateOfTenantsPayment, MethodOfPayment, TenantPaymentBank, DateOfRecord
             FROM Payment
             WHERE
 				(PaymentID = @PaymentID OR  TenantID = @TenantID OR PropertyID = @PropertyID) AND
@@ -819,7 +823,7 @@ BEGIN
         RAISERROR('ViewPaymentByDateRange - required parameter: @StartDate and @EndDate', 16, 1);
     ELSE
         BEGIN
-            SELECT PaymentID, TenantID, PropertyID, AmountPaid, PaymentStartMonth, PaymentStartYear, MonthsPaidFor, NextDueMonth, NextDueYear, NextDueDate, DateOfTenantsPayment, MethodOfPayment, TenantPaymentBank, DateOfRecord
+            SELECT PaymentID, TenantID, PropertyID, AmountPaid, PaymentStartMonth, PaymentEndMonth, PaymentStartYear, MonthsPaidFor, NextDueMonth, NextDueYear, NextDueDate, DateOfTenantsPayment, MethodOfPayment, TenantPaymentBank, DateOfRecord
             FROM Payment
             WHERE
 				(PaymentID = @PaymentID OR  TenantID = @TenantID OR PropertyID = @PropertyID) OR

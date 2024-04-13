@@ -128,7 +128,14 @@ namespace CNMaisons.Controller
             return Success;
         }
 
-        
+        public bool AddPayment(Payment aPayment)
+        {
+            bool Success;
+            Payments PaymentRequestManager = new Payments();
+            Success = PaymentRequestManager.CreatePayment(aPayment);
+            return Success;
+        }
+
         public String SubmitSignedCopy(String findTenantID, String approvalStatus, byte[] signedForm)
         {
             String Success;

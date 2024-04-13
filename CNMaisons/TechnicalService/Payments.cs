@@ -18,7 +18,7 @@ namespace CNMaisons.TechnicalService
             connectionString = DatabaseUserConfiguration.GetConnectionString("CNMaisons");
         }
 
-        public bool AddPayment(Payment payment)
+        public bool CreatePayment(Payment aPayment)
         {
             bool Success = false;
             string successMessage;
@@ -51,23 +51,21 @@ namespace CNMaisons.TechnicalService
                 }
 
 
-                AddParameter("@TenantID", SqlDbType.VarChar, payment.TenantID);
-                AddParameter("@PropertyID", SqlDbType.VarChar, payment.PropertyID);
-                AddParameter("@AmountPaid", SqlDbType.Money, payment.AmountPaid);
-                AddParameter("@PaymentStartMonth", SqlDbType.VarChar, payment.PaymentStartMonth);
-                AddParameter("@PaymentEndMonth", SqlDbType.VarChar, payment.PaymentEndMonth);
-                AddParameter("@PaymentStartYear", SqlDbType.Int, payment.PaymentStartYear);
-                AddParameter("@MonthsPaidFor", SqlDbType.Int, payment.MonthsPaidFor);
-                AddParameter("@NextDueMonth", SqlDbType.Int, payment.NextDueMonth);
-                AddParameter("@NextDueYear", SqlDbType.Int, payment.NextDueYear);
-                AddParameter("@NextDueDate", SqlDbType.Date, payment.NextDueDate);
-                AddParameter("@DateOfTenantsPayment", SqlDbType.Date, payment.DateOfTenantsPayment);
-                AddParameter("@MethodOfPayment", SqlDbType.VarChar, payment.MethodOfPayment);
-                AddParameter("@TenantPaymentBank", SqlDbType.Date, payment.TenantPaymentBank);
+                AddParameter("@TenantID", SqlDbType.VarChar, aPayment.TenantID);
+                AddParameter("@PropertyID", SqlDbType.VarChar, aPayment.PropertyID);
+                AddParameter("@AmountPaid", SqlDbType.Money, aPayment.AmountPaid);
+                AddParameter("@PaymentStartMonth", SqlDbType.VarChar, aPayment.PaymentStartMonth);
+                AddParameter("@PaymentEndMonth", SqlDbType.VarChar, aPayment.PaymentEndMonth);
+                AddParameter("@PaymentStartYear", SqlDbType.VarChar, aPayment.PaymentStartYear);
+                AddParameter("@MonthsPaidFor", SqlDbType.Int, aPayment.MonthsPaidFor);
+                AddParameter("@NextDueMonth", SqlDbType.VarChar, aPayment.NextDueMonth);
+                AddParameter("@NextDueYear", SqlDbType.Int, aPayment.NextDueYear);
+                AddParameter("@NextDueDate", SqlDbType.Date, aPayment.NextDueDate);
+                AddParameter("@DateOfTenantsPayment", SqlDbType.Date, aPayment.DateOfTenantsPayment);
+                AddParameter("@MethodOfPayment", SqlDbType.VarChar, aPayment.MethodOfPayment);
+                AddParameter("@TenantPaymentBank", SqlDbType.VarChar, aPayment.TenantPaymentBank);
 
-
-
-        MyCommand.ExecuteNonQuery();
+         MyCommand.ExecuteNonQuery();
                 MyDataSource.Close();
                 successMessage = "Successful!";
                 Success = true;
