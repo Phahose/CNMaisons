@@ -65,7 +65,7 @@ namespace CNMaisons.TechnicalService
                 AddParameter("@MethodOfPayment", SqlDbType.VarChar, aPayment.MethodOfPayment);
                 AddParameter("@TenantPaymentBank", SqlDbType.VarChar, aPayment.TenantPaymentBank);
 
-         MyCommand.ExecuteNonQuery();
+                MyCommand.ExecuteNonQuery();
                 MyDataSource.Close();
                 successMessage = "Successful!";
                 Success = true;

@@ -13,61 +13,67 @@ namespace CNMaisons.Pages
    // [Authorize(Roles = "LandLord, Staff, Tenant")]   // Restrict access to specified roles
     public class AddPaymentModel : PageModel
     {
-        public string Message { get; set; } = string.Empty;
-        public List<string> errorMessage { get; set; } = new();
-        public bool FlagError;
 
         [BindProperty]
-        public string TenantID { get; set; }
+        public string TenantID { get; set; } = string.Empty;
+
+
         [BindProperty]
-        public string PropertyID { get; set; }
+        public string PropertyID { get; set; } = string.Empty;
+
+
         [BindProperty]
         public decimal AmountPaid { get; set; }
+
         [BindProperty]
-        public string PaymentStartMonth { get; set; }
+        public string PaymentStartMonth { get; set; }= string.Empty;
+
         [BindProperty]
-        public string PaymentEndMonth { get; set; }
+        public string PaymentEndMonth { get; set; } = string.Empty;
+
         [BindProperty]
-        public int PaymentStartYear { get; set; }
+        public int PaymentStartYear { get; set; }  
+
         [BindProperty]
         public int MonthsPaidFor { get; set; }
+
         [BindProperty]
-        public string NextDueMonth { get; set; }
+        public string NextDueMonth { get; set; } = string.Empty;
         [BindProperty]
         public int NextDueYear { get; set; }
+
         [BindProperty]
         public DateTime NextDueDate { get; set; }
         [BindProperty]
         public DateTime DateOfTenantsPayment { get; set; }
         [BindProperty]
-        public string MethodOfPayment { get; set; }
+        public string MethodOfPayment { get; set; } = string.Empty;
+
         [BindProperty]
-        public string TenantPaymentBank { get; set; }
+        public string TenantPaymentBank { get; set; } = string.Empty;
+
         [BindProperty]
         public DateTime DateOfRecord { get; set; }
 
         CNMPMS PropertyRequestDirector = new CNMPMS();
-
-        CNMPMS TenantRequestDirector = new CNMPMS();
-        Tenant tenantForPayment = new Tenant();
-
         Payments PaymentRequestDirector = new Payments();
+        Tenant tenantForPayment = new Tenant();
+        public string Message { get; set; } = string.Empty;
+        public List<string> errorMessage { get; set; } = new();
+        public bool FlagError;
+
+
+
         public string Email;
         public string FName;
 
 
-
-        public void OnGet()
-        {
-            
-
-
-        }
-        public void OnPost(IFormFile ApplicationForm)
+ 
+        public void OnPost()
         {
 
             #region All Validations
-            ModelState.Clear();
+            //ModelState.Clear();
 
 
             if (string.IsNullOrEmpty(PropertyID))
@@ -77,15 +83,10 @@ namespace CNMaisons.Pages
             else
             {
                 bool propertyIDConfirmation = PropertyRequestDirector.ValidateProperty(PropertyID);
-                Property occupiedProperty = PropertyRequestDirector.GetPropertyByID(PropertyID);
 
                 if (propertyIDConfirmation == false)
                 {
                     errorMessage.Add("This is not a valid PropertyID");
-                }
-                if (occupiedProperty.Occupied == true)
-                {
-                    errorMessage.Add($"This Property {PropertyID} is Not Avalaible");
                 }
             }
 
@@ -251,7 +252,7 @@ namespace CNMaisons.Pages
                 Message = "This was not saved.";
                 RePopulate();
             }
-            RePopulate();
+           RePopulate();
 
         }
 

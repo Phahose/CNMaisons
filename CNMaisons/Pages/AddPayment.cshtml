@@ -6,6 +6,8 @@
     var currentYear = DateTime.Now.Year;
 
 }
+
+
 <script src="~/libraries/jquery/jquery.js"></script>
 <script src="~/libraries/jquery-validate/jquery.validate.js"></script>
 <script src="~/libraries/jquery-validate-unobtrusive/jquery.validate.unobtrusive.js"></script>
@@ -115,33 +117,43 @@
         Your browser does not support the video tag.
     </video>
 
-    <form name="RequestPropertyVisitForm" method="post" class="form property_form transition-fade-down">
+    <form name="AddPayment" method="post" class="form property_form transition-fade-down">
         <br />
         <fieldset>
             <span style="font-size: larger; font-style: italic;">
-                @Model.Message
+                @foreach (var error in Model.errorMessage)
+                {
+                    @if (error != null)
+                    {
+                        <p style="font-size: small; color: red; background-color:white; padding: 0.5rem;">@error</p>
+                    }
+                }
+                @if (Model.Message != "")
+                {
+                    <p style="font-size: small; color: green; background-color:white; padding: 0.5rem;">@Model.Message</p>
+                }
                 <br />
             </span>
 
             <legend>Add Payment</legend>
             <div>
                 <label>Tenant ID:</label><br />
-                <input type="text" asp-for="TenantID" maxlength="5" required oninput="this.value = this.value.toUpperCase();" /><br />
+                <input type="text" name="TenantID" maxlength="5" required oninput="this.value = this.value.toUpperCase();" /><br />
 
 
                 <label> Property ID:</label><br />
-                <input type="text" asp-for="PropertyID" maxlength="7" required oninput="this.value = this.value.toUpperCase();" /><br />
+                <input type="text" name="PropertyID" maxlength="7" required oninput="this.value = this.value.toUpperCase();" /><br />
 
                 <label>Amount Paid:</label><br />
-                <input type="number" asp-for="AmountPaid" required  /><br />
+                <input type="number" name="AmountPaid" required  /><br />
 
 
                 <label>Date you made the payment:</label><br />                
-                <input type="date" asp-for="DateOfTenantsPayment" required value="@DateTime.Today.ToString("yyyy-MM-dd")" max="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                <input type="date" name="DateOfTenantsPayment" required value="@DateTime.Today.ToString("yyyy-MM-dd")" max="@DateTime.Today.ToString("yyyy-MM-dd")" />
 
           
                 <label>Method Of Payment:</label><br />
-                <select asp-for="MethodOfPayment" required>
+                <select name="MethodOfPayment" required>
                     <option value="">Select Method</option>
                     <option value="E Transfer">E Transfer</option>
                     <option value="Cheque">Cheque</option>
@@ -149,7 +161,7 @@
                 </select>
 
                 <label>Tenant Payment Bank:</label><br />
-                <select asp-for="TenantPaymentBank" required>
+                <select name="TenantPaymentBank" required>
                     <option value="">Select Bank</option>
                     <option value="Access Bank">Access Bank</option>
                     <option value="Citibank">Citibank</option>
@@ -176,13 +188,13 @@
 
 
                 <label>Months Paid For:</label><br />
-                <select asp-for="MonthsPaidFor" id="MonthsPaidFor" required onchange="calculatePaymentEndMonth(document.getElementById('PaymentStartMonth').value)">
+                <select name="MonthsPaidFor" id="MonthsPaidFor" required onchange="calculatePaymentEndMonth(document.getElementById('PaymentStartMonth').value)">
                     <option value="12">12</option>
                     <option value="6">6</option>
                 </select><br />
 
                 <label>Payment Start Month:</label><br />
-                <select name="PaymentStartMonth" asp-for="PaymentStartMonth" id="PaymentStartMonth" required onchange="calculatePaymentEndMonth(this.value)">
+                <select name="PaymentStartMonth" name="PaymentStartMonth" id="PaymentStartMonth" required onchange="calculatePaymentEndMonth(this.value)">
                     <option value="">Select Month</option>
                     <option value="JAN">JAN</option>
                     <option value="FEB">FEB</option>
@@ -198,7 +210,7 @@
                     <option value="DEC">DEC</option>
                 </select>
                 <label>Payment Start Year:</label><br />
-                <select asp-for="PaymentStartYear" required id="PaymentStartYearSelect" onchange="computeNextDueYear()">
+                <select name="PaymentStartYear" required id="PaymentStartYearSelect" onchange="computeNextDueYear()">
                     <option value="">Select Year</option>
                     <!-- Generate options for years 2024 to 2026 (currentYear + 2) -->
                     @for (int year = currentYear; year <= (currentYear + 2); year++)
@@ -209,24 +221,24 @@
 
                 
                 <label>Payment End Month:</label><br />
-                <input type="text" asp-for="PaymentEndMonth" required id="PaymentEndMonth" readonly onchange="computeNextDueDate()" /><br />
+                <input type="text" name="PaymentEndMonth" required id="PaymentEndMonth" readonly onchange="computeNextDueDate()" /><br />
                 <label>Next Due Month:</label><br />
-                <input type="text" asp-for="NextDueMonth" required id="NextDueMonth" readonly onchange="computeNextDueDate()" /><br />
+                <input type="text" name="NextDueMonth" required id="NextDueMonth" readonly onchange="computeNextDueDate()" /><br />
 
                 
 
 
               
                 <label>Next Due Year:</label><br />
-                <input type="number" id="NextDueYear" asp-for="NextDueYear" readonly required onchange="computeNextDueDate()" /><br />
+                <input type="number" id="NextDueYear" name="NextDueYear" readonly required onchange="computeNextDueDate()" /><br />
 
                 <label>Next Due Date:</label><br />
-                <input type="date" asp-for="NextDueDate" required id="NextDueDate" readonly /><br />
+                <input type="date" name="NextDueDate" required id="NextDueDate" readonly /><br />
 
             </div>
+            <input type="submit" name="Submit" value="Request Property Visit" class="btn" />
         </fieldset>
 
-        <input type="submit" name="Submit" value="Request Property Visit" class="btn" />
 
     </form>
 </div>
