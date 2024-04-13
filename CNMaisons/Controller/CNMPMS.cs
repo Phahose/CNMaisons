@@ -46,6 +46,14 @@ namespace CNMaisons.Controller
             Property = Properties.GetPropertyByID(propertyID);
             return Property;
          }
+        
+        public List<Payment> ViewPaymentbyDate(string aTenantID, DateTime startDate, DateTime endDate)
+        {
+            List<Payment> myPaymentList= new();
+            Payments PaymentRequestDirector = new Payments();
+            myPaymentList = PaymentRequestDirector.PaymentPaymentbyDate(aTenantID, startDate, endDate);
+            return myPaymentList;
+        }
 
         public User GetUserByEmail(string existingUseremail)
         {
