@@ -1,8 +1,7 @@
 ﻿@page
 @model CNMaisons.Pages.AddPaymentModel
 @{
-    Layout = "_Header";
-    ViewData["Title"] = "Book Property Vist";
+    ViewData["Title"] = "Record Rent Payment";
     var currentYear = DateTime.Now.Year;
 
 }
@@ -112,37 +111,109 @@
 
 
 <div>
-    <video autoplay muted loop id="video-background">
-        <source src="~/img/backvideos.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
+    <div class="loggedin-pages">
+        <nav class="loggedin-nav">
+            <a href="~/Index"><img src="~/img/png/logo-no-background.png" width="150" class="intro_image" /></a>
+            <ul class="loggedin-list">
+                @if (Model.Users.Role == "LandLord")
+                {
 
+                    <li>
+                        <a href="~/IndexStaff">My Account</a>
+                    </li>
+                    <li>
+                        <a href="~/AddProperty">Add Property</a>
+                    </li>
+                    <li>
+                        <a href="#">View Maintainance Requests</a>
+                    </li>
+                    <li>
+                        <a href="~/CreateAccount">Create New Employee Account</a>
+                    </li>
+                    <li>
+                        <a href="#">View Visit Requests</a>
+                    </li>
+                    <li>
+                        <a href="~/ViewPropertyAdmin">View Properties</a>
+                    </li>
+                    <li>
+                        <a href="~/ViewTenantbyLandLord">View Tenant </a>
+                    </li>
+                    <li>
+                        <a href="~/ViewInquiry">View Inquiry </a>
+                    </li>
+                    <li>
+                        <a href="~/UpdateTenant">Edit Tenants</a>
+                    </li>
+                }
+                @if (Model.Users.Role == "Staff")
+                {
+
+                    <li>
+                        <a href="~/IndexStaff">My Account</a>
+                    </li>
+                    <li>
+                        <a href="~/AddProperty">Add Property</a>
+                    </li>
+                    <li>
+                        <a href="#">View Visit Requests</a>
+                    </li>
+                    <li>
+                        <a href="~/UpdateTenant">Edit Tenants</a>
+                    </li>
+
+                }
+                @if (Model.Users.Role == "Tenant")
+                {
+                    <li><a href="~/IndexTenant">My Account</a></li>
+                    @if (Model.tenantForPayment.ApprovalStatus != "Approved")
+                    {
+                        <li><a href="~/SignLeaseForm">Sign Lease Form</a></li>
+                    }
+                    @if (Model.tenantForPayment.ApprovalStatus == "Approved")
+                    {
+                        <li><a href="#">Record Rent Payment</a></li>
+                    }
+                }
+\
+                <li class="loggedin-icon_div">
+                    @if (Model.tenantForPayment.Passport.Length > 0)
+                    {
+                        <img src="data:image;base64,@Convert.ToBase64String(Model.tenantForPayment.Passport)" alt="Property Image" />
+                    }
+                    else
+                    {
+                        <img src="~/img/profile_icon.png" width="150" class="intro_image" />
+                    }
+                </li>
+                
+
+            </ul>
+        </nav>
+    </div>
     <form name="AddPayment" method="post" class="form property_form transition-fade-down">
         <br />
         <fieldset>
-            <span style="font-size: larger; font-style: italic;">
-                @foreach (var error in Model.errorMessage)
+            @foreach (var error in Model.errorMessage)
+            {
+                @if (error != null)
                 {
-                    @if (error != null)
-                    {
-                        <p style="font-size: small; color: red; background-color:white; padding: 0.5rem;">@error</p>
-                    }
+                    <p style="font-size: small; color: red; background-color:white; padding: 0.5rem;">@error</p>
                 }
-                @if (Model.Message != "")
-                {
-                    <p style="font-size: small; color: green; background-color:white; padding: 0.5rem;">@Model.Message</p>
-                }
-                <br />
-            </span>
-
+            }
+            @if (Model.Message != "")
+            {
+                <p style="font-size: small; color: green; background-color:white; padding: 0.5rem;">@Model.Message</p>
+            }
+            <br />
             <legend>Add Payment</legend>
             <div>
                 <label>Tenant ID:</label><br />
-                <input type="text" name="TenantID" maxlength="5" required oninput="this.value = this.value.toUpperCase();" /><br />
+                <input type="text" name="TenantID" maxlength="5" required oninput="this.value = this.value.toUpperCase();" value="@Model.tenantForPayment.TenantID" disabled /><br />
 
 
                 <label> Property ID:</label><br />
-                <input type="text" name="PropertyID" maxlength="7" required oninput="this.value = this.value.toUpperCase();" /><br />
+                <input type="text" name="PropertyID" maxlength="7" required oninput="this.value = this.value.toUpperCase();" value="@Model.tenantForPayment.PropertyID" disabled /><br />
 
                 <label>Amount Paid:</label><br />
                 <input type="number" name="AmountPaid" required  /><br />
@@ -194,7 +265,7 @@
                 </select><br />
 
                 <label>Payment Start Month:</label><br />
-                <select name="PaymentStartMonth" name="PaymentStartMonth" id="PaymentStartMonth" required onchange="calculatePaymentEndMonth(this.value)">
+                <select name="PaymentStartMonth" id="PaymentStartMonth" required onchange="calculatePaymentEndMonth(this.value)">
                     <option value="">Select Month</option>
                     <option value="JAN">JAN</option>
                     <option value="FEB">FEB</option>
@@ -236,7 +307,7 @@
                 <input type="date" name="NextDueDate" required id="NextDueDate" readonly /><br />
 
             </div>
-            <input type="submit" name="Submit" value="Request Property Visit" class="btn" />
+            <input type="submit" name="Submit" value="Add Payment" class="btn" />
         </fieldset>
 
 

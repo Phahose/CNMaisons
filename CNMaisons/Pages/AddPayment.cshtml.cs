@@ -10,18 +10,13 @@ using System.Xml.Linq;
 
 namespace CNMaisons.Pages
 {
-   // [Authorize(Roles = "LandLord, Staff, Tenant")]   // Restrict access to specified roles
+    [Authorize(Roles = "LandLord, Staff, Tenant")]   // Restrict access to specified roles
     public class AddPaymentModel : PageModel
     {
-
         [BindProperty]
         public string TenantID { get; set; } = string.Empty;
-
-
         [BindProperty]
         public string PropertyID { get; set; } = string.Empty;
-
-
         [BindProperty]
         public decimal AmountPaid { get; set; }
 
@@ -57,16 +52,25 @@ namespace CNMaisons.Pages
 
         CNMPMS PropertyRequestDirector = new CNMPMS();
         Payments PaymentRequestDirector = new Payments();
-        Tenant tenantForPayment = new Tenant();
+        public Tenant tenantForPayment { get; set; } = new Tenant();
         public string Message { get; set; } = string.Empty;
         public List<string> errorMessage { get; set; } = new();
         public bool FlagError;
+        public string Email { get; set; } = string.Empty;
+        public string FName { get; set; } = string.Empty;
+        public string UserEmail { get; set; } = string.Empty;
+        public User Users { get; set; } = new User();
 
-
-
-        public string Email;
-        public string FName;
-
+        public void OnGet()
+        {
+            CNMPMS tenantController = new();
+            if (HttpContext.Session.GetString("Email") != null)
+            {
+                UserEmail = HttpContext.Session.GetString("Email")!;
+            }
+            Users = tenantController.GetUserByEmail(UserEmail);
+            tenantForPayment = tenantController.GetAllTennants(UserEmail);
+        }
 
  
         public void OnPost()

@@ -333,7 +333,7 @@ select {
     display: flex;
     width: 100%;
     margin:auto;
-    justify-content: center;;
+    justify-content: center;
     align-items: center;
 }
 .box1>div:nth-child(1){
@@ -602,7 +602,7 @@ input.filter-btn{
 }
 .flex-buttons{
     display: flex;
-    width: 10rem;;
+    width: 10rem;
     margin: auto;
     justify-content: space-between;
 }
