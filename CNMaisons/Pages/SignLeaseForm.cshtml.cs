@@ -70,6 +70,7 @@ namespace CNMaisons.Pages
             }
             Users = tenantController.GetUserByEmail(UserEmail);
             Employee = tenantController.GetAllEmployees(UserEmail);
+            tenantForReview = tenantController.GetAllTennants(UserEmail);
         }
         public IActionResult OnPost()
         {
@@ -77,6 +78,7 @@ namespace CNMaisons.Pages
             var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
             CNMPMS tenantController = new();
             aTenantsPendingReview = tenantController.GetSpecificTenantApplication(Email);
+            tenantForReview = tenantController.GetAllTennants(UserEmail);
             if (aTenantsPendingReview == null)
             {
                 ListMessage = "All have been reviewed";

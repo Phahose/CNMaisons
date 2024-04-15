@@ -46,6 +46,14 @@ namespace CNMaisons.Controller
             Property = Properties.GetPropertyByID(propertyID);
             return Property;
          }
+        
+        public List<Payment> ViewPaymentbyDate(string aTenantID, DateTime startDate, DateTime endDate)
+        {
+            List<Payment> myPaymentList= new();
+            Payments PaymentRequestDirector = new Payments();
+            myPaymentList = PaymentRequestDirector.PaymentPaymentbyDate(aTenantID, startDate, endDate);
+            return myPaymentList;
+        }
 
         public User GetUserByEmail(string existingUseremail)
         {
@@ -128,7 +136,14 @@ namespace CNMaisons.Controller
             return Success;
         }
 
-        
+        public bool AddPayment(Payment aPayment)
+        {
+            bool Success;
+            Payments PaymentRequestManager = new Payments();
+            Success = PaymentRequestManager.CreatePayment(aPayment);
+            return Success;
+        }
+
         public String SubmitSignedCopy(String findTenantID, String approvalStatus, byte[] signedForm)
         {
             String Success;
@@ -149,11 +164,16 @@ namespace CNMaisons.Controller
             Tenant tenant = new();
             Tenants Tennants = new();
             tenant = Tennants.GetTenant(email);
-
             return tenant;
         }
 
-
+        public List<Tenant> FindAllTenants()
+        {
+            List<Tenant> list = new List<Tenant>();
+            Tenants tenants = new Tenants();
+            list = tenants.GetAllTenants();
+            return list;
+        }
 
         public bool ModifyUser (User user)
         {
@@ -257,6 +277,13 @@ namespace CNMaisons.Controller
             return Success;
         }
 
+        public List<User> GetActiveUsers()
+        {
+            List<User> users = new List<User>();
+            Users userServices = new Users();
+            users = userServices.GetUsers();
 
+            return users;
+        }
     }
 }
