@@ -73,12 +73,23 @@ namespace CNMaisons.Pages
 
                 propertyliststring = JsonSerializer.Serialize(properties);
                 HttpContext.Session.SetString("ListOfProperties", propertyliststring);
-
             }
             else
             {
-                propertyliststring = HttpContext.Session.GetString("ListOfProperties")!;
-                properties = JsonSerializer.Deserialize<List<Property>>(propertyliststring)!;
+                if (HttpContext.Session.GetString("PropertyHasBeenupdated") == "True")
+                {
+                    CNMPMS controller = new CNMPMS();
+                    properties = controller.GetProperties();
+
+                    propertyliststring = JsonSerializer.Serialize(properties);
+                    HttpContext.Session.SetString("ListOfProperties", propertyliststring);
+                    HttpContext.Session.SetString("PropertyHasBeenupdated", "False");
+                }
+                else
+                {
+                    propertyliststring = HttpContext.Session.GetString("ListOfProperties")!;
+                    properties = JsonSerializer.Deserialize<List<Property>>(propertyliststring)!;
+                }
             }
             return properties;
         }

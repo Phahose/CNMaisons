@@ -277,5 +277,13 @@ namespace CNMaisons.Controller
             return Success;
         }
 
+        public List<User> GetActiveUsers()
+        {
+            List<User> users = new List<User>();
+            Users userServices = new Users();
+            users = userServices.GetUsers();
+
+            return users;
+        }
     }
 }

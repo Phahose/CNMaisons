@@ -39,7 +39,8 @@ namespace CNMaisons.TechnicalService
                 // Create the email client object
                 using (SmtpClient client = new SmtpClient(smtpServer))
                 {
-                    client.Port = 587;
+                    int portNumber = GetEmailProvider(toEmailAddress);
+                    client.Port = portNumber;
                     client.EnableSsl = true;
 
 
@@ -66,6 +67,46 @@ namespace CNMaisons.TechnicalService
             return success;
         }
 
+        public static int GetEmailProvider(string emailAddress)
+        {
+            // Extract the domain part of the email address
+            string[] parts = emailAddress.Split('@');
+            if (parts.Length == 2)
+            {
+                string domain = parts[1].ToLower();
+
+                // Check if the domain matches common email providers
+                switch (domain)
+                {
+                    case "gmail.com":
+                        return 587;
+                    case "yahoo.com":
+                        return 587;
+                    case "hotmail.com":
+                        return 587;
+                    case "outlook.com":
+                        return 587;
+                    case "aol.com":
+                        return 587;
+                    case "icloud.com":
+                        return 587;
+                    case "live.com":
+                        return 587;
+                    case "mail.com":
+                        return 587;
+                    case "yandex.com":
+                        return 587;
+                    case "protonmail.com":
+                        return 587;
+                    default:
+                        return 587;
+                }
+            }
+            else
+            {
+                return 587;
+            }
+        }
 
     }
 }
