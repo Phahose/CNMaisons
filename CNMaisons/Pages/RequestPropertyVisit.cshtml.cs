@@ -22,19 +22,19 @@ namespace CNMaisons.Pages
         public string MessageForFile { get; set; } = string.Empty;
         public CNMPMS PropertyRequestDirector { get; set; } = new();
         [BindProperty]
-        public string PropertyID { get; set; }
+        public string PropertyID { get; set; } = string.Empty;
 
         [BindProperty]
-        public string FirstName { get; set; }
+        public string FirstName { get; set; } = string.Empty;
 
         [BindProperty]
-        public string LastName { get; set; }
+        public string LastName { get; set; } = string.Empty;
 
         [BindProperty]
-        public string Email { get; set; }
+        public string Email { get; set; } = string.Empty;
 
         [BindProperty]
-        public string PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; } = string.Empty;
 
 
 
@@ -46,7 +46,7 @@ namespace CNMaisons.Pages
         public TimeSpan ProposedVisitTime { get; set; } = DateTime.Now.TimeOfDay;
 
         [BindProperty]
-        public string VisitStatus { get; set; }
+        public string VisitStatus { get; set; } = string.Empty;
 
         public void OnPost()
         {

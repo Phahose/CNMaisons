@@ -39,11 +39,12 @@ namespace CNMaisons.TechnicalService
                 // Create the email client object
                 using (SmtpClient client = new SmtpClient(smtpServer))
                 {
-                    client.Port = 587;
+                    int portNumber = GetEmailProvider(toEmailAddress);
+                    client.Port = portNumber;
                     client.EnableSsl = true;
 
 
-                    client.Credentials = new NetworkCredential(fromEmail, password);  //Ezra
+                    client.Credentials = new NetworkCredential(fromEmail, password);  //CN Maisons
 
 
                     // Create the email message
