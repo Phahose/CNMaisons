@@ -856,7 +856,8 @@ namespace CNMaisons.TechnicalService
                         YourSignedForm = MyDataReader["YourSignedForm"] == DBNull.Value ? null! : (byte[])MyDataReader["YourSignedForm"],
                         DeleteFlag = (bool)MyDataReader["DeleteFlag"],
                         ApprovalStatus = MyDataReader["ApprovalStatus"]?.ToString(),
-                        LeaseFormForSigning = MyDataReader["LeaseFormForSigning"] == DBNull.Value ? null! : (byte[])MyDataReader["LeaseFormForSigning"]
+                        LeaseFormForSigning = MyDataReader["LeaseFormForSigning"] == DBNull.Value ? null! : (byte[])MyDataReader["LeaseFormForSigning"],
+                        NextRentDue = (DateTime)MyDataReader["NextRentDue"]
                     };
                 }
             }
@@ -939,7 +940,8 @@ namespace CNMaisons.TechnicalService
                         YourSignedForm = MyDataReader["YourSignedForm"] == DBNull.Value ? null! : (byte[])MyDataReader["YourSignedForm"],
                         DeleteFlag = (bool)MyDataReader["DeleteFlag"],
                         ApprovalStatus = MyDataReader["ApprovalStatus"]?.ToString(),
-                        LeaseFormForSigning = MyDataReader["LeaseFormForSigning"] == DBNull.Value ? null! : (byte[])MyDataReader["LeaseFormForSigning"]
+                        LeaseFormForSigning = MyDataReader["LeaseFormForSigning"] == DBNull.Value ? null! : (byte[])MyDataReader["LeaseFormForSigning"],
+                        NextRentDue = (DateTime)MyDataReader["NextRentDue"]
                     };
                     tenantList.Add(tenant);
                 }

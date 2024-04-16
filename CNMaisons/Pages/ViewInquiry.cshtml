@@ -100,18 +100,17 @@
         </nav>
     </div>
     <form name="FindPendingApplicationForm" method="post" class="table-form">
-        <h4>Review Lease Applications</h4>
         <div class="table-div">
             <table style="border-collapse: collapse; text-align: left;">
                 <thead>
                     <tr style="border: 1px solid #ddd; background-color:black;">
-                        <th style="border: 1px solid #ddd;">VisitStatus</th>
-                        <th style="border: 1px solid #ddd;">PropertyVisitID</th>
-                        <th style="border: 1px solid #ddd;">PropertyID</th>
-                        <th style="border: 1px solid #ddd;">ProposedVisitDate</th>
-                        <th style="border: 1px solid #ddd;">ProposedVisitTime</th>
-                        <th style="border: 1px solid #ddd;">FirstName</th>
-                        <th style="border: 1px solid #ddd;">LastName</th>
+                        <th style="border: 1px solid #ddd;">Visit Status</th>
+                        <th style="border: 1px solid #ddd;">Property  Visit ID</th>
+                        <th style="border: 1px solid #ddd;">Property ID</th>
+                        <th style="border: 1px solid #ddd;">Proposed Visit Date</th>
+                        <th style="border: 1px solid #ddd;">Proposed Visit Time</th>
+                        <th style="border: 1px solid #ddd;">First Name</th>
+                        <th style="border: 1px solid #ddd;">Last Name</th>
                         <th style="border: 1px solid #ddd;">Email</th>
                         <th style="border: 1px solid #ddd;">PhoneNumber</th>
                         <th style="border: 1px solid #ddd;">DateRecorded</th>
@@ -138,46 +137,39 @@
                         </tr>
                     }
                 </tbody>
-                <tr>
-                    <td>Visit ID/PropertyID/Name</td>
-                    <td><input type="text" name="FindVisitID" readonly id="findVisitID"/></td>
-                    <td><input type="text" name="FirstName" readonly /></td>
-                    <td><input type="text" name="Email" readonly /></td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>Approval Status:</label>
-                    </td>
-                    <td>
-                        <select name="VisitStatus" onchange="validateForm()" disabled>
-                            <option value="0">--Make your selection--</option>
-                            <option value="Confirm Visit">Confirm Visit</option>
-                            <option value="Completed">Completed</option>
-                            <option value="Cancelled">Cancelled</option>
-                        </select>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <button type="submit" name="Submit" style="text-align: center;" value="Submit" disabled>
-                            <img src="../img/buttons/primary-submit.svg" alt="Save Icon" width="24" height="24" style="vertical-align: middle;">
-                            <span style="vertical-align: middle;">Submit Review</span>
-                        </button>
-                    </td>
-
-                    <td><button type="button" class="delete-prop-button" onclick="showConfirmation()">Delete Visit</button></td>
-                    <td><input type="submit" name="Submit" value="Close" class="btn"/></td>
-                </tr>
-            </table>
-            <div class="delConfirmation hideform">
-                <h3>Are you sure you want to delete this Visit <span id="confirmationvisitID"></span></h3>
-                <div class="flex-buttons">
-                    <input type="hidden" name="DeletedPropertyID" id="deletevisitID" value="">
-                    <input type="submit" name="Submit" value="Delete" class="delete-prop-button">
-                    <button type="button" class="update-prop-button" onclick="hideConfirmation()">Cancel</button>
-                </div>
-            </div>
+               
+            </table>     
         </div>
+        <table>
+            <tr>
+                <td>Visit ID/PropertyID/Name</td>
+                <td><input type="text" name="FindVisitID" readonly id="findVisitID" /></td>
+                <td><input type="text" name="FirstName" readonly /></td>
+                <td><input type="text" name="Email" readonly /></td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Approval Status:</label>
+                </td>
+                <td>
+                    <select name="VisitStatus" onchange="validateForm()" disabled>
+                        <option value="0">--Make your selection--</option>
+                        <option value="Confirm Visit">Confirm Visit</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </select>
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="submit" name="Submit" style="text-align: center;" value="Submit" disabled>
+                        <img src="../img/buttons/primary-submit.svg" alt="Save Icon" width="24" height="24" style="vertical-align: middle;">
+                        <span style="vertical-align: middle;">Submit Review</span>
+                    </button>
+                </td>
+                <td><input type="submit" name="Submit" value="Close" class="btn" /></td>
+            </tr>
+        </table>
     </form>
  </div>

@@ -138,7 +138,7 @@ namespace CNMaisons.Pages
                     errorMessage = "";
                     List<User> LandLords = new List<User>();
                     LandLords = PropertyVisitRequestDirector.GetActiveUsers();
-                    LandLords = LandLords.Where(x => x.Role == "LandLord").ToList();
+                    LandLords = LandLords.Where(x => x.Role == "LandLord" || x.Role== "Staff").ToList();
                     CNMPMS MailRequestManager = new CNMPMS();
                     foreach (var landlord in LandLords)
                     {

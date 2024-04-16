@@ -285,5 +285,21 @@ namespace CNMaisons.Controller
 
             return users;
         }
+
+        public bool AddReminder(string tenantID, string description, DateTime dueDateRemindedFor)
+        {
+            bool Success;
+            Payments payments = new Payments();
+            Success = payments.AddReminder(tenantID, description, dueDateRemindedFor);
+            return Success;
+        }
+
+        public List<Reminder> GetAllReminder()
+        {
+            List<Reminder> reminders = new List<Reminder>();
+            Payments paymentServices = new Payments();
+            reminders = paymentServices.GetAllReminders();
+            return reminders;
+        }
     }
 }
