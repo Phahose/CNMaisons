@@ -13,10 +13,15 @@ namespace CNMaisons.Pages
     [Authorize(Roles = "LandLord, Staff, Tenant")]   // Restrict access to specified roles
     public class AddPaymentModel : PageModel
     {
+
         [BindProperty]
         public string TenantID { get; set; } = string.Empty;
+
+
         [BindProperty]
         public string PropertyID { get; set; } = string.Empty;
+
+
         [BindProperty]
         public decimal AmountPaid { get; set; }
 
@@ -52,25 +57,16 @@ namespace CNMaisons.Pages
 
         CNMPMS PropertyRequestDirector = new CNMPMS();
         Payments PaymentRequestDirector = new Payments();
-        public Tenant tenantForPayment { get; set; } = new Tenant();
+        Tenant tenantForPayment = new Tenant();
         public string Message { get; set; } = string.Empty;
         public List<string> errorMessage { get; set; } = new();
         public bool FlagError;
-        public string Email { get; set; } = string.Empty;
-        public string FName { get; set; } = string.Empty;
-        public string UserEmail { get; set; } = string.Empty;
-        public User Users { get; set; } = new User();
 
-        public void OnGet()
-        {
-            CNMPMS tenantController = new();
-            if (HttpContext.Session.GetString("Email") != null)
-            {
-                UserEmail = HttpContext.Session.GetString("Email")!;
-            }
-            Users = tenantController.GetUserByEmail(UserEmail);
-            tenantForPayment = tenantController.GetAllTennants(UserEmail);
-        }
+
+
+        public string Email;
+        public string FName;
+
 
  
         public void OnPost()
@@ -231,13 +227,35 @@ namespace CNMaisons.Pages
                 };
 
 
+                RentReminder aReminder = new()
+                {
+                    TenantID = TenantID,
+                    PropertyID = PropertyID,
+                    LastRentAmountPaid = AmountPaid,
+                    DateOfTenantsPayment = DateOfTenantsPayment,
+                    NextDueDate = NextDueDate,
+                    NextDueMonth = NextDueMonth,
+                    NextDueYear = NextDueYear           
+                };
+
                 bool Confirmation;
                 CNMPMS PaymentRequestDirector = new CNMPMS();
                 Confirmation = PaymentRequestDirector.AddPayment(myPayment);
                 if (Confirmation == true)
                 {
-                    Message = "Payment successful added.";
 
+                   bool Confirmation2;
+                   CNMPMS RentReminderRequestDirector= new CNMPMS();
+                   Confirmation2 = RentReminderRequestDirector.AddReminder(aReminder);
+                    if (Confirmation2 == true)
+                    {
+                        Message = "Payment successful added and Reminder created.";
+                    }
+                    else
+                    {
+                        Message = "Payment successful added but Reminder was not created";
+
+                    }
 
 
                     string messageBody = "Hello " + FName + ",\n" +

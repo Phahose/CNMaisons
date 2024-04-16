@@ -15,19 +15,19 @@ namespace CNMaisons.Pages
         public string MessageForFile { get; set; } = string.Empty;
         public CNMPMS PropertyRequestDirector { get; set; } = new();
         [BindProperty]
-        public string PropertyID { get; set; } = string.Empty;
+        public string PropertyID { get; set; }
 
         [BindProperty]
-        public string FirstName { get; set; } = string.Empty;
+        public string FirstName { get; set; }
 
         [BindProperty]
-        public string LastName { get; set; } = string.Empty;
+        public string LastName { get; set; }
 
         [BindProperty]
-        public string Email { get; set; } = string.Empty;
+        public string Email { get; set; }
 
         [BindProperty]
-        public string PhoneNumber { get; set; } = string.Empty;
+        public string PhoneNumber { get; set; }
 
 
 
@@ -39,7 +39,7 @@ namespace CNMaisons.Pages
         public TimeSpan ProposedVisitTime { get; set; } = DateTime.Now.TimeOfDay;
 
         [BindProperty]
-        public string VisitStatus { get; set; } = string.Empty;
+        public string VisitStatus { get; set; }
 
         public void OnPost()
         {
@@ -129,23 +129,6 @@ namespace CNMaisons.Pages
                 {
                     Message = "User Account has been created succesfully.";
                     errorMessage = "";
-                    List<User> LandLords = new List<User>();
-                    LandLords = PropertyVisitRequestDirector.GetActiveUsers();
-                    LandLords = LandLords.Where(x => x.Role == "LandLord").ToList();
-                    CNMPMS MailRequestManager = new CNMPMS();
-                    foreach (var landlord in LandLords)
-                    {
-                      string  messageBody = "Hello,\n" +
-                                        "\nYou have a New Tenancy Application at CN Maisons \n" +
-                                        "Tenants Name:" + FirstName + LastName +
-                                        "Property ID:" + PropertyID +
-                                        "\nLogin To Your Account on CN Maisons to Review this Application";
-                        string messageSubject = "New Tenancy Application";
-
-                        string mailConfirmation;
-
-                        mailConfirmation = MailRequestManager.PostEmail("ekwomnick@gmail.com", messageBody, messageSubject);
-                    }
                 }
                 else
                 {

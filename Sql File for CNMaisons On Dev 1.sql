@@ -1588,20 +1588,3 @@ BEGIN
     RETURN @ReturnCode
 END;
 go
-
-
-CREATE PROCEDURE GetTenants
-AS
-BEGIN
- SELECT * FROM Tenant
- END
-
-
- CREATE PROCEDURE GetAllUsers
- AS
-	BEGIN 
-		SELECT * FROM Users WHERE DeactivateAccountStatus = 0
-	END
-
-
-DROP PROCEDURE GetAllUSers

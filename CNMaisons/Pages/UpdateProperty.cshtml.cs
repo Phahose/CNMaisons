@@ -287,7 +287,6 @@ namespace CNMaisons.Pages
                 if (success)
                 {
                     SucceessMessage = "The Property Updated SuccessFully";
-                    HttpContext.Session.SetString("PropertyHasBeenupdated", "True");
                 }
                 else
                 {
