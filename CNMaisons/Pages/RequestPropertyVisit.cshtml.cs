@@ -22,19 +22,19 @@ namespace CNMaisons.Pages
         public string MessageForFile { get; set; } = string.Empty;
         public CNMPMS PropertyRequestDirector { get; set; } = new();
         [BindProperty]
-        public string PropertyID { get; set; }
+        public string PropertyID { get; set; } = string.Empty;
 
         [BindProperty]
-        public string FirstName { get; set; }
+        public string FirstName { get; set; } = string.Empty;
 
         [BindProperty]
-        public string LastName { get; set; }
+        public string LastName { get; set; } = string.Empty;
 
         [BindProperty]
-        public string Email { get; set; }
+        public string Email { get; set; } = string.Empty;
 
         [BindProperty]
-        public string PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; } = string.Empty;
 
 
 
@@ -46,7 +46,7 @@ namespace CNMaisons.Pages
         public TimeSpan ProposedVisitTime { get; set; } = DateTime.Now.TimeOfDay;
 
         [BindProperty]
-        public string VisitStatus { get; set; }
+        public string VisitStatus { get; set; } = string.Empty;
 
         public void OnPost()
         {
@@ -136,6 +136,25 @@ namespace CNMaisons.Pages
                 {
                     Message = "Visit Booked SuccessFully";
                     errorMessage = "";
+                    List<User> LandLords = new List<User>();
+                    LandLords = PropertyVisitRequestDirector.GetActiveUsers();
+                    LandLords = LandLords.Where(x => x.Role == "LandLord").ToList();
+                    CNMPMS MailRequestManager = new CNMPMS();
+                    foreach (var landlord in LandLords)
+                    {
+                        string messageBody = "Hello,\n" +
+                                          "\nYou have a request to view a property at CN Maisons \n" +
+                                          "\tPersons Name: " + FirstName +" "+ LastName +
+                                          "\n\tProperty ID: " + PropertyID +
+                                          "\n\tProposed Visit Date: " + ProposedVisitDate.ToString("dddd MMMM dd, yyyy.") +
+                                          "\n\tProposed Visit Time: " + ProposedVisitTime +
+                                          "\nLogin To Your Account on CN Maisons to Review this Visit";
+                        string messageSubject = "New Property Visit Request";
+
+                        string mailConfirmation;
+
+                        mailConfirmation = MailRequestManager.PostEmail("ekwomnick@yahoo.com", messageBody, messageSubject);
+                    }
                 }
                 else
                 {

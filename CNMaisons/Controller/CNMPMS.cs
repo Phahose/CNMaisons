@@ -192,11 +192,16 @@ namespace CNMaisons.Controller
             Tenant tenant = new();
             Tenants Tennants = new();
             tenant = Tennants.GetTenant(email);
-
             return tenant;
         }
 
-
+        public List<Tenant> FindAllTenants()
+        {
+            List<Tenant> list = new List<Tenant>();
+            Tenants tenants = new Tenants();
+            list = tenants.GetAllTenants();
+            return list;
+        }
 
         public bool ModifyUser (User user)
         {
@@ -300,6 +305,13 @@ namespace CNMaisons.Controller
             return Success;
         }
 
+        public List<User> GetActiveUsers()
+        {
+            List<User> users = new List<User>();
+            Users userServices = new Users();
+            users = userServices.GetUsers();
 
+            return users;
+        }
     }
 }

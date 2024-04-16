@@ -130,7 +130,17 @@ namespace CNMaisons.Pages
                
                 if (UserAccountConfirmation == true)
                 {
-                    Message = "User Account has been created succesfully.";
+                    Message = $"{Role} Account has been created succesfully.";
+                    string messageBody = "Hello " + UserFirstName + ",\n" + 
+                                           "\nWelcome To CN Maisons You are a New Staff! " +
+                                           "\nYour Account Has Successfuly Been Created and You can Now Log in " +
+                                            "\nYour Login Credentials are:\n\t\tEmail: " + Email + "\n\t\tPassword: " + Password;
+                    string messageSubject = $"{Role} Account Created";
+
+                    string mailConfirmation;
+                    CNMPMS MailRequestManager = new CNMPMS();
+                    mailConfirmation = MailRequestManager.PostEmail(Email, messageBody, messageSubject);
+
                 }
                 else
                 {

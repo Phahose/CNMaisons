@@ -865,6 +865,89 @@ namespace CNMaisons.TechnicalService
             return tenant;
         }
 
+        public List<Tenant> GetAllTenants()
+        {
+            List<Tenant> tenantList = new List<Tenant>();
+            Tenant tenant = new Tenant();
+            SqlConnection cnMaisonsConnection = new SqlConnection();
+            cnMaisonsConnection.ConnectionString = connectionString;
+            cnMaisonsConnection.Open();
+            SqlCommand GetTenant = new()
+            {
+                CommandType = CommandType.StoredProcedure,
+                Connection = cnMaisonsConnection,
+                CommandText = "GetTenants"
+            };
+
+            SqlDataReader MyDataReader = GetTenant.ExecuteReader();
+
+            if (MyDataReader.HasRows)
+            {
+                while (MyDataReader.Read())
+                {
+                    tenant = new()
+                    {
+                        Passport = MyDataReader["Passport"] == DBNull.Value ? null! : (byte[])MyDataReader["Passport"],
+                        TenantID = MyDataReader["TenantID"]?.ToString(),
+                        PropertyID = MyDataReader["PropertyID"]?.ToString(),
+                        FirstName = MyDataReader["FirstName"]?.ToString(),
+                        LastName = MyDataReader["LastName"]?.ToString(),
+                        PhoneNumber = MyDataReader["PhoneNumber"]?.ToString(),
+                        Email = MyDataReader["Email"]?.ToString(),
+                        DOB = MyDataReader["DOB"] == DBNull.Value ? default(DateTime) : (DateTime)MyDataReader["DOB"],
+                        Nationality = MyDataReader["Nationality"]?.ToString(),
+                        StateofOrigin = MyDataReader["StateofOrigin"]?.ToString(),
+                        LGA = MyDataReader["LGA"]?.ToString(),
+                        HomeTown = MyDataReader["HomeTown"]?.ToString(),
+                        PermanentHomeAddress = MyDataReader["PermanentHomeAddress"]?.ToString(),
+                        Occupation = MyDataReader["Occupation"]?.ToString(),
+                        SelfEmployed = MyDataReader["SelfEmployed"]?.ToString(),
+                        BusinessRegistrationNumber = MyDataReader["BusinessRegistrationNumber"]?.ToString(),
+                        CorporateAffairsCertificate = MyDataReader["CorporateAffairsCertificate"] == DBNull.Value ? null! : (byte[])MyDataReader["CorporateAffairsCertificate"],
+                        NameofEmployer = MyDataReader["NameofEmployer"]?.ToString(),
+                        AddressOfEmployer = MyDataReader["AddressOfEmployer"]?.ToString(),
+                        LengthOnJob = (int)MyDataReader["LengthOnJob"],
+                        CurrentPositionHeld = MyDataReader["CurrentPositionHeld"]?.ToString(),
+                        NatureOfJob = MyDataReader["NatureOfJob"]?.ToString(),
+                        FormerResidenceAddress = MyDataReader["FormerResidenceAddress"]?.ToString(),
+                        ReasonForMoving = MyDataReader["ReasonForMoving"]?.ToString(),
+                        LengthOfStayAtOldResidence = (int)MyDataReader["LengthOfStayAtOldResidence"],
+                        NameOfFormerResidentManager = MyDataReader["NameOfFormerResidentManager"]?.ToString(),
+                        ObjectionsToReasonsForMoving = MyDataReader["ObjectionsToReasonsForMoving"]?.ToString(),
+                        MaritalStatus = MyDataReader["MaritalStatus"]?.ToString(),
+                        SpouseFirstName = MyDataReader["SpouseFirstName"]?.ToString(),
+                        SpouseLastName = MyDataReader["SpouseLastName"]?.ToString(),
+                        SpouseOccupation = MyDataReader["SpouseOccupation"]?.ToString(),
+                        NumberOfOccupants = (int)MyDataReader["NumberOfOccupants"],
+                        NextOfKinFirstName = MyDataReader["NextOfKinFirstName"]?.ToString(),
+                        NextOfKinLastName = MyDataReader["NextOfKinLastName"]?.ToString(),
+                        NextOfKinAddress = MyDataReader["NextOfKinAddress"]?.ToString(),
+                        NextOfKinPhoneNumber = MyDataReader["NextOfKinPhoneNumber"]?.ToString(),
+                        Guarantor1FirstName = MyDataReader["Guarantor1FirstName"]?.ToString(),
+                        Guarantor1LastName = MyDataReader["Guarantor1LastName"]?.ToString(),
+                        Guarantor1Address = MyDataReader["Guarantor1Address"]?.ToString(),
+                        Guarantor1Occupation = MyDataReader["Guarantor1Occupation"]?.ToString(),
+                        Guarantor1PhoneNumber = MyDataReader["Guarantor1PhoneNumber"]?.ToString(),
+                        Guarantor1AlternatePhoneNumber = MyDataReader["Guarantor1AlternatePhoneNumber"]?.ToString(),
+                        Guarantor2FirstName = MyDataReader["Guarantor2FirstName"]?.ToString(),
+                        Guarantor2LastName = MyDataReader["Guarantor2LastName"]?.ToString(),
+                        Guarantor2Address = MyDataReader["Guarantor2Address"]?.ToString(),
+                        Guarantor2Occupation = MyDataReader["Guarantor2Occupation"]?.ToString(),
+                        Guarantor2PhoneNumber = MyDataReader["Guarantor2PhoneNumber"]?.ToString(),
+                        Guarantor2AlternatePhoneNumber = MyDataReader["Guarantor2AlternatePhoneNumber"]?.ToString(),
+                        Declaration = MyDataReader["Declaration"]?.ToString(),
+                        YourSignedForm = MyDataReader["YourSignedForm"] == DBNull.Value ? null! : (byte[])MyDataReader["YourSignedForm"],
+                        DeleteFlag = (bool)MyDataReader["DeleteFlag"],
+                        ApprovalStatus = MyDataReader["ApprovalStatus"]?.ToString(),
+                        LeaseFormForSigning = MyDataReader["LeaseFormForSigning"] == DBNull.Value ? null! : (byte[])MyDataReader["LeaseFormForSigning"]
+                    };
+                    tenantList.Add(tenant);
+                }
+            }
+            MyDataReader.Close();
+            cnMaisonsConnection.Close();
+            return tenantList;
+        }
 
         public bool CheckIfEmailAlreadyExistInTenantTable(string email)
         {

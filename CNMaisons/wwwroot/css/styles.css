@@ -333,7 +333,7 @@ select {
     display: flex;
     width: 100%;
     margin:auto;
-    justify-content: center;;
+    justify-content: center;
     align-items: center;
 }
 .box1>div:nth-child(1){
@@ -508,7 +508,7 @@ select {
 /*View Property Admin*/
 .prop-card {
     display: flex;
-    width: 70%;
+    width: 80%;
     margin: 1rem auto;
     justify-content: space-between;
     border: 1px solid white;
@@ -602,7 +602,7 @@ input.filter-btn{
 }
 .flex-buttons{
     display: flex;
-    width: 10rem;;
+    width: 10rem;
     margin: auto;
     justify-content: space-between;
 }
@@ -705,6 +705,9 @@ input.filter-btn{
     margin-right: auto;
     border-radius: 50%;
     display: flex;
+}
+.loggedin-icon_div img {
+    border-radius: 50%;
 }
 .loggedin-list li:hover {
     border-bottom: 1.4px solid white;
@@ -862,4 +865,23 @@ summary {
     background-color: antiquewhite;
     padding: 0.5rem;
     border-radius: 5px;
+}
+.popup {
+    width: 400px;
+    background-color: #1c1d1f;
+    border-radius: 6px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.1);
+    padding: 0 3rem 3rem;
+    box-shadow: 0 2px 20px antiquewhite;
+    visibility: hidden;
+    transition: transform 0.4s top 0.4s
+}
+
+.open-popup {
+    visibility: visible;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(1);
 }
