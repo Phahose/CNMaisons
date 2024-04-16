@@ -1,13 +1,11 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container
 builder.Services.AddRazorPages();
 builder.Services.AddSession();
-builder.Services.AddHostedService<BackgroundWorkerService>();
 
 builder.Services.AddRazorPages().AddRazorPagesOptions(o =>
 {

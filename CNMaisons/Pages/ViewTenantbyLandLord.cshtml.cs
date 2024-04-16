@@ -18,24 +18,19 @@ namespace CNMaisons.Pages
         public string FindTenantID { get; set; } = string.Empty;
         [BindProperty]
         public string Submit { get; set; } = string.Empty;
-        public string ListMessage { get; set; } = string.Empty;      
+        public string ListMessage { get; set; } = string.Empty;
+        public bool ShowForm = false;
         public List<Tenant> ListOfTenantsPendingReview = new List<Tenant>();
-        public List<Tenant> ListOfTenants = new List<Tenant>();
         [BindProperty]
         public string ApprovalStatus { get; set; } = string.Empty;
         public User Users { get; set; } = new User();
         public string Email { get; set; } = string.Empty;
         public Employee Employee { get; set; } = new Employee();
-        public bool ShowForm = false;
-        [BindProperty]
-        public string RecieverEmail {  get; set; } = string.Empty;
-        [BindProperty]
-        public string RecieverMessage {  get; set; } = string.Empty;
+
         public void OnGet()
         {
             CNMPMS tenantController = new();
             ListOfTenantsPendingReview = tenantController.GetPendingLeaseApplication();
-            ListOfTenants = tenantController.FindAllTenants();
             if (ListOfTenantsPendingReview == null)
             {
                 ListMessage = "All have been reviewed";
@@ -55,7 +50,7 @@ namespace CNMaisons.Pages
             }
             Users = RequestDirector.GetUserByEmail(Email);
             Employee = RequestDirector.GetAllEmployees(Email);
-            ListOfTenants = RequestDirector.FindAllTenants();
+
 
             ModelState.Clear();
             Message = "";
@@ -79,7 +74,7 @@ namespace CNMaisons.Pages
                             if (check != "")
                             {
                                 ViewFormNow = true;
-                                Message = "Below are the details of the Tenant.";
+                                Message = "Below are the detail of the Tenant's Lease application.";
                                 return Page();
                             }
                             else
@@ -89,15 +84,7 @@ namespace CNMaisons.Pages
                             }
                         }
                     }
-                return Page();
-                case "Send Notice":
-                    string messageBody = RecieverMessage;
-                    string messageSubject = "Notice to Quit";
-
-                    string mailConfirmation;
-                    CNMPMS MailRequestManager = new CNMPMS();
-                    mailConfirmation = MailRequestManager.PostEmail(RecieverEmail, messageBody, messageSubject);
-                return Page();
+                    return Page();
             }
             return Page();
         }

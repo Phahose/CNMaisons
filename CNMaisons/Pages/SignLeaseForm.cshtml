@@ -115,31 +115,16 @@
                         <li><a href="#">Record Rent Payment</a></li>
                     }
                 }
-                @if (Model.Users.Role != "Tenant")
-                {
-                    <li class="loggedin-icon_div">
-                        @if (Model.Employee.EmployeeImage.Length > 0)
-                        {
-                            <img src="data:image;base64,@Convert.ToBase64String(Model.Employee.EmployeeImage)" alt="Property Image" />
-                        }
-                        else
-                        {
-                            <img src="~/img/profile_icon.png" width="150" class="intro_image" />
-                        }
-                    </li>
-                }else{
-                    <li class="loggedin-icon_div">
-                        @if (Model.tenantForReview.Passport.Length > 0)
-                        {
-                            <img src="data:image;base64,@Convert.ToBase64String(Model.tenantForReview.Passport)" alt="Property Image"/>
-                        }
-                        else
-                        {
-                            <img src="~/img/profile_icon.png" width="150" class="intro_image" />
-                        }
-                    </li>
-                }
-                
+                <li class="loggedin-icon_div">
+                    @if (Model.Employee.EmployeeImage.Length > 0)
+                    {
+                        <img src="data:image;base64,@Convert.ToBase64String(Model.Employee.EmployeeImage)" alt="Property Image" />
+                    }
+                    else
+                    {
+                        <img src="~/img/profile_icon.png" width="150" class="intro_image" />
+                    }
+                </li>
             </ul>
         </nav>
     </div>

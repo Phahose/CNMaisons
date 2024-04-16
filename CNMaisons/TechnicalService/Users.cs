@@ -265,41 +265,5 @@ namespace CNMaisons.TechnicalService
             return Success;
         }
 
-        public List<User> GetUsers()
-        {
-            List<User> users = new();
-            SqlConnection cnMaisonsConnection = new SqlConnection();
-            cnMaisonsConnection.ConnectionString = connectionString;
-            cnMaisonsConnection.Open();
-
-            SqlCommand GetAllUsers = new()
-            {
-                CommandType = CommandType.StoredProcedure,
-                Connection = cnMaisonsConnection,
-                CommandText = "GetAllUsers"
-            };
-
-            SqlDataReader UserReader = GetAllUsers.ExecuteReader();
-
-            if (UserReader.HasRows)
-            {
-                while (UserReader.Read())
-                {
-                    User user = new User();
-                    user.Email = (string)UserReader["Email"];
-                    user.Password = (string)UserReader["Password"];
-                    user.UserSalt = (string)UserReader["UserSalt"];
-                    user.Role = (string)UserReader["Role"];
-                    user.DefaultPassword = (string)UserReader["DefaultPassword"];
-                    user.DeactivateAccountStatus = (bool)UserReader["DeactivateAccountStatus"];
-
-                    users.Add(user);
-                }
-            }
-            UserReader.Close();
-            cnMaisonsConnection.Close();
-            return users;
-        }
-
     }
 }
