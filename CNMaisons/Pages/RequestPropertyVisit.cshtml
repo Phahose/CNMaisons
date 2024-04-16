@@ -30,11 +30,13 @@
     </video>
 
     <form name="RequestPropertyVisitForm" method="post" class="view_form">
-        @if (Model.Message != "")
-        {
-            <p style="font-size: small; color: green; background-color:white; padding: 0.5rem;">@Model.Message</p>
-        }
+        <br />
         <fieldset>
+            <span style="font-size: larger; font-style: italic;">
+                @Model.Message
+                <br />
+            </span>
+
             <legend>Request Property Visit</legend>
             <div>
                 <label for="PropertyID">Property ID:</label><br />
