@@ -1,15 +1,12 @@
 using CNMaisons.Controller;
 using CNMaisons.Domain;
 using CNMaisons.TechnicalService;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace CNMaisons.Pages
 {
-
-    [Authorize(Roles = "LandLord, Staff, Tenant")]   // Restrict access to specified roles
     public class ViewPaymentModel : PageModel
     {
         public string Message { get; set; } = string.Empty;
@@ -60,7 +57,7 @@ namespace CNMaisons.Pages
             {
                 
                 CNMPMS PaymentRequestDirector = new CNMPMS();
-                PaymentList = PaymentRequestDirector.ViewTenantPaymentbyDate(FindTenantID, FindStartDate, FindEndDate);
+                PaymentList = PaymentRequestDirector.ViewPaymentbyDate(FindTenantID, FindStartDate, FindEndDate);
                 if (PaymentList != null)
                 {
                     Message = "Below are your records.";

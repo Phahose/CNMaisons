@@ -54,13 +54,11 @@
             }
         }
         computeNextDueDate();
-
         // Return empty string if no matching month found
         return '';
     }
 
     function computeNextDueYear() {
-
         var monthsPaidForSelect = document.getElementById("MonthsPaidFor");
         var paymentStartMonthSelect = document.getElementById("PaymentStartMonth");
         var paymentStartYearSelect = document.getElementById("PaymentStartYearSelect");
@@ -83,11 +81,9 @@
         // Set the computed value to the NextDueYear input
         nextDueYearInput.value = nextDueYear;
         computeNextDueDate();
-        calculatePaymentEndMonth();
      }
 
     function computeNextDueDate() {
-        
         const month12 = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
 
         var monthsPaidForSelect = document.getElementById("MonthsPaidFor");
@@ -103,8 +99,6 @@
         var formattedDate = nextDueYear + '-' + ('0' + NextDueMonthNumber).slice(-2) + '-01';
 
         NextDueDateInput.value = formattedDate;
-        computeNextDueYear();
-        calculatePaymentEndMonth();
     }
 
     var today = new Date();
@@ -151,12 +145,13 @@
                 <input type="text" name="PropertyID" maxlength="7" required oninput="this.value = this.value.toUpperCase();" /><br />
 
                 <label>Amount Paid:</label><br />
-                <input type="number" name="AmountPaid" required onchange="calculatePaymentEndMonth()"/><br />
-
-                <label hidden>Date you made the payment: </label><br />
-                <input hidden type="date" name="DateOfTenantsPayment" required value='@(DateTime.Today.ToString("yyyy-MM-dd"))' max='@(DateTime.Today.ToString("yyyy-MM-dd"))' />
+                <input type="number" name="AmountPaid" required  /><br />
 
 
+                <label>Date you made the payment:</label><br />                
+                <input type="date" name="DateOfTenantsPayment" required value="@DateTime.Today.ToString("yyyy-MM-dd")" max="@DateTime.Today.ToString("yyyy-MM-dd")" />
+
+          
                 <label>Method Of Payment:</label><br />
                 <select name="MethodOfPayment" required>
                     <option value="">Select Method</option>
@@ -241,7 +236,7 @@
                 <input type="date" name="NextDueDate" required id="NextDueDate" readonly /><br />
 
             </div>
-            <input type="submit" name="Submit" value="Add Payment" class="btn" />
+            <input type="submit" name="Submit" value="Request Property Visit" class="btn" />
         </fieldset>
 
 

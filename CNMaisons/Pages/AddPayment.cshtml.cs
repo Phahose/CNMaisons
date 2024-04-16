@@ -10,7 +10,7 @@ using System.Xml.Linq;
 
 namespace CNMaisons.Pages
 {
-    [Authorize(Roles = "LandLord, Staff, Tenant")]   // Restrict access to specified roles
+   // [Authorize(Roles = "LandLord, Staff, Tenant")]   // Restrict access to specified roles
     public class AddPaymentModel : PageModel
     {
 
@@ -220,35 +220,13 @@ namespace CNMaisons.Pages
                 };
 
 
-                RentReminder aReminder = new()
-                {
-                    TenantID = TenantID,
-                    PropertyID = PropertyID,
-                    LastRentAmountPaid = AmountPaid,
-                    DateOfTenantsPayment = DateOfTenantsPayment,
-                    NextDueDate = NextDueDate,
-                    NextDueMonth = NextDueMonth,
-                    NextDueYear = NextDueYear           
-                };
-
                 bool Confirmation;
                 CNMPMS PaymentRequestDirector = new CNMPMS();
                 Confirmation = PaymentRequestDirector.AddPayment(myPayment);
                 if (Confirmation == true)
                 {
+                    Message = "Payment successful added.";
 
-                   bool Confirmation2;
-                   CNMPMS RentReminderRequestDirector= new CNMPMS();
-                   Confirmation2 = RentReminderRequestDirector.AddReminder(aReminder);
-                    if (Confirmation2 == true)
-                    {
-                        Message = "Payment successful added and Reminder created.";
-                    }
-                    else
-                    {
-                        Message = "Payment successful added but Reminder was not created";
-
-                    }
 
 
                     string messageBody = "Hello " + FName + ",\n" +

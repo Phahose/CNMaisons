@@ -91,7 +91,7 @@ namespace CNMaisons.TechnicalService
 
         }
 
-        public List<Payment> GetTenantPaymentbyDate(string aTenantID, DateTime startDate, DateTime endDate)
+        public List<Payment> PaymentPaymentbyDate(string aTenantID, DateTime startDate, DateTime endDate)
         { 
               
             List<Payment> myPaymentList = new();
@@ -108,7 +108,7 @@ namespace CNMaisons.TechnicalService
                 {
                     Connection = MyDataSource,
                     CommandType = CommandType.StoredProcedure,
-                    CommandText = "ViewTenantPaymentByDateRange"
+                    CommandText = "ViewAllPaymentByDateRange"
                 };
 
                 SqlParameter MyParameter;
@@ -133,7 +133,7 @@ namespace CNMaisons.TechnicalService
                 MyParameter = new()
                 {
                     ParameterName = "@EndDate",
-                    SqlDbType = SqlDbType.Date,
+                    SqlDbType = SqlDbType.VarChar,
                     Direction = ParameterDirection.Input,
                     SqlValue = endDate
                 };
@@ -174,221 +174,6 @@ namespace CNMaisons.TechnicalService
             }
 
            
-            catch (Exception ex)
-            {
-                // Handle other exceptions here
-                Console.WriteLine($"An error occurred: {ex.Message}");
-            }
-
-            return myPaymentList;
-
-        }
-
-        public List<Payment> GetFinancialRecordbyDate(int findStartYear, int findEndYear)
-        {
-
-            List<Payment> myPaymentList = new();
-
-            try
-            {
-                //connection
-                SqlConnection MyDataSource = new();
-                MyDataSource.ConnectionString = connectionString;
-                MyDataSource.Open();
-
-                //Command
-                SqlCommand MyCommand = new()
-                {
-                    Connection = MyDataSource,
-                    CommandType = CommandType.StoredProcedure,
-                    CommandText = "ViewFinancialRecordByDateRange"
-                };
-
-                SqlParameter MyParameter;
-                MyParameter = new()
-                {
-                    ParameterName = "@StartDate",
-                    SqlDbType = SqlDbType.Int,
-                    Direction = ParameterDirection.Input,
-                    SqlValue = findStartYear
-                };
-                MyCommand.Parameters.Add(MyParameter);
-
-                MyParameter = new()
-                {
-                    ParameterName = "@EndDate",
-                    SqlDbType = SqlDbType.Int,
-                    Direction = ParameterDirection.Input,
-                    SqlValue = findEndYear
-                };
-                MyCommand.Parameters.Add(MyParameter);
-
-                Payment aPayment = new();
-
-                SqlDataReader MyDataReader = MyCommand.ExecuteReader();
-                int Count = 0;
-                if (MyDataReader.HasRows)
-                {
-                    while (MyDataReader.Read())
-                    {
-                        aPayment = new()
-                        {
-                            PaymentID = (int)MyDataReader["PaymentID"],
-                            TenantID = MyDataReader["TenantID"]?.ToString(),
-                            PropertyID = MyDataReader["PropertyID"]?.ToString(),
-                            AmountPaid = (decimal)MyDataReader["AmountPaid"],
-                            PaymentStartMonth = MyDataReader["PaymentStartMonth"]?.ToString(),
-                            PaymentEndMonth = MyDataReader["PaymentEndMonth"]?.ToString(),
-                            PaymentStartYear = (int)MyDataReader["PaymentStartYear"],
-                            MonthsPaidFor = (int)MyDataReader["MonthsPaidFor"],
-                            NextDueMonth = MyDataReader["NextDueMonth"]?.ToString(),
-                            NextDueYear = (int)MyDataReader["NextDueYear"],
-                            NextDueDate = MyDataReader["NextDueDate"] == DBNull.Value ? default(DateTime) : (DateTime)MyDataReader["NextDueDate"],
-                            DateOfTenantsPayment = MyDataReader["DateOfTenantsPayment"] == DBNull.Value ? default(DateTime) : (DateTime)MyDataReader["DateOfTenantsPayment"],
-                            MethodOfPayment = MyDataReader["MethodOfPayment"]?.ToString(),
-                            TenantPaymentBank = MyDataReader["TenantPaymentBank"]?.ToString(),
-                            DateOfRecord = MyDataReader["DateOfRecord"] == DBNull.Value ? default(DateTime) : (DateTime)MyDataReader["DateOfRecord"]
-                        };
-                        myPaymentList.Add(aPayment);
-                    }
-                    Count++;
-                    MyDataReader.Close();
-                    MyDataSource.Close();
-                }
-            }
-
-
-            catch (Exception ex)
-            {
-                // Handle other exceptions here
-                Console.WriteLine($"An error occurred: {ex.Message}");
-            }
-
-            return myPaymentList;
-
-        }
-
-
-        public List<Payment> ViewFinancialRecordDueInSixMonths()
-        {
-
-            List<Payment> myPaymentList = new();
-
-            try
-            {
-                //connection
-                SqlConnection MyDataSource = new();
-                MyDataSource.ConnectionString = connectionString;
-                MyDataSource.Open();
-
-                //Command
-                SqlCommand MyCommand = new()
-                {
-                    Connection = MyDataSource,
-                    CommandType = CommandType.StoredProcedure,
-                    CommandText = "ViewFinancialRecordDueInSixMonths"
-                };
-
-                Payment aPayment = new();
-
-                SqlDataReader MyDataReader = MyCommand.ExecuteReader();
-                int Count = 0;
-                if (MyDataReader.HasRows)
-                {
-                    while (MyDataReader.Read())
-                    {
-                        aPayment = new()
-                        {
-                            PaymentID = (int)MyDataReader["PaymentID"],
-                            TenantID = MyDataReader["TenantID"]?.ToString(),
-                            PropertyID = MyDataReader["PropertyID"]?.ToString(),
-                            AmountPaid = (decimal)MyDataReader["AmountPaid"],
-                            PaymentStartMonth = MyDataReader["PaymentStartMonth"]?.ToString(),
-                            PaymentEndMonth = MyDataReader["PaymentEndMonth"]?.ToString(),
-                            PaymentStartYear = (int)MyDataReader["PaymentStartYear"],
-                            MonthsPaidFor = (int)MyDataReader["MonthsPaidFor"],
-                            NextDueMonth = MyDataReader["NextDueMonth"]?.ToString(),
-                            NextDueYear = (int)MyDataReader["NextDueYear"],
-                            NextDueDate = MyDataReader["NextDueDate"] == DBNull.Value ? default(DateTime) : (DateTime)MyDataReader["NextDueDate"],
-                            DateOfTenantsPayment = MyDataReader["DateOfTenantsPayment"] == DBNull.Value ? default(DateTime) : (DateTime)MyDataReader["DateOfTenantsPayment"],
-                            MethodOfPayment = MyDataReader["MethodOfPayment"]?.ToString(),
-                            TenantPaymentBank = MyDataReader["TenantPaymentBank"]?.ToString(),
-                            DateOfRecord = MyDataReader["DateOfRecord"] == DBNull.Value ? default(DateTime) : (DateTime)MyDataReader["DateOfRecord"]
-                        };
-                        myPaymentList.Add(aPayment);
-                    }
-                    Count++;
-                    MyDataReader.Close();
-                    MyDataSource.Close();
-                }
-            }
-
-
-            catch (Exception ex)
-            {
-                // Handle other exceptions here
-                Console.WriteLine($"An error occurred: {ex.Message}");
-            }
-
-            return myPaymentList;
-
-        }
-
-        public List<Payment> ViewFinancialRecordDueInThreeMonths()
-        {
-
-            List<Payment> myPaymentList = new();
-
-            try
-            {
-                //connection
-                SqlConnection MyDataSource = new();
-                MyDataSource.ConnectionString = connectionString;
-                MyDataSource.Open();
-
-                //Command
-                SqlCommand MyCommand = new()
-                {
-                    Connection = MyDataSource,
-                    CommandType = CommandType.StoredProcedure,
-                    CommandText = "ViewFinancialRecordDueInThreeMonths"
-                };
-
-                Payment aPayment = new();
-
-                SqlDataReader MyDataReader = MyCommand.ExecuteReader();
-                int Count = 0;
-                if (MyDataReader.HasRows)
-                {
-                    while (MyDataReader.Read())
-                    {
-                        aPayment = new()
-                        {
-                            PaymentID = (int)MyDataReader["PaymentID"],
-                            TenantID = MyDataReader["TenantID"]?.ToString(),
-                            PropertyID = MyDataReader["PropertyID"]?.ToString(),
-                            AmountPaid = (decimal)MyDataReader["AmountPaid"],
-                            PaymentStartMonth = MyDataReader["PaymentStartMonth"]?.ToString(),
-                            PaymentEndMonth = MyDataReader["PaymentEndMonth"]?.ToString(),
-                            PaymentStartYear = (int)MyDataReader["PaymentStartYear"],
-                            MonthsPaidFor = (int)MyDataReader["MonthsPaidFor"],
-                            NextDueMonth = MyDataReader["NextDueMonth"]?.ToString(),
-                            NextDueYear = (int)MyDataReader["NextDueYear"],
-                            NextDueDate = MyDataReader["NextDueDate"] == DBNull.Value ? default(DateTime) : (DateTime)MyDataReader["NextDueDate"],
-                            DateOfTenantsPayment = MyDataReader["DateOfTenantsPayment"] == DBNull.Value ? default(DateTime) : (DateTime)MyDataReader["DateOfTenantsPayment"],
-                            MethodOfPayment = MyDataReader["MethodOfPayment"]?.ToString(),
-                            TenantPaymentBank = MyDataReader["TenantPaymentBank"]?.ToString(),
-                            DateOfRecord = MyDataReader["DateOfRecord"] == DBNull.Value ? default(DateTime) : (DateTime)MyDataReader["DateOfRecord"]
-                        };
-                        myPaymentList.Add(aPayment);
-                    }
-                    Count++;
-                    MyDataReader.Close();
-                    MyDataSource.Close();
-                }
-            }
-
-
             catch (Exception ex)
             {
                 // Handle other exceptions here

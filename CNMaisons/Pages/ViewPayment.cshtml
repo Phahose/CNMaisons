@@ -24,18 +24,16 @@
         <div>
             <label>Enter Tenant ID: </label>
             <br />
-            <input type="text" name="FindTenantID" required />
+            <input type="text" name="FindTenantID" accept="image/*" required />
             <br />
 
             <label>Start Date: </label>
             <br />
-            <input type="date" name="FindStartDate" class="btn"  required value='@(DateTime.Today.ToString("yyyy-MM-dd"))' max='@(DateTime.Today.ToString("yyyy-MM-dd"))' />
-
+            <input type="date" name="FindStartDate" class="btn" />
             <br />
             <label>End Date: </label>
             <br />
-            <input type="date" name="FindEndDate" class="btn" required value='@(DateTime.Today.ToString("yyyy-MM-dd"))' max='@(DateTime.Today.ToString("yyyy-MM-dd"))' />
-
+            <input type="date" name="FindEndDate" class="btn" />
             <br />
             <br />
             <input type="submit" name="Submit" value="Find" class="btn" />
@@ -47,29 +45,29 @@
 
 @if (Model.ViewPage == true)    
 {
-    <form name="ShowPayment" method="post" class="form property_form transition-fade-down">
+    <form name="ShowPayment" method="post" >
         <h4>View Payment</h4>
 
 
         <div style="display: flex; align-content: center">
             <table style="border-collapse: collapse; text-align: left; width: 100%;">
                 <thead>
-                    <tr style="border: 1px solid #ddd; background-color:black;">                        
-                        <th style="border: 1px solid #ddd;">PaymentID</th>
-                        <th style="border: 1px solid #ddd;">TenantID</th>
-                        <th style="border: 1px solid #ddd;">PropertyID</th>                        
-                        <th style="border: 1px solid #ddd;">Amount Paid</th>
-                        <th style="border: 1px solid #ddd;">Payment Start Month</th>
-                        <th style="border: 1px solid #ddd;">Payment End Month</th>
-                        <th style="border: 1px solid #ddd;">Payment Start Year</th>
-                        <th style="border: 1px solid #ddd;">Months Paid For</th>
-                        <th style="border: 1px solid #ddd;">Next Due Month</th>
-                        <th style="border: 1px solid #ddd;">Next Due Year</th>
-                        <th style="border: 1px solid #ddd;">Next Due Date</th>
-                        <th style="border: 1px solid #ddd;">Date of Tenants Payment</th>
-                        <th style="border: 1px solid #ddd;">Method of Payment</th>
-                        <th style="border: 1px solid #ddd;">Tenant Payment Bank</th>
-                        <th style="border: 1px solid #ddd;">Date of Record</th>
+                    <tr style="border: 1px solid #ddd; background-color:black;">
+                        <th style="border: 1px solid #ddd;">Payment ID: PaymentID</th>
+                        <th style="border: 1px solid #ddd;">Tenant ID: TenantID</th>
+                        <th style="border: 1px solid #ddd;">Property ID: PropertyID</th>
+                        <th style="border: 1px solid #ddd;">Amount Paid: AmountPaid</th>
+                        <th style="border: 1px solid #ddd;">Payment Start Month: PaymentStartMonth</th>
+                        <th style="border: 1px solid #ddd;">Payment End Month: PaymentEndMonth</th>
+                        <th style="border: 1px solid #ddd;">Payment Start Year: PaymentStartYear</th>
+                        <th style="border: 1px solid #ddd;">Months Paid For: MonthsPaidFor</th>
+                        <th style="border: 1px solid #ddd;">Next Due Month: NextDueMonth</th>
+                        <th style="border: 1px solid #ddd;">Next Due Year: NextDueYear</th>
+                        <th style="border: 1px solid #ddd;">Next Due Date: NextDueDate</th>
+                        <th style="border: 1px solid #ddd;">Date of Tenant's Payment: DateOfTenantsPayment</th>
+                        <th style="border: 1px solid #ddd;">Method of Payment: MethodOfPayment</th>
+                        <th style="border: 1px solid #ddd;">Tenant Payment Bank: TenantPaymentBank</th>
+                        <th style="border: 1px solid #ddd;">Date of Record: DateOfRecord</th>
                     </tr>
                 </thead>
                 <tbody>
