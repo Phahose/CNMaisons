@@ -1,0 +1,610 @@
+﻿@page
+@model CNMaisons.Pages.LeaseApplicationModel
+@{
+    Layout = "_Header";
+    ViewData["Title"] = "Lease Application";
+    var emailPattern = new System.Text.RegularExpressions.Regex(@"^[^\s@]+@[^\s@]+\.[^\s@]+$");
+
+}
+
+
+<script src="~/libraries/jquery/jquery.js"></script>
+<script src="~/libraries/jquery-validate/jquery.validate.js"></script>
+<script src="~/libraries/jquery-validate-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+<script type="text/javascript">
+    //to popuate values. To be removed later
+    function populateValue() {
+        document.querySelector('input[name="PropertyID"]').value = "CN00001";
+        document.querySelector('input[name="FirstName"]').value = "Noelyn";
+        document.querySelector('input[name="LastName"]').value = "Yamat";
+        document.querySelector('input[name="PhoneNumber"]').value = "0803854364";
+        document.querySelector('input[name="Email"]').value = "nyamat1@nait.ca";
+        document.querySelector('input[name="DOB"]').value = "1982-01-01";
+        document.querySelector('input[name="Password"]').value = "abc123";
+        document.querySelector('input[name="Nationality"]').value = "Nigeria";
+        document.querySelector('input[name="PermanentHomeAddress"]').value = "Udenu";
+        document.querySelector('input[name="Occupation"]').value = "Engineer";
+        document.querySelector('input[name="SelfEmployed"][value="yes"]').checked = true;
+        document.querySelector('select[name="MaritalStatus"]').value = "Single";
+        document.querySelector('input[name="NumberOfOccupants"]').value = "2";
+        document.querySelector('input[name="NextOfKinFirstName"]').value = "FirstName";
+        document.querySelector('input[name="NextOfKinLastName"]').value = "LastName";
+        document.querySelector('input[name="NextOfKinAddress"]').value = "Address";
+        document.querySelector('input[name="NextOfKinPhoneNumber"]').value = "PhoneNumber";
+        document.querySelector('input[name="Guarantor1FirstName"]').value = "FirstName";
+        document.querySelector('input[name="Guarantor1LastName"]').value = "LastName";
+        document.querySelector('input[name="Guarantor1Address"]').value = "Address";
+        document.querySelector('input[name="Guarantor1Occupation"]').value = "placeholder";
+        document.querySelector('input[name="Guarantor1PhoneNumber"]').value = "PhoneNumber";
+        document.querySelector('input[name="Guarantor2FirstName"]').value = "placeholder";
+        document.querySelector('input[name="Guarantor2LastName"]').value = "placeholder";
+        document.querySelector('input[name="Guarantor2Address"]').value = "placeholder";
+        document.querySelector('input[name="Guarantor2Occupation"]').value = "placeholder";
+        document.querySelector('input[name="Guarantor2PhoneNumber"]').value = "placeholder";
+       
+    }
+
+
+
+
+    function isFormValid(event) {
+        var isValid = true; // Set to true initially
+        var textOnly = /^[a-zA-Z]+$/;
+        var textAndNumbers = /^[a-zA-Z0-9]+$/;
+        var numbersOnly = /^[0-9]+$/;
+
+
+
+        // Validate Passport (File Upload)
+        var passportFile = event.Passport.files[0];
+        if (!passportFile) {
+            var passportFileError = "Add the passport.";
+            isValid = false;
+        }
+
+
+
+
+
+        // Validate PropertyID
+        var propertyID = event.PropertyID.value;
+        if (propertyID === "" || !textOnly.test(propertyID)) {
+            var PropertyIDError = "Enter a valid property ID.";
+            isValid = false;
+        }
+
+        // Validate FirstName
+        var FirstName = event.FirstName.value;
+        if (FirstName === "" || !textOnly.test(firstName)) {
+            var firstNameError = "Enter a valid First Name.";
+            isValid = false;
+        }
+
+        // Validate LastName
+        var lastName = event.LastName.value;
+        if (lastName === "" || !textOnly.test(lastName)) {
+            var lastNameError = "Enter a valid Last Name.";
+            isValid = false;
+        }
+
+        // Validate PhoneNumber
+        var phoneNumber = event.PhoneNumber.value;
+        if (phoneNumber === "" || !textAndNumbers.test(phoneNumber)) {
+            alert("Please enter a valid PhoneNumber.");
+            isValid = false;
+        }
+
+
+        // Validate Email
+
+
+        // var email = event.Email.value;
+        // if (email === "" || !emailPattern.test(email)) {
+        //     alert("Please enter a valid email address.");
+        //     isValid = false;
+        // }
+
+
+        // Validate DOB
+        var dob = event.DOB.value;
+        if (dob === "") {
+            alert("Please enter a valid Date of Birth.");
+            isValid = false;
+        }
+        //textOnly          textAndNumbers          numbersOnly
+
+
+        // Validate Nationality
+        var nationality = event.Nationality.value;
+        if (nationality === "" || !textOnly.test(nationality)) {
+            alert("Please enter a valid Nationality.");
+            isValid = false;
+        }
+
+        // Validate PermanentHomeAddress
+        var permanentHomeAddress = event.PermanentHomeAddress.value;
+        if (permanentHomeAddress === "" || !textAndNumbers.test(permanentHomeAddress)) {
+            alert("Please enter a valid Permanent Home Address.");
+            isValid = false;
+        }
+
+
+
+
+        // Validate Occupation
+        var occupation = event.Occupation.value;
+        if (occupation === "" || !textOnly.test(occupation)) {
+            alert("Please enter a valid Occupation.");
+            isValid = false;
+        }
+
+        // Validate SelfEmployed
+        var selfEmployed = event.SelfEmployed.value;
+        if (selfEmployed === "" || !textOnly.test(selfEmployed)) {
+            alert("Please enter a valid SelfEmployed status.");
+            isValid = false;
+        }
+
+
+        // Validate MaritalStatus
+        var maritalStatus = event.MaritalStatus.value;
+        if (maritalStatus === "" || !textOnly.test(maritalStatus)) {
+            alert("Please enter a valid Marital Status.");
+            isValid = false;
+        }
+
+        // Validate NumberOfOccupants
+        var numberOfOccupants = event.NumberOfOccupants.value;
+        if (numberOfOccupants === "" || isNaN(numberOfOccupants) || numberOfOccupants <= 0) {
+            alert("Please enter a valid Number of Occupants.");
+            isValid = false;
+        }
+
+        // Validate NextOfKinFirstName
+        var nextOfKinFirstName = event.NextOfKinFirstName.value;
+        if (nextOfKinFirstName === "" || !textOnly.test(nextOfKinFirstName)) {
+            alert("Please enter a valid Next of Kin First Name.");
+            isValid = false;
+        }
+
+        // Validate NextOfKinLastName
+        var nextOfKinLastName = event.NextOfKinLastName.value;
+        if (nextOfKinLastName === "" || !textOnly.test(nextOfKinLastName)) {
+            alert("Please enter a valid Next of Kin Last Name.");
+            isValid = false;
+        }
+        // Validate NextOfKinAddress
+        var nextOfKinAddress = event.NextOfKinAddress.value;
+        if (nextOfKinAddress === "" || !textAndNumbers.test(nextOfKinAddress)) {
+            alert("Please enter a valid Next of Kin Address.");
+            isValid = false;
+        }
+
+        // Validate NextOfKinPhoneNumber
+        var nextOfKinPhoneNumber = event.NextOfKinPhoneNumber.value;
+        if (nextOfKinPhoneNumber === "" || !textAndNumbers.test(nextOfKinPhoneNumber)) {
+            alert("Please enter a valid Next of Kin Phone Number.");
+            isValid = false;
+        }
+
+
+        // Validate Guarantor1FirstName
+        var guarantor1FirstName = event.Guarantor1FirstName.value;
+        if (guarantor1FirstName === "" || !textOnly.test(guarantor1FirstName)) {
+            alert("Please enter a valid Guarantor 1 First Name.");
+            isValid = false;
+        }
+
+        // Validate Guarantor1LastName
+        var guarantor1LastName = event.Guarantor1LastName.value;
+        if (guarantor1LastName === "" || !textOnly.test(guarantor1LastName)) {
+            alert("Please enter a valid Guarantor 1 Last Name.");
+            isValid = false;
+        }
+
+        // Validate Guarantor1Address
+        var guarantor1Address = event.Guarantor1Address.value;
+        if (guarantor1Address === "" || !textAndNumbers.test(guarantor1Address)) {
+            alert("Please enter a valid Guarantor 1 Address.");
+            isValid = false;
+        }
+
+        // Validate Guarantor1Occupation
+        var guarantor1Occupation = event.Guarantor1Occupation.value;
+        if (guarantor1Occupation === "" || !textOnly.test(guarantor1Occupation)) {
+            alert("Please enter a valid Guarantor 1 Occupation.");
+            isValid = false;
+        }
+
+        // Validate Guarantor1PhoneNumber
+        var guarantor1PhoneNumber = event.Guarantor1PhoneNumber.value;
+        if (guarantor1PhoneNumber === "" || !textAndNumbers.test(guarantor1PhoneNumber)) {
+            alert("Please enter a valid Guarantor 1 Phone Number.");
+            isValid = false;
+        }
+
+        // Validate Guarantor2FirstName
+        var guarantor2FirstName = event.Guarantor2FirstName.value;
+        if (guarantor2FirstName === "" || !textOnly.test(guarantor2FirstName)) {
+            alert("Please enter a valid Guarantor 2 First Name.");
+            isValid = false;
+        }
+
+        // Validate Guarantor2LastName
+        var guarantor2LastName = event.Guarantor2LastName.value;
+        if (guarantor2LastName === "" || !textOnly.test(guarantor2LastName)) {
+            alert("Please enter a valid Guarantor 2 Last Name.");
+            isValid = false;
+        }
+
+        // Validate Guarantor2Address
+        var guarantor2Address = event.Guarantor2Address.value;
+        if (guarantor2Address === "" || !textOnly.test(guarantor2Address)) {
+            alert("Please enter a valid Guarantor 2 Address.");
+            isValid = false;
+        }
+
+        // Validate Guarantor2Occupation
+        var guarantor2Occupation = event.Guarantor2Occupation.value;
+        if (guarantor2Occupation === "" || !textOnly.test(guarantor2Occupation)) {
+            alert("Please enter a valid Guarantor 2 Occupation.");
+            isValid = false;
+        }
+
+        // Validate Guarantor2PhoneNumber
+        var guarantor2PhoneNumber = event.Guarantor2PhoneNumber.value;
+        if (guarantor2PhoneNumber === "" || !textAndNumbers.test(guarantor2PhoneNumber)) {
+            alert("Please enter a valid Guarantor 2 Phone Number.");
+            isValid = false;
+        }
+
+        // Validate Declaration
+        var declaration = event.Declaration.value;
+        if (declaration === "" || !/^.{1,60}$/i.test(declaration)) {
+            alert("Please enter a valid Declaration.");
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
+
+
+
+
+
+    //---- script for  self - employed  selection-
+    function showFields() {
+        document.getElementById("selfEmployedFields").style.display = "block";
+        document.getElementById("employerFields").style.display = "none";
+    }
+
+    function hideFields() {
+        document.getElementById("selfEmployedFields").style.display = "none";
+        document.getElementById("employerFields").style.display = "block";
+    }
+
+
+    //--- script for  self - employed  selection-- >
+    function toggleSpouseFields(select) {
+        var spouseFields = document.getElementById("spouseFields");
+        if (select.value === "Married") {
+            spouseFields.style.display = "block";
+        } else {
+            spouseFields.style.display = "none";
+        }
+    }
+</script>
+
+<div>
+    <video autoplay muted loop id="video-background">
+        <source src="~/img/backvideos.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+
+    <form name="Application" method="post" class="form property_form transition-fade-down" enctype="multipart/form-data">
+        <input type="button" name="populate values" value="populate values" onclick="populateValue()" class="btn" />
+        <!--<form name="Application" method="post" class="form property_form transition-fade-down" onsubmit="return isFormValid(this);" enctype="multipart/form-data" action="ViewHTTPRequest">-->
+        <input type="submit" name="Submit" value="Submit Lease Application" class="btn" />
+        <br />
+
+        <br />
+        @foreach (var error in Model.errorMessage)
+        {
+            @if (error != null)
+            {
+                <p style="font-size: small; color: red; background-color:white; padding: 0.5rem;">@error</p>
+            }
+        }
+        @if (Model.Message != "")
+        {
+            <p style="font-size: small; color: green; background-color:white; padding: 0.5rem;">@Model.Message</p>
+        }
+        <br />
+        <fieldset>
+            <legend>Personal Information</legend>
+            <div>
+                <label for="Passport Photo">Profile Photo</label>
+                <br />
+                <input type="file" name="Passport" accept="image/*" required/>
+
+                <br />
+
+                <label for="Property ID">Which Property ID are you interested in:</label>
+                <br />
+                <input type="text" name="PropertyID" maxlength="7" />
+                <br />
+
+                Email:
+                <input type="email" name="Email" />
+
+                <label for="FirstName">First Name</label>
+                <br />
+                <input type="text" name="FirstName" maxlength="30" />
+                <br />
+
+                <label for="LasName">Last Name</label>
+                <br />
+                <input type="text" name="LastName" maxlength="30" />
+                <br />
+                TelePhone Number*:
+                <input type="tel" name="PhoneNumber" maxlength="14" />
+
+                Date Of Birth*:
+                <input type="date" name="DOB" />
+
+                Password*:
+                <input type="password" name="Password" maxlength="100" />
+
+                Nationality*:
+                <input type="text" name="Nationality" maxlength="20" />
+                State of Origin
+                <input type="text" name="StateofOrigin" maxlength="20" />
+
+                Local Govt. Area:
+                <input type="text" name="LGA" maxlength="20" />
+                Home Town:
+                <input type="text" name="HomeTown" maxlength="20" />
+                Permanent Home Address*:
+                <input type="text" name="PermanentHomeAddress" maxlength="100" />
+            </div>
+        </fieldset>
+
+
+        <fieldset>
+            <legend>Occupation Info</legend>
+            <div>
+                <div>
+                    <label for="Occupation">Occupation*:</label>
+
+                    <input type="text" name="Occupation" />
+
+                    <label for="SelfEmployed">Are you self-employed*: </label>
+                    <input type="radio" id="answer_yes" name="SelfEmployed" value="yes" onclick="showFields() " checked>
+                    <label for="answer_yes">Yes</label>
+                    <input type="radio" id="answer_no" name="SelfEmployed" value="no" onclick="hideFields()">
+                    <label for="answer_no">No</label>
+
+                    <!-----displays only when  self-employed = yes-->
+                    <div id="selfEmployedFields" style="display: none;">
+                        <label for="BusinessRegistrationNumber">Business Registration Number</label>
+                        <br />
+                        <input type="text" name="BusinessRegistrationNumber" maxlength="15" />
+                        <br />
+
+                        <label for="CorporateAffairsCertificate">Corporate Affairs Certificate</label>
+                        <br />
+                        <input type="file" name="CorporateAffairsCertificate" />
+                        <br />
+                    </div>
+                    <!----------------------------------------------------------------------->
+                    <!-----displays only when  self-employed = no-->
+                    <div id="employerFields" style="display: none;">
+                        <label for="NameofEmployer">Name of Employer</label>
+                        <br />
+                        <input type="text" name="NameofEmployer" maxlength="50" />
+                        <br />
+
+                        <label for="AddressOfEmployer">Address of Employer</label>
+                        <br />
+                        <input type="text" name="AddressOfEmployer" maxlength="100" />
+                        <br />
+
+                        <label for="LengthOnJob">How long have you been on the job?</label>
+                        <br />
+                        <input type="text" name="LengthOnJob" maxlength="10" />
+                        <br />
+
+                        <label for="CurrentPositionHeld">Current Position Held at Job</label>
+                        <br />
+                        <input type="text" name="CurrentPositionHeld" maxlength="25" />
+                        <br />
+                    </div>
+
+                    <label for="NatureOfJob">Nature of business or Nature of Job</label>
+                    <br />
+                    <input type="text" name="NatureOfJob" maxlength="25" />
+                </div>
+           </div>
+        </fieldset>
+
+
+        <fieldset>
+            <legend>Past Rental Information</legend>
+            <div>
+                <div>
+                    <label for="FormerResidenceAddress">Former Residence Address</label>
+                    <br />
+                    <input type="text" name="FormerResidenceAddress" maxlength="100" />
+                    <br />
+
+                    <label for="ReasonForMoving">State your reasons for moving out of former residence: </label><br />
+                    <textarea name="ReasonForMoving" style="max-height: 200px; max-width: 500px;" maxlength="50"></textarea>
+                    <br />
+                    <label for="LengthOfStayAtOldResidence">Number of years spent at the former residence</label>
+                    <br />
+                    <input type="number" min="0" name="LengthOfStayAtOldResidence" maxlength="2" />
+                    <br />
+                    <label for="NameOfFormerResidentManager">Name of Former Landlord or Estate Manager</label>
+                    <br />
+                    <input type="text" name="NameOfFormerResidentManager" maxlength="60" />
+                    <br />
+                    <label for="ObjectionsToReasonsForMoving">Do you Have any Objection to Your Reson to Leaving you Former Residence</label>
+                    <br />
+                    <textarea name="ObjectionsToReasonsForMoving" style="max-height: 200px; max-width: 500px;" maxlength="100"></textarea>
+                </div>
+            </div>
+        </fieldset>
+
+
+        <fieldset>
+            <legend>Marital Information</legend>
+            <div>
+                <div>
+                    <label for="MaritalStatus">Marital Status</label>
+                    <br />
+                    <select name="MaritalStatus" onchange="toggleSpouseFields(this)">
+                        <option value="Single">Single</option>
+                        <option value="Married">Married</option>
+                        <option value="Divorced">Divorced</option>
+                        <option value="Widowed">Widowed</option>
+                        <option value="SingleParent">Single Parent</option>
+                    </select>
+                    <br />
+
+                    <!-----displays only when  MaritalStatus = Married-->
+                    <div id="spouseFields" style="display: none;">
+                        <label for="SpouseFirstName">Spouse's First Name</label>
+                        <br />
+                        <input type="text" name="SpouseFirstName" maxlength="30" />
+                        <br />
+                        <label for="SpouseLastName">Spouse's Last Name</label>
+                        <br />
+                        <input type="text" name="SpouseLastName" maxlength="30" />
+                        <br />
+                        <label for="SpouseOccupation">Spouse's Occupation/Employment</label>
+                        <br />
+                        <input type="text" name="SpouseOccupation" maxlength="25" />
+                        <br />
+                    </div>
+                    <!----------------------------------------------------------------------->
+
+                    <label for="NumberOfOccupants">Number of Expected Occupants in House*:</label>
+                    <br />
+                    <input type="number" name="NumberOfOccupants"  maxlength="2">
+                    <br />
+                </div>
+            </div>
+        </fieldset>
+
+
+        <fieldset>
+            <legend>Next of Kin Information</legend>
+            <div>
+                <div>
+
+                    <label for="NextOfKinFirstName">Next Of Kin First Name*:</label>
+                    <br />
+                    <input type="text" name="NextOfKinFirstName"  maxlength="30"/>
+                    <br />
+                    <label for="NextOfKinLastName">Next Of Kin Last Name*:</label>
+                    <br />
+                    <input type="text" name="NextOfKinLastName" maxlength="30" />
+                    <br />
+                    <label for="NextOfKinAddress">Next Of Kin Address*:</label>
+                    <br />
+                    <input type="text" name="NextOfKinAddress" maxlength="100"/>
+                    <br />
+                    <label for="NextOfKinPhoneNumber">Next Of Kin Phone Number</label>
+                    <br />
+                    <input type="text" name="NextOfKinPhoneNumber" maxlength="14" />
+                    <br />
+                </div>
+            </div>
+        </fieldset>
+
+
+
+
+        <fieldset>
+            <legend>Guarrantor Information</legend>
+            <div>
+                <div>
+                    <label for="Guarantor1FirstName">Guarantor #1 First Name*:</label>
+                    <br />
+                    <input type="text" name="Guarantor1FirstName" maxlength="30" />
+                    <br />
+                    <label for="Guarantor1LastName">Guarantor #1 Last Name</label>
+                    <br />
+                    <input type="text" name="Guarantor1LastName" maxlength="30" />
+                    <br />
+                    <label for="Guarantor1Address">Guarantor #1 Address*:</label>
+                    <br />
+                    <input type="text" name="Guarantor1Address" maxlength="100" />
+                    <br />
+
+                    <label for="Guarantor1Occupation">Guarantor #1 Occupation*:</label>
+                    <br />
+                    <input type="text" name="Guarantor1Occupation" maxlength="25" />
+                    <br />
+                    <label for="Guarantor1PhoneNumber">Guarantor #1 Phone Number*:</label>
+                    <br />
+                    <input type="tel" name="Guarantor1PhoneNumber" maxlength="14" />
+                    <br />
+                    <label for="Guarantor1AlternatePhoneNumber">Guarantor Alt. Phone#</label>
+                    <br />
+                    <input type="tel" name="Guarantor1AlternatePhoneNumber" maxlength="14" />
+                    <br />
+
+                    <label for="Guarantor2FirstName">Guarantor #2 First Name*:</label>
+                    <br />
+                    <input type="text" name="Guarantor2FirstName" maxlength="30" />
+                    <br />
+                    <label for="Guarantor2LastName">Guarantor #2 Last Name*:</label>
+                    <br />
+                    <input type="text" name="Guarantor2LastName" maxlength="30" />
+                    <br />
+                    <label for="Guarantor2Address">Guarantor #2 Address*:</label>
+                    <br />
+                    <input type="text" name="Guarantor2Address" maxlength="100" />
+                    <br />
+                    <label for="Guarantor2Occupation">Guarantor #2 Occupation*:</label>
+                    <br />
+                    <input type="text" name="Guarantor2Occupation" maxlength="25" />
+                    <br />
+                    <label for="Guarantor2PhoneNumber">Guarantor #2 Phone Number*:</label>
+                    <br />
+                    <input type="tel" name="Guarantor2PhoneNumber" maxlength="14" />
+                    <br />
+                    <label for="Guarantor2AlternatePhoneNumber">Guarantor Alt. Phone#</label>
+                    <br />
+                    <input type="tel" name="Guarantor2AlternatePhoneNumber" maxlength="14" />
+                    <br />
+                </div>
+
+
+
+                <div class="confirmation_text">
+                    <label for="LegalConfirmation">
+                        I hereby declare and state that all the information supplied above are true and correct to the best of my knowledge and belief and
+                        I accept to be held liable for any misrepresentation therein.*:
+                    </label>
+                </div>
+               
+                <input type="checkbox" value="Yes" name="Declaration" checked />
+                <br />
+  
+                <input type="text" name="DeleteFlag" value="0" hidden />
+
+
+                     
+                    <label for="LeaseFormForSigning" hidden> Lease Form For Signing</label>
+                    <br />
+                    <input type="file" name="LeaseFormForSigning" hidden />
+                    <br />
+            </div>
+        </fieldset>
+    </form>
+</div>

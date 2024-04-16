@@ -1,0 +1,383 @@
+﻿@page
+@model CNMaisons.Pages.ViewTenantbyLandLordModel
+@{
+
+    ViewData["Title"] = "View Renant";
+    var emailPattern = new System.Text.RegularExpressions.Regex(@"^[^\s@]+@[^\s@]+\.[^\s@]+$");
+
+}
+
+
+
+<script src="~/libraries/jquery/jquery.js"></script>
+<script src="~/libraries/jquery-validate/jquery.validate.js"></script>
+<script src="~/libraries/jquery-validate-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+<script type="text/javascript">
+    function copyTenantID(tenantID) {
+        document.querySelector('input[name="FindTenantID"]').value = tenantID;
+    }
+
+</script>
+<div>
+    <div class="loggedin-pages">
+        <nav class="loggedin-nav">
+            <a href="~/Index"><img src="~/img/png/logo-no-background.png" width="150" class="intro_image" /></a>
+            <ul class="loggedin-list">
+                @if (Model.Users.Role == "LandLord")
+                {
+                    <li><a href="~/IndexStaff">My Account</a></li>
+                    <li><a href="~/ViewTenantbyLandLord">View Tenant </a></li>
+                    <li><a href="~/CreateAccount">Create New Employee Account</a></li>
+                }
+                @if (Model.Users.Role == "Staff")
+                {
+
+                    <li>
+                        <a href="~/IndexStaff">My Account</a>
+                    </li>
+                    <li>
+                        <a href="~/AddProperty">Add Property</a>
+                    </li>
+                    <li>
+                        <a href="#">View Visit Requests</a>
+                    </li>
+                    <li>
+                        <a href="#">Edit Account</a>
+                    </li>
+
+                }
+                <li class="loggedin-icon_div">
+                    @if (Model.Employee.EmployeeImage != null)
+                    {
+                        <img src="data:image;base64,@Convert.ToBase64String(Model.Employee.EmployeeImage)" alt="Property Image" />
+                    }
+                    else
+                    {
+                        <a href="~/Index"><img src="~/img/profile_icon" width="150" class="intro_image" /></a>
+                    }
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <form name="FindPendingApplicationForm" method="post" class="form property_form transition-fade-down" id="tenForm">
+        <h4>View Tenant Profile</h4>
+        <div style="display: flex; align-content: center">
+            <table style="border-collapse: collapse; text-align: left; width: 100%;">
+                <tr>
+                    <td>Enter Tenant ID or Email:</td>
+                    <td><input type="text" name="FindTenantID" /></td>
+                </tr>
+                <tr>
+                    <td><input type="submit" name="Submit" value="Find" class="btn" /></td>
+                    <td><input type="submit" name="Submit" value="Close" class="btn" /></td>
+                </tr>
+                <tr>
+                    <td>
+                        @*  @Model.Message *@
+                    </td>
+                </tr>
+
+            </table>           
+        </div>
+        @if (Model.ViewFormNow == false)
+        {
+            @foreach (var tennant in Model.ListOfTenants)
+            {
+                <div class="prop-card">
+                    <div>
+                        <a href="#"><img src="data:image;base64,@Convert.ToBase64String(tennant.Passport)" alt="Tenant Profile Picture" /></a>
+                    </div>
+                    <div>
+                        <p><label class="label">Property ID:</label> @tennant.PropertyID</p>
+                        <p><label class="label">Tenant Name:</label>@tennant.FirstName @tennant.LastName</p>
+                        <p><label class="label">Tenant ID:</label>@tennant.TenantID</p>
+                        <p><label class="label">Status:</label>@tennant.ApprovalStatus</p>
+                        <p><label class="label">Tenant Email:</label>@tennant.Email</p>
+                    </div>
+                    <div>
+                        <input type="hidden" name="RecieverID" value="@tennant.Email">
+                        <input type="hidden" name="RecieverName" value="@tennant.FirstName @tennant.LastName">
+                        <input type="button" name="Submit" value="Send Quit Notice" class="update-prop-button" onclick="openPopUp()">
+                    </div>
+                </div>
+            }
+            <fieldset class="popup" id="popup">
+                <legend>Send Notice</legend>
+                <label class="label">Tenant Email</label>
+                <br/>
+                <input type="text" name="RecieverEmail">
+                <label class="label">Message</label>
+                <br />
+                <textarea name="RecieverMessage" style="max-height: 800px; max-width: 500px; height: 350px" maxlength="1000"></textarea>
+                <input type="submit" name="Submit" class="update-prop-button" value="Send Notice">
+                <input type="button" name="Submit" class="delete-prop-button" value="Back" onclick="closePopUp()">
+            </fieldset>
+        }     
+    </form>
+
+    @if (Model.ViewFormNow == true)
+    {
+
+        <form name="Application" method="post" class="form property_form transition-fade-down" enctype="multipart/form-data">
+            <p style="font-size: medium; padding-left: 1rem;">@Model.Message</p>
+            <details>
+                <summary>Declaration, Signature, and Approval</summary>
+
+                <div class="tenant-info">
+                    <div class="info-item">
+                        <span class="label">Approval Status:</span>
+                        <span class="value">@Model.aTenant.ApprovalStatus</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Declaration:</span>
+                        <span class="value">@Model.aTenant.Declaration</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Your Signature:</span>
+                        <span class="value">@Model.aTenant.YourSignedForm</span>
+                    </div>
+
+                </div>
+            </details>
+            <details>
+                <summary>Personal Information</summary>
+                <div class="tenant-info">
+                    <div class="info-item">
+                        <span class="label">First Name:</span>
+                        <span class="value">@Model.aTenant.FirstName</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Last Name:</span>
+                        <span class="value">@Model.aTenant.LastName</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Phone Number:</span>
+                        <span class="value">@Model.aTenant.PhoneNumber</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Email:</span>
+                        <span class="value">@Model.aTenant.Email</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Date of Birth:</span>
+                        <span class="value">@Model.aTenant.DOB.ToString("dd MMMM, yyyy.")</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Nationality:</span>
+                        <span class="value">@Model.aTenant.Nationality</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">State of Origin:</span>
+                        <span class="value">@Model.aTenant.StateofOrigin</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Local Govt. Area:</span>
+                        <span class="value">@Model.aTenant.LGA</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Home Town:</span>
+                        <span class="value">@Model.aTenant.HomeTown</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Permanent Home Add:</span>
+                        <span class="value">@Model.aTenant.PermanentHomeAddress</span>
+                    </div>
+                </div>
+            </details>
+            <details>
+                <summary>Occupation Info</summary>
+                <div class="tenant-info">
+                    <div class="info-item">
+                        <span class="label">Occupation:</span>
+                        <span class="value">@Model.aTenant.Occupation</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Self Employed:</span>
+                        <span class="value">@Model.aTenant.SelfEmployed</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Business Registration Number:</span>
+                        <span class="value">@Model.aTenant.BusinessRegistrationNumber</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Corporate Affairs Certificate:</span>
+                        <span class="value">@Model.aTenant.CorporateAffairsCertificate</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Name of Employer:</span>
+                        <span class="value">@Model.aTenant.NameofEmployer</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Address Of Employer:</span>
+                        <span class="value">@Model.aTenant.AddressOfEmployer</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Length On Job:</span>
+                        <span class="value">@Model.aTenant.LengthOnJob</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Current Position Held:</span>
+                        <span class="value">@Model.aTenant.CurrentPositionHeld</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Nature Of Job:</span>
+                        <span class="value">@Model.aTenant.NatureOfJob</span>
+                    </div>
+                </div>
+            </details>
+
+            <details>
+                <summary>Past Rental Information</summary>
+                <div class="tenant-info">
+                    <div class="info-item">
+                        <span class="label">Former Residence Address:</span>
+                        <span class="value">@Model.aTenant.FormerResidenceAddress</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Reason For Moving:</span>
+                        <span class="value">@Model.aTenant.ReasonForMoving</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Length Of Stay At Old Residence:</span>
+                        <span class="value">@Model.aTenant.LengthOfStayAtOldResidence</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Name Of Former Resident Manager:</span>
+                        <span class="value">@Model.aTenant.NameOfFormerResidentManager</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Objections To Reasons For Moving:</span>
+                        <span class="value">@Model.aTenant.ObjectionsToReasonsForMoving</span>
+                    </div>
+                </div>
+            </details>
+
+            <details>
+                <summary>Marital Information</summary>
+                <div class="tenant-info">
+                    <div class="info-item">
+                        <span class="label">Marital Status:</span>
+                        <span class="value">@Model.aTenant.MaritalStatus</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Spouse First Name:</span>
+                        <span class="value">@Model.aTenant.SpouseFirstName</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Spouse Last Name:</span>
+                        <span class="value">@Model.aTenant.SpouseLastName</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Spouse Occupation:</span>
+                        <span class="value">@Model.aTenant.SpouseOccupation</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Number Of Occupants:</span>
+                        <span class="value">@Model.aTenant.NumberOfOccupants</span>
+                    </div>
+                </div>
+            </details>
+            <details>
+                <summary>Next of Kin Information</summary>
+                <div class="tenant-info">
+                    <div class="info-item">
+                        <span class="label">Next Of Kin First Name:</span>
+                        <span class="value">@Model.aTenant.NextOfKinFirstName</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Next Of Kin Last Name:</span>
+                        <span class="value">@Model.aTenant.NextOfKinLastName</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Next Of Kin Address:</span>
+                        <span class="value">@Model.aTenant.NextOfKinAddress</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Next Of Kin Phone Number:</span>
+                        <span class="value">@Model.aTenant.NextOfKinPhoneNumber</span>
+                    </div>
+                </div>
+            </details>
+            <details>
+                <summary>Guarantor Information</summary>
+                <div class="tenant-info">
+                    <div class="info-item">
+                        <span class="label">Guarantor1 First Name:</span>
+                        <span class="value">@Model.aTenant.Guarantor1FirstName</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Guarantor1 Last Name:</span>
+                        <span class="value">@Model.aTenant.Guarantor1LastName</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Guarantor1 Address:</span>
+                        <span class="value">@Model.aTenant.Guarantor1Address</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Guarantor1 Occupation:</span>
+                        <span class="value">@Model.aTenant.Guarantor1Occupation</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Guarantor1 Phone Number:</span>
+                        <span class="value">@Model.aTenant.Guarantor1PhoneNumber</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Guarantor1 Alternate Phone Number:</span>
+                        <span class="value">@Model.aTenant.Guarantor1AlternatePhoneNumber</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Guarantor2 First Name:</span>
+                        <span class="value">@Model.aTenant.Guarantor2FirstName</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Guarantor2 Last Name:</span>
+                        <span class="value">@Model.aTenant.Guarantor2LastName</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Guarantor2 Address:</span>
+                        <span class="value">@Model.aTenant.Guarantor2Address</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Guarantor2 Occupation:</span>
+                        <span class="value">@Model.aTenant.Guarantor2Occupation</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Guarantor2 Phone Number:</span>
+                        <span class="value">@Model.aTenant.Guarantor2PhoneNumber</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Guarantor2 Alternate Phone Number:</span>
+                        <span class="value">@Model.aTenant.Guarantor2AlternatePhoneNumber</span>
+                    </div>
+                </div>
+            </details>
+            <input type="submit" name="Submit" value="Close" class="btn"/>
+        </form>
+    }
+</div>
+<script type="text/javascript">
+    function openPopUp() {
+
+        // Find the clicked submit button
+        var submitButton = event.target;
+
+        // Find the associated form
+        let form = document.getElementById("tenForm");
+
+        // Find the hidden input field with the name "PropertyID" within the form
+        var tenantEmailInput = submitButton.closest('.prop-card').querySelector('input[name="RecieverID"]');
+        var submitInput = submitButton.value;
+
+        // Get the value of the hidden input field
+        var propertyID = tenantEmailInput.value;
+
+        // Update the value of the hidden input field in the form
+        form.querySelector('input[name="RecieverEmail"]').value = propertyID;
+        popup.classList.add("open-popup");
+    }
+
+    function closePopUp() {
+        popup.classList.remove("open-popup");
+    }
+</script>

@@ -1,0 +1,71 @@
+﻿@page
+@model CNMaisons.Pages.BookVisitModel
+@{
+    Layout = "_Header";
+    ViewData["Title"] = "Book Property Vist";
+    var emailPattern = new System.Text.RegularExpressions.Regex(@"^[^\s@]+@[^\s@]+\.[^\s@]+$");
+
+}
+
+
+<script src="~/libraries/jquery/jquery.js"></script>
+<script src="~/libraries/jquery-validate/jquery.validate.js"></script>
+<script src="~/libraries/jquery-validate-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+<script type="text/javascript">
+    // Get the current time
+    var now = new Date();
+    var hours = now.getHours().toString().padStart(2, '0'); // Ensure two digits for hours
+    var minutes = now.getMinutes().toString().padStart(2, '0'); // Ensure two digits for minutes
+    var currentTime = hours + ':' + minutes;
+
+    // Set the current time as the default value for the time input
+    document.getElementById('timePicker').value = currentTime;
+</script>
+
+<div>
+    <video autoplay muted loop id="video-background">
+        <source src="~/img/backvideos.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <form name="RequestPropertyVisitForm" method="post" class="form property_form transition-fade-down">
+        @if (Model.Message != "")
+        {
+            <p style="font-size: small; color: green; background-color:white; padding: 0.5rem;">@Model.Message</p>
+        }
+        <fieldset>
+            <legend>Request Property Visit</legend>
+            <div>
+                <label for="PropertyID">Property ID:</label><br />
+                <input type="text" name="PropertyID" maxlength="7" required /><br />
+
+                <label for="FirstName">First Name:</label><br />
+                <input type="text" name="FirstName" maxlength="30" required /><br />
+
+                <label for="LastName">Last Name:</label><br />
+                <input type="text" name="LastName" maxlength="30" required /><br />
+
+                <label for="Email">Email:</label><br />
+                <input type="email" name="Email" maxlength="100" required /><br />
+
+                <label for="PhoneNumber">Phone Number:</label><br />
+                <input type="tel" name="PhoneNumber" maxlength="14" required /><br />
+
+                <label for="ProposedVisitDate">Proposed Visit Date:</label><br />
+                <input type="date" name="ProposedVisitDate" value="@DateTime.Today.ToString("yyyy-MM-dd")" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
+
+                <label for="ProposedVisitTime">Proposed Visit Time:</label><br />
+                <input type="time" id="timePicker" name="ProposedVisitTime" required /><br />
+
+
+
+
+                <input type="text" name="VisitStatus" maxlength="20" required value="Open" hidden /><br />
+            </div>
+        </fieldset>
+
+        <input type="submit" name="Submit" value="Request Property Visit" class="btn" />
+
+    </form>
+</div>

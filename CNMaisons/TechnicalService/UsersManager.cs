@@ -15,9 +15,9 @@ namespace CNMaisons.TechnicalService
             connectionString = DatabaseUserConfiguration.GetConnectionString("CNMaisons");
         }
 
-        public User GetUserByEmail(string email)
+        public Employee GetUserByEmail(string email)
         {
-            User user = new User();
+            Employee employee = new Employee();
             SqlConnection cnMaisonsConnection = new SqlConnection();
             cnMaisonsConnection.ConnectionString = connectionString;
             cnMaisonsConnection.Open();
@@ -44,84 +44,112 @@ namespace CNMaisons.TechnicalService
             {
                 while (UserReader.Read())
                 {
-                    user.Email = (string)UserReader["Email"];
-                    user.Password = (string)UserReader["Password"];
-                    user.UserSalt = (string)UserReader["UserSalt"];
-                    user.Role = (string)UserReader["Role"];
-                    //user.AccountStatus = (int)UserReader["DeactivateAccountStatus"];
-                    user.DateJoined = (DateTime)UserReader["DateOfCreation"];
+                    employee.EmployeeID= (int)UserReader[0];
+                    employee.FirstName = (string)UserReader["FirstName"];
+                    employee.LastName = (string)UserReader["LastName"];
+                    employee.PhoneNumber = (int)UserReader["PhoneNumber"];
+                    employee.Email = (string)UserReader["Email"];
+                    employee.Password = (string)UserReader["Password"];
+                    employee.UserSalt = (string)UserReader["UserSalt"];
+                    employee.Role = (string)UserReader["Role"];
+                    employee.DateJoined = (DateTime)UserReader["DateOfCreation"];
                 }
             }
             UserReader.Close();
             cnMaisonsConnection.Close();
-            return user;
+            return employee;
         } 
 
-        public bool AddUser (User user)
+        public bool AddEmployee (Employee employee)
         {
-            bool success = false;
+            bool success = true;
             SqlConnection cnMaisonsConnection = new SqlConnection();
             cnMaisonsConnection.ConnectionString = connectionString;
             cnMaisonsConnection.Open();
 
-            SqlCommand AddUserCommand = new()
+            SqlCommand AddEmployeeCommand = new()
             {
                 Connection = cnMaisonsConnection,
                 CommandType = CommandType.StoredProcedure,
-                CommandText = "AddUser",
+                CommandText = "AddEmployee",
+            };
+
+
+            SqlParameter FirstNameParameter = new()
+            {
+                ParameterName = "@FirstName",
+                SqlDbType = SqlDbType.VarChar,
+                SqlValue = employee.FirstName,
+                Direction = ParameterDirection.Input,
+            };
+            SqlParameter LastNameParamter = new()
+            {
+                ParameterName = "@Lastname",
+                SqlDbType = SqlDbType.VarChar,
+                SqlValue = employee.LastName,
+                Direction = ParameterDirection.Input,
+            };
+            SqlParameter PhoneNumberParamter = new()
+            {
+                ParameterName = "@PhoneNumber",
+                SqlDbType = SqlDbType.VarChar,
+                SqlValue = employee.PhoneNumber,
+                Direction = ParameterDirection.Input,
             };
             SqlParameter EmailParameter = new()
             {
                 ParameterName = "@Email",
                 SqlDbType = SqlDbType.VarChar,
-                SqlValue = user.Email,
+                SqlValue = employee.Email,
                 Direction = ParameterDirection.Input,
             };
             SqlParameter PasswordParameter = new()
             {
                 ParameterName = "@Password",
                 SqlDbType = SqlDbType.VarChar,
-                SqlValue = user.Password,
+                SqlValue = employee.Password,
                 Direction = ParameterDirection.Input,
             };
             SqlParameter RoleParameter = new()
             {
                 ParameterName = "@Role",
                 SqlDbType = SqlDbType.VarChar,
-                SqlValue = user.Role,
+                SqlValue = employee.Role,
                 Direction = ParameterDirection.Input,
             };
             SqlParameter DefaultPassword = new()
             {
                 ParameterName = "@DefaultPassword ",
                 SqlDbType = SqlDbType.VarChar,
-                SqlValue = user.Password,
+                SqlValue = employee.Password,
                 Direction = ParameterDirection.Input,
             };
             SqlParameter UserSalt = new()
             {
                 ParameterName = "@UserSalt",
-                SqlValue = user.UserSalt,
+                SqlValue = employee.UserSalt,
                 SqlDbType = SqlDbType.NVarChar,
                 Direction = ParameterDirection.Input,
             };
 
             try
             {
-                AddUserCommand.Parameters.Add(EmailParameter);
-                AddUserCommand.Parameters.Add(PasswordParameter);
-                AddUserCommand.Parameters.Add(RoleParameter);
-                AddUserCommand.Parameters.Add(DefaultPassword);
-                AddUserCommand.Parameters.Add(UserSalt);                
+                AddEmployeeCommand.Parameters.Add(FirstNameParameter);
+                AddEmployeeCommand.Parameters.Add(LastNameParamter);
+                AddEmployeeCommand.Parameters.Add(PhoneNumberParamter); 
+                AddEmployeeCommand.Parameters.Add(EmailParameter);
+                AddEmployeeCommand.Parameters.Add(PasswordParameter);
+                AddEmployeeCommand.Parameters.Add(RoleParameter);
+                AddEmployeeCommand.Parameters.Add(DefaultPassword);
+                AddEmployeeCommand.Parameters.Add(UserSalt);                
 
-                AddUserCommand.ExecuteNonQuery();
+                AddEmployeeCommand.ExecuteNonQuery();
                 cnMaisonsConnection.Close();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 success = false;
             }
-
             return success;
         }
     }

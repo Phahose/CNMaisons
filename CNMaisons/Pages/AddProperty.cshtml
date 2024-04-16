@@ -84,28 +84,42 @@
         <nav class="memberhome_nav">
             <a href="~/Index"><img src="~/img/png/logo-no-background.png" width="150" class="intro_image" /></a>
             <ul>
-                <li>
-                    <a href="#">My Account</a>
-                </li>
-                <li>
-                    <a href="#">Record Rent</a>
-                </li>
-                <li>
-                    <a href="#">Record Maintainance</a>
-                </li>
-                <li>
-                    <a href="#">Contact</a>
-                </li>
-                <li>
-                    <a href="#">Edit Account</a>
-                </li>
+                @if (Model.Users.Role == "LandLord")
+                {
+
+                    <li><a href="~/IndexStaff">My Account</a></li>
+                    <li><a href="~/ViewTenantbyLandLord">View Tenant </a></li>
+                    <li><a href="~/CreateAccount">Create New Employee Account</a></li>
+                }
+                @if (Model.Users.Role == "Staff")
+                {
+
+                    <li>
+                        <a href="~/IndexStaff">My Account</a>
+                    </li>
+                    <li>
+                        <a href="~/IndexStaff">My Account</a>
+                    </li>
+                    <li>
+                        <a href="~/ViewInquiry">View Inquiry </a>
+                    </li>
+
+                }
             </ul>
         </nav>
         <div class="basic_info">
             <div class="icon_div">
+                @if (Model.Employee.EmployeeImage != null)
+                {
+                    <img src="data:image;base64,@Convert.ToBase64String(Model.Employee.EmployeeImage)" alt="Property Image" />
+                }
+                else
+                {
+                    <a href="~/Index"><img src="~/img/profile_icon" width="150" class="intro_image" /></a>
+                }
             </div>
-            <h2>Nicholas Ekwom</h2>
-            <p>LandLord</p>
+            <h2>@Model.Employee.FirstName @Model.Employee.LastName</h2>
+            <p>@Model.Users.Role</p>
         </div>
     </div>
     
@@ -168,65 +182,66 @@
 
             <label for="Description">Property Description</label>
             <br />
-            <textarea name="Description" style="max-height: 200px; max-width: 600px;" required></textarea>
+            <textarea name="Description" style="max-height: 200px; max-width: 600px;" required maxlength="100"></textarea>
             @Html.ValidationMessage("Description")
             <br />
 
+            <label>Must Add At least 4 Images </label><br />
             <label for="Image1"> Image 1</label>
             <br/>
-            <input type="file" name="Image1" required />
+            <input type="file" name="Image1" required accept=".jpg, .jpeg, .png"/>
             @Html.ValidationMessage("Image1Error")
             <br/>
 
             <label for="Image2"> Image 2</label>
             <br/>
-            <input type="file" name="Image2" />
+            <input type="file" name="Image2" accept=".jpg, .jpeg, .png" />
             @Html.ValidationMessage("Image2Error")
             <br/>
 
             <label for="Image3"> Image 3</label>
             <br/>
-            <input type="file" name="Image3" />
+            <input type="file" name="Image3" accept=".jpg, .jpeg, .png" />
             @Html.ValidationMessage("Image3Error")
             <br/>
 
             <label for="Image4"> Image 4</label>
             <br/>
-            <input type="file" name="Image4" />
+            <input type="file" name="Image4" accept=".jpg, .jpeg, .png" />
             @Html.ValidationMessage("Image4Error")
             <br/>
 
-            <label for="Image5"> Image 5</label>
+             <label for="Image5"> Image 5</label>
             <br/>
-            <input type="file" name="Image5" />
+            <input type="file" name="Image5" accept=".jpg, .jpeg, .png" />
             <br/>
-
+            @*
             <label for="Image6"> Image 6</label>
             <br/>
-            <input type="file" name="Image6" />
+            <input type="file" name="Image6" accept=".jpg, .jpeg, .png" />
             <br/>
 
             <label for="Image7"> Image 7</label>
             <br/>
-            <input type="file" name="Image7" />
+            <input type="file" name="Image7" accept=".jpg, .jpeg, .png" />
             <br/>
 
             <label for="Image8"> Image 8</label>
             <br/>
-            <input type="file" name="Image8" />
+            <input type="file" name="Image8" accept=".jpg, .jpeg, .png" />
             <br/>
 
             <label for="Image9"> Image 9</label>
             <br/>
-            <input type="file" name="Image9" />
+            <input type="file" name="Image9" accept=".jpg, .jpeg, .png" />
             <br/>
 
             <label for="Image10"> Image 10</label>
             <br/>
-            <input type="file" name="Image10" />
-            <br/>
+            <input type="file" name="Image10" accept=".jpg, .jpeg, .png" />
+            <br/> *@
 
-            <input type="submit" name="Submit" value="Add Property" />
+            <input type="submit" name="Submit" value="Add Property" class="btn"/>
         </fieldset>
     </form>
 </div>

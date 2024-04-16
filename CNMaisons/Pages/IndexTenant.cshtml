@@ -1,0 +1,67 @@
+﻿@page
+@model CNMaisons.Pages.IndexTenantModel
+@{
+    ViewData["Title"] = "Home";
+}
+<div class="memberhome">
+    <div>
+        <div class="home_intro">
+            <nav class="memberhome_nav">
+                <a href="~/Index"><img src="~/img/png/logo-no-background.png" width="150" class="intro_image" /></a>
+                <ul>
+                    <li><a href="~/IndexTenant">My Account</a></li>
+                    @if (Model.Tenant.ApprovalStatus != "Approved")
+                    {
+                        <li><a href="~/SignLeaseForm">Sign Lease Form</a></li>
+                    }
+                    @if(Model.Tenant.ApprovalStatus =="Approved")
+                    {
+                        <li><a href="~/AddPayment">Record Rent Payment</a></li>
+                    }
+                </ul>
+            </nav>
+            <div class="basic_info">
+                <div class="icon_div">
+                    @if (Model.Tenant.Passport != null)
+                    {
+                        @if (Model.Tenant.Passport.Length > 0)
+                        {
+                            <img src="data:image;base64,@Convert.ToBase64String(Model.Tenant.Passport)" alt="Property Image" />
+                        }
+                        else
+                        {
+                            <img src="~/img/profile_icon.png" width="150" class="intro_image" />
+                        }
+                    }
+                    else
+                    {
+                        <img src="~/img/profile_icon.png" width="150" class="intro_image" />
+                    }
+
+                </div>
+                <h2>@Model.Tenant.FirstName @Model.Tenant.LastName</h2>
+                <p>Tenant ID: @Model.Tenant.TenantID</p>
+            </div>
+        </div> 
+        <p class="title">Account info</p>
+        <div class="infodiv transition-fade-down">
+            <div class="boxcontainer ">
+                <div class="box1">
+                    <div>
+                        <p><span>Full Name</span>: @Model.Tenant.FirstName @Model.Tenant.LastName</p>
+                        <p><span>Email</span>: @Model.Users.Email</p>
+                        <p><span>Phone Number</span>: @Model.Tenant.PhoneNumber</p>
+                        <p><span>Application Status</span>: @Model.Tenant.ApprovalStatus</p>
+                        <p><span>Date Of Birth</span>: @Model.Tenant.DOB.ToString("yyyy-MMMM-dddd")</p>
+                        <p><span>Nationality</span>: @Model.Tenant.Nationality</p>
+                        <p><span>State Of Origin</span>: @Model.Tenant.StateofOrigin</p>
+                        <p><span>Permanent Howe Address</span>: @Model.Tenant.PermanentHomeAddress</p>
+                    </div>
+                    <div class="next_rent">
+                        <a href="~/ViewTenant" class="more-info">View More info</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

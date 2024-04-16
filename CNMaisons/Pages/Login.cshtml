@@ -10,18 +10,22 @@
         Your browser does not support the video tag.
     </video>
     <form name="Login" method="post" class="form loginForm">
+        @if (Model.Message != "")
+        {
+            <p class="@Model.AlertClass" style="font-size: small; color: red; background-color:white; padding: 0.5rem;">@Model.Message</p>
+        }      
         <fieldset>
             <legend>Login</legend>
-
             <label for="Email">Email</label>
             <br />
-            <input type="email" name="Email" />
+            <input type="email" name="Email" required/>
             <br />
             <label for="Password">Password</label>
             <br />
-            <input type="password" name="Password" />
+            <input type="password" name="Password" required/>
             <br />
-            <input type="submit" name="Submit" value="Login" />
-        </fieldset>
+            <input type="submit" name="Submit" value="Login" class="btn"/>
+            <a href="~/ForgotPassword.cshtml">Forgot Password?</a>
+        </fieldset>      
     </form>
 </div>

@@ -5,11 +5,14 @@ using CNMaisons.Domain;
 using CNMaisons.Controller;
 using System.Text.RegularExpressions;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CNMaisons.Pages
 {
+    [Authorize]
     public class AddPropertyModel : PageModel
     {
+        #region ModelPropertyDeclarations
         [BindProperty]
         [RegularExpression("[A-Za-z]{2}[0-9]{5}", ErrorMessage = "The PropertyID must be in the Format CN00001")]
         public string PropertyID { get; set; } = string.Empty;
@@ -53,17 +56,31 @@ namespace CNMaisons.Pages
         public string Submit { get; set; } = string.Empty;
         [BindProperty]
         public decimal PropertyPrice {  get; set; } 
-
         public string SusccessMessage {  get; set; } = string.Empty;    
-        public string ErrorMessage {  get; set; } = string.Empty;    
+        public string ErrorMessage {  get; set; } = string.Empty;
+        public User Users { get; set; } = new User();
+        public string Email { get; set; } = string.Empty;
+        public Employee Employee { get; set; } = new Employee();
+        #endregion
         public void OnGet()
         {
+            Email = HttpContext.Session.GetString("Email")!;
+            CNMPMS controller = new CNMPMS();
+            Users = controller.GetUserByEmail(Email);
+            Employee = controller.GetAllEmployees(Email);
         }
         public void OnPost() 
-        { 
+        {
+            Email = HttpContext.Session.GetString("Email")!;
+            CNMPMS controller = new CNMPMS();
+            Users = controller.GetUserByEmail(Email);
+            Employee = controller.GetAllEmployees(Email);
+
             string pattern = @"[A-Za-z]{2}[0-9]{5}$";
             Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
             ModelState.Clear();
+
+            #region Property Validation
             if (PropertyID == null)
             {
                 ModelState.AddModelError("PropertyIDError", "The Property ID is Required");
@@ -116,7 +133,7 @@ namespace CNMaisons.Pages
             {
                 ModelState.AddModelError("Image4Error", "Image4 is required");
             }
-
+            #endregion
 
             if (ModelState.IsValid)
             {
@@ -132,10 +149,9 @@ namespace CNMaisons.Pages
                 byte[] image9Bytes = ConvertToByteArray(Image9);
                 byte[] image10Bytes = ConvertToByteArray(Image10);
 
-                BCS controller = new();
                 property = controller.GetPropertyByID(PropertyID);
 
-                if (property != null)
+                if (property.PropertyID != "")
                 {
                     ErrorMessage = "This ID is Already Exists Try a Diffrent ID";
                 }

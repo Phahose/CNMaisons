@@ -173,24 +173,58 @@ AS
 	BEGIN 
 		SELECT * FROM Users WHERE Email = @Email AND DeactivateAccountStatus = 0
 	END
+Drop Procedure GetUserByEmail
 
-CREATE PROCEDURE AddUser
-    @Email VARCHAR(100),
-    @Password VARCHAR(100),
-    @Role VARCHAR(25),
-    @DefaultPassword NVARCHAR(255),
-    @UserSalt NVARCHAR(255)
+
+
+CREATE PROCEDURE UpdateProperty
+    @PropertyID VARCHAR(7),
+    @PropertyName VARCHAR(50),
+    @PropertyLocationState VARCHAR(50),
+    @PropertyLocationCountry VARCHAR(50),
+    @PropertyAddress VARCHAR(50),
+    @PropertyType VARCHAR(50),
+    @NumberOfRooms INT,
+    @PropertyDescription VARCHAR(100),
+    @PropertyPrice DECIMAL,
+    @Image1 VARBINARY(MAX),
+    @Image2 VARBINARY(MAX),
+    @Image3 VARBINARY(MAX),
+    @Image4 VARBINARY(MAX),
+    @Image5 VARBINARY(MAX),
+    @Image6 VARBINARY(MAX),
+    @Image7 VARBINARY(MAX),
+    @Image8 VARBINARY(MAX),
+    @Image9 VARBINARY(MAX),
+    @Image10 VARBINARY(MAX)
 AS
 BEGIN
-    INSERT INTO Users (Email, Password, Role, DeactivateAccountStatus, DefaultPassword, UserSalt, DateOfCreation)
-    VALUES (@Email, @Password, @Role, 0, @DefaultPassword, @UserSalt, GETDATE())
-END
+    UPDATE Property
+    SET PropertyName = @PropertyName,
+        PropertyLocationState = @PropertyLocationState,
+        PropertyLocationCountry = @PropertyLocationCountry,
+        PropertyAddress = @PropertyAddress,
+        PropertyType = @PropertyType,
+        NumberOfRooms = @NumberOfRooms,
+        PropertyDescription = @PropertyDescription,
+        PropertyPrice = @PropertyPrice,
+        Image1 = @Image1,
+        Image2 = @Image2,
+        Image3 = @Image3,
+        Image4 = @Image4,
+        Image5 = @Image5,
+        Image6 = @Image6,
+        Image7 = @Image7,
+        Image8 = @Image8,
+        Image9 = @Image9,
+        Image10 = @Image10
+    WHERE PropertyID = @PropertyID;
+END;
 
-
-DELETE FROm Property WHERE PropertyID = 'CN00002'
-UPDATE Property 
-SET PropertyPrice = 3202000.56
-WHERE PropertyID = 'CN00003'
-
-SElECT * From Property
-
+CREATE Procedure DeleteProperty (@PropertyID VARCHAR(7))
+AS 
+	BEGIN
+		Update Property 
+		SET DeleteFlag = 1
+		Where PropertyID = @PropertyID
+	END

@@ -6,21 +6,21 @@
     <header>
         <a href="~/Index"><img src="~/img/png/logo-no-background.png" width="150" class="intro_image"/></a>
         <ul>
-            <li><a href="~/Application">Apply to Rent</a></li>
+            <li><a href="~/LeaseApplication">Apply to Rent</a></li>
             <li><a href="~/Login">Log In</a></li>
-            <li class="last_list"><a href="~/ViewProperty">View Properties</a></li>
+            <li class="last_list"><a href="~/RequestPropertyVisit">Book a Visit</a></li>
         </ul>
     </header>
     <div class="searchbox transition-fade-down">
         <form method="post" name="SearchForm">
             <input type="hidden" name="FormType" value="SearchForm">
             <p class="quote">Offering premium, meticulously designed properties with comfort, convenience, and style.</p>
-            <input type="text" name="Search" class="searchfield" placeholder="Find A Place"/>
-            <input type="submit" name="Search" value="Search" class="search_button"/>
+            <input type="text" name="StateFilter" class="searchfield" placeholder="Enter A State" />
+            <input type="submit" name="Search" value="Search By State" class="search_button"/>
         </form>
     </div>
     <div class="properties">
-        <p class="prop_head">Some properties</p>
+        <p class="prop_head">Avalaible properties</p>
         <form method="post" name="InfoForm" onsubmit="submitForm(event)">
             <input type="hidden" name="FormType" value="InfoForm">
             <div class="cards transition-fade">
@@ -31,13 +31,17 @@
                         <div class="property-details">
                             <h2 class="property-title">@property.PropertyName</h2>
                             <p class="property-location">@property.PropertyAddress</p>
-                            <p class="property-location">@property.PropertyID</p>
+                            <p class="property-location">Property ID: @property.PropertyID</p>
                             <p class="property-description">@property.PropertyDescription</p>
                             <div class="property-price">@property.PropertyPrice / Year</div>
                             <input type="hidden" name="PropertyID" value="@property.PropertyID">
                             <input type="submit" name="Submit" value="View Details" class="btn btn-primary" onclick="setPropertyID(@property.PropertyID)" />
                         </div>
                     </div>
+                }
+                @if (Model.DisplayedPropertyList.Count < 1)
+                {
+                    <p>@Model.ErrorMessage</p>
                 }
             </div>
         </form>

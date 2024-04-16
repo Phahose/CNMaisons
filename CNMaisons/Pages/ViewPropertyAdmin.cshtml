@@ -1,0 +1,120 @@
+﻿@page
+@model CNMaisons.Pages.ViewPropertyAdminModel
+@{
+   // Layout = "_Header";
+    ViewData["Title"] = "Property Details";
+}
+<div>
+    <div class="loggedin-pages">
+        <nav class="loggedin-nav">
+            <a href="~/Index"><img src="~/img/png/logo-no-background.png" width="150" class="intro_image" /></a>
+            <ul class="loggedin-list">
+                @if (Model.Users.Role == "LandLord")
+                {
+                    <li><a href="~/IndexStaff">My Account</a></li>
+                    <li><a href="~/ViewTenantbyLandLord">View Tenant </a></li>
+                    <li><a href="~/CreateAccount">Create New Employee Account</a></li>
+                }
+                @if (Model.Users.Role == "Staff")
+                {
+
+                    <li>
+                        <a href="~/IndexStaff">My Account</a>
+                    </li>
+                    <li>
+                        <a href="~/IndexStaff">My Account</a>
+                    </li>
+                    <li>
+                        <a href="~/ViewInquiry">View Inquiry </a>
+                    </li>
+                }
+                <li class="loggedin-icon_div">
+                    @if (Model.Employee.EmployeeImage != null)
+                    {
+                        <img src="data:image;base64,@Convert.ToBase64String(Model.Employee.EmployeeImage)" alt="Property Image" />
+                    }
+                    else
+                    {
+                        <a href="~/Index"><img src="~/img/profile_icon" width="150" class="intro_image" /></a>
+                    }
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <form method="post" name="PropertyListPage" onsubmit="submitForm(event)" class="transition-fade-down">
+        <div class="filters">
+            <input type="text" name="StateFilter" class="filter-input" placeholder="Filter By State" />
+            <input type="text" name="PropertyIDFilter" class="filter-input" placeholder="Property ID" />
+            <input type="submit" name="Submit" value="Filter" class="btn filter-btn" />
+        </div>
+        @foreach (var property in Model.DisplayedPropertyList)
+        {
+            <div class="prop-card">
+                <div>
+                    <a href="#"><img src="data:image;base64,@Convert.ToBase64String(property.Image1)" alt="Property Image" /></a>
+                </div>
+                <div>
+                    <p>@property.PropertyID</p>
+                    <p>@property.PropertyName</p>
+                    <p>@property.PropertyPrice</p>
+                </div>
+                <div>
+                    <input type="hidden" name="PropertyID" value="@property.PropertyID">
+                    <input type="submit" name="Submit" value="Update Property" class="update-prop-button">
+                    <button type="button" class="delete-prop-button" onclick="showConfirmation('@property.PropertyID')">Delete Property</button>
+                </div>
+            </div>
+        }
+
+        <div class="delConfirmation hideform">
+            <h3>Are you sure you want to delete this Property <span id="confirmationPropertyID"></span></h3>
+            <div class="flex-buttons">
+                <input type="hidden" name="DeletedPropertyID" id="deletePropertyID" value="">
+                <input type="submit" name="Submit" value="Delete" class="delete-prop-button">
+                <button type="button" class="update-prop-button" onclick="hideConfirmation()">Cancel</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    function submitForm(event) {
+        // Prevent the default form submission
+
+        // Find the clicked submit button
+        var submitButton = event.submitter;
+
+        // Find the associated form
+        var form = submitButton.form;
+
+        // Find the hidden input field with the name "PropertyID" within the form
+        var propertyIDInput = submitButton.closest('.prop-card').querySelector('input[name="PropertyID"]');
+        var submitInput = submitButton.value;
+
+        // Get the value of the hidden input field
+        var propertyID = propertyIDInput.value;
+
+
+        // Update the value of the hidden input field in the form
+        form.querySelector('input[name="PropertyID"]').value = propertyID;
+        form.querySelector('input[name="Submit"]').value = submitInput;
+
+        // Submit the form
+        form.submit();
+    }
+
+    function showConfirmation(propertyID) {
+        var confirmationDiv = document.querySelector('.delConfirmation');
+        var confirmationPropertyID = document.getElementById('confirmationPropertyID');
+        var deletePropertyID = document.getElementById('deletePropertyID');
+
+        confirmationPropertyID.innerText = propertyID;
+        deletePropertyID.value = propertyID;
+        confirmationDiv.classList.remove('hideform');
+    }
+
+    function hideConfirmation() {
+        var confirmationDiv = document.querySelector('.delConfirmation');
+        confirmationDiv.classList.add('hideform');
+    }
+
+</script>

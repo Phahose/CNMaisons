@@ -170,9 +170,10 @@ header li a:hover{
     background-color: #007bff;
     color: #fff;
     border: none;
-    padding: 10px 20px;
+    padding: 10px 25px;
     border-radius: 5px;
     cursor: pointer;
+    margin-left: 1rem;
 }
 
 .btn:hover {
@@ -241,7 +242,7 @@ select {
     z-index: -1;
     filter: brightness(0.6);
 }
-input[type=submit] {
+.btn {
     width: 95%;
     padding: 0.5rem;
     margin-top: 0.5rem;
@@ -249,7 +250,7 @@ input[type=submit] {
     background-color: #1c1c1b;
     color: white;
 }
-input[type=submit]:hover {
+.btn:hover {
     background-color: #292323;
     padding: 0.6rem;
     transition: 0.2s ease-in-out;
@@ -297,8 +298,7 @@ input[type=submit]:hover {
     padding-left: 1rem;
     padding-right:1rem;
 }
-.icon_div {
-    background-image: url("/img/profile_icon.png");
+.icon_div img {
     background-size: cover;
     height: 7rem;
     width: 7rem;
@@ -306,6 +306,7 @@ input[type=submit]:hover {
     margin-right: auto;
     margin-top: 3rem;
     border-radius: 50%;
+    display: flex;
 }
 .basic_info h2{
     width: fit-content;
@@ -319,7 +320,7 @@ input[type=submit]:hover {
 .infodiv {
     border: 1px solid #fff;
     height: fit-content;
-    width: 90%;
+    width: 70%;
     margin-top: 1rem;
     margin-left: auto;
     margin-right: auto;
@@ -332,7 +333,8 @@ input[type=submit]:hover {
     display: flex;
     width: 100%;
     margin:auto;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
 }
 .box1>div:nth-child(1){
     display:flex;
@@ -347,32 +349,8 @@ input[type=submit]:hover {
 .box1 > div:nth-child(1) span{
     font-weight:bold;
 }
-.box1 > div:nth-child(2) {
-    background-color: black;
-}
-.next_rent {
-    border: 1px solid green;
-    margin-top: 3rem;
-    display:flex;
-    flex-flow: column;
-    justify-content:center;
-}
-.next_rent p{
-    margin-top:0.5rem;
-    margin-left:auto;
-    margin-right:auto;
-    font-size: 2.5rem;
-    border: 1px solid green;
-    border-radius: 50%;
-    padding: 1rem;
-}
-.next_rent h3{
-    margin-top:2rem;
-    margin-bottom: 0;
-    margin-left:auto;
-    margin-right:auto;
-    
-}
+
+
 .title{
     width:fit-content;
     margin:auto;
@@ -524,4 +502,395 @@ input[type=submit]:hover {
 .prop_price{
     font-size: 2rem;
     margin: 0;
+}
+
+
+/*View Property Admin*/
+.prop-card {
+    display: flex;
+    width: 80%;
+    margin: 1rem auto;
+    justify-content: space-between;
+    border: 1px solid white;
+    padding: 1rem;
+    border-radius: 1%;
+    max-width: 50rem;
+    align-items:center;
+}
+.prop-card img{
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+}
+
+.update-prop-button {
+    background-color: blue;
+    width: fit-content;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    color: white;
+}
+.delete-prop-button {
+    background-color: red;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    color: white;
+}
+.update-prop-button:hover{
+    cursor: pointer;
+    background-color: darkblue
+}
+.delete-prop-button:hover{
+    cursor: pointer;
+    background-color: darkred;
+}
+.filters{
+    width: 70%;
+    max-width: 50rem;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+input.filter-input {
+    width: 30%;
+    margin-right: auto;
+    margin-top: 1rem;
+    margin-left: 1rem;
+    color: black;
+    background-color: white;
+}
+input.filter-btn{
+    width: 25%;
+    padding: 0 3rem;
+    height: 2rem;
+    width:fit-content;
+    margin-top: 1rem;
+}
+.img-row img{
+   width: 9rem;
+   height: 9rem;
+   margin: 1rem;
+   margin-right:auto;
+   border-radius: 5%;
+}
+.img-row{
+    display: flex;
+    justify-content: left;
+    margin-left: auto;
+}
+.img-table{
+    width: 100%;
+    margin: auto;
+}
+.delConfirmation {
+    background-color: #282a2e;
+    border: 1px solid white;
+    position: absolute;
+    top: 40%;
+    bottom: 50%;
+    left: 22%;
+    right: 10%;
+    min-width: fit-content;
+    height: fit-content;
+    padding: 4rem 2rem;
+    width: 10rem;
+    margin: 0 auto;
+}
+
+.delConfirmation > input[type= submit]{
+    margin: 1rem;
+}
+.flex-buttons{
+    display: flex;
+    width: 10rem;
+    margin: auto;
+    justify-content: space-between;
+}
+.hideform{
+    display: none;
+    background-color: red;
+}
+
+/*Create Employee*/
+.success_message{
+    background-color: darkgreen;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+}
+.error_message{
+    background-color: red;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+}
+
+/*Staff Page */
+.staff-info{
+    display: flex;
+    width: 80%;
+    justify-content: space-between;
+    margin: 0 auto;
+}
+.update-account {
+    padding: 0.5rem;
+    background-color: #d6db9c;
+    transition: 0.2s ease-in-out;
+}
+.update-account:hover{
+    padding: 0.7rem;
+}
+.delete-account {
+    padding: 0.5rem;
+    background-color: #d61118;
+    transition: 0.2s ease-in-out;
+    color: white;
+}
+.delete-account:hover {
+    padding: 0.7rem;
+}
+.date-joined {
+    width: 95%;
+    margin-left: auto;
+    margin-top: 0rem;
+    margin-bottom: 1rem;
+    padding: 0.4rem;
+    border: 1px solid #fff;
+    background-color: rgba(255, 255, 255, 0.5);
+    caret-color: #fff;
+    color: #fff;
+    font-size: 1rem;
+}
+
+.loggedin-pages {
+   background-color: #e39a3b;
+   display: flex;
+}
+.loggedin-nav {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.loggedin-list{
+    display: flex;
+    margin-top: 0;
+}
+.loggedin-list li {
+    list-style: none;
+    margin-left: 1rem;   
+    font-size: 1.2rem;
+    font-family: "Raleway", sans-serif;
+    padding: 0.5rem;
+    padding-bottom: 0;
+}
+.loggedin-list li:not(:last-child){
+    margin-top: 1.5rem;
+}
+.loggedin-list a {
+    text-decoration: none;
+    margin-top: 1rem;
+    color: white;
+}
+.loggedin-nav>a{
+    margin-top: 2.5rem;
+    margin-left: 1rem;
+}
+.loggedin-icon_div {
+    background-size: cover;
+    height: 5rem;
+    width: 5rem;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 50%;
+    display: flex;
+}
+.loggedin-icon_div img {
+    border-radius: 50%;
+}
+.loggedin-list li:hover {
+    border-bottom: 1.4px solid white;
+}
+.update-password {
+    position: absolute;
+    width: 60%;
+    max-width: 35rem;
+    left: 35%;
+    right: 50%;
+    top: 30%;
+    padding: 0.5rem;
+    background-color: #282a2e;
+    border: 1px solid white;
+}
+.update-password input[type='submit']{
+    padding: 0.5rem;
+    margin-right: auto;
+    width: fit-content;
+    display: flex;
+    margin-left: 12rem;
+    background-color: #d6db9c;
+    transition: 0.5s ease-in-out;
+}
+.update-password > p{
+    width: 32rem;
+    margin: auto;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    font-size: 1rem;
+}
+.update-password input[type='submit']:hover{
+    padding: 0.7rem;
+}
+.val {
+    width: 95%;
+    margin-left: auto;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border: 1px solid #fff;
+    background-color: rgba(255, 255, 255, 0.5);
+    caret-color: #fff;
+    color: black;
+    font-weight: bold;
+}
+.infodiv fieldset{
+    width: 90%;
+    margin: auto;
+}
+/*Index Tenant*/
+.more-info{
+    text-decoration: none;
+    color: white;
+    padding: 1rem;
+}
+.more-info:hover {
+    color: black;
+    font-weight: bold;
+    border-bottom: 1px solid black;
+    background-color: wheat;
+}
+.next_rent {
+    border: 1px solid green;
+    margin-top: 0.5rem;
+    display:flex;
+    flex-flow: column;
+    justify-content:center;
+    transition: 0.2s ease-in-out;
+    height: fit-content;
+}
+.next_rent:hover{
+    
+}
+.next_rent p{
+    margin-top:0.5rem;
+    margin-left:auto;
+    margin-right:auto;
+    font-size: 2.5rem;
+    border: 1px solid green;
+    border-radius: 50%;
+    padding: 1rem;
+}
+.next_rent h3{
+    margin-top:2rem;
+    margin-bottom: 0;
+    margin-left:auto;
+    margin-right:auto;
+    
+}
+.table-div {
+    display: block;
+    width: 85vw;
+    margin-top: 1rem;
+    height: 30rem;
+    overflow: auto;
+}
+.table-div table{
+    margin: auto;
+}
+.table-form {
+    width: 90%;
+    margin: auto;
+}
+.table-body{
+    height: 10rem;
+    overflow:scroll;
+    background-color: blue;
+    max-height: 30rem;
+}
+tr {
+    width: fit-content;
+}
+td {
+    padding: 1rem;
+    width:fit-content;
+}
+th{
+    padding: 0.5rem;
+    width: fit-content;
+}
+details{
+    margin: 1rem;
+}
+details>div{
+    margin-left: 2rem;
+    margin-top: 1rem;
+}
+
+summary {
+    background-color: #f5b342;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+}
+.tenant-info {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.info-item {
+    margin-bottom: 10px;
+}
+
+.label {
+    font-weight: bold;
+    margin-right: 5px;
+    color: lightgreen;
+}
+
+.value {
+    color: #fff;
+}
+.populating-link > a {
+    text-decoration: none;
+    color: blue;
+    background-color: white;
+    padding: 0.5rem;
+    border-radius: 5px;
+    transition: 0.2s ease-in-out;
+}
+.populating-link > a:hover {
+    color: black;
+    background-color: antiquewhite;
+    padding: 0.5rem;
+    border-radius: 5px;
+}
+.popup {
+    width: 400px;
+    background-color: #1c1d1f;
+    border-radius: 6px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.1);
+    padding: 0 3rem 3rem;
+    box-shadow: 0 2px 20px antiquewhite;
+    visibility: hidden;
+    transition: transform 0.4s top 0.4s
+}
+
+.open-popup {
+    visibility: visible;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(1);
 }
