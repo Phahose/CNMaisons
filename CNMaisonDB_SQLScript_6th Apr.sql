@@ -649,7 +649,7 @@ CREATE TABLE Payment(
 	NextDueDate DATE NOT NULL,
 	DateOfTenantsPayment DATE NOT NULL,
 	MethodOfPayment VARCHAR(15) NOT NULL,
-	TenantPaymentBank VARCHAR(25) NOT NULL,
+	TenantPaymentBank VARCHAR(50) NOT NULL,
 	DateOfRecord DATE DEFAULT GETDATE() NOT NULL
 )
 
@@ -766,6 +766,11 @@ END;
 
 
 
+SELECT * FROM Payment WHERE DATEDIFF(MONTH, GETDATE(), NextDueDate) < 3;
+
+
+
+
 
 
 --DROP PROCEDURE ViewSpecificPaymentByDateRange
@@ -791,8 +796,7 @@ BEGIN
             FROM Payment
             WHERE
 				(PaymentID = @PaymentID OR  TenantID = @TenantID OR PropertyID = @PropertyID) AND
-                (DateOfRecord >= @StartDate OR @StartDate IS NULL) AND
-                (DateOfRecord <= @EndDate OR @EndDate IS NULL);
+                (DateOfRecord >= @StartDate OR @StartDate IS NULL);
 
             IF @@ERROR = 0
                 SET @ReturnCode = 0;
@@ -806,11 +810,9 @@ END;
 
 
 
---DROP PROCEDURE ViewAllPaymentByDateRange
-CREATE PROCEDURE ViewAllPaymentByDateRange(
-    @PaymentID INT = NULL,
-	@TenantID VARCHAR(5) = NULL,
-	@PropertyID VARCHAR(7) = NULL,
+--DROP PROCEDURE ViewTenantPaymentByDateRange
+CREATE PROCEDURE ViewTenantPaymentByDateRange(   
+	@TenantID VARCHAR(5) = NULL,	
 	@StartDate DATE = NULL,
     @EndDate DATE = NULL
 )
@@ -826,9 +828,8 @@ BEGIN
             SELECT PaymentID, TenantID, PropertyID, AmountPaid, PaymentStartMonth, PaymentEndMonth, PaymentStartYear, MonthsPaidFor, NextDueMonth, NextDueYear, NextDueDate, DateOfTenantsPayment, MethodOfPayment, TenantPaymentBank, DateOfRecord
             FROM Payment
             WHERE
-				(PaymentID = @PaymentID OR  TenantID = @TenantID OR PropertyID = @PropertyID) OR
-                (DateOfRecord >= @StartDate OR @StartDate IS NULL) AND
-                (DateOfRecord <= @EndDate OR @EndDate IS NULL);
+				(TenantID = @TenantID) AND
+                (DateOfRecord >= @StartDate  AND DateOfRecord <= @EndDate);
 
             IF @@ERROR = 0
                 SET @ReturnCode = 0;
@@ -838,6 +839,98 @@ BEGIN
 
     RETURN @ReturnCode;
 END;
+
+
+
+--DROP PROCEDURE ViewFinancialRecordByDateRange
+CREATE PROCEDURE ViewFinancialRecordByDateRange(   
+	@StartDate INT = NULL,
+    @EndDate INT = NULL
+)
+AS
+BEGIN
+    DECLARE @ReturnCode INT;
+    SET @ReturnCode = 1;
+
+    IF @StartDate IS NULL AND @EndDate IS NULL
+        RAISERROR('ViewFinancialRecordByDateRange - required parameter: @StartDate and @EndDate', 16, 1);
+    ELSE
+        BEGIN
+            SELECT PaymentID, TenantID, PropertyID, AmountPaid, PaymentStartMonth, PaymentEndMonth, PaymentStartYear, MonthsPaidFor, NextDueMonth, NextDueYear, NextDueDate, DateOfTenantsPayment, MethodOfPayment, TenantPaymentBank, DateOfRecord
+            FROM Payment
+            WHERE				
+                (PaymentStartYear >= @StartDate  AND PaymentStartYear <= @EndDate);
+
+            IF @@ERROR = 0
+                SET @ReturnCode = 0;
+            ELSE
+                RAISERROR('ViewFinancialRecordByDateRange - SELECT Error occurred while viewing Payment request.', 16, 1);
+        END;
+
+    RETURN @ReturnCode;
+END;
+exec ViewFinancialRecordByDateRange 2024, 2025
+
+
+
+
+--DROP PROCEDURE ViewFinancialRecordDueInSixMonths
+CREATE PROCEDURE ViewFinancialRecordDueInSixMonths 
+AS
+BEGIN
+    DECLARE @ReturnCode INT;
+    SET @ReturnCode = 1;
+
+    BEGIN
+        SELECT PaymentID, TenantID, PropertyID, AmountPaid, PaymentStartMonth, PaymentEndMonth, PaymentStartYear, MonthsPaidFor, NextDueMonth, NextDueYear, NextDueDate, DateOfTenantsPayment, MethodOfPayment, TenantPaymentBank, DateOfRecord 
+		FROM Payment 
+		WHERE DATEDIFF(MONTH, GETDATE(), NextDueDate) < 6;
+
+        IF @@ERROR = 0
+            SET @ReturnCode = 0;
+        ELSE
+            RAISERROR('ViewFinancialRecordDueInSixMonths - SELECT Error occurred while viewing Payment request.', 16, 1);
+    END;
+
+	RETURN @ReturnCode;
+END;
+
+--DROP PROCEDURE ViewFinancialRecordDueInThreeMonths
+CREATE PROCEDURE ViewFinancialRecordDueInThreeMonths 
+AS
+BEGIN
+    DECLARE @ReturnCode INT;
+    SET @ReturnCode = 1;
+
+    BEGIN
+        SELECT PaymentID, TenantID, PropertyID, AmountPaid, PaymentStartMonth, PaymentEndMonth, PaymentStartYear, MonthsPaidFor, NextDueMonth, NextDueYear, NextDueDate, DateOfTenantsPayment, MethodOfPayment, TenantPaymentBank, DateOfRecord 
+		FROM Payment 
+		WHERE DATEDIFF(MONTH, GETDATE(), NextDueDate) < 3;
+
+        IF @@ERROR = 0
+            SET @ReturnCode = 0;
+        ELSE
+            RAISERROR('ViewFinancialRecordDueInSixMonths - SELECT Error occurred while viewing Payment request.', 16, 1);
+    END;
+
+	RETURN @ReturnCode;
+END;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -855,6 +948,17 @@ ALTER TABLE Reminders
 	ADD CONSTRAINT PK_Reminders PRIMARY KEY (RemindersID),
 		CONSTRAINT FK_Reminders_TenantID FOREIGN KEY(TenantID) REFERENCES Tenant(TenantID)
 		
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -901,6 +1005,7 @@ END;
 
 
 
+SELECT * FROM Reminders WHERE DATEDIFF(MONTH, GETDATE(), NextDueDate) < 3;
 
 
 

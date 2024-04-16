@@ -47,14 +47,34 @@ namespace CNMaisons.Controller
             return Property;
          }
         
-        public List<Payment> ViewPaymentbyDate(string aTenantID, DateTime startDate, DateTime endDate)
+        public List<Payment> ViewTenantPaymentbyDate(string aTenantID, DateTime startDate, DateTime endDate)
         {
             List<Payment> myPaymentList= new();
             Payments PaymentRequestDirector = new Payments();
-            myPaymentList = PaymentRequestDirector.PaymentPaymentbyDate(aTenantID, startDate, endDate);
+            myPaymentList = PaymentRequestDirector.GetTenantPaymentbyDate(aTenantID, startDate, endDate);
             return myPaymentList;
         }
-
+        public List<Payment> ViewFinancialRecordbyDate(int findStartYear, int findEndYear)
+        {
+            List<Payment> myPaymentList = new();
+            Payments PaymentRequestDirector = new Payments();
+            myPaymentList = PaymentRequestDirector.GetFinancialRecordbyDate(findStartYear, findEndYear);
+            return myPaymentList;
+        }
+        public List<Payment> GetFinancialRecordDueInSixMonths()
+        {
+            List<Payment> myPaymentList = new();
+            Payments PaymentRequestDirector = new Payments();
+            myPaymentList = PaymentRequestDirector.ViewFinancialRecordDueInSixMonths();
+            return myPaymentList;
+        }
+        public List<Payment> GetFinancialRecordDueInThreeMonths()
+        {
+            List<Payment> myPaymentList = new();
+            Payments PaymentRequestDirector = new Payments();
+            myPaymentList = PaymentRequestDirector.ViewFinancialRecordDueInThreeMonths();
+            return myPaymentList;
+        }
         public User GetUserByEmail(string existingUseremail)
         {
             User user = new User();
@@ -144,6 +164,14 @@ namespace CNMaisons.Controller
             return Success;
         }
 
+
+        public bool AddReminder(RentReminder aReminder)
+        {
+            bool Success;
+            RentReminders RentReminderRequestManager = new RentReminders();
+            Success = RentReminderRequestManager.AddRentReminder(aReminder);
+            return Success;
+        }
         public String SubmitSignedCopy(String findTenantID, String approvalStatus, byte[] signedForm)
         {
             String Success;
