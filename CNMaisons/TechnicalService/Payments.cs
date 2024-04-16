@@ -265,7 +265,6 @@ namespace CNMaisons.TechnicalService
             MyDataReader.Close();
             cnMaisonsConnection.Close();
             return reminderList;
-        }
         public List<Payment> GetFinancialRecordbyDate(int findStartYear, int findEndYear)
         {
 

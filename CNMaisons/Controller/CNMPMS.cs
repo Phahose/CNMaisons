@@ -9,7 +9,7 @@ namespace CNMaisons.Controller
     public class CNMPMS
     {
 
-
+        
         public bool AddProperty(Property property)
         {
             bool success = false;
@@ -17,13 +17,13 @@ namespace CNMaisons.Controller
             success = properties.AddProperty(property);
             return success;
         }
-        public bool UpdateProperty(Property property)
-        {
+         public bool UpdateProperty(Property property)
+         {
             bool success = false;
             Properties properties = new Properties();
             success = properties.UpdateProperty(property);
             return success;
-        }
+         }
 
         public bool DeleteProperty(string propertyID)
         {
@@ -39,17 +39,17 @@ namespace CNMaisons.Controller
             PropertyList = Properties.GetProperty();
             return PropertyList;
         }
-        public Property GetPropertyByID(string propertyID)
-        {
+         public Property GetPropertyByID(string propertyID)
+         {
             Property Property = new();
             Properties Properties = new Properties();
             Property = Properties.GetPropertyByID(propertyID);
             return Property;
-        }
-
+         }
+        
         public List<Payment> ViewTenantPaymentbyDate(string aTenantID, DateTime startDate, DateTime endDate)
         {
-            List<Payment> myPaymentList = new();
+            List<Payment> myPaymentList= new();
             Payments PaymentRequestDirector = new Payments();
             myPaymentList = PaymentRequestDirector.GetTenantPaymentbyDate(aTenantID, startDate, endDate);
             return myPaymentList;
@@ -119,12 +119,12 @@ namespace CNMaisons.Controller
 
         public List<Tenant> GetPendingLeaseApplication()
         {
-            List<Tenant> TenantsPendingApplicationReview = new();
+            List<Tenant> TenantsPendingApplicationReview=new();
             Tenants tenatManager = new();
             TenantsPendingApplicationReview = tenatManager.RetrievePendingLeaseApplication();
             return TenantsPendingApplicationReview;
         }
-
+         
 
         public Tenant GetSpecificTenantApplication(string email)
         {
@@ -179,7 +179,7 @@ namespace CNMaisons.Controller
             Success = RequestManager.UpdateSignedApplication(findTenantID, approvalStatus, signedForm);
             return Success;
         }
-
+        
         public Employee GetAllEmployees(string Email)
         {
             Employee employee = new Employee();
@@ -187,7 +187,7 @@ namespace CNMaisons.Controller
             employee = employees.GetAllEmployees(Email);
             return employee;
         }
-        public Tenant GetAllTennants(string email)
+        public Tenant GetAllTennants (string email)
         {
             Tenant tenant = new();
             Tenants Tennants = new();
@@ -198,7 +198,7 @@ namespace CNMaisons.Controller
 
 
 
-        public bool ModifyUser(User user)
+        public bool ModifyUser (User user)
         {
             bool result = false;
             Users users = new Users();
@@ -217,7 +217,7 @@ namespace CNMaisons.Controller
                     client.Port = 587;
                     client.EnableSsl = true;
                     client.Credentials = new NetworkCredential(FROM_EMAIL_ADDRESS, "ublu yfxa glrj esne "); //NIcholas
-
+                     
 
                     // Create the email message
                     MailMessage message = new MailMessage(FROM_EMAIL_ADDRESS, TO_EMAIL_ADDRESS);
@@ -242,7 +242,7 @@ namespace CNMaisons.Controller
         public bool ValidateEmailTenant(string email)
         {
             bool success = false;
-            Tenants TenantRequestManager = new Tenants();
+            Tenants TenantRequestManager= new Tenants();
             success = TenantRequestManager.CheckIfEmailAlreadyExistInTenantTable(email);
             return success;
         }
@@ -259,7 +259,7 @@ namespace CNMaisons.Controller
         public bool ValidateProperty(string propertyID)
         {
             bool success = false;
-            Properties PropertyRequestManager = new Properties();
+            Properties PropertyRequestManager= new Properties();
             success = PropertyRequestManager.CheckIfPropertyExist(propertyID);
             return success;
         }
@@ -271,16 +271,9 @@ namespace CNMaisons.Controller
             success = MailRequestManager.SendEmail(toEmailAddress, messageBody, messageSubject);
             return success;
         }
+        
 
-        public List<User> GetActiveUsers()
-        {
-            List<User> users = new List<User>();
-            Users userServices = new Users();
-            users = userServices.GetUsers();
-
-            return users;
-        }
-
+         
 
 
         public String AddPropertyVisit(Visit aPropertyVisit)
@@ -294,7 +287,7 @@ namespace CNMaisons.Controller
         public List<Visit> RetrieveOpenPropertyVisit()
         {
             List<Visit> OpenVisitList = new();
-            Visits VisitRequestManager = new();
+            Visits VisitRequestManager= new();
             OpenVisitList = VisitRequestManager.GetAllOpenPropertyVisit();
             return OpenVisitList;
         }
@@ -306,23 +299,25 @@ namespace CNMaisons.Controller
             Success = PropertyVisitRequestManager.ConfirmOrClosePropertyVisit(findVisitID, visitStatus);
             return Success;
         }
-        
 
-    public bool AddReminder(string tenantID, string description, DateTime dueDateRemindedFor)
-    {
-        bool Success;
-        Payments payments = new Payments();
-        Success = payments.AddReminder(tenantID, description, dueDateRemindedFor);
-        return Success;
-    }
 
-    public List<Reminder> GetAllReminder()
-    {
-        List<Reminder> reminders = new List<Reminder>();
-        Payments paymentServices = new Payments();
-        reminders = paymentServices.GetAllReminders();
-        return reminders;
+            return users;
+        }
+
+        public bool AddReminder(string tenantID, string description, DateTime dueDateRemindedFor)
+        {
+            bool Success;
+            Payments payments = new Payments();
+            Success = payments.AddReminder(tenantID, description, dueDateRemindedFor);
+            return Success;
+        }
+
+        public List<Reminder> GetAllReminder()
+        {
+            List<Reminder> reminders = new List<Reminder>();
+            Payments paymentServices = new Payments();
+            reminders = paymentServices.GetAllReminders();
+            return reminders;
+        }
     }
 }
-}
-
