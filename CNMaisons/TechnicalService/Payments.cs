@@ -149,20 +149,20 @@ namespace CNMaisons.TechnicalService
                     {
                         aPayment = new()
                         {
-                            PaymentID = (int)MyDataReader["PaymentID"],
-                            TenantID = MyDataReader["TenantID"]?.ToString(),
-                            PropertyID = MyDataReader["PropertyID"]?.ToString(),
+                            PaymentID = (int)MyDataReader["PaymentID"]!,
+                            TenantID = MyDataReader["TenantID"]?.ToString()!,
+                            PropertyID = MyDataReader["PropertyID"]?.ToString()!,
                             AmountPaid = (decimal)MyDataReader["AmountPaid"],
-                            PaymentStartMonth = MyDataReader["PaymentStartMonth"]?.ToString(),
-                            PaymentEndMonth = MyDataReader["PaymentEndMonth"]?.ToString(),
+                            PaymentStartMonth = MyDataReader["PaymentStartMonth"]?.ToString()!,
+                            PaymentEndMonth = MyDataReader["PaymentEndMonth"]?.ToString()!,
                             PaymentStartYear = (int)MyDataReader["PaymentStartYear"],
                             MonthsPaidFor = (int)MyDataReader["MonthsPaidFor"],
-                            NextDueMonth = MyDataReader["NextDueMonth"]?.ToString(),
+                            NextDueMonth = MyDataReader["NextDueMonth"]?.ToString()!,
                             NextDueYear = (int)MyDataReader["NextDueYear"],
                             NextDueDate = MyDataReader["NextDueDate"] == DBNull.Value ? default(DateTime) : (DateTime)MyDataReader["NextDueDate"],
                             DateOfTenantsPayment =  MyDataReader["DateOfTenantsPayment"] == DBNull.Value ? default(DateTime) : (DateTime)MyDataReader["DateOfTenantsPayment"],
-                            MethodOfPayment = MyDataReader["MethodOfPayment"]?.ToString(),
-                            TenantPaymentBank = MyDataReader["TenantPaymentBank"]?.ToString(),
+                            MethodOfPayment = MyDataReader["MethodOfPayment"]?.ToString()!,
+                            TenantPaymentBank = MyDataReader["TenantPaymentBank"]?.ToString()!,
                             DateOfRecord =MyDataReader["DateOfRecord"] == DBNull.Value ? default(DateTime) : (DateTime)MyDataReader["DateOfRecord"]
                         };
                         myPaymentList.Add(aPayment);
@@ -182,6 +182,89 @@ namespace CNMaisons.TechnicalService
 
             return myPaymentList;
 
+        }
+
+        public bool AddReminder(string tenantID, string description, DateTime dueDateRemindedFor)
+        {
+            bool success = false;
+            string successMessage = "";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    using (SqlCommand command = new SqlCommand("AddReminders", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        // Add parameters
+                        command.Parameters.AddWithValue("@TenantID", tenantID);
+                        command.Parameters.AddWithValue("@Description", description);
+                        command.Parameters.AddWithValue("@DueDateRemindedFor", dueDateRemindedFor);
+
+                        // Execute the command
+                        command.ExecuteNonQuery();
+
+                        success = true;
+                        successMessage = "Reminder added successfully.";
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                if (ex.Number == 2627) // Unique constraint violation error number
+                {
+                    successMessage = "This reminder already exists.";
+                }
+                else
+                {
+                    successMessage = $"An error occurred: {ex.Message}";
+                }
+            }
+            catch (Exception ex)
+            {
+                successMessage = $"An error occurred: {ex.Message}";
+            }
+
+            return success;
+        }
+
+        public List<Reminder> GetAllReminders()
+        {
+            List<Reminder> reminderList = new List<Reminder>();
+            Reminder reminder = new Reminder();
+            SqlConnection cnMaisonsConnection = new SqlConnection();
+            cnMaisonsConnection.ConnectionString = connectionString;
+            cnMaisonsConnection.Open();
+            SqlCommand GetTenant = new()
+            {
+                CommandType = CommandType.StoredProcedure,
+                Connection = cnMaisonsConnection,
+                CommandText = "GetAllReminders"
+            };
+
+            SqlDataReader MyDataReader = GetTenant.ExecuteReader();
+
+            if (MyDataReader.HasRows)
+            {
+                while (MyDataReader.Read())
+                {
+                    reminder = new()
+                    {
+                        ReminderId = (int)MyDataReader["RemindersID"],
+                        TenantID = (string)MyDataReader["TenantID"],
+                        Description = (string)MyDataReader["Description"],
+                        DateSent = (DateTime)MyDataReader["DateSent"],
+                        DueDateRemindedFor = (DateTime)MyDataReader["DueDateRemindedFor"]
+                    };
+                    reminderList.Add(reminder);
+                }
+            }
+            MyDataReader.Close();
+            cnMaisonsConnection.Close();
+            return reminderList;
         }
     }
 }

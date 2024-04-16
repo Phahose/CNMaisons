@@ -75,6 +75,13 @@ namespace CNMaisons.Pages
  
         public void OnPost()
         {
+            CNMPMS tenantController = new();
+            if (HttpContext.Session.GetString("Email") != null)
+            {
+                UserEmail = HttpContext.Session.GetString("Email")!;
+            }
+            Users = tenantController.GetUserByEmail(UserEmail);
+            tenantForPayment = tenantController.GetAllTennants(UserEmail);
 
             #region All Validations
             //ModelState.Clear();

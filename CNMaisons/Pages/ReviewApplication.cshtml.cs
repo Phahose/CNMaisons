@@ -158,16 +158,9 @@ namespace CNMaisons.Pages
                                     return Page();
                                 }
                             }
-                            //else
-                            //{
-                            //    Message = "Please attach the lease form.";
-                            //    ViewFormNow = true;
-                            //    return Page();
-                            //}
-
                             if (ApprovalStatus == "Approved")
                             {
-                                //byte[] LeaseForm = ConvertToByteArray(LeaseFormForSigning);
+                            
                                 messageBody = "Hello,\n\nYour Lease Form has been APPROVED.\n\nYou can proceed with the payment.\n\tpay to :..........\n\nRegards\nCN Maisons Management";
                                 messageSubject = "Lease Application Approved.";
                                 MailRequestManager = new CNMPMS();
@@ -177,7 +170,7 @@ namespace CNMaisons.Pages
 
                             if (ApprovalStatus == "Rejected")
                             {
-                                //byte[] LeaseForm = ConvertToByteArray(LeaseFormForSigning);
+                                
                                 messageBody = "Hello,\n\nSorry we are unable toproceed with this lease agreement.\n\nRegards\nCN Maisons Management";
                                 messageSubject = "Lease Agreement reject.";
                                 MailRequestManager = new CNMPMS();

@@ -107,6 +107,5 @@ namespace CNMaisons.TechnicalService
                 return 587;
             }
         }
-
     }
 }

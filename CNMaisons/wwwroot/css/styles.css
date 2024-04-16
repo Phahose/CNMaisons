@@ -799,21 +799,30 @@ input.filter-btn{
 }
 .table-div {
     display: block;
-    align-content: center;
     width: 85vw;
+    margin-top: 1rem;
+    height: 30rem;
+    overflow: auto;
 }
-table {
+.table-div table{
+    margin: auto;
 }
 .table-form {
     width: 90%;
     margin: auto;
+}
+.table-body{
+    height: 10rem;
+    overflow:scroll;
+    background-color: blue;
+    max-height: 30rem;
 }
 tr {
     width: fit-content;
 }
 td {
     padding: 1rem;
-    width: fit-content;
+    width:fit-content;
 }
 th{
     padding: 0.5rem;
