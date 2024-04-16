@@ -164,7 +164,13 @@ namespace CNMaisons.Controller
             return Success;
         }
 
-
+        public List<Tenant> FindAllTenants()
+        {
+            List<Tenant> list = new List<Tenant>();
+            Tenants tenants = new Tenants();
+            list = tenants.GetAllTenants();
+            return list;
+        }
         public bool AddReminder(RentReminder aReminder)
         {
             bool Success;
