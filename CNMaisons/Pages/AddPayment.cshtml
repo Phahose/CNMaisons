@@ -1,7 +1,7 @@
 ﻿@page
 @model CNMaisons.Pages.AddPaymentModel
 @{
-    ViewData["Title"] = "Book Property Vist";
+    ViewData["Title"] = "Record A Payment";
     var currentYear = DateTime.Now.Year;
 }
 
@@ -217,13 +217,13 @@
                 <br />
             </span>
 
-            <legend>Add Payment</legend>
+            <legend>Record A Payment</legend>
             <div>
-                <label>Tenant ID:</label><br />
+                <label>Enter Your Tenant ID:</label><br />
                 <input type="text" name="TenantID" maxlength="5" required oninput="this.value = this.value.toUpperCase();" /><br />
 
 
-                <label> Property ID:</label><br />
+                <label>Enter your Property ID:</label><br />
                 <input type="text" name="PropertyID" maxlength="7" required oninput="this.value = this.value.toUpperCase();" /><br />
 
                 <label>Amount Paid:</label><br />
