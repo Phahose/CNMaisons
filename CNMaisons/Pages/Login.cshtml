@@ -11,7 +11,10 @@
     </video>
     <form name="Login" method="post" class="form loginForm">
         <fieldset>
-            <p class="@Model.AlertClass">@Model.Message</p>
+            @if (Model.Message != "")
+            {
+                <p style="font-size: small; color: red; background-color:white; padding: 0.5rem;">@Model.Message</p>
+            }
             <legend>Login</legend>
             <label for="Email">Email</label>
             <br />

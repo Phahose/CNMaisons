@@ -17,95 +17,175 @@
 </script>
 
 
-@if (Model.ViewPage != true)
-{
-<div>     
-    <form name="ViewPayment" method="post" class="form property_form transition-fade-down">
-        <div>
-            <label>Enter Tenant ID: </label>
-            <br />
-            <input type="text" name="FindTenantID" required />
-            <br />
+<div>
+    <div class="loggedin-pages">
+        <nav class="loggedin-nav">
+            <a href="~/Index"><img src="~/img/png/logo-no-background.png" width="150" class="intro_image" /></a>
+            <ul class="loggedin-list">
+                @if (Model.Users.Role == "LandLord")
+                {
+                    <li>
+                        <a href="~/IndexStaff">My Account</a>
+                    </li>
+                    <li>
+                        <a href="~/AddProperty">Add Property</a>
+                    </li>
+                    <li>
+                        <a href="~/CreateAccount">Create New Employee Account</a>
+                    </li>
+                    <li>
+                        <a href="#">View Visit Requests</a>
+                    </li>
+                    <li>
+                        <a href="~/ViewPropertyAdmin">View Properties</a>
+                    </li>
+                    <li>
+                        <a href="~/ViewTenantbyLandLord">View Tenant </a>
+                    </li>
+                    <li>
+                        <a href="~/ViewInquiry">View Inquiry </a>
+                    </li>
+                    <li>
+                        <a href="~/UpdateTenant">Edit Account</a>
+                    </li>
+                }
+                @if (Model.Users.Role == "Staff")
+                {
+                    <li>
+                        <a href="~/IndexStaff">My Account</a>
+                    </li>
+                    <li>
+                        <a href="~/AddProperty">Add Property</a>
+                    </li>
+                    <li>
+                        <a href="#">View Visit Requests</a>
+                    </li>
+                    <li>
+                        <a href="~/UpdateTenant">Edit Account</a>
+                    </li>
 
-            <label>Start Date: </label>
-            <br />
-            <input type="date" name="FindStartDate" class="btn"  required value='@(DateTime.Today.ToString("yyyy-MM-dd"))' max='@(DateTime.Today.ToString("yyyy-MM-dd"))' />
-
-            <br />
-            <label>End Date: </label>
-            <br />
-            <input type="date" name="FindEndDate" class="btn" required value='@(DateTime.Today.ToString("yyyy-MM-dd"))' max='@(DateTime.Today.ToString("yyyy-MM-dd"))' />
-
-            <br />
-            <br />
-            <input type="submit" name="Submit" value="Find" class="btn" />
-            <br />
-        </div>        
-    </form>
-</div>
-}
-
-@if (Model.ViewPage == true)    
-{
-    <form name="ShowPayment" method="post" class="form property_form transition-fade-down">
-        <h4>View Payment</h4>
-
-
-        <div style="display: flex; align-content: center">
-            <table style="border-collapse: collapse; text-align: left; width: 100%;">
-                <thead>
-                    <tr style="border: 1px solid #ddd; background-color:black;">                        
-                        <th style="border: 1px solid #ddd;">PaymentID</th>
-                        <th style="border: 1px solid #ddd;">TenantID</th>
-                        <th style="border: 1px solid #ddd;">PropertyID</th>                        
-                        <th style="border: 1px solid #ddd;">Amount Paid</th>
-                        <th style="border: 1px solid #ddd;">Payment Start Month</th>
-                        <th style="border: 1px solid #ddd;">Payment End Month</th>
-                        <th style="border: 1px solid #ddd;">Payment Start Year</th>
-                        <th style="border: 1px solid #ddd;">Months Paid For</th>
-                        <th style="border: 1px solid #ddd;">Next Due Month</th>
-                        <th style="border: 1px solid #ddd;">Next Due Year</th>
-                        <th style="border: 1px solid #ddd;">Next Due Date</th>
-                        <th style="border: 1px solid #ddd;">Date of Tenants Payment</th>
-                        <th style="border: 1px solid #ddd;">Method of Payment</th>
-                        <th style="border: 1px solid #ddd;">Tenant Payment Bank</th>
-                        <th style="border: 1px solid #ddd;">Date of Record</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var record in Model.PaymentList)
+                }
+                @if (Model.Users.Role == "Tenant")
+                {
+                    <li><a href="~/IndexTenant">My Account</a></li>
+                    @if (Model.aTenant.ApprovalStatus != "Approved")
                     {
-                        <tr>
-                            <td style="border: 1px solid #ddd;">@record.PaymentID</td>
-                            <td style="border: 1px solid #ddd;">@record.TenantID</td>
-                            <td style="border: 1px solid #ddd;">@record.PropertyID</td>
-                            <td style="border: 1px solid #ddd;">@record.AmountPaid</td>
-                            <td style="border: 1px solid #ddd;">@record.PaymentStartMonth</td>
-                            <td style="border: 1px solid #ddd;">@record.PaymentEndMonth</td>
-                            <td style="border: 1px solid #ddd;">@record.PaymentStartYear</td>
-                            <td style="border: 1px solid #ddd;">@record.MonthsPaidFor</td>
-                            <td style="border: 1px solid #ddd;">@record.NextDueMonth</td>
-                            <td style="border: 1px solid #ddd;">@record.NextDueYear</td>
-                            <td style="border: 1px solid #ddd;">@record.NextDueDate</td>
-                            <td style="border: 1px solid #ddd;">@record.DateOfTenantsPayment</td>
-                            <td style="border: 1px solid #ddd;">@record.MethodOfPayment</td>
-                            <td style="border: 1px solid #ddd;">@record.TenantPaymentBank</td>
-                            <td style="border: 1px solid #ddd;">@record.DateOfRecord</td>
-                        </tr>
+                        <li><a href="~/SignLeaseForm">Sign Lease Form</a></li>
                     }
-                </tbody>
+                    @if (Model.aTenant.ApprovalStatus == "Approved")
+                    {
+                        <li><a href="~/AddPayment">Record Rent Payment</a></li>
+                    }
 
-                <tr>
-                    <td><input type="submit" name="Submit" value="Find" class="btn" /></td>
-                    <td><input type="submit" name="Submit" value="Refresh" class="btn" /></td>
-                    <td><input type="submit" name="Submit" value="Close" class="btn" /></td>
+                }
+                <li class="loggedin-icon_div">
+                    @if (Model.aTenant.Passport != null)
+                    {
+                        @if (Model.aTenant.Passport.Length > 0)
+                        {
+                            <img src="data:image;base64,@Convert.ToBase64String(Model.aTenant.Passport)" alt="Property Image" />
+                        }
+                        else
+                        {
+                            <img src="~/img/profile_icon.png" width="150" class="intro_image" />
+                        }
+                    }
+                    else
+                    {
+                        <img src="~/img/profile_icon.png" width="150" class="intro_image" />
+                    }
+                </li>
+            </ul>
+        </nav>
+    </div>
+    @if (Model.ViewPage != true)
+    {
+        <div>
+            <form name="ViewPayment" method="post" class="form property_form transition-fade-down">
+                <div>
+                    <label>Enter Tenant ID: </label>
+                    <br />
+                    <input type="text" name="FindTenantID" required />
+                    <br />
 
-                </tr>
+                    <label>Start Date: </label>
+                    <br />
+                    <input type="date" name="FindStartDate" class="btn" required value='@(DateTime.Today.ToString("yyyy-MM-dd"))' max='@(DateTime.Today.ToString("yyyy-MM-dd"))' />
 
+                    <br />
+                    <label>End Date: </label>
+                    <br />
+                    <input type="date" name="FindEndDate" class="btn" required value='@(DateTime.Today.ToString("yyyy-MM-dd"))' max='@(DateTime.Today.ToString("yyyy-MM-dd"))' />
 
-            </table>
+                    <br />
+                    <br />
+                    <input type="submit" name="Submit" value="Find" class="btn" />
+                    <br />
+                </div>
+            </form>
         </div>
-    </form>
+    }
+
+    @if (Model.ViewPage == true)
+    {
+        <form name="ShowPayment" method="post" class="form property_form transition-fade-down">
+            <h4>View Payment</h4>
 
 
-}
+            <div style="display: flex; align-content: center">
+                <table style="border-collapse: collapse; text-align: left; width: 100%;">
+                    <thead>
+                        <tr style="border: 1px solid #ddd; background-color:black;">
+                            <th style="border: 1px solid #ddd;">PaymentID</th>
+                            <th style="border: 1px solid #ddd;">TenantID</th>
+                            <th style="border: 1px solid #ddd;">PropertyID</th>
+                            <th style="border: 1px solid #ddd;">Amount Paid</th>
+                            <th style="border: 1px solid #ddd;">Payment Start Month</th>
+                            <th style="border: 1px solid #ddd;">Payment End Month</th>
+                            <th style="border: 1px solid #ddd;">Payment Start Year</th>
+                            <th style="border: 1px solid #ddd;">Months Paid For</th>
+                            <th style="border: 1px solid #ddd;">Next Due Month</th>
+                            <th style="border: 1px solid #ddd;">Next Due Year</th>
+                            <th style="border: 1px solid #ddd;">Next Due Date</th>
+                            <th style="border: 1px solid #ddd;">Date of Tenants Payment</th>
+                            <th style="border: 1px solid #ddd;">Method of Payment</th>
+                            <th style="border: 1px solid #ddd;">Tenant Payment Bank</th>
+                            <th style="border: 1px solid #ddd;">Date of Record</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var record in Model.PaymentList)
+                        {
+                            <tr>
+                                <td style="border: 1px solid #ddd;">@record.PaymentID</td>
+                                <td style="border: 1px solid #ddd;">@record.TenantID</td>
+                                <td style="border: 1px solid #ddd;">@record.PropertyID</td>
+                                <td style="border: 1px solid #ddd;">@record.AmountPaid</td>
+                                <td style="border: 1px solid #ddd;">@record.PaymentStartMonth</td>
+                                <td style="border: 1px solid #ddd;">@record.PaymentEndMonth</td>
+                                <td style="border: 1px solid #ddd;">@record.PaymentStartYear</td>
+                                <td style="border: 1px solid #ddd;">@record.MonthsPaidFor</td>
+                                <td style="border: 1px solid #ddd;">@record.NextDueMonth</td>
+                                <td style="border: 1px solid #ddd;">@record.NextDueYear</td>
+                                <td style="border: 1px solid #ddd;">@record.NextDueDate</td>
+                                <td style="border: 1px solid #ddd;">@record.DateOfTenantsPayment</td>
+                                <td style="border: 1px solid #ddd;">@record.MethodOfPayment</td>
+                                <td style="border: 1px solid #ddd;">@record.TenantPaymentBank</td>
+                                <td style="border: 1px solid #ddd;">@record.DateOfRecord</td>
+                            </tr>
+                        }
+                    </tbody>
+
+                    <tr>
+                        <td><input type="submit" name="Submit" value="Find" class="btn" /></td>
+                        <td><input type="submit" name="Submit" value="Refresh" class="btn" /></td>
+                        <td><input type="submit" name="Submit" value="Close" class="btn" /></td>
+
+                    </tr>
+
+
+                </table>
+            </div>
+        </form>
+    }
+</div>

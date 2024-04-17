@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace CNMaisons.Pages
 {
-    [Authorize]
+    [Authorize(Roles = "LandLord, Staff")]
     public class UpdateTenantModel : PageModel
     {
         public bool ViewFormNow = false;
@@ -191,7 +191,8 @@ namespace CNMaisons.Pages
         CNMPMS TenantRequestDirector = new CNMPMS();
         public User Users { get; set; } = new User();
         public Tenant Tenant { get; set; } = new();
-        public string TenantEmail {  get; set; } = string.Empty;    
+        public string TenantEmail {  get; set; } = string.Empty;
+        public Employee Employee { get; set; } = new Employee();
 
         public void OnGet()
         {
@@ -204,6 +205,7 @@ namespace CNMaisons.Pages
             }
             Users = tenantController.GetUserByEmail(TenantEmail);
             Tenant = tenantController.ViewTenant(TenantEmail);
+            Employee = tenantController.GetAllEmployees(TenantEmail);
         }
         public IActionResult OnPost()
         {

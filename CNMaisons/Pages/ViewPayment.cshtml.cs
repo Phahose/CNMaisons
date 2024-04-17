@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Security.Claims;
 
 namespace CNMaisons.Pages
 {
@@ -29,10 +30,21 @@ namespace CNMaisons.Pages
         public string Submit { get; set; } = string.Empty;
 
         public List<Payment> PaymentList = new List<Payment>();
+        public Tenant aTenant { get; set; } = new();
+        public User Users { get; set; } = new User();
+        public void OnGet()
+        {
+            string Email = HttpContext.Session.GetString("Email")!;
+            var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
 
+            CNMPMS RequestDirector = new();
+            aTenant = RequestDirector.ViewTenant(Email);
+            Users = RequestDirector.GetUserByEmail(Email);
+            string check = aTenant.TenantID;
+        }
         public void OnPost()
         {
-
+            OnGet();
             ViewPage = false;
 
             ModelState.Clear();

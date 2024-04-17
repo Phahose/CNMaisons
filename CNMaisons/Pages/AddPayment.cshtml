@@ -1,10 +1,8 @@
 ﻿@page
 @model CNMaisons.Pages.AddPaymentModel
 @{
-    Layout = "_Header";
     ViewData["Title"] = "Book Property Vist";
     var currentYear = DateTime.Now.Year;
-
 }
 
 
@@ -118,10 +116,88 @@
 
 
 <div>
-    <video autoplay muted loop id="video-background">
-        <source src="~/img/backvideos.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
+    <div class="loggedin-pages">
+        <nav class="loggedin-nav">
+            <a href="~/Index"><img src="~/img/png/logo-no-background.png" width="150" class="intro_image" /></a>
+            <ul class="loggedin-list">
+                @if (Model.Users.Role == "LandLord")
+                {
+
+                    <li>
+                        <a href="~/IndexStaff">My Account</a>
+                    </li>
+                    <li>
+                        <a href="~/AddProperty">Add Property</a>
+                    </li>
+                    <li>
+                        <a href="~/CreateAccount">Create New Employee Account</a>
+                    </li>
+                    <li>
+                        <a href="#">View Visit Requests</a>
+                    </li>
+                    <li>
+                        <a href="~/ViewPropertyAdmin">View Properties</a>
+                    </li>
+                    <li>
+                        <a href="~/ViewTenantbyLandLord">View Tenant </a>
+                    </li>
+                    <li>
+                        <a href="~/ViewInquiry">View Inquiry </a>
+                    </li>
+                    <li>
+                        <a href="~/UpdateTenant">Edit Account</a>
+                    </li>
+                }
+                @if (Model.Users.Role == "Staff")
+                {
+
+                    <li>
+                        <a href="~/IndexStaff">My Account</a>
+                    </li>
+                    <li>
+                        <a href="~/AddProperty">Add Property</a>
+                    </li>
+                    <li>
+                        <a href="#">View Visit Requests</a>
+                    </li>
+                    <li>
+                        <a href="~/UpdateTenant">Edit Account</a>
+                    </li>
+
+                }
+                @if (Model.Users.Role == "Tenant")
+                {
+                    <li><a href="~/IndexTenant">My Account</a></li>
+                    @if (Model.tenantForPayment.ApprovalStatus != "Approved")
+                    {
+                        <li><a href="~/SignLeaseForm">Sign Lease Form</a></li>
+                    }
+                    @if (Model.tenantForPayment.ApprovalStatus == "Approved")
+                    {
+                        <li><a href="~/AddPayment">Record Rent Payment</a></li>
+                    }
+
+                }
+                <li class="loggedin-icon_div">
+                    @if (Model.tenantForPayment.Passport != null)
+                    {
+                        @if (Model.tenantForPayment.Passport.Length > 0)
+                        {
+                            <img src="data:image;base64,@Convert.ToBase64String(Model.tenantForPayment.Passport)" alt="Property Image" />
+                        }
+                        else
+                        {
+                            <img src="~/img/profile_icon.png" width="150" class="intro_image" />
+                        }
+                    }
+                    else
+                    {
+                        <img src="~/img/profile_icon.png" width="150" class="intro_image" />
+                    }
+                </li>
+            </ul>
+        </nav>
+    </div>
 
     <form name="AddPayment" method="post" class="form property_form transition-fade-down">
         <br />

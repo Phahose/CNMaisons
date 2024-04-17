@@ -9,11 +9,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Xml.Linq;
  
 namespace CNMaisons.Pages
-
 {
-
     [Authorize(Roles = "LandLord, Staff, Tenant")]   // Restrict access to specified roles
-
     public class AddPaymentModel : PageModel
 
     {
@@ -95,9 +92,7 @@ namespace CNMaisons.Pages
         public User Users { get; set; } = new User();
 
         public void OnGet()
-
         {
-
             CNMPMS tenantController = new();
 
             if (HttpContext.Session.GetString("Email") != null)
