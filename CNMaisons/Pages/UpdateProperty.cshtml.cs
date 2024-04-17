@@ -16,7 +16,7 @@ namespace CNMaisons.Pages
     [Authorize]
     public class UpdatePropertyModel : PageModel
     {
-        public string ErrorMessage {get; set; } = string.Empty;
+        public string ErrorMessage { get; set; } = string.Empty;
         public string SucceessMessage { get; set; } = string.Empty;
         [BindProperty]
         [RegularExpression("[A-Za-z]{2}[0-9]{5}", ErrorMessage = "The PropertyID must be in the Format CN00001")]
@@ -38,7 +38,7 @@ namespace CNMaisons.Pages
         [BindProperty]
         public string Description { get; set; } = string.Empty;
         [BindProperty]
-        public IFormFile Image1 { get; set; } 
+        public IFormFile Image1 { get; set; }
         [BindProperty]
         public IFormFile Image2 { get; set; }
         [BindProperty]
@@ -63,7 +63,7 @@ namespace CNMaisons.Pages
         public decimal PropertyPrice { get; set; }
         public Property Property { get; set; } = new();
         public bool Occupied { get; set; }
-        public string Email { get; set; } 
+        public string Email { get; set; }
         public User Users { get; set; } = new User();
         [BindProperty]
         public string MyCheckBox { get; set; }
@@ -78,7 +78,7 @@ namespace CNMaisons.Pages
             if (HttpContext.Session.GetString("Email") != null)
             {
                 Email = HttpContext.Session.GetString("Email")!;
-            }           
+            }
             CNMPMS controller = new CNMPMS();
             Users = controller.GetUserByEmail(Email);
             Property = controller.GetPropertyByID(PropertyID);
@@ -152,7 +152,7 @@ namespace CNMaisons.Pages
                 byte[] image9Bytes = ConvertToByteArray(Image9);
                 byte[] image10Bytes = ConvertToByteArray(Image10);
 
-                if (MyCheckBox == "on") 
+                if (MyCheckBox == "on")
                 {
                     Occupied = true;
                 }
@@ -183,7 +183,7 @@ namespace CNMaisons.Pages
                     Image10 = image10Bytes,
                     Occupied = Occupied
                 };
-                if (Image1 == null || Image2 == null || Image3 == null || Image4== null || Image5 == null || Image6 == null || Image7 == null || Image8 == null || Image9 == null || Image10 == null)
+                if (Image1 == null || Image2 == null || Image3 == null || Image4 == null || Image5 == null || Image6 == null || Image7 == null || Image8 == null || Image9 == null || Image10 == null)
                 {
                     #region Image Null Checker
                     property = new();
@@ -287,12 +287,13 @@ namespace CNMaisons.Pages
                 if (success)
                 {
                     SucceessMessage = "The Property Updated SuccessFully";
+                    HttpContext.Session.SetString("PropertyHasBeenupdated", "True");
                 }
                 else
                 {
                     SucceessMessage = "An Error Occured When trying to Update this Property";
                 }
-              
+
             }
         }
         private byte[] ConvertToByteArray(IFormFile file)

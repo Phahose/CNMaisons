@@ -57,6 +57,7 @@ namespace CNMaisons.Domain
         public string ApprovalStatus { get; set; } = string.Empty;
         public byte[] LeaseFormForSigning { get; set; } = new byte[0];        
         public bool DeleteFlag { get; set; }
+        public DateTime NextRentDue { get; set; }
 
     }
 }

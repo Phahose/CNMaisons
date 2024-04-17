@@ -14,6 +14,8 @@
                         <li><a href="~/IndexStaff">My Account</a></li>
                         <li><a href="~/ViewTenantbyLandLord">View Tenant </a></li>
                         <li><a href="~/CreateAccount">Create New Employee Account</a></li>
+                        <li><a href="~/ViewFinancebyLandlord">View Financial Report</a></li>
+
                     </ul>
                 }
                 @if (Model.Users.Role == "Staff")
@@ -47,7 +49,7 @@
                     }
                 </div>
                 <h2>@Model.Employee.FirstName @Model.Employee.LastName</h2>
-                <p>@Model.Users.Role</p>
+                <p>Employee ID: @Model.Employee.EmployeeId</p>
             </div>
         </div> 
         <p class="title">Account info</p>
@@ -55,7 +57,7 @@
             <form method="post" name="StaffAccountForm">              
                 <div>
                     <div class="next_rent">
-                        <a href="~/ViewInquiry" class="more-info">View Inquiry </a>
+                        <a href="~/ViewInquiry" class="more-info">View Visit Requests</a>
                     </div>
                     <div class="next_rent">
                         <a href="~/ViewPropertyAdmin" class="more-info">View Properties</a>
@@ -68,7 +70,7 @@
                     {
                         <div class="next_rent">
                             <a href="~/ReviewApplication" class="more-info">Review Tennancy Applications</a>
-                        </div>
+                        </div> 
                     }
                     <div>
                         <div>

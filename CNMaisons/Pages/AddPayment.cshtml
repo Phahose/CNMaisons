@@ -1,0 +1,325 @@
+﻿@page
+@model CNMaisons.Pages.AddPaymentModel
+@{
+    ViewData["Title"] = "Record A Payment";
+    var currentYear = DateTime.Now.Year;
+}
+
+
+<script src="~/libraries/jquery/jquery.js"></script>
+<script src="~/libraries/jquery-validate/jquery.validate.js"></script>
+<script src="~/libraries/jquery-validate-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+<script type="text/javascript">
+    var currentYear = new Date().getFullYear();
+
+    // Set the default value of the select to the current year
+    document.getElementById("PaymentStartYearSelect").value = currentYear;
+
+    function calculatePaymentEndMonth() {
+        // Replace these placeholders with your actual data
+        const month12a = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+        const month12b = ["DEC", "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV"];
+        const month12c = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];;
+
+        const month6a = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+        const month6b = ["JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC", "JAN", "FEB", "MAR", "APR", "MAY"];
+        const month6c = ["JUL", "AUG", "SEP", "OCT", "NOV", "DEC", "JAN", "FEB", "MAR", "APR", "MAY", "JUN"];
+
+
+        // Get the value of MonthsPaidFor
+        const monthsPaidForSelect = document.getElementById("MonthsPaidFor");
+        const monthsPaidFor = parseInt(monthsPaidForSelect.value);
+
+
+        // Get the value of PaymentStartMonth
+        const paymentStartMonthSelect = document.getElementById("PaymentStartMonth");
+        const paymentStartMonthValue = paymentStartMonthSelect.value.toUpperCase();
+        const paymentEndMonthInput = document.getElementById("PaymentEndMonth");
+        const NextDueMonthInput = document.getElementById("NextDueMonth");
+
+        if (monthsPaidFor === 12) {
+            const index = month12a.indexOf(paymentStartMonthValue);
+            if (index !== -1) {
+                paymentEndMonthInput.value = month12b[index];
+                NextDueMonthInput.value = month12c[index];
+            }
+        } else if (monthsPaidFor === 6) {
+            const index = month6a.indexOf(paymentStartMonthValue);
+            if (index !== -1) {
+                paymentEndMonthInput.value = month6b[index];
+                NextDueMonthInput.value = month6c[index];
+            }
+        }
+        computeNextDueDate();
+
+        // Return empty string if no matching month found
+        return '';
+    }
+
+    function computeNextDueYear() {
+
+        var monthsPaidForSelect = document.getElementById("MonthsPaidFor");
+        var paymentStartMonthSelect = document.getElementById("PaymentStartMonth");
+        var paymentStartYearSelect = document.getElementById("PaymentStartYearSelect");
+        var nextDueYearInput = document.getElementById("NextDueYear");
+        var NextDueMonthInput = document.getElementById("NextDueMonth");
+
+        var monthsPaidFor = parseInt(monthsPaidForSelect.value);
+        var paymentStartMonth = paymentStartMonthSelect.value.toUpperCase(); // Convert to uppercase for comparison
+        var paymentStartYear = parseInt(paymentStartYearSelect.value);
+
+        var nextDueYear;
+
+        if (monthsPaidFor === 12) {
+            nextDueYear = paymentStartYear + 1;
+        } else if (monthsPaidFor === 6 && (paymentStartMonth === "JAN" || paymentStartMonth === "FEB" || paymentStartMonth === "MAR" || paymentStartMonth === "APR" || paymentStartMonth === "MAY" || paymentStartMonth === "JUNE")) {
+            nextDueYear = paymentStartYear;
+        } else {
+            nextDueYear = paymentStartYear + 1;
+        }
+        // Set the computed value to the NextDueYear input
+        nextDueYearInput.value = nextDueYear;
+        computeNextDueDate();
+        calculatePaymentEndMonth();
+     }
+
+    function computeNextDueDate() {
+        
+        const month12 = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+
+        var monthsPaidForSelect = document.getElementById("MonthsPaidFor");
+        var NextDueDateInput = document.getElementById("NextDueDate");
+        var NextDueMonthInput = document.getElementById("NextDueMonth");
+        var nextDueYearInput = document.getElementById("NextDueYear");
+
+        var monthsPaidFor = parseInt(monthsPaidForSelect.value);
+        var NextDueMonth = NextDueMonthInput.value.toUpperCase(); // Convert to uppercase for comparison
+        var nextDueYear = parseInt(nextDueYearInput.value);
+        var NextDueMonthNumber = month12.indexOf(NextDueMonth) + 1;
+
+        var formattedDate = nextDueYear + '-' + ('0' + NextDueMonthNumber).slice(-2) + '-01';
+
+        NextDueDateInput.value = formattedDate;
+        computeNextDueYear();
+        calculatePaymentEndMonth();
+    }
+
+    var today = new Date();
+
+    // Format the date as yyyy-MM-dd (required by input type="date")
+    var formattedDate = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
+
+    // Set the value of the input field to today's date
+    document.getElementById('DateOfTenantsPaymentInput').value = formattedDate;
+</script>
+
+
+<div>
+    <div class="loggedin-pages">
+        <nav class="loggedin-nav">
+            <a href="~/Index"><img src="~/img/png/logo-no-background.png" width="150" class="intro_image" /></a>
+            <ul class="loggedin-list">
+                @if (Model.Users.Role == "LandLord")
+                {
+
+                    <li>
+                        <a href="~/IndexStaff">My Account</a>
+                    </li>
+                    <li>
+                        <a href="~/AddProperty">Add Property</a>
+                    </li>
+                    <li>
+                        <a href="~/CreateAccount">Create New Employee Account</a>
+                    </li>
+                    <li>
+                        <a href="#">View Visit Requests</a>
+                    </li>
+                    <li>
+                        <a href="~/ViewPropertyAdmin">View Properties</a>
+                    </li>
+                    <li>
+                        <a href="~/ViewTenantbyLandLord">View Tenant </a>
+                    </li>
+                    <li>
+                        <a href="~/ViewInquiry">View Inquiry </a>
+                    </li>
+                    <li>
+                        <a href="~/UpdateTenant">Edit Account</a>
+                    </li>
+                }
+                @if (Model.Users.Role == "Staff")
+                {
+
+                    <li>
+                        <a href="~/IndexStaff">My Account</a>
+                    </li>
+                    <li>
+                        <a href="~/AddProperty">Add Property</a>
+                    </li>
+                    <li>
+                        <a href="#">View Visit Requests</a>
+                    </li>
+                    <li>
+                        <a href="~/UpdateTenant">Edit Account</a>
+                    </li>
+
+                }
+                @if (Model.Users.Role == "Tenant")
+                {
+                    <li><a href="~/IndexTenant">My Account</a></li>
+                    @if (Model.tenantForPayment.ApprovalStatus != "Approved")
+                    {
+                        <li><a href="~/SignLeaseForm">Sign Lease Form</a></li>
+                    }
+                    @if (Model.tenantForPayment.ApprovalStatus == "Approved")
+                    {
+                        <li><a href="~/AddPayment">Record Rent Payment</a></li>
+                    }
+
+                }
+                <li class="loggedin-icon_div">
+                    @if (Model.tenantForPayment.Passport != null)
+                    {
+                        @if (Model.tenantForPayment.Passport.Length > 0)
+                        {
+                            <img src="data:image;base64,@Convert.ToBase64String(Model.tenantForPayment.Passport)" alt="Property Image" />
+                        }
+                        else
+                        {
+                            <img src="~/img/profile_icon.png" width="150" class="intro_image" />
+                        }
+                    }
+                    else
+                    {
+                        <img src="~/img/profile_icon.png" width="150" class="intro_image" />
+                    }
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <form name="AddPayment" method="post" class="form property_form transition-fade-down">
+        <br />
+        <fieldset>
+            <span style="font-size: larger; font-style: italic;">
+                @foreach (var error in Model.errorMessage)
+                {
+                    @if (error != null)
+                    {
+                        <p style="font-size: small; color: red; background-color:white; padding: 0.5rem;">@error</p>
+                    }
+                }
+                @if (Model.Message != "")
+                {
+                    <p style="font-size: small; color: green; background-color:white; padding: 0.5rem;">@Model.Message</p>
+                }
+                <br />
+            </span>
+
+            <legend>Record A Payment</legend>
+            <div>
+                <label>Enter Your Tenant ID:</label><br />
+                <input type="text" name="TenantID" maxlength="5" required oninput="this.value = this.value.toUpperCase();" /><br />
+
+
+                <label>Enter your Property ID:</label><br />
+                <input type="text" name="PropertyID" maxlength="7" required oninput="this.value = this.value.toUpperCase();" /><br />
+
+                <label>Amount Paid:</label><br />
+                <input type="number" name="AmountPaid" required onchange="calculatePaymentEndMonth()"/><br />
+
+                <label hidden>Date you made the payment: </label><br />
+                <input hidden type="date" name="DateOfTenantsPayment" required value='@(DateTime.Today.ToString("yyyy-MM-dd"))' max='@(DateTime.Today.ToString("yyyy-MM-dd"))' />
+
+
+                <label>Method Of Payment:</label><br />
+                <select name="MethodOfPayment" required>
+                    <option value="">Select Method</option>
+                    <option value="E Transfer">E Transfer</option>
+                    <option value="Cheque">Cheque</option>
+                    <option value="Cash">Cash</option>
+                </select>
+
+                <label>Tenant Payment Bank:</label><br />
+                <select name="TenantPaymentBank" required>
+                    <option value="">Select Bank</option>
+                    <option value="Access Bank">Access Bank</option>
+                    <option value="Citibank">Citibank</option>
+                    <option value="Diamond Bank">Diamond Bank</option>
+                    <option value="Ecobank Nigeria">Ecobank Nigeria</option>
+                    <option value="Fidelity Bank Nigeria">Fidelity Bank Nigeria</option>
+                    <option value="First Bank of Nigeria">First Bank of Nigeria</option>
+                    <option value="First City Monument Bank">First City Monument Bank (FCMB)</option>
+                    <option value="Guaranty Trust Bank">Guaranty Trust Bank (GTB)</option>
+                    <option value="Heritage Bank Plc">Heritage Bank Plc</option>
+                    <option value="Keystone Bank Limited">Keystone Bank Limited</option>
+                    <option value="Polaris Bank">Polaris Bank</option>
+                    <option value="Stanbic IBTC Bank Nigeria Limited">Stanbic IBTC Bank Nigeria Limited</option>
+                    <option value="Standard Chartered Bank">Standard Chartered Bank</option>
+                    <option value="Sterling Bank">Sterling Bank</option>
+                    <option value="Union Bank of Nigeria">Union Bank of Nigeria</option>
+                    <option value="United Bank for Africa">United Bank for Africa (UBA)</option>
+                    <option value="Unity Bank Plc">Unity Bank Plc</option>
+                    <option value="Wema Bank">Wema Bank</option>
+                    <option value="Zenith Bank">Zenith Bank</option>
+                </select>
+
+
+
+
+                <label>Months Paid For:</label><br />
+                <select name="MonthsPaidFor" id="MonthsPaidFor" required onchange="calculatePaymentEndMonth(document.getElementById('PaymentStartMonth').value)">
+                    <option value="12">12</option>
+                    <option value="6">6</option>
+                </select><br />
+
+                <label>Payment Start Month:</label><br />
+                <select name="PaymentStartMonth" name="PaymentStartMonth" id="PaymentStartMonth" required onchange="calculatePaymentEndMonth(this.value)">
+                    <option value="">Select Month</option>
+                    <option value="JAN">JAN</option>
+                    <option value="FEB">FEB</option>
+                    <option value="MAR">MAR</option>
+                    <option value="APR">APR</option>
+                    <option value="MAY">MAY</option>
+                    <option value="JUN">JUN</option>
+                    <option value="JUL">JUL</option>
+                    <option value="AUG">AUG</option>
+                    <option value="SEP">SEP</option>
+                    <option value="OCT">OCT</option>
+                    <option value="NOV">NOV</option>
+                    <option value="DEC">DEC</option>
+                </select>
+                <label>Payment Start Year:</label><br />
+                <select name="PaymentStartYear" required id="PaymentStartYearSelect" onchange="computeNextDueYear()">
+                    <option value="">Select Year</option>
+                    <!-- Generate options for years 2024 to 2026 (currentYear + 2) -->
+                    @for (int year = currentYear; year <= (currentYear + 2); year++)
+                    {
+                        <option value="@year">@year</option>
+                    }
+                </select>
+
+                
+                <label>Payment End Month:</label><br />
+                <input type="text" name="PaymentEndMonth" required id="PaymentEndMonth" readonly onchange="computeNextDueDate()" /><br />
+                <label>Next Due Month:</label><br />
+                <input type="text" name="NextDueMonth" required id="NextDueMonth" readonly onchange="computeNextDueDate()" /><br />
+
+                
+
+
+              
+                <label>Next Due Year:</label><br />
+                <input type="number" id="NextDueYear" name="NextDueYear" readonly required onchange="computeNextDueDate()" /><br />
+
+                <label>Next Due Date:</label><br />
+                <input type="date" name="NextDueDate" required id="NextDueDate" readonly /><br />
+
+            </div>
+            <input type="submit" name="Submit" value="Add Payment" class="btn" />
+        </fieldset>
+
+
+    </form>
+</div>

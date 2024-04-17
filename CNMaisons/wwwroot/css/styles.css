@@ -706,6 +706,9 @@ input.filter-btn{
     border-radius: 50%;
     display: flex;
 }
+.loggedin-icon_div img{
+     border-radius: 50%;
+}
 .loggedin-list li:hover {
     border-bottom: 1.4px solid white;
 }
@@ -796,21 +799,30 @@ input.filter-btn{
 }
 .table-div {
     display: block;
-    align-content: center;
     width: 85vw;
+    margin-top: 1rem;
+    height: 30rem;
+    overflow: auto;
 }
-table {
+.table-div table{
+    margin: auto;
 }
 .table-form {
     width: 90%;
     margin: auto;
+}
+.table-body{
+    height: 10rem;
+    overflow:scroll;
+    background-color: blue;
+    max-height: 30rem;
 }
 tr {
     width: fit-content;
 }
 td {
     padding: 1rem;
-    width: fit-content;
+    width:fit-content;
 }
 th{
     padding: 0.5rem;
@@ -862,4 +874,23 @@ summary {
     background-color: antiquewhite;
     padding: 0.5rem;
     border-radius: 5px;
+}
+.popup {
+    width: 400px;
+    background-color: #1c1d1f;
+    border-radius: 6px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.1);
+    padding: 0 3rem 3rem;
+    box-shadow: 0 2px 20px antiquewhite;
+    visibility: hidden;
+    transition: transform 0.4s top 0.4s
+}
+
+.open-popup {
+    visibility: visible;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(1);
 }

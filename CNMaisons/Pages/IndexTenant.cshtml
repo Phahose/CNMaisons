@@ -16,7 +16,7 @@
                     }
                     @if(Model.Tenant.ApprovalStatus =="Approved")
                     {
-                        <li><a href="#">Record Rent Payment</a></li>
+                        <li><a href="~/AddPayment">Record Rent Payment</a></li>
                     }
                 </ul>
             </nav>
@@ -40,7 +40,7 @@
 
                 </div>
                 <h2>@Model.Tenant.FirstName @Model.Tenant.LastName</h2>
-                <p>@Model.Users.Role</p>
+                <p>Tenant ID: @Model.Tenant.TenantID</p>
             </div>
         </div> 
         <p class="title">Account info</p>
@@ -52,10 +52,8 @@
                         <p><span>Email</span>: @Model.Users.Email</p>
                         <p><span>Phone Number</span>: @Model.Tenant.PhoneNumber</p>
                         <p><span>Application Status</span>: @Model.Tenant.ApprovalStatus</p>
-                        <p><span>Date Of Birth</span>: @Model.Tenant.DOB.ToString("yyyy-MMMM-dddd")</p>
                         <p><span>Nationality</span>: @Model.Tenant.Nationality</p>
-                        <p><span>State Of Origin</span>: @Model.Tenant.StateofOrigin</p>
-                        <p><span>Permanent Howe Address</span>: @Model.Tenant.PermanentHomeAddress</p>
+                        <p><span>Property ID</span>: @Model.Tenant.PropertyID</p>
                     </div>
                     <div class="next_rent">
                         <a href="~/ViewTenant" class="more-info">View More info</a>

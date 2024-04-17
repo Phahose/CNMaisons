@@ -8,8 +8,6 @@
     var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
 }
 
-
-
 <script src="~/libraries/jquery/jquery.js"></script>
 <script src="~/libraries/jquery-validate/jquery.validate.js"></script>
 <script src="~/libraries/jquery-validate-unobtrusive/jquery.validate.unobtrusive.js"></script>
@@ -115,16 +113,31 @@
                         <li><a href="#">Record Rent Payment</a></li>
                     }
                 }
-                <li class="loggedin-icon_div">
-                    @if (Model.Employee.EmployeeImage.Length > 0)
-                    {
-                        <img src="data:image;base64,@Convert.ToBase64String(Model.Employee.EmployeeImage)" alt="Property Image" />
-                    }
-                    else
-                    {
-                        <img src="~/img/profile_icon.png" width="150" class="intro_image" />
-                    }
-                </li>
+                @if (Model.Users.Role != "Tenant")
+                {
+                    <li class="loggedin-icon_div">
+                        @if (Model.Employee.EmployeeImage.Length > 0)
+                        {
+                            <img src="data:image;base64,@Convert.ToBase64String(Model.Employee.EmployeeImage)" alt="Property Image" />
+                        }
+                        else
+                        {
+                            <img src="~/img/profile_icon.png" width="150" class="intro_image" />
+                        }
+                    </li>
+                }else{
+                    <li class="loggedin-icon_div">
+                        @if (Model.tenantForReview.Passport.Length > 0)
+                        {
+                            <img src="data:image;base64,@Convert.ToBase64String(Model.tenantForReview.Passport)" alt="Property Image"/>
+                        }
+                        else
+                        {
+                            <img src="~/img/profile_icon.png" width="150" class="intro_image" />
+                        }
+                    </li>
+                }
+                
             </ul>
         </nav>
     </div>

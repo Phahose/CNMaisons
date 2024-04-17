@@ -40,6 +40,8 @@ namespace CNMaisons.Pages
               
             CNMPMS VisitRequestDirector= new CNMPMS();
             OpenVisitList = VisitRequestDirector.RetrieveOpenPropertyVisit();
+            OpenVisitList = OpenVisitList.Where(x => x.VisitStatus != "Completed").ToList();
+            OpenVisitList = OpenVisitList.Where(x => x.VisitStatus != "Cancelled").ToList();
             if (OpenVisitList == null)
             {
                 Message = "All have been reviewed";
@@ -55,6 +57,8 @@ namespace CNMaisons.Pages
         {
             CNMPMS VisitRequestDirector = new CNMPMS();
             OpenVisitList = VisitRequestDirector.RetrieveOpenPropertyVisit();
+            OpenVisitList = OpenVisitList.Where(x => x.VisitStatus != "Completed").ToList();
+            OpenVisitList = OpenVisitList.Where(x => x.VisitStatus != "Cancelled").ToList();
             if (HttpContext.Session.GetString("Email") != null)
             {
                 UserEmail = HttpContext.Session.GetString("Email")!;

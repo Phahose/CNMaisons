@@ -412,6 +412,7 @@ CREATE TABLE Tenant(
 	DeleteFlag BIT NOT NULL)
 
 ALTER TABLE Tenant
+	ADD NextRentDue DATE 
 	ADD CONSTRAINT PK_Tenant PRIMARY KEY (TenantID),
 		CONSTRAINT UK_Email UNIQUE(Email)
 
@@ -1182,25 +1183,26 @@ BEGIN
     RETURN @ReturnCode;
 END;
 
-
+DROP TABLE Reminders
 CREATE TABLE Reminders(
 	RemindersID INT IDENTITY(1,1) NOT NULL,
 	TenantID VARCHAR(5) NOT NULL,
 	Description VARCHAR(100) NOT NULL,
 	DateSent DATE DEFAULT GETDATE() NOT NULL,
-	DeleteFlag  BIT NOT NULL
+	DueDateRemindedFor DATE 
 )
-
 ALTER TABLE Reminders
 	ADD CONSTRAINT PK_Reminders PRIMARY KEY (RemindersID),
 		CONSTRAINT FK_Reminders_TenantID FOREIGN KEY(TenantID) REFERENCES Tenant(TenantID)
 
 
 
+
+		--DROP PROCEDURE [AddReminders]
 CREATE PROCEDURE AddReminders(	
 	@TenantID VARCHAR(5) = NULL,
 	@Description VARCHAR(100) = NULL,
-	@DeleteFlag  BIT = NULL
+	@DueDateRemindedFor DATE 
 )
 AS
 BEGIN
@@ -1211,15 +1213,13 @@ BEGIN
 		RAISERROR('AddReminders- required parameter: @TenantID.', 16, 1);
 	ELSE IF @Description IS NULL
 		RAISERROR('AddReminders - required parameter: @Description.', 16, 1);
-	ELSE IF @DeleteFlag IS NULL
-		RAISERROR('AddReminders - required parameter: @DeleteFlag.', 16, 1);
     ELSE
 		BEGIN
 			-- Insert the maintenance request into the Maintenance table
 			INSERT INTO Reminders
-				(TenantID, Description, DeleteFlag)
+				(TenantID, Description, DateSent, DueDateRemindedFor)
 			VALUES 
-				(@TenantID, @Description, @DeleteFlag)
+				(@TenantID, @Description, GETDATE(), @DueDateRemindedFor)
 
 			IF @@ERROR = 0
 				SET @ReturnCode = 0;
@@ -1230,6 +1230,7 @@ BEGIN
     RETURN @ReturnCode;
 END;
 
+	--DROP PROCEDURE [ViewRemindersByTenantID]
 CREATE PROCEDURE ViewRemindersByTenantID(@TenantID VARCHAR(5) = NULL)
 AS
 BEGIN
@@ -1240,7 +1241,7 @@ BEGIN
 		RAISERROR('ViewReminders - required parameter: @TenantID.', 16, 1);
 	ELSE
 		BEGIN
-			SELECT RemindersID, TenantID, Description, DateSent,  DeleteFlag
+			SELECT *
 			FROM Reminders
 			WHERE TenantID = @TenantID
 
@@ -1253,6 +1254,13 @@ BEGIN
     RETURN @ReturnCode;
 END;
 
+CREATE PROCEDURE GetAllReminders
+AS
+	BEGIN 
+		SELECT * FROM Reminders
+	END
+
+	--DROP PROCEDURE [ViewRemindersByTenantIDAndDateRange]
 CREATE PROCEDURE ViewRemindersByTenantIDAndDateRange(@TenantID VARCHAR(5) = NULL,
 	@StartDate DATE = NULL,
     @EndDate DATE = NULL)
@@ -1271,7 +1279,7 @@ BEGIN
 
 	ELSE
 		BEGIN
-			SELECT RemindersID, TenantID, Description, DateSent,  DeleteFlag
+			SELECT *
 			FROM Reminders
 			WHERE
 				(TenantID = @TenantID) AND

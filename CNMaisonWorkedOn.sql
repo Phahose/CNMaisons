@@ -677,9 +677,9 @@ CREATE PROCEDURE ModifyTenant(
 	@Guarantor2PhoneNumber VARCHAR(14) = NULL,
 	@Guarantor2AlternatePhoneNumber VARCHAR(14),
 	@Declaration VARCHAR(60) = NULL,
-	@YourSignedForm VARBINARY(MAX) = NULL,	
+	--@YourSignedForm VARBINARY(MAX) = NULL,	
 	@ApprovalStatus VARCHAR(20)  = NULL,
-	@LeaseFormForSigning VARBINARY(MAX) = NULL,
+	--@LeaseFormForSigning VARBINARY(MAX) = NULL,
 	@DeleteFlag BIT = NULL)
 AS
 BEGIN
@@ -818,9 +818,9 @@ BEGIN
 				Guarantor2PhoneNumber = @Guarantor2PhoneNumber,
 				Guarantor2AlternatePhoneNumber = @Guarantor2AlternatePhoneNumber,
 				Declaration = @Declaration,
-				YourSignedForm = @YourSignedForm ,
+				--YourSignedForm = @YourSignedForm ,
 				ApprovalStatus =@ApprovalStatus,
-				LeaseFormForSigning= @LeaseFormForSigning,
+				--LeaseFormForSigning= @LeaseFormForSigning,
 				DeleteFlag = @DeleteFlag				
 				 
 
