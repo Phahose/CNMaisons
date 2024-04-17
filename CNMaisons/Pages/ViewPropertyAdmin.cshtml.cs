@@ -44,7 +44,7 @@ namespace CNMaisons.Pages
         {
             Email = HttpContext.Session.GetString("Email")!;
             CNMPMS controller = new CNMPMS();
-            PropertyList = GetListProperties();
+            PropertyList = controller.GetProperties();
             DisplayedPropertyList = PropertyList.ToList();
             Users = controller.GetUserByEmail(Email);
             Employee = controller.GetAllEmployees(Email);
@@ -97,7 +97,6 @@ namespace CNMaisons.Pages
             }
             return Page();
         }
-
         public List<Property> GetListProperties()
         {
             List<Property> properties = new List<Property>();
@@ -109,7 +108,6 @@ namespace CNMaisons.Pages
 
                 propertyliststring = JsonSerializer.Serialize(properties);
                 HttpContext.Session.SetString("ListOfProperties", propertyliststring);
-
             }
             else
             {
@@ -120,6 +118,7 @@ namespace CNMaisons.Pages
 
                     propertyliststring = JsonSerializer.Serialize(properties);
                     HttpContext.Session.SetString("ListOfProperties", propertyliststring);
+                    HttpContext.Session.SetString("PropertyHasBeenupdated", "False");
                 }
                 else
                 {

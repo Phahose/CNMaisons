@@ -10,11 +10,11 @@
         Your browser does not support the video tag.
     </video>
     <form name="Login" method="post" class="form loginForm">
-        @if (Model.Message != "")
-        {
-            <p class="@Model.AlertClass" style="font-size: small; color: red; background-color:white; padding: 0.5rem;">@Model.Message</p>
-        }      
         <fieldset>
+            @if (Model.Message != "")
+            {
+                <p style="font-size: small; color: red; background-color:white; padding: 0.5rem;">@Model.Message</p>
+            }
             <legend>Login</legend>
             <label for="Email">Email</label>
             <br />

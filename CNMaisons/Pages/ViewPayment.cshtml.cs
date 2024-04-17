@@ -5,10 +5,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Security.Claims;
 
 namespace CNMaisons.Pages
 {
-    [Authorize(Roles = "LandLord, Staff")]
+
+    [Authorize(Roles = "LandLord, Staff, Tenant")]   // Restrict access to specified roles
     public class ViewPaymentModel : PageModel
     {
         public string Message { get; set; } = string.Empty;
@@ -28,31 +30,23 @@ namespace CNMaisons.Pages
         public string Submit { get; set; } = string.Empty;
 
         public List<Payment> PaymentList = new List<Payment>();
-        public string UserEmail { get; set; } = string.Empty;
+        public Tenant aTenant { get; set; } = new();
         public User Users { get; set; } = new User();
-        public Employee Employee { get; set; } = new Employee();
         public void OnGet()
         {
-            CNMPMS tenantController = new();
-            if (HttpContext.Session.GetString("Email") != null)
-            {
-                UserEmail = HttpContext.Session.GetString("Email")!;
-            }
-            Users = tenantController.GetUserByEmail(UserEmail);
-            Employee = tenantController.GetAllEmployees(UserEmail);
-        }
+            string Email = HttpContext.Session.GetString("Email")!;
+            var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
 
+            CNMPMS RequestDirector = new();
+            aTenant = RequestDirector.ViewTenant(Email);
+            Users = RequestDirector.GetUserByEmail(Email);
+            string check = aTenant.TenantID;
+        }
         public void OnPost()
         {
-            CNMPMS PaymentRequestDirector = new CNMPMS();
-            if (HttpContext.Session.GetString("Email") != null)
-            {
-                UserEmail = HttpContext.Session.GetString("Email")!;
-            }
-            Users = PaymentRequestDirector.GetUserByEmail(UserEmail);
-            Employee = PaymentRequestDirector.GetAllEmployees(UserEmail);
-            
+            OnGet();
             ViewPage = false;
+
             ModelState.Clear();
             Message = "";
 
@@ -75,8 +69,10 @@ namespace CNMaisons.Pages
             }
 
             if (ModelState.IsValid)
-            {  
-                PaymentList = PaymentRequestDirector.ViewPaymentbyDate(FindTenantID, FindStartDate, FindEndDate);
+            {
+                
+                CNMPMS PaymentRequestDirector = new CNMPMS();
+                PaymentList = PaymentRequestDirector.ViewTenantPaymentbyDate(FindTenantID, FindStartDate, FindEndDate);
                 if (PaymentList != null)
                 {
                     Message = "Below are your records.";

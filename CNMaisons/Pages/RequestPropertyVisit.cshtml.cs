@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace CNMaisons.Pages
 {
-    [AllowAnonymous] 
+    [AllowAnonymous]
 
     public class RequestPropertyVisitModel : PageModel
     {
@@ -72,7 +72,7 @@ namespace CNMaisons.Pages
                 errorMessage += "The PhoneNumber is Required.\n";
             }
 
-           
+
             if (ProposedVisitDate == default(DateTime))
             {
                 errorMessage += "The ProposedVisitDate is Required.\n";
@@ -110,13 +110,13 @@ namespace CNMaisons.Pages
                 ModelState.AddModelError("AllError", errorMessage);
                 Message = errorMessage;
             }
-            
-            
-            
+
+
+
             if (ModelState.IsValid)
-            {             
-                
-                
+            {
+
+
                 CNMPMS PropertyVisitRequestDirector = new();
 
                 Visit newVisit = new();
@@ -138,13 +138,13 @@ namespace CNMaisons.Pages
                     errorMessage = "";
                     List<User> LandLords = new List<User>();
                     LandLords = PropertyVisitRequestDirector.GetActiveUsers();
-                    LandLords = LandLords.Where(x => x.Role == "LandLord" || x.Role== "Staff").ToList();
+                    LandLords = LandLords.Where(x => x.Role == "LandLord" || x.Role == "Staff").ToList();
                     CNMPMS MailRequestManager = new CNMPMS();
                     foreach (var landlord in LandLords)
                     {
                         string messageBody = "Hello,\n" +
                                           "\nYou have a request to view a property at CN Maisons \n" +
-                                          "\tPersons Name: " + FirstName +" "+ LastName +
+                                          "\tPersons Name: " + FirstName + " " + LastName +
                                           "\n\tProperty ID: " + PropertyID +
                                           "\n\tProposed Visit Date: " + ProposedVisitDate.ToString("dddd MMMM dd, yyyy.") +
                                           "\n\tProposed Visit Time: " + ProposedVisitTime +
@@ -153,7 +153,7 @@ namespace CNMaisons.Pages
 
                         string mailConfirmation;
 
-                        mailConfirmation = MailRequestManager.PostEmail("ekwomnick@yahoo.com", messageBody, messageSubject);
+                        mailConfirmation = MailRequestManager.PostEmail(landlord.Email, messageBody, messageSubject);
                     }
                 }
                 else

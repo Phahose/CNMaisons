@@ -18,7 +18,7 @@ namespace CNMaisons.Pages
         public string FindTenantID { get; set; } = string.Empty;
         [BindProperty]
         public string Submit { get; set; } = string.Empty;
-        public string ListMessage { get; set; } = string.Empty;      
+        public string ListMessage { get; set; } = string.Empty;
         public List<Tenant> ListOfTenantsPendingReview = new List<Tenant>();
         public List<Tenant> ListOfTenants = new List<Tenant>();
         [BindProperty]
@@ -28,9 +28,9 @@ namespace CNMaisons.Pages
         public Employee Employee { get; set; } = new Employee();
         public bool ShowForm = false;
         [BindProperty]
-        public string RecieverEmail {  get; set; } = string.Empty;
+        public string RecieverEmail { get; set; } = string.Empty;
         [BindProperty]
-        public string RecieverMessage {  get; set; } = string.Empty;
+        public string RecieverMessage { get; set; } = string.Empty;
         public void OnGet()
         {
             CNMPMS tenantController = new();
@@ -89,7 +89,7 @@ namespace CNMaisons.Pages
                             }
                         }
                     }
-                return Page();
+                    return Page();
                 case "Send Notice":
                     string messageBody = RecieverMessage;
                     string messageSubject = "Notice to Quit";
@@ -97,7 +97,7 @@ namespace CNMaisons.Pages
                     string mailConfirmation;
                     CNMPMS MailRequestManager = new CNMPMS();
                     mailConfirmation = MailRequestManager.PostEmail(RecieverEmail, messageBody, messageSubject);
-                return Page();
+                    return Page();
             }
             return Page();
         }

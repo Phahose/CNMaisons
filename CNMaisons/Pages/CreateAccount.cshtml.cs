@@ -9,7 +9,7 @@ namespace CNMaisons.Pages
 {
     public class CreateAccountModel : PageModel
     {
-        
+
         public string Message { get; set; } = string.Empty;
         public List<string> errorMessage { get; set; } = new List<string>();
         public bool FlagError;
@@ -17,22 +17,22 @@ namespace CNMaisons.Pages
 
         [BindProperty]
         public string UserFirstName { get; set; } = string.Empty;
-        
+
         [BindProperty]
         public string LastName { get; set; } = string.Empty;
-        
-        [BindProperty] 
+
+        [BindProperty]
         public string Email { get; set; } = string.Empty;
 
-        [BindProperty] 
+        [BindProperty]
         public string AdminEmail { get; set; } = string.Empty;
-        
-        [BindProperty] 
+
+        [BindProperty]
         public string Password { get; set; } = string.Empty;
-        [BindProperty] 
+        [BindProperty]
         public string ConfirmPassword { get; set; } = string.Empty;
-        
-        [BindProperty] 
+
+        [BindProperty]
         public string Role { get; set; } = string.Empty;
 
         [BindProperty]
@@ -51,7 +51,7 @@ namespace CNMaisons.Pages
             Users = controller.GetUserByEmail(AdminEmail);
             Employee = controller.GetAllEmployees(AdminEmail);
         }
-        public void OnPost() 
+        public void OnPost()
         {
 
             AdminEmail = HttpContext.Session.GetString("Email")!;
@@ -125,13 +125,13 @@ namespace CNMaisons.Pages
 
                 if (errorMessage.Count() == 0)
                 {
-                   UserAccountConfirmation = RequestDirector.CreateEmployeeAccount(newUser, newEmployee);
+                    UserAccountConfirmation = RequestDirector.CreateEmployeeAccount(newUser, newEmployee);
                 }
-               
+
                 if (UserAccountConfirmation == true)
                 {
                     Message = $"{Role} Account has been created succesfully.";
-                    string messageBody = "Hello " + UserFirstName + ",\n" + 
+                    string messageBody = "Hello " + UserFirstName + ",\n" +
                                            "\nWelcome To CN Maisons You are a New Staff! " +
                                            "\nYour Account Has Successfuly Been Created and You can Now Log in " +
                                             "\nYour Login Credentials are:\n\t\tEmail: " + Email + "\n\t\tPassword: " + Password;

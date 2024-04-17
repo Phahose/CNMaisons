@@ -264,7 +264,6 @@ namespace CNMaisons.TechnicalService
             }
             return Success;
         }
-
         public List<User> GetUsers()
         {
             List<User> users = new();
@@ -300,6 +299,5 @@ namespace CNMaisons.TechnicalService
             cnMaisonsConnection.Close();
             return users;
         }
-
     }
 }

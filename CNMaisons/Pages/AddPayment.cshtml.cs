@@ -7,72 +7,109 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.IdentityModel.Tokens;
 using System.Xml.Linq;
-
+ 
 namespace CNMaisons.Pages
 {
     [Authorize(Roles = "LandLord, Staff, Tenant")]   // Restrict access to specified roles
     public class AddPaymentModel : PageModel
+
     {
+
         [BindProperty]
+
         public string TenantID { get; set; } = string.Empty;
+
         [BindProperty]
+
         public string PropertyID { get; set; } = string.Empty;
+
         [BindProperty]
+
         public decimal AmountPaid { get; set; }
 
         [BindProperty]
-        public string PaymentStartMonth { get; set; }= string.Empty;
+
+        public string PaymentStartMonth { get; set; } = string.Empty;
 
         [BindProperty]
+
         public string PaymentEndMonth { get; set; } = string.Empty;
 
         [BindProperty]
-        public int PaymentStartYear { get; set; }  
+
+        public int PaymentStartYear { get; set; }
 
         [BindProperty]
+
         public int MonthsPaidFor { get; set; }
 
         [BindProperty]
+
         public string NextDueMonth { get; set; } = string.Empty;
+
         [BindProperty]
+
         public int NextDueYear { get; set; }
 
         [BindProperty]
+
         public DateTime NextDueDate { get; set; }
+
         [BindProperty]
+
         public DateTime DateOfTenantsPayment { get; set; }
+
         [BindProperty]
+
         public string MethodOfPayment { get; set; } = string.Empty;
 
         [BindProperty]
+
         public string TenantPaymentBank { get; set; } = string.Empty;
 
         [BindProperty]
+
         public DateTime DateOfRecord { get; set; }
 
         CNMPMS PropertyRequestDirector = new CNMPMS();
+
         Payments PaymentRequestDirector = new Payments();
+
         public Tenant tenantForPayment { get; set; } = new Tenant();
+
         public string Message { get; set; } = string.Empty;
+
         public List<string> errorMessage { get; set; } = new();
+
         public bool FlagError;
+
         public string Email { get; set; } = string.Empty;
+
         public string FName { get; set; } = string.Empty;
+
         public string UserEmail { get; set; } = string.Empty;
+
         public User Users { get; set; } = new User();
 
         public void OnGet()
         {
             CNMPMS tenantController = new();
+
             if (HttpContext.Session.GetString("Email") != null)
+
             {
+
                 UserEmail = HttpContext.Session.GetString("Email")!;
+
             }
+
             Users = tenantController.GetUserByEmail(UserEmail);
+
             tenantForPayment = tenantController.GetAllTennants(UserEmail);
+
         }
 
- 
+
         public void OnPost()
         {
             CNMPMS tenantController = new();
@@ -118,7 +155,6 @@ namespace CNMaisons.Pages
                     errorMessage.Add("TenantID  is not a valid PropertyID");
                 }
             }
-
 
 
             if (AmountPaid <= 0)
@@ -180,7 +216,6 @@ namespace CNMaisons.Pages
             #endregion
 
 
-
             #region SettingUpSession
             //0-10
             SetSessionString("TenantID1", TenantID);
@@ -205,7 +240,6 @@ namespace CNMaisons.Pages
             HttpContext.Session.SetString("DateOfRecord1", DateOfRecordString);
 
             #endregion
-
 
 
             //if ModelState is true
@@ -239,7 +273,6 @@ namespace CNMaisons.Pages
                     Message = "Payment successful added.";
 
 
-
                     string messageBody = "Hello " + FName + ",\n" +
                                         "\nYour payment of has been saved. Below are the details for your record:\n" +
                                         "\t\t. You paid:" + AmountPaid + "\n\nRegards";
@@ -263,22 +296,20 @@ namespace CNMaisons.Pages
                 Message = "This was not saved.";
                 RePopulate();
             }
-           RePopulate();
+            RePopulate();
 
         }
 
-       
-   
- 
+
+
         private void RePopulate()
         {
             // Retrieving session values
             //0-10
             PropertyID = HttpContext.Session.GetString("PropertyID1") ?? string.Empty;
 
-            TenantID= HttpContext.Session.GetString("TenantID1") ?? string.Empty;
+            TenantID = HttpContext.Session.GetString("TenantID1") ?? string.Empty;
             PropertyID = HttpContext.Session.GetString("PropertyID1") ?? string.Empty;
-           
             string amountPaidString = HttpContext.Session.GetString("AmountPaid1");
 
             // Convert string back to decimal
@@ -294,21 +325,20 @@ namespace CNMaisons.Pages
 
 
             NextDueMonth = HttpContext.Session.GetString("NextDueMonth1") ?? string.Empty;
-            NextDueYear  = HttpContext.Session.GetInt32("NextDueYear1") ?? DateTime.Now.Year;
-            NextDueDate = DateTime.TryParse(HttpContext.Session.GetString("NextDueDate1"), out DateTime nextDueDate) ? nextDueDate : DateTime.MinValue;  
-            DateOfTenantsPayment = DateTime.TryParse(HttpContext.Session.GetString("DateOfTenantsPayment1"), out DateTime dateOfTenantsPayment) ? dateOfTenantsPayment  : DateTime.MinValue; // Assuming you want to store DOB as a string
+            NextDueYear = HttpContext.Session.GetInt32("NextDueYear1") ?? DateTime.Now.Year;
+            NextDueDate = DateTime.TryParse(HttpContext.Session.GetString("NextDueDate1"), out DateTime nextDueDate) ? nextDueDate : DateTime.MinValue;
+            DateOfTenantsPayment = DateTime.TryParse(HttpContext.Session.GetString("DateOfTenantsPayment1"), out DateTime dateOfTenantsPayment) ? dateOfTenantsPayment : DateTime.MinValue; // Assuming you want to store DOB as a string
 
 
-            MethodOfPayment  = HttpContext.Session.GetString("MethodOfPayment1") ?? string.Empty;
-            TenantPaymentBank  = HttpContext.Session.GetString("TenantPaymentBank1") ?? string.Empty;
+            MethodOfPayment = HttpContext.Session.GetString("MethodOfPayment1") ?? string.Empty;
+            TenantPaymentBank = HttpContext.Session.GetString("TenantPaymentBank1") ?? string.Empty;
 
 
             TenantID = HttpContext.Session.GetString("TenantID1") ?? string.Empty;
             TenantID = HttpContext.Session.GetString("TenantID1") ?? string.Empty;
-            DateOfRecord = DateTime.TryParse(HttpContext.Session.GetString("DateOfRecord1"), out DateTime dateOfRecord) ? dateOfRecord : DateTime.MinValue;  
+            DateOfRecord = DateTime.TryParse(HttpContext.Session.GetString("DateOfRecord1"), out DateTime dateOfRecord) ? dateOfRecord : DateTime.MinValue;
         }
 
 
     }
- 
 }

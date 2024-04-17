@@ -26,8 +26,15 @@ public class BackgroundWorkerService : BackgroundService
                 if (!IsEmailSent(tenant.TenantID, tenant.NextRentDue))
                 {
                     // Send reminder email to the tenant
-                    messageBody = "Sending Mails";
-                    messageSubject = "Date for Property Visit Confirmed.";
+                    messageSubject = "Rent For CN Maisons Due";
+                    messageBody = "Good day," +
+                                      "\n Your Rent for CN Maisons Is Due today Please be sure to Pay your Rent before the deadline" +
+                                      "\n If you have already paid your rent please disregard this email. " +
+                                      "\n If your rent has not been paid please make your payment as soon as possible and add the Payment to your Tenant Account" +
+                                      "\n Follow these Steps to Add a Payment to Your Tenant Profile" +
+                                      "\n\t 1. Login to Your Account on CN Maisons Website" +
+                                      "\n\t 2. Click the Record Rent payment Option at the Top of the Screen" +
+                                      "\n\t 3. Fill out the Form on the Page with your payment information and Submit";
 
                                
                     mailConfirmation = PaymentRequestManager.PostEmail(tenant.Email, messageBody, messageSubject);

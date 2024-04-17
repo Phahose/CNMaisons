@@ -36,7 +36,7 @@ namespace CNMaisons.Pages
             {
                 if (FormType == "SearchForm")
                 {
-                    if (StateFilter !=null)
+                    if (StateFilter != null)
                     {
                         DisplayedPropertyList = DisplayedPropertyList.Where(p => p.PropertyLocationState == StateFilter).ToList();
                         if (DisplayedPropertyList.Count < 1)
@@ -47,7 +47,7 @@ namespace CNMaisons.Pages
                         return Page();
                     }
 
-                    
+
                 }
                 else if (FormType == "InfoForm")
                 {
@@ -57,7 +57,7 @@ namespace CNMaisons.Pages
                         HttpContext.Session.SetString("PropertyID", PropertyID);
                     }
                     return RedirectToPage("/PropertyDetails");
-                }      
+                }
             }
             return Page();
         }

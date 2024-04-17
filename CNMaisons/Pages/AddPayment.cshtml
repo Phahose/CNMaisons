@@ -1,9 +1,8 @@
 ﻿@page
 @model CNMaisons.Pages.AddPaymentModel
 @{
-    ViewData["Title"] = "Record Rent Payment";
+    ViewData["Title"] = "Record A Payment";
     var currentYear = DateTime.Now.Year;
-
 }
 
 
@@ -53,11 +52,13 @@
             }
         }
         computeNextDueDate();
+
         // Return empty string if no matching month found
         return '';
     }
 
     function computeNextDueYear() {
+
         var monthsPaidForSelect = document.getElementById("MonthsPaidFor");
         var paymentStartMonthSelect = document.getElementById("PaymentStartMonth");
         var paymentStartYearSelect = document.getElementById("PaymentStartYearSelect");
@@ -80,9 +81,11 @@
         // Set the computed value to the NextDueYear input
         nextDueYearInput.value = nextDueYear;
         computeNextDueDate();
+        calculatePaymentEndMonth();
      }
 
     function computeNextDueDate() {
+        
         const month12 = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
 
         var monthsPaidForSelect = document.getElementById("MonthsPaidFor");
@@ -98,6 +101,8 @@
         var formattedDate = nextDueYear + '-' + ('0' + NextDueMonthNumber).slice(-2) + '-01';
 
         NextDueDateInput.value = formattedDate;
+        computeNextDueYear();
+        calculatePaymentEndMonth();
     }
 
     var today = new Date();
@@ -125,9 +130,6 @@
                         <a href="~/AddProperty">Add Property</a>
                     </li>
                     <li>
-                        <a href="#">View Maintainance Requests</a>
-                    </li>
-                    <li>
                         <a href="~/CreateAccount">Create New Employee Account</a>
                     </li>
                     <li>
@@ -143,7 +145,7 @@
                         <a href="~/ViewInquiry">View Inquiry </a>
                     </li>
                     <li>
-                        <a href="~/UpdateTenant">Edit Tenants</a>
+                        <a href="~/UpdateTenant">Edit Account</a>
                     </li>
                 }
                 @if (Model.Users.Role == "Staff")
@@ -159,7 +161,7 @@
                         <a href="#">View Visit Requests</a>
                     </li>
                     <li>
-                        <a href="~/UpdateTenant">Edit Tenants</a>
+                        <a href="~/UpdateTenant">Edit Account</a>
                     </li>
 
                 }
@@ -172,57 +174,65 @@
                     }
                     @if (Model.tenantForPayment.ApprovalStatus == "Approved")
                     {
-                        <li><a href="#">Record Rent Payment</a></li>
+                        <li><a href="~/AddPayment">Record Rent Payment</a></li>
                     }
+
                 }
-\
                 <li class="loggedin-icon_div">
-                    @if (Model.tenantForPayment.Passport.Length > 0)
+                    @if (Model.tenantForPayment.Passport != null)
                     {
-                        <img src="data:image;base64,@Convert.ToBase64String(Model.tenantForPayment.Passport)" alt="Property Image" />
+                        @if (Model.tenantForPayment.Passport.Length > 0)
+                        {
+                            <img src="data:image;base64,@Convert.ToBase64String(Model.tenantForPayment.Passport)" alt="Property Image" />
+                        }
+                        else
+                        {
+                            <img src="~/img/profile_icon.png" width="150" class="intro_image" />
+                        }
                     }
                     else
                     {
                         <img src="~/img/profile_icon.png" width="150" class="intro_image" />
                     }
                 </li>
-                
-
             </ul>
         </nav>
     </div>
+
     <form name="AddPayment" method="post" class="form property_form transition-fade-down">
         <br />
         <fieldset>
-            @foreach (var error in Model.errorMessage)
-            {
-                @if (error != null)
+            <span style="font-size: larger; font-style: italic;">
+                @foreach (var error in Model.errorMessage)
                 {
-                    <p style="font-size: small; color: red; background-color:white; padding: 0.5rem;">@error</p>
+                    @if (error != null)
+                    {
+                        <p style="font-size: small; color: red; background-color:white; padding: 0.5rem;">@error</p>
+                    }
                 }
-            }
-            @if (Model.Message != "")
-            {
-                <p style="font-size: small; color: green; background-color:white; padding: 0.5rem;">@Model.Message</p>
-            }
-            <br />
-            <legend>Add Payment</legend>
+                @if (Model.Message != "")
+                {
+                    <p style="font-size: small; color: green; background-color:white; padding: 0.5rem;">@Model.Message</p>
+                }
+                <br />
+            </span>
+
+            <legend>Record A Payment</legend>
             <div>
-                <label>Tenant ID:</label><br />
-                <input type="text" name="TenantID" maxlength="5" required oninput="this.value = this.value.toUpperCase();" value="@Model.tenantForPayment.TenantID" disabled /><br />
+                <label>Enter Your Tenant ID:</label><br />
+                <input type="text" name="TenantID" maxlength="5" required oninput="this.value = this.value.toUpperCase();" /><br />
 
 
-                <label> Property ID:</label><br />
-                <input type="text" name="PropertyID" maxlength="7" required oninput="this.value = this.value.toUpperCase();" value="@Model.tenantForPayment.PropertyID" disabled /><br />
+                <label>Enter your Property ID:</label><br />
+                <input type="text" name="PropertyID" maxlength="7" required oninput="this.value = this.value.toUpperCase();" /><br />
 
                 <label>Amount Paid:</label><br />
-                <input type="number" name="AmountPaid" required  /><br />
+                <input type="number" name="AmountPaid" required onchange="calculatePaymentEndMonth()"/><br />
+
+                <label hidden>Date you made the payment: </label><br />
+                <input hidden type="date" name="DateOfTenantsPayment" required value='@(DateTime.Today.ToString("yyyy-MM-dd"))' max='@(DateTime.Today.ToString("yyyy-MM-dd"))' />
 
 
-                <label>Date you made the payment:</label><br />                
-                <input type="date" name="DateOfTenantsPayment" required value="@DateTime.Today.ToString("yyyy-MM-dd")" max="@DateTime.Today.ToString("yyyy-MM-dd")" />
-
-          
                 <label>Method Of Payment:</label><br />
                 <select name="MethodOfPayment" required>
                     <option value="">Select Method</option>
@@ -265,7 +275,7 @@
                 </select><br />
 
                 <label>Payment Start Month:</label><br />
-                <select name="PaymentStartMonth" id="PaymentStartMonth" required onchange="calculatePaymentEndMonth(this.value)">
+                <select name="PaymentStartMonth" name="PaymentStartMonth" id="PaymentStartMonth" required onchange="calculatePaymentEndMonth(this.value)">
                     <option value="">Select Month</option>
                     <option value="JAN">JAN</option>
                     <option value="FEB">FEB</option>

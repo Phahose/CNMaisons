@@ -1,7 +1,7 @@
 ﻿@page
 @model CNMaisons.Pages.ViewTenantModel
 @{
-    ViewData["Title"] = "View Tenant";
+    ViewData["Title"] = "View My Information";
     var emailPattern = new System.Text.RegularExpressions.Regex(@"^[^\s@]+@[^\s@]+\.[^\s@]+$");
 }
 
@@ -77,7 +77,7 @@
                     }
                     @if (Model.aTenant.ApprovalStatus == "Approved")
                     {
-                        <li><a href="#">Record Rent Payment</a></li>
+                        <li><a href="~/AddPayment">Record Rent Payment</a></li>
                     }
                    
                 }

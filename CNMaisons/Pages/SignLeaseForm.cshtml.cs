@@ -20,8 +20,8 @@ namespace CNMaisons.Pages
         public Tenant tenantForReview = new();
 
         [BindProperty]
-        public string FindEmail { get; set; } = string.Empty; 
-        
+        public string FindEmail { get; set; } = string.Empty;
+
         [BindProperty]
         public string FindTenantID { get; set; } = string.Empty;
 
@@ -134,18 +134,18 @@ namespace CNMaisons.Pages
                         {
                             FindTenantID = HttpContext.Session.GetString("FindTenantID1") ?? string.Empty;
 
- 
-                                byte[] SignedForm = ConvertToByteArray(YourSignedForm);
 
-                                CNMPMS RequestDirector = new();
-                                String Confirmation = RequestDirector.SubmitSignedCopy(FindTenantID, ApprovalStatus, SignedForm);
-                                if (Confirmation == "Successful!")
-                                {
-                                    ViewFormNow = false;
-                                    MessageForFile = "Tenant's Lease application uploaded him to sign.";
-                                    OnGet();
-                                    return Page();
-                                }
+                            byte[] SignedForm = ConvertToByteArray(YourSignedForm);
+
+                            CNMPMS RequestDirector = new();
+                            String Confirmation = RequestDirector.SubmitSignedCopy(FindTenantID, ApprovalStatus, SignedForm);
+                            if (Confirmation == "Successful!")
+                            {
+                                ViewFormNow = false;
+                                MessageForFile = "Tenant's Lease application uploaded him to sign.";
+                                OnGet();
+                                return Page();
+                            }
                         }
                     }
                     else
@@ -154,7 +154,7 @@ namespace CNMaisons.Pages
                         ViewFormNow = true;
                         return Page();
                     }
-            
+
                     return Page();
             }
             return Page();

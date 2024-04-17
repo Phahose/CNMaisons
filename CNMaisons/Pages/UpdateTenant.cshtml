@@ -21,32 +21,10 @@
             <ul class="loggedin-list">
                 @if (Model.Users.Role == "LandLord")
                 {
-
-                    <li>
-                        <a href="~/IndexStaff">My Account</a>
-                    </li>
-                    <li>
-                        <a href="~/AddProperty">Add Property</a>
-                    </li>
-                    <li>
-                        <a href="~/CreateAccount">Create New Employee Account</a>
-                    </li>
-                    <li>
-                        <a href="#">View Visit Requests</a>
-                    </li>
-                    <li>
-                        <a href="~/ViewPropertyAdmin">View Properties</a>
-                    </li>
-                    <li>
-                        <a href="~/ViewTenantbyLandLord">View Tenant </a>
-                    </li>
-                    <li>
-                        <a href="~/ViewInquiry">View Inquiry </a>
-                    </li>
-                    <li>
-                        <a href="~/UpdateTenant">Edit Account</a>
-                    </li>
-
+                    <li><a href="~/IndexStaff">My Account</a></li>
+                    <li><a href="~/ViewTenantbyLandLord">View Tenant </a></li>
+                    <li><a href="~/CreateAccount">Create New Employee Account</a></li>
+                    <li><a href="~/ViewFinancebyLandlord">View Financial Report</a></li>
                 }
                 @if (Model.Users.Role == "Staff")
                 {
@@ -55,30 +33,20 @@
                         <a href="~/IndexStaff">My Account</a>
                     </li>
                     <li>
-                        <a href="~/AddProperty">Add Property</a>
+                        <a href="~/IndexStaff">My Account</a>
                     </li>
                     <li>
                         <a href="~/ViewInquiry">View Inquiry </a>
                     </li>
-                    <li>
-                        <a href="~/UpdateTenant">Edit Account</a>
-                    </li>
-
-                }
-                @if (Model.Users.Role == "Tenant")
-                {
-                    <li><a href="~/IndexTenant">My Account</a></li>
-                    <li><a href="~/SignLeaseForm">Sign Lease Form</a></li>
-                    <li><a href="#">Record Rent Payment</a></li>
                 }
                 <li class="loggedin-icon_div">
-                    @if (Model.Tenant.Passport.Length > 0)
+                    @if (Model.Employee.EmployeeImage != null)
                     {
-                        <img src="data:image;base64,@Convert.ToBase64String(Model.Tenant.Passport)" alt="Property Image" />
+                        <img src="data:image;base64,@Convert.ToBase64String(Model.Employee.EmployeeImage)" alt="Property Image" />
                     }
                     else
                     {
-                        <img src="~/img/profile_icon.png" width="150" class="intro_image" />
+                        <a href="~/Index"><img src="~/img/profile_icon" width="150" class="intro_image" /></a>
                     }
                 </li>
             </ul>
