@@ -209,9 +209,9 @@ namespace CNMaisons.Pages
         }
         public IActionResult OnPost()
         {
+            OnGet();
             ModelState.Clear();
-            Message = "";
-
+            Message = "";      
             switch (Submit)
             {
                 case "Close":
