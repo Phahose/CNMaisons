@@ -51,7 +51,7 @@ namespace CNMaisons.Pages
                 }
                 else if (FormType == "InfoForm")
                 {
-                    HttpContext.Session.Clear();
+                    /*HttpContext.Session.Clear();*/
                     if (PropertyID != null)
                     {
                         HttpContext.Session.SetString("PropertyID", PropertyID);
