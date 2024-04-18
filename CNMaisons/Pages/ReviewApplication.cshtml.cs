@@ -142,7 +142,12 @@ namespace CNMaisons.Pages
                             {
                                 byte[] LeaseForm = ConvertToByteArray(LeaseFormForSigning);
 
-                                messageBody = "Hello,\n\nYour Lease Form is ready. You need to \n\t1. login, \n\t2. Download the Lease Form,\n\t3. Sign and upload it ...\n\nOnce Uploaded, the contract will be finalised.\n\nRegards\nCN Maisons Management";
+                                messageBody = "Hello,\n\nYour Lease Form is ready. You need to " +
+                                               "\n\t1. Login To Your Tenant Profile on CN Maisons, " +
+                                               "\n\t2. Click Sign Lease Form option at the Top of the Screen," +
+                                               "\n\t3. Download the Lease Form," +
+                                               "\n\t4. Sign and upload it ..." +
+                                               "\n\nOnce Uploaded, the contract will be finalised.\n\nRegards\nCN Maisons Management";
                                 messageSubject = "Sign this Lease Form and revert.";
                                 mailConfirmation = MailRequestManager.PostEmail(FindEmail, messageBody, messageSubject);
 
@@ -171,8 +176,8 @@ namespace CNMaisons.Pages
                             if (ApprovalStatus == "Rejected")
                             {
                                 
-                                messageBody = "Hello,\n\nSorry we are unable toproceed with this lease agreement.\n\nRegards\nCN Maisons Management";
-                                messageSubject = "Lease Agreement reject.";
+                                messageBody = "Hello,\n\nSorry we are unable to proceed with this lease agreement.\n\nRegards\nCN Maisons Management";
+                                messageSubject = "Lease Application Rejected.";
                                 MailRequestManager = new CNMPMS();
                                 mailConfirmation = MailRequestManager.PostEmail(FindEmail, messageBody, messageSubject);
 
