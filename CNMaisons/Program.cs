@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container
 builder.Services.AddRazorPages();
 builder.Services.AddSession();
-builder.Services.AddHostedService<BackgroundWorkerService>();
+//builder.Services.AddHostedService<BackgroundWorkerService>();
 
 builder.Services.AddRazorPages().AddRazorPagesOptions(o =>
 {

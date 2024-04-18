@@ -274,7 +274,7 @@ namespace CNMaisons.Pages
 
 
                     string messageBody = "Hello " + FName + ",\n" +
-                                        "\nYour payment of has been saved. Below are the details for your record:\n" +
+                                        "\nYour payment has been saved succefully. Below are the details for your record:\n" +
                                         "\t\t. You paid:" + AmountPaid + "\n\nRegards";
                     string messageSubject = "Payment submitted.";
 

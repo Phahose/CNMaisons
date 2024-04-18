@@ -630,6 +630,7 @@ GO;
 --DROP PROCEDURE ModifyTenant
 CREATE PROCEDURE ModifyTenant(
     @TenantID VARCHAR(5) = NULL, 
+	@PropertyID VARCHAR(7) = NULL, 
 	@Passport VARBINARY(MAX) = NULL,
 	@FirstName VARCHAR(30) = NULL,  
 	@LastName VARCHAR(30) = NULL,
@@ -637,18 +638,20 @@ CREATE PROCEDURE ModifyTenant(
 	@Email VARCHAR(100) = NULL,
 	@DOB DATE = NULL, 
 	@Nationality VARCHAR(20) = NULL,
-	@StateofOrigin VARCHAR(20), 
-	@LGA VARCHAR(20),
-	@HomeTown VARCHAR(20), 
+	@StateofOrigin VARCHAR(20) = NULL, 
+
+	@LGA VARCHAR(20) = NULL, 
+	@HomeTown VARCHAR(20) = NULL,  
 	@PermanentHomeAddress VARCHAR(100) = NULL,
 	@Occupation VARCHAR(25) = NULL, 
 	@SelfEmployed VARCHAR(1) = NULL,
-	@BusinessRegistrationNumber VARCHAR(15),
-	@CorporateAffairsCertificate VARBINARY(MAX),
-	@NameofEmployer VARCHAR(50), 
-	@AddressOfEmployer VARCHAR(100),
-	@LengthOnJob INT, 
-	@CurrentPositionHeld VARCHAR(25),
+	@BusinessRegistrationNumber VARCHAR(15) = NULL, 
+	@CorporateAffairsCertificate VARBINARY(MAX) = NULL, 
+	@NameofEmployer VARCHAR(50) = NULL, 
+	@AddressOfEmployer VARCHAR(100) = NULL, 
+	@LengthOnJob INT = NULL, 
+	
+	@CurrentPositionHeld VARCHAR(25) = NULL, 
 	@NatureOfJob VARCHAR(25) = NULL, 
 	@FormerResidenceAddress VARCHAR(100) = NULL,
 	@ReasonForMoving VARCHAR(50) = NULL, 
@@ -656,9 +659,10 @@ CREATE PROCEDURE ModifyTenant(
 	@NameOfFormerResidentManager VARCHAR(60) = NULL, 
 	@ObjectionsToReasonsForMoving VARCHAR(100) = NULL,
 	@MaritalStatus VARCHAR(10) = NULL,  
-	@SpouseFirstName VARCHAR(30),
-	@SpouseLastName VARCHAR(30), 
-	@SpouseOccupation VARCHAR(25),
+	@SpouseFirstName VARCHAR(30) = NULL, 
+	@SpouseLastName VARCHAR(30) = NULL,  
+	
+	@SpouseOccupation VARCHAR(25) = NULL, 
 	@NumberOfOccupants INT = NULL, 
 	@NextOfKinFirstName VARCHAR(30) = NULL,
 	@NextOfKinLastName VARCHAR(30) = NULL, 
@@ -668,19 +672,15 @@ CREATE PROCEDURE ModifyTenant(
 	@Guarantor1LastName VARCHAR(30) = NULL, 
 	@Guarantor1Address VARCHAR(100) = NULL,
 	@Guarantor1Occupation VARCHAR(25) = NULL,
+	
 	@Guarantor1PhoneNumber VARCHAR(14) = NULL,
-	@Guarantor1AlternatePhoneNumber VARCHAR(14),
+	@Guarantor1AlternatePhoneNumber VARCHAR(14) = NULL, 
 	@Guarantor2FirstName VARCHAR(30) = NULL,
 	@Guarantor2LastName VARCHAR(30) = NULL, 
 	@Guarantor2Address VARCHAR(100) = NULL,
 	@Guarantor2Occupation VARCHAR(25) = NULL,
 	@Guarantor2PhoneNumber VARCHAR(14) = NULL,
-	@Guarantor2AlternatePhoneNumber VARCHAR(14),
-	@Declaration VARCHAR(60) = NULL,
-	--@YourSignedForm VARBINARY(MAX) = NULL,	
-	@ApprovalStatus VARCHAR(20)  = NULL,
-	--@LeaseFormForSigning VARBINARY(MAX) = NULL,
-	@DeleteFlag BIT = NULL)
+	@Guarantor2AlternatePhoneNumber VARCHAR(14) = NULL)
 AS
 BEGIN
     DECLARE @ReturnCode INT
@@ -688,6 +688,8 @@ BEGIN
 	
 	IF @TenantID IS NULL
         RAISERROR('ModifyTenant - required parameter: @TenantID.', 16, 1);
+    IF @PropertyID IS NULL
+        RAISERROR('ModifyTenant - required parameter: @PropertyID.', 16, 1);
     ELSE IF @FirstName IS NULL
         RAISERROR('ModifyTenant - required parameter: @FirstName.', 16, 1);
     ELSE IF @LastName IS NULL
@@ -764,13 +766,12 @@ BEGIN
 		RAISERROR('ModifyTenant - required parameter: @Guarantor2Occupation.', 16, 1);
 	ELSE IF @Guarantor2PhoneNumber IS NULL
 		RAISERROR('ModifyTenant - required parameter: @Guarantor2PhoneNumber.', 16, 1);
-	ELSE IF @Declaration IS NULL
-		RAISERROR('ModifyTenant - required parameter: @Declaration.', 16, 1);
 	ELSE
 
 		BEGIN
 		    UPDATE Tenant
 			SET 
+				PropertyID= @PropertyID,
 				Passport = @Passport,
 				FirstName = @FirstName,
 				LastName = @LastName,
@@ -779,6 +780,7 @@ BEGIN
 				DOB = @DOB,
 				Nationality = @Nationality,
 				StateofOrigin = @StateofOrigin,
+
 				LGA = @LGA,
 				HomeTown = @HomeTown,
 				PermanentHomeAddress = @PermanentHomeAddress,
@@ -789,6 +791,7 @@ BEGIN
 				NameofEmployer = @NameofEmployer,
 				AddressOfEmployer = @AddressOfEmployer,
 				LengthOnJob = @LengthOnJob,
+
 				CurrentPositionHeld = @CurrentPositionHeld,
 				NatureOfJob = @NatureOfJob,
 				FormerResidenceAddress = @FormerResidenceAddress,
@@ -799,6 +802,7 @@ BEGIN
 				MaritalStatus = @MaritalStatus,
 				SpouseFirstName = @SpouseFirstName,
 				SpouseLastName = @SpouseLastName,
+
 				SpouseOccupation = @SpouseOccupation,
 				NumberOfOccupants = @NumberOfOccupants,
 				NextOfKinFirstName = @NextOfKinFirstName,
@@ -809,6 +813,7 @@ BEGIN
 				Guarantor1LastName = @Guarantor1LastName,
 				Guarantor1Address = @Guarantor1Address,
 				Guarantor1Occupation = @Guarantor1Occupation,
+
 				Guarantor1PhoneNumber = @Guarantor1PhoneNumber,
 				Guarantor1AlternatePhoneNumber = @Guarantor1AlternatePhoneNumber,
 				Guarantor2FirstName = @Guarantor2FirstName,
@@ -816,12 +821,7 @@ BEGIN
 				Guarantor2Address = @Guarantor2Address,
 				Guarantor2Occupation = @Guarantor2Occupation,
 				Guarantor2PhoneNumber = @Guarantor2PhoneNumber,
-				Guarantor2AlternatePhoneNumber = @Guarantor2AlternatePhoneNumber,
-				Declaration = @Declaration,
-				--YourSignedForm = @YourSignedForm ,
-				ApprovalStatus =@ApprovalStatus,
-				--LeaseFormForSigning= @LeaseFormForSigning,
-				DeleteFlag = @DeleteFlag				
+				Guarantor2AlternatePhoneNumber = @Guarantor2AlternatePhoneNumber
 				 
 
 			WHERE TenantID = @TenantID;
@@ -832,13 +832,7 @@ BEGIN
 		END
 
     RETURN @ReturnCode
-END;
-Go;
-
-
-
-
-
+END
 
 
 

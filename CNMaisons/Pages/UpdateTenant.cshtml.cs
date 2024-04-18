@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace CNMaisons.Pages
 {
-    [Authorize(Roles = "LandLord, Staff")]
+    //[Authorize(Roles = "LandLord, Staff")]
     public class UpdateTenantModel : PageModel
     {
         public bool ViewFormNow = false;
@@ -265,16 +265,16 @@ namespace CNMaisons.Pages
                     {
                         errorMessage += "Email is Required.\n";
                     }
-                    else
-                    {
-                        bool emailConfirmation1 = TenantRequestDirector.ValidateEmailTenant(Email); // checking in Tenant Table
-                        bool emailConfirmation2 = TenantRequestDirector.ValidateEmailUsers(Email); // checking in Users table
+                    //else
+                    //{
+                    //    bool emailConfirmation1 = TenantRequestDirector.ValidateEmailTenant(Email); // checking in Tenant Table
+                    //    bool emailConfirmation2 = TenantRequestDirector.ValidateEmailUsers(Email); // checking in Users table
 
-                        if (emailConfirmation1 == true || emailConfirmation2 == true)
-                        {
-                            errorMessage += "This email already exist in our system.\n";
-                        }
-                    }
+                    //    if (emailConfirmation1 == true || emailConfirmation2 == true)
+                    //    {
+                    //        errorMessage += "This email already exist in our system.\n";
+                    //    }
+                    //}
 
 
                     if (string.IsNullOrEmpty(FirstName))
@@ -302,11 +302,6 @@ namespace CNMaisons.Pages
                         errorMessage += "DOB is Required.\n";
                     }
 
-                    // Validate Password
-                    if (string.IsNullOrEmpty(Password))
-                    {
-                        errorMessage += "Password is Required.\n";
-                    }
 
                     // Validate Nationality
                     if (string.IsNullOrEmpty(Nationality))
@@ -432,11 +427,11 @@ namespace CNMaisons.Pages
 
 
 
-                    // Validate Declaration
-                    if (string.IsNullOrEmpty(Declaration))
-                    {
-                        errorMessage += "Declaration is Required.\n";
-                    }
+                    //// Validate Declaration
+                    //if (string.IsNullOrEmpty(Declaration))
+                    //{
+                    //    errorMessage += "Declaration is Required.\n";
+                    //}
 
 
                     // Check if any error occurred and add it to the model state
@@ -548,6 +543,7 @@ namespace CNMaisons.Pages
 
                         aTenant = new()
                         {
+                            TenantID = TenantID,
                             PropertyID = PropertyID,
                             Passport = PassportBytes,
                             FirstName = FirstName,
@@ -557,6 +553,7 @@ namespace CNMaisons.Pages
                             DOB = DOB,
                             Nationality = Nationality,
                             StateofOrigin = StateofOrigin,
+
                             LGA = LGA,
                             HomeTown = HomeTown,
                             PermanentHomeAddress = PermanentHomeAddress,
@@ -567,6 +564,7 @@ namespace CNMaisons.Pages
                             NameofEmployer = NameofEmployer,
                             AddressOfEmployer = AddressOfEmployer,
                             LengthOnJob = LengthOnJob,
+
                             CurrentPositionHeld = CurrentPositionHeld,
                             NatureOfJob = NatureOfJob,
                             FormerResidenceAddress = FormerResidenceAddress,
@@ -577,6 +575,7 @@ namespace CNMaisons.Pages
                             MaritalStatus = MaritalStatus,
                             SpouseFirstName = SpouseFirstName,
                             SpouseLastName = SpouseLastName,
+
                             SpouseOccupation = SpouseOccupation,
                             NumberOfOccupants = NumberOfOccupants,
                             NextOfKinFirstName = NextOfKinFirstName,
@@ -587,6 +586,7 @@ namespace CNMaisons.Pages
                             Guarantor1LastName = Guarantor1LastName,
                             Guarantor1Address = Guarantor1Address,
                             Guarantor1Occupation = Guarantor1Occupation,
+
                             Guarantor1PhoneNumber = Guarantor1PhoneNumber,
                             Guarantor1AlternatePhoneNumber = Guarantor1AlternatePhoneNumber,
                             Guarantor2FirstName = Guarantor2FirstName,
@@ -594,12 +594,7 @@ namespace CNMaisons.Pages
                             Guarantor2Address = Guarantor2Address,
                             Guarantor2Occupation = Guarantor2Occupation,
                             Guarantor2PhoneNumber = Guarantor2PhoneNumber,
-                            Guarantor2AlternatePhoneNumber = Guarantor2AlternatePhoneNumber,
-                            Declaration = Declaration,
-                            //YourSignedForm = SignedForm,
-                            ApprovalStatus = "Just Applied",
-                            DeleteFlag = DeleteFlag
-                           // LeaseFormForSigning = LeaseForm
+                            Guarantor2AlternatePhoneNumber = Guarantor2AlternatePhoneNumber
                         };
 
 

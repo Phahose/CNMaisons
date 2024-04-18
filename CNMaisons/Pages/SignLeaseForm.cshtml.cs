@@ -127,7 +127,7 @@ namespace CNMaisons.Pages
                     return Page();
 
 
-                case "Submit Review":
+                case "Submit Signed Copy":
                     if (ApprovalStatus == "Signed" && YourSignedForm != null)
                     {
                         if (ModelState.IsValid)

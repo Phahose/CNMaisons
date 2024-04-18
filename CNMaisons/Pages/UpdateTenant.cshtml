@@ -80,10 +80,10 @@
                     <input type="text" name="TenantID" value="@Model.tenantForReview.TenantID" readonly /><br />
 
                     <label>Property ID:                </label><br />
-                    <input type="text" name="Property ID" value="@Model.tenantForReview.PropertyID" readonly /><br />
+                    <input type="text" name="PropertyID" value="@Model.tenantForReview.PropertyID" readonly /><br />
 
                     <label>First Name:                 </label><br />
-                    <input type="text" name="FirsrName" value="@Model.tenantForReview.FirstName" /><br />
+                    <input type="text" name="FirstName" value="@Model.tenantForReview.FirstName" /><br />
 
                     <label>Last Name:                  </label><br />
                     <input type="text" name="LastName" value="@Model.tenantForReview.LastName" /><br />
@@ -95,7 +95,9 @@
                     <input type="email" name="Email" value="@Model.tenantForReview.Email" /><br />
 
                     <label>Date of Birth:             </label><br />
-                    <input type="date" name="DOB" value="@Model.tenantForReview.DOB" /><br />
+                    @* <input type="date" name="DOB" value="@Model.tenantForReview.DOB" /><br /> *@
+                    <input type="date" name="DOB" value="@Model.tenantForReview.DOB.ToString("yyyy-MM-dd")" /><br />
+
 
                     <label>Nationality:                </label><br />
                     <input type="text" name="Nationality" value="@Model.tenantForReview.Nationality" /><br />
@@ -110,7 +112,7 @@
                     <input type="text" name="HomeTown" value="@Model.tenantForReview.HomeTown" /><br />
 
                     <label>Permanent Home Add: </label><br />
-                    <input type="text" name="PermanentHomeAdd" value="@Model.tenantForReview.PermanentHomeAddress" /><br />
+                    <input type="text" name="PermanentHomeAddress" value="@Model.tenantForReview.PermanentHomeAddress" /><br />
                 </div>
             </fieldset>
 
@@ -134,7 +136,7 @@
                     <input type="text" name="CorporateAffairsCertificate" value="@Model.tenantForReview.CorporateAffairsCertificate" /><br />
 
                     <label>Name of Employer: </label><br />
-                    <input type="text" name="NameOfEmployer" value="@Model.tenantForReview.NameofEmployer" /><br />
+                    <input type="text" name="NameofEmployer" value="@Model.tenantForReview.NameofEmployer" /><br />
 
                     <label>Address Of Employer: </label><br />
                     <input type="text" name="AddressOfEmployer" value="@Model.tenantForReview.AddressOfEmployer" /><br />

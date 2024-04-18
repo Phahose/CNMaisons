@@ -167,7 +167,7 @@ namespace CNMaisons.TechnicalService
                 }
 
                 // Adding parameters
-                //AddParameter("@TenantID", SqlDbType.VarChar, aTenant.TenantID);
+                AddParameter("@TenantID", SqlDbType.VarChar, aTenant.TenantID);
                 AddParameter("@PropertyID", SqlDbType.VarChar, aTenant.PropertyID);
                 AddParameter("@Passport", SqlDbType.VarBinary, aTenant.Passport);
                 AddParameter("@FirstName", SqlDbType.VarChar, aTenant.FirstName);
@@ -184,11 +184,11 @@ namespace CNMaisons.TechnicalService
                 AddParameter("@Occupation", SqlDbType.VarChar, aTenant.Occupation);
                 AddParameter("@SelfEmployed", SqlDbType.VarChar, aTenant.SelfEmployed);
                 AddParameter("@BusinessRegistrationNumber", SqlDbType.VarChar, aTenant.BusinessRegistrationNumber);
-                AddParameter("@CorporateAffairsCertificate", SqlDbType.VarBinary, aTenant.CorporateAffairsCertificate);
+              AddParameter("@CorporateAffairsCertificate", SqlDbType.VarBinary, aTenant.CorporateAffairsCertificate);
                 AddParameter("@NameofEmployer", SqlDbType.VarChar, aTenant.NameofEmployer);
                 AddParameter("@AddressOfEmployer", SqlDbType.VarChar, aTenant.AddressOfEmployer);
                 AddParameter("@LengthOnJob", SqlDbType.Int, aTenant.LengthOnJob);
-
+  
                 AddParameter("@CurrentPositionHeld", SqlDbType.VarChar, aTenant.CurrentPositionHeld);
                 AddParameter("@NatureOfJob", SqlDbType.VarChar, aTenant.NatureOfJob);
                 AddParameter("@FormerResidenceAddress", SqlDbType.VarChar, aTenant.FormerResidenceAddress);
@@ -219,9 +219,9 @@ namespace CNMaisons.TechnicalService
                 AddParameter("@Guarantor2Occupation", SqlDbType.VarChar, aTenant.Guarantor2Occupation);
                 AddParameter("@Guarantor2PhoneNumber", SqlDbType.VarChar, aTenant.Guarantor2PhoneNumber);
                 AddParameter("@Guarantor2AlternatePhoneNumber", SqlDbType.VarChar, aTenant.Guarantor2AlternatePhoneNumber);
-                AddParameter("@Declaration", SqlDbType.VarChar, aTenant.Declaration); 
-                AddParameter("@ApprovalStatus", SqlDbType.VarChar, aTenant.ApprovalStatus);
-                AddParameter("@DeleteFlag", SqlDbType.Bit, aTenant.DeleteFlag);
+                //AddParameter("@Declaration", SqlDbType.VarChar, aTenant.Declaration); 
+                //AddParameter("@ApprovalStatus", SqlDbType.VarChar, aTenant.ApprovalStatus);
+                //AddParameter("@DeleteFlag", SqlDbType.Bit, aTenant.DeleteFlag);
                 
 
                 MyCommand.ExecuteNonQuery();
@@ -283,7 +283,7 @@ namespace CNMaisons.TechnicalService
                 }
 
                 // Adding parameters
-                //AddParameter("@TenantID", SqlDbType.VarChar, aTenant.TenantID);
+                AddParameter("@TenantID", SqlDbType.VarChar, aTenant.TenantID);
                 AddParameter("@PropertyID", SqlDbType.VarChar, aTenant.PropertyID);
                 AddParameter("@Passport", SqlDbType.VarBinary, aTenant.Passport);
                 AddParameter("@FirstName", SqlDbType.VarChar, aTenant.FirstName);
@@ -335,12 +335,6 @@ namespace CNMaisons.TechnicalService
                 AddParameter("@Guarantor2Occupation", SqlDbType.VarChar, aTenant.Guarantor2Occupation);
                 AddParameter("@Guarantor2PhoneNumber", SqlDbType.VarChar, aTenant.Guarantor2PhoneNumber);
                 AddParameter("@Guarantor2AlternatePhoneNumber", SqlDbType.VarChar, aTenant.Guarantor2AlternatePhoneNumber);
-                AddParameter("@Declaration", SqlDbType.VarChar, aTenant.Declaration);
-                AddParameter("@YourSignedForm", SqlDbType.VarChar, aTenant.YourSignedForm);
-
-                AddParameter("@ApprovalStatus", SqlDbType.VarChar, aTenant.ApprovalStatus);
-                AddParameter("@DeleteFlag", SqlDbType.Bit, aTenant.DeleteFlag);
-                AddParameter("@LeaseFormForSigning", SqlDbType.VarBinary, aTenant.LeaseFormForSigning);
 
                 MyCommand.ExecuteNonQuery();
                 MyDataSource.Close();
@@ -857,7 +851,8 @@ namespace CNMaisons.TechnicalService
                         DeleteFlag = (bool)MyDataReader["DeleteFlag"],
                         ApprovalStatus = MyDataReader["ApprovalStatus"]?.ToString(),
                         LeaseFormForSigning = MyDataReader["LeaseFormForSigning"] == DBNull.Value ? null! : (byte[])MyDataReader["LeaseFormForSigning"],
-                        NextRentDue = (DateTime)MyDataReader["NextRentDue"]
+                        NextRentDue = MyDataReader["NextRentDue"] == DBNull.Value ? default(DateTime) : (DateTime)MyDataReader["NextRentDue"]
+                        
                     };
                 }
             }
