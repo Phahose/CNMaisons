@@ -62,8 +62,20 @@
                 </tr>
                 <tr>
                     <td><input type="submit" name="Submit" value="Find" class="btn" /></td>
-                </tr>
 
+                    <td>
+                        <button type="submit" name="Submit" style="text-align: center;" value="Find">
+                            <img src="../img/buttons/find.svg" alt="Save Icon" width="24" height="24" style="vertical-align: middle;">
+                            <span style="vertical-align: middle;">Find</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span style="font-size: larger; font-style: italic;">@Model.Message</span>
+                    </td>
+
+                </tr>
             </table>
         </div>
     </form>
@@ -72,7 +84,6 @@
     {
 
         <form name="Application" method="post" class="form property_form transition-fade-down" enctype="multipart/form-data">
-            <span style="font-size: larger; font-style: italic;">@Model.Message</span>
             <fieldset>
                 <legend>Personal Information</legend>
                 <div>
@@ -252,8 +263,18 @@
                     <label>Guarantor2 Alternate Phone Number: </label><br />
                     <input type="text" name="Guarantor2AlternatePhoneNumber" value="@Model.tenantForReview.Guarantor2AlternatePhoneNumber" /><br />
                     <br />
-                    <input type="submit" name="Submit" value="Submit" class="btn" />
-                    <input type="submit" name="Submit" value="Close" class="btn" />
+                    
+
+
+                    <button type="submit" name="Submit" style="text-align: center;" value="Submit">
+                        <img src="../img/buttons/primary-submit.svg" alt="Save Icon" width="24" height="24" style="vertical-align: middle;">
+                        <span style="vertical-align: middle;">Submit</span>
+                    </button>
+
+                     <button type="submit" name="Submit" style="text-align: center;" value="Close">
+                        <img src="../img/buttons/x-button.svg" alt="Close Icon" width="24" height="24" style="vertical-align: middle;">
+                        <span style="vertical-align: middle;">Close</span>
+                    </button> 
 
                 </div>
             </fieldset>

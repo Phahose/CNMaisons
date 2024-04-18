@@ -610,7 +610,7 @@ namespace CNMaisons.Pages
                         else
                         {
                             //repopulate the text
-                            Message = Confirmation;  // "This was not saved.";
+                            Message = "This was not saved.";
                             RePopulate();
                             //return Page();
                         }
