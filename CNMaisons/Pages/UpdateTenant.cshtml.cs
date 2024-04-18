@@ -5,6 +5,7 @@ using CNMaisons.TechnicalService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CNMaisons.Pages
 {
@@ -218,24 +219,38 @@ namespace CNMaisons.Pages
                     return RedirectToPage("/IndexTenant");
 
                 case "Find":
+                    ViewFormNow = false;
+
                     if (FindTenantID != null)
                     {
-                        ViewFormNow = false;
                         if (ModelState.IsValid)
                         {
                             SetSessionString("FindTenantID1", FindTenantID);  // save content for furtre retreival
 
                             CNMPMS RequestDirector = new();
                             tenantForReview = RequestDirector.ViewTenant(FindTenantID);
-                            if (tenantForReview != null)
+                            if (!tenantForReview.FirstName.IsNullOrEmpty())
                             {
                                 ViewFormNow = true;
                                 Message = "Below are the detail of the Tenant's Lease application.";
                                 return Page();
                             }
+                            else                            {
+                                ViewFormNow = false;
+                                Message = "This TenantID does not exist.";
+
+                            }
                         }
+
                     }
-                return Page();
+                    else
+                    {
+                        Message = "TenantID is required.";
+                        ViewFormNow = false;
+
+                    }
+
+                    return Page();
 
 
                 case "Submit":
@@ -604,8 +619,9 @@ namespace CNMaisons.Pages
                         string Confirmation = TenantRequestDirector.UpdateLeaseApplication(aTenant);
                         if (Confirmation == "Successful.")
                         {
-                            Message = "Tenant's Lease application was successful saved.";
+                            Message = "Tenant's information successful updated.";
                             return Page();
+                            ViewFormNow = true;
                         }
                         else
                         {
