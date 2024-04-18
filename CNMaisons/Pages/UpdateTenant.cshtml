@@ -62,8 +62,20 @@
                 </tr>
                 <tr>
                     <td><input type="submit" name="Submit" value="Find" class="btn" /></td>
-                </tr>
 
+                    <td>
+                        <button type="submit" name="Submit" style="text-align: center;" value="Find">
+                            <img src="../img/buttons/find.svg" alt="Save Icon" width="24" height="24" style="vertical-align: middle;">
+                            <span style="vertical-align: middle;">Find</span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span style="font-size: larger; font-style: italic;">@Model.Message</span>
+                    </td>
+
+                </tr>
             </table>
         </div>
     </form>
@@ -72,7 +84,6 @@
     {
 
         <form name="Application" method="post" class="form property_form transition-fade-down" enctype="multipart/form-data">
-            <span style="font-size: larger; font-style: italic;">@Model.Message</span>
             <fieldset>
                 <legend>Personal Information</legend>
                 <div>
@@ -80,10 +91,10 @@
                     <input type="text" name="TenantID" value="@Model.tenantForReview.TenantID" readonly /><br />
 
                     <label>Property ID:                </label><br />
-                    <input type="text" name="Property ID" value="@Model.tenantForReview.PropertyID" readonly /><br />
+                    <input type="text" name="PropertyID" value="@Model.tenantForReview.PropertyID" readonly /><br />
 
                     <label>First Name:                 </label><br />
-                    <input type="text" name="FirsrName" value="@Model.tenantForReview.FirstName" /><br />
+                    <input type="text" name="FirstName" value="@Model.tenantForReview.FirstName" /><br />
 
                     <label>Last Name:                  </label><br />
                     <input type="text" name="LastName" value="@Model.tenantForReview.LastName" /><br />
@@ -95,7 +106,9 @@
                     <input type="email" name="Email" value="@Model.tenantForReview.Email" /><br />
 
                     <label>Date of Birth:             </label><br />
-                    <input type="date" name="DOB" value="@Model.tenantForReview.DOB" /><br />
+                    @* <input type="date" name="DOB" value="@Model.tenantForReview.DOB" /><br /> *@
+                    <input type="date" name="DOB" value="@Model.tenantForReview.DOB.ToString("yyyy-MM-dd")" /><br />
+
 
                     <label>Nationality:                </label><br />
                     <input type="text" name="Nationality" value="@Model.tenantForReview.Nationality" /><br />
@@ -110,7 +123,7 @@
                     <input type="text" name="HomeTown" value="@Model.tenantForReview.HomeTown" /><br />
 
                     <label>Permanent Home Add: </label><br />
-                    <input type="text" name="PermanentHomeAdd" value="@Model.tenantForReview.PermanentHomeAddress" /><br />
+                    <input type="text" name="PermanentHomeAddress" value="@Model.tenantForReview.PermanentHomeAddress" /><br />
                 </div>
             </fieldset>
 
@@ -134,7 +147,7 @@
                     <input type="text" name="CorporateAffairsCertificate" value="@Model.tenantForReview.CorporateAffairsCertificate" /><br />
 
                     <label>Name of Employer: </label><br />
-                    <input type="text" name="NameOfEmployer" value="@Model.tenantForReview.NameofEmployer" /><br />
+                    <input type="text" name="NameofEmployer" value="@Model.tenantForReview.NameofEmployer" /><br />
 
                     <label>Address Of Employer: </label><br />
                     <input type="text" name="AddressOfEmployer" value="@Model.tenantForReview.AddressOfEmployer" /><br />
@@ -250,8 +263,18 @@
                     <label>Guarantor2 Alternate Phone Number: </label><br />
                     <input type="text" name="Guarantor2AlternatePhoneNumber" value="@Model.tenantForReview.Guarantor2AlternatePhoneNumber" /><br />
                     <br />
-                    <input type="submit" name="Submit" value="Submit" class="btn" />
-                    <input type="submit" name="Submit" value="Close" class="btn" />
+                    
+
+
+                    <button type="submit" name="Submit" style="text-align: center;" value="Submit">
+                        <img src="../img/buttons/primary-submit.svg" alt="Save Icon" width="24" height="24" style="vertical-align: middle;">
+                        <span style="vertical-align: middle;">Submit</span>
+                    </button>
+
+                     <button type="submit" name="Submit" style="text-align: center;" value="Close">
+                        <img src="../img/buttons/x-button.svg" alt="Close Icon" width="24" height="24" style="vertical-align: middle;">
+                        <span style="vertical-align: middle;">Close</span>
+                    </button> 
 
                 </div>
             </fieldset>
