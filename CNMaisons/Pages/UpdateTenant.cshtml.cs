@@ -233,6 +233,10 @@ namespace CNMaisons.Pages
                                 Message = "Below are the detail of the Tenant's Lease application.";
                                 return Page();
                             }
+                            else
+                            {
+                                ViewFormNow = false;
+                            }
                         }
                     }
                 return Page();
@@ -606,6 +610,7 @@ namespace CNMaisons.Pages
                         {
                             Message = "Tenant's Lease application was successful saved.";
                             return Page();
+                            ViewFormNow = true;
                         }
                         else
                         {
