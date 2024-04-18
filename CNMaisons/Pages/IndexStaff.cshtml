@@ -63,14 +63,17 @@
                         <a href="~/ViewPropertyAdmin" class="more-info">View Properties</a>
                     </div>
                     <div class="next_rent">
-                        <a href="~/AddProperty" class="more-info">Add Property</a>
+                        <a href="~/UpdateTenant" class="more-info">Update Tenant</a>
                     </div>
-
+                   
                     @if (Model.Users.Role == "LandLord")
                     {
                         <div class="next_rent">
                             <a href="~/ReviewApplication" class="more-info">Review Tennancy Applications</a>
-                        </div> 
+                        </div>
+                        <div class="next_rent">
+                            <a href="~/AddProperty" class="more-info">Add Property</a>
+                        </div>
                     }
                     <div>
                         <div>
