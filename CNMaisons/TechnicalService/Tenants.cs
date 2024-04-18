@@ -936,7 +936,7 @@ namespace CNMaisons.TechnicalService
                         DeleteFlag = (bool)MyDataReader["DeleteFlag"],
                         ApprovalStatus = MyDataReader["ApprovalStatus"]?.ToString(),
                         LeaseFormForSigning = MyDataReader["LeaseFormForSigning"] == DBNull.Value ? null! : (byte[])MyDataReader["LeaseFormForSigning"],
-                        NextRentDue = (DateTime)MyDataReader["NextRentDue"]
+                        NextRentDue = MyDataReader["NextRentDue"] == DBNull.Value ? default(DateTime) : (DateTime)MyDataReader["NextRentDue"]
                     };
                     tenantList.Add(tenant);
                 }
