@@ -18,7 +18,7 @@
         document.querySelector('input[name="PropertyID"]').value = "CN00004";
         document.querySelector('input[name="FirstName"]').value = "Ezra";
         document.querySelector('input[name="LastName"]').value = "Mallo";
-        document.querySelector('input[name="PhoneNumber"]').value = "078084734";
+        document.querySelector('input[name="PhoneNumber"]').value = "";
         document.querySelector('input[name="Email"]').value = "emallo1@nait.ca";
         document.querySelector('input[name="DOB"]').value = "2000-01-01";
         document.querySelector('input[name="Password"]').value = "abc123";
@@ -306,7 +306,6 @@
 
     <form name="Application" method="post" class="form property_form transition-fade-down" enctype="multipart/form-data">
         <!--<form name="Application" method="post" class="form property_form transition-fade-down" onsubmit="return isFormValid(this);" enctype="multipart/form-data" action="ViewHTTPRequest">-->
-        <input type="submit" name="Submit" value="Submit Lease Application" class="btn" />
         <br />
 
         <br />
@@ -605,6 +604,7 @@
                     <br />
                     <input type="file" name="LeaseFormForSigning" hidden />
                     <br />
+                <input type="submit" name="Submit" value="Submit Lease Application" class="btn" />
             </div>
         </fieldset>
     </form>

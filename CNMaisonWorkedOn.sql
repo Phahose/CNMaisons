@@ -688,84 +688,58 @@ BEGIN
 	
 	IF @TenantID IS NULL
         RAISERROR('ModifyTenant - required parameter: @TenantID.', 16, 1);
-    IF @PropertyID IS NULL
-        RAISERROR('ModifyTenant - required parameter: @PropertyID.', 16, 1);
-    ELSE IF @FirstName IS NULL
-        RAISERROR('ModifyTenant - required parameter: @FirstName.', 16, 1);
-    ELSE IF @LastName IS NULL
-        RAISERROR('ModifyTenant - required parameter: @LastName.', 16, 1);
-    ELSE IF @PhoneNumber IS NULL
-        RAISERROR('ModifyTenant - required parameter: @PhoneNumber.', 16, 1);
-    ELSE IF @Email IS NULL
-        RAISERROR('ModifyTenant - required parameter: @Email.', 16, 1);
-    ELSE IF @DOB IS NULL
-        RAISERROR('ModifyTenant - required parameter: @DOB.', 16, 1);
-    ELSE IF @Nationality IS NULL
-        RAISERROR('ModifyTenant - required parameter: @Nationality.', 16, 1);
-    ELSE IF @StateofOrigin IS NULL
-        RAISERROR('ModifyTenant - required parameter: @StateofOrigin.', 16, 1);
-    ELSE IF @LGA IS NULL
-        RAISERROR('ModifyTenant - required parameter: @LGA.', 16, 1);
-    ELSE IF @HomeTown IS NULL
-        RAISERROR('ModifyTenant - required parameter: @HomeTown.', 16, 1);
-    ELSE IF @NameofEmployer IS NULL
-        RAISERROR('ModifyTenant - required parameter: @NameofEmployer.', 16, 1);
-    ELSE IF @AddressOfEmployer IS NULL
-        RAISERROR('ModifyTenant - required parameter: @AddressOfEmployer.', 16, 1);
-    ELSE IF @LengthOnJob IS NULL
-        RAISERROR('ModifyTenant - required parameter: @LengthOnJob.', 16, 1);
-    ELSE IF @CurrentPositionHeld IS NULL
-        RAISERROR('ModifyTenant - required parameter: @CurrentPositionHeld.', 16, 1);
-	ELSE IF @NatureOfJob IS NULL
-		RAISERROR('ModifyTenant - required parameter: @NatureOfJob.', 16, 1);
-	ELSE IF @FormerResidenceAddress IS NULL
-		RAISERROR('ModifyTenant - required parameter: @FormerResidenceAddress.', 16, 1);
-	ELSE IF @ReasonForMoving IS NULL
-		RAISERROR('ModifyTenant - required parameter: @ReasonForMoving.', 16, 1);
-	ELSE IF @LengthOfStayAtOldResidence IS NULL
-		RAISERROR('ModifyTenant - required parameter: @LengthOfStayAtOldResidence.', 16, 1);
-	ELSE IF @NameOfFormerResidentManager IS NULL
-		RAISERROR('ModifyTenant - required parameter: @NameOfFormerResidentManager.', 16, 1);
-	ELSE IF @ObjectionsToReasonsForMoving IS NULL
-		RAISERROR('ModifyTenant - required parameter: @ObjectionsToReasonsForMoving.', 16, 1);
+    ELSE IF @PropertyID IS NULL
+        RAISERROR('ModifyTenant - required parameter: @PropertyID.', 16, 1);    
+	ELSE IF @FirstName IS NULL
+		RAISERROR('ModifyTenant - required parameter: FirstName.', 16, 1);
+	ELSE IF @LastName IS NULL
+		RAISERROR('ModifyTenant - required parameter: LastName.', 16, 1);
+	ELSE IF @PhoneNumber IS NULL
+		RAISERROR('ModifyTenant - required parameter: PhoneNumber.', 16, 1);
+	ELSE IF @Email IS NULL
+		RAISERROR('ModifyTenant - required parameter: Email.', 16, 1);
+	ELSE IF @DOB IS NULL
+		RAISERROR('ModifyTenant - required parameter: DOB.', 16, 1);
+	ELSE IF @Nationality IS NULL
+		RAISERROR('ModifyTenant - required parameter: Nationality.', 16, 1);
+	ELSE IF @PermanentHomeAddress IS NULL
+		RAISERROR('ModifyTenant - required parameter: PermanentHomeAddress.', 16, 1);
+	ELSE IF @Occupation IS NULL
+		RAISERROR('ModifyTenant - required parameter: Occupation.', 16, 1);
+	ELSE IF @SelfEmployed IS NULL
+		RAISERROR('ModifyTenant - required parameter: SelfEmployed.', 16, 1);
 	ELSE IF @MaritalStatus IS NULL
-		RAISERROR('ModifyTenant - required parameter: @MaritalStatus.', 16, 1);
-	ELSE IF @SpouseFirstName IS NULL
-		RAISERROR('ModifyTenant - required parameter: @SpouseFirstName.', 16, 1);
-	ELSE IF @SpouseLastName IS NULL
-		RAISERROR('ModifyTenant - required parameter: @SpouseLastName.', 16, 1);
-	ELSE IF @SpouseOccupation IS NULL
-		RAISERROR('ModifyTenant - required parameter: @SpouseOccupation.', 16, 1);
-    ELSE IF @NumberOfOccupants IS NULL
-		RAISERROR('ModifyTenant - required parameter: @NumberOfOccupants.', 16, 1);
+		RAISERROR('ModifyTenant - required parameter: MaritalStatus.', 16, 1);
+	ELSE IF @NumberOfOccupants IS NULL
+		RAISERROR('ModifyTenant - required parameter: NumberOfOccupants.', 16, 1);
 	ELSE IF @NextOfKinFirstName IS NULL
-		RAISERROR('ModifyTenant - required parameter: @NextOfKinFirstName.', 16, 1);
+		RAISERROR('ModifyTenant - required parameter: NextOfKinFirstName.', 16, 1);
 	ELSE IF @NextOfKinLastName IS NULL
-		RAISERROR('ModifyTenant - required parameter: @NextOfKinLastName.', 16, 1);
+		RAISERROR('ModifyTenant - required parameter: NextOfKinLastName.', 16, 1);
 	ELSE IF @NextOfKinAddress IS NULL
-		RAISERROR('ModifyTenant - required parameter: @NextOfKinAddress.', 16, 1);
+		RAISERROR('ModifyTenant - required parameter: NextOfKinAddress.', 16, 1);
 	ELSE IF @NextOfKinPhoneNumber IS NULL
-		RAISERROR('ModifyTenant - required parameter: @NextOfKinPhoneNumber.', 16, 1);
+		RAISERROR('ModifyTenant - required parameter: NextOfKinPhoneNumber.', 16, 1);
 	ELSE IF @Guarantor1FirstName IS NULL
-		RAISERROR('ModifyTenant - required parameter: @Guarantor1FirstName.', 16, 1);
+		RAISERROR('ModifyTenant - required parameter: Guarantor1FirstName.', 16, 1);
 	ELSE IF @Guarantor1LastName IS NULL
-		RAISERROR('ModifyTenant - required parameter: @Guarantor1LastName.', 16, 1);
+		RAISERROR('ModifyTenant - required parameter: Guarantor1LastName.', 16, 1);
 	ELSE IF @Guarantor1Address IS NULL
-		RAISERROR('ModifyTenant - required parameter: @Guarantor1Address.', 16, 1);
+		RAISERROR('ModifyTenant - required parameter: Guarantor1Address.', 16, 1);
 	ELSE IF @Guarantor1Occupation IS NULL
-		RAISERROR('ModifyTenant - required parameter: @Guarantor1Occupation.', 16, 1);
+		RAISERROR('ModifyTenant - required parameter: Guarantor1Occupation.', 16, 1);
 	ELSE IF @Guarantor1PhoneNumber IS NULL
-		RAISERROR('ModifyTenant - required parameter: @Guarantor1PhoneNumber.', 16, 1);
+		RAISERROR('ModifyTenant - required parameter: Guarantor1PhoneNumber.', 16, 1);
 	ELSE IF @Guarantor2FirstName IS NULL
-		RAISERROR('ModifyTenant - required parameter: @Guarantor2FirstName.', 16, 1);
+		RAISERROR('ModifyTenant - required parameter: Guarantor2FirstName.', 16, 1);
 	ELSE IF @Guarantor2LastName IS NULL
-		RAISERROR('ModifyTenant - required parameter: @Guarantor2LastName.', 16, 1);
+		RAISERROR('ModifyTenant - required parameter: Guarantor2LastName.', 16, 1);
 	ELSE IF @Guarantor2Address IS NULL
-		RAISERROR('ModifyTenant - required parameter: @Guarantor2Address.', 16, 1);
+		RAISERROR('ModifyTenant - required parameter: Guarantor2Address.', 16, 1);
 	ELSE IF @Guarantor2Occupation IS NULL
-		RAISERROR('ModifyTenant - required parameter: @Guarantor2Occupation.', 16, 1);
+		RAISERROR('ModifyTenant - required parameter: Guarantor2Occupation.', 16, 1);
 	ELSE IF @Guarantor2PhoneNumber IS NULL
-		RAISERROR('ModifyTenant - required parameter: @Guarantor2PhoneNumber.', 16, 1);
+		RAISERROR('ModifyTenant - required parameter: Guarantor2PhoneNumber.', 16, 1);
 	ELSE
 
 		BEGIN
@@ -833,6 +807,8 @@ BEGIN
 
     RETURN @ReturnCode
 END
+
+
 
 
 
