@@ -603,21 +603,6 @@ namespace CNMaisons.Pages
                         mailConfirmation = MailRequestManager.PostEmail(Email, messageBody, messageSubject); 
                         
                         Message = "Tenant's Lease application was successful saved and Login Account created.";
-                        List<User> LandLords = new List<User>();
-                        LandLords = MailRequestManager.GetActiveUsers();
-                        LandLords = LandLords.Where(x => x.Role == "LandLord").ToList();
-                        foreach (var landlord in LandLords)
-                        {
-                            messageBody = "Hello,\n" +
-                                              "\nYou have a new Tenancy Application on CN Maisons \n" +
-                                              "\tPersons Name: " + FirstName + " " + LastName +
-                                              "\n\tProperty ID: " + PropertyID +
-                                              "\nLogin To Your Account on CN Maisons to Review this Application";
-                            messageSubject = "New Tenancy Application";
-
-
-                            mailConfirmation = MailRequestManager.PostEmail(landlord.Email, messageBody, messageSubject);
-                        }
                     }
                     else
                     {

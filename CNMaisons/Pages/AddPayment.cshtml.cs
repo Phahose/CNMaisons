@@ -274,30 +274,13 @@ namespace CNMaisons.Pages
 
 
                     string messageBody = "Hello " + FName + ",\n" +
-                                        "\nYour payment has been saved succefully. Below are the details for your record:\n" +
+                                        "\nYour payment of has been saved. Below are the details for your record:\n" +
                                         "\t\t. You paid:" + AmountPaid + "\n\nRegards";
                     string messageSubject = "Payment submitted.";
 
                     string mailConfirmation;
                     CNMPMS MailRequestManager = new CNMPMS();
                     mailConfirmation = MailRequestManager.PostEmail(Email, messageBody, messageSubject);
-
-                    List<User> LandLords = new List<User>();
-                    LandLords = MailRequestManager.GetActiveUsers();
-                    LandLords = LandLords.Where(x => x.Role == "LandLord").ToList();
-                    foreach (var landlord in LandLords)
-                    {
-                        messageBody = "Hello,\n" +
-                                          "\nA new Payment has Been Added To CN Maisons \n" +
-                                          "\tPayee Name: " + FName +
-                                          "\n\tProperty ID: " + PropertyID +
-                                          "\n\tAmount Paid: " + AmountPaid +
-                                          "\nLogin To Your Account on CN Maisons to View This New Payment Info";
-                        messageSubject = "New Payment Added To CN Maisons";
-
-
-                        mailConfirmation = MailRequestManager.PostEmail(landlord.Email, messageBody, messageSubject);
-                    }
 
                 }
                 else

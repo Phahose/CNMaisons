@@ -127,7 +127,7 @@ namespace CNMaisons.Pages
                     return Page();
 
 
-                case "Submit Signed Copy":
+                case "Submit Review":
                     if (ApprovalStatus == "Signed" && YourSignedForm != null)
                     {
                         if (ModelState.IsValid)
@@ -143,23 +143,6 @@ namespace CNMaisons.Pages
                             {
                                 ViewFormNow = false;
                                 MessageForFile = "Tenant's Lease application uploaded him to sign.";
-
-                                List<User> LandLords = new List<User>();
-                                LandLords = RequestDirector.GetActiveUsers();
-                                LandLords = LandLords.Where(x => x.Role == "LandLord").ToList();
-                                CNMPMS MailRequestManager = new CNMPMS();
-                                foreach (var landlord in LandLords)
-                                {
-                                    string messageBody = "Hello,\n" +
-                                                      "\nYour Tenant has Updated Their Application with the Signed Lease Agreement \n" +
-                                                      "\n\tTenant ID: " + FindTenantID +
-                                                      "\nLogin To Your Account on CN Maisons to Review this Tenacy Application";
-                                    string messageSubject = "Tenant Application Updated With Signed Lease Agreement";
-
-                                    string mailConfirmation;
-
-                                    mailConfirmation = MailRequestManager.PostEmail(landlord.Email, messageBody, messageSubject);
-                                }
                                 OnGet();
                                 return Page();
                             }

@@ -15,20 +15,20 @@
 <script type="text/javascript">
     //to popuate values. To be removed later
     function populateValue() {
-        document.querySelector('input[name="PropertyID"]').value = "CN00004";
-        document.querySelector('input[name="FirstName"]').value = "Ezra";
-        document.querySelector('input[name="LastName"]').value = "Mallo";
-        document.querySelector('input[name="PhoneNumber"]').value = "";
-        document.querySelector('input[name="Email"]').value = "emallo1@nait.ca";
-        document.querySelector('input[name="DOB"]').value = "2000-01-01";
+        document.querySelector('input[name="PropertyID"]').value = "CN00001";
+        document.querySelector('input[name="FirstName"]').value = "Noelyn";
+        document.querySelector('input[name="LastName"]').value = "Yamat";
+        document.querySelector('input[name="PhoneNumber"]').value = "0803854364";
+        document.querySelector('input[name="Email"]').value = "nyamat1@nait.ca";
+        document.querySelector('input[name="DOB"]').value = "1982-01-01";
         document.querySelector('input[name="Password"]').value = "abc123";
         document.querySelector('input[name="Nationality"]').value = "Nigeria";
         document.querySelector('input[name="PermanentHomeAddress"]').value = "Udenu";
         document.querySelector('input[name="Occupation"]').value = "Engineer";
         document.querySelector('input[name="SelfEmployed"][value="yes"]').checked = true;
-        document.querySelector('select[name="MaritalStatus"]').value = "Married";
-        document.querySelector('input[name="NumberOfOccupants"]').value = "4";
-        document.querySelector('input[name="NextOfKinFirstName"]').value = "Placeholder";
+        document.querySelector('select[name="MaritalStatus"]').value = "Single";
+        document.querySelector('input[name="NumberOfOccupants"]').value = "2";
+        document.querySelector('input[name="NextOfKinFirstName"]').value = "FirstName";
         document.querySelector('input[name="NextOfKinLastName"]').value = "LastName";
         document.querySelector('input[name="NextOfKinAddress"]').value = "Address";
         document.querySelector('input[name="NextOfKinPhoneNumber"]').value = "PhoneNumber";
@@ -305,7 +305,9 @@
 
 
     <form name="Application" method="post" class="form property_form transition-fade-down" enctype="multipart/form-data">
+        <input type="button" name="populate values" value="populate values" onclick="populateValue()" class="btn" />
         <!--<form name="Application" method="post" class="form property_form transition-fade-down" onsubmit="return isFormValid(this);" enctype="multipart/form-data" action="ViewHTTPRequest">-->
+        <input type="submit" name="Submit" value="Submit Lease Application" class="btn" />
         <br />
 
         <br />
@@ -367,10 +369,8 @@
                 <input type="text" name="HomeTown" maxlength="20" />
                 Permanent Home Address*:
                 <input type="text" name="PermanentHomeAddress" maxlength="100" />
-
             </div>
         </fieldset>
-        <input type="button" name="populate values" value="populate values" onclick="populateValue()" />
 
 
         <fieldset>
@@ -451,7 +451,7 @@
                     <br />
                     <input type="text" name="NameOfFormerResidentManager" maxlength="60" />
                     <br />
-                    <label for="ObjectionsToReasonsForMoving">Do you Have any Objection to Your Reason to Leaving you Former Residence</label>
+                    <label for="ObjectionsToReasonsForMoving">Do you Have any Objection to Your Reson to Leaving you Former Residence</label>
                     <br />
                     <textarea name="ObjectionsToReasonsForMoving" style="max-height: 200px; max-width: 500px;" maxlength="100"></textarea>
                 </div>
@@ -604,7 +604,6 @@
                     <br />
                     <input type="file" name="LeaseFormForSigning" hidden />
                     <br />
-                <input type="submit" name="Submit" value="Submit Lease Application" class="btn" />
             </div>
         </fieldset>
     </form>
