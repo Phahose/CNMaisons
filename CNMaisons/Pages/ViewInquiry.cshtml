@@ -106,7 +106,6 @@
                 <thead>
                     <tr style="border: 1px solid #ddd; background-color:black;">
                         <th style="border: 1px solid #ddd;">Visit Status</th>
-                        <th style="border: 1px solid #ddd;">Property  Visit ID</th>
                         <th style="border: 1px solid #ddd;">Property ID</th>
                         <th style="border: 1px solid #ddd;">Proposed Visit Date</th>
                         <th style="border: 1px solid #ddd;">Proposed Visit Time</th>
@@ -124,7 +123,7 @@
                         <tr>
 
                             <td style="border: 1px solid #ddd;" class="populating-link"><a href="#" onclick="copyData('@record.PropertyVisitID', '@record.FirstName', '@record.Email')">@record.VisitStatus</a></td>
-                            <td style="border: 1px solid #ddd;" class="populating-link"><a href="#" onclick="copyData('@record.PropertyVisitID', '@record.FirstName', '@record.Email')">@record.PropertyVisitID</a></td>
+@*                             <td style="border: 1px solid #ddd;" class="populating-link"><a href="#" onclick="copyData('@record.PropertyVisitID', '@record.FirstName', '@record.Email')">@record.PropertyVisitID</a></td> *@
 
                             <td style="border: 1px solid #ddd;">@record.PropertyID</td>
                             <td style="border: 1px solid #ddd;">@record.ProposedVisitDate.ToString("dd/MM/yyyy")</td>

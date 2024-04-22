@@ -619,7 +619,7 @@ namespace CNMaisons.Pages
                         string Confirmation = TenantRequestDirector.UpdateLeaseApplication(aTenant);
                         if (Confirmation == "Successful.")
                         {
-                            Message = "Tenant's information successful updated.";
+                            Message = "Tenant's information successfuly updated.";
                             return Page();
                             ViewFormNow = true;
                         }

@@ -708,6 +708,7 @@ input.filter-btn{
 }
 .loggedin-icon_div img{
      border-radius: 50%;
+     max-width: 5rem
 }
 .loggedin-list li:hover {
     border-bottom: 1.4px solid white;
