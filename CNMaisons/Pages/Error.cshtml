@@ -1,0 +1,53 @@
+﻿@page
+@model CNMaisons.Pages.ErrorModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #282c34;
+        color: #fff;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .container {
+        text-align: center;
+    }
+
+    h1 {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        color: #ff8c00; /* Orange color */
+    }
+
+    p {
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+    }
+
+    a {
+        color: #ff8c00; /* Orange color */
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+        a:hover {
+            text-decoration: underline;
+        }
+</style>
+
+<body>
+    <div class="container">
+        <h1>Oops! Something went wrong.</h1>
+        <p>We're sorry, but it seems like there was an error processing your request.</p>
+        <p>Please try again later or <a href="/">go back to home</a>.</p>
+    </div>
+</body>
+
