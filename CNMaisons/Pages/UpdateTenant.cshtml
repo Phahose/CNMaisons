@@ -62,7 +62,10 @@
                 </tr>
                 <tr>
                     <td>
-                        <p style="font-size: medium; color: green; background-color:white; padding: 0.5rem;">@Model.Message</p>
+                        @if (Model.Message != "")
+                        {
+                            <p style="font-size: medium; color: green; background-color:white; padding: 0.5rem;">@Model.Message</p>
+                        }                      
                     </td>
 
                 </tr>

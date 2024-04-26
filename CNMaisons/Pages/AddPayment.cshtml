@@ -221,11 +221,11 @@
             <legend>Record A Payment</legend>
             <div>
                 <label>Enter Your Tenant ID:</label><br />
-                <input type="text" name="TenantID" maxlength="5" required oninput="this.value = this.value.toUpperCase();" value="@Model.tenantForPayment.TenantID" disabled/><br />
+                <input type="text" name="TenantID" maxlength="5" required oninput="this.value = this.value.toUpperCase();" value="@Model.tenantForPayment.TenantID" readonly/><br />
 
 
                 <label>Enter your Property ID:</label><br />
-                <input type="text" name="PropertyID" maxlength="7" required oninput="this.value = this.value.toUpperCase();" value="@Model.tenantForPayment.PropertyID" disabled/><br />
+                <input type="text" name="PropertyID" maxlength="7" required oninput="this.value = this.value.toUpperCase();" value="@Model.tenantForPayment.PropertyID" readonly/><br />
 
                 <label>Amount Paid:</label><br />
                 <input type="number" name="AmountPaid" required onchange="calculatePaymentEndMonth()"/><br />

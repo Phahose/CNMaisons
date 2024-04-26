@@ -59,7 +59,7 @@
                 </select>
                 <br />
                 <label>To Year:</label><br />
-                <select name="FindEndYear">
+                <select name="FindEndYear" required>
                     <option value="">Select Year</option>
                     <!-- Generate options for years 2024 to 2026 (currentYear + 5) -->
                     @for (int year = currentYear; year <= (currentYear + 5); year++)
