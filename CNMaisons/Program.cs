@@ -25,8 +25,8 @@ var app = builder.Build();
 //Configure the HTTP reqest pipeline
 if (!app.Environment.IsDevelopment()) // check for any enviromnet that is not a development 
 {
-    app.UseDeveloperExceptionPage();
-    // app.UseExceptionHandler("/Error"); //customised error page use for final release
+    //app.UseDeveloperExceptionPage();
+    app.UseExceptionHandler("/Error"); //customised error page use for final release
 }
 else
 {

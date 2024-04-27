@@ -4,9 +4,9 @@
     color: white;
     margin: 0;
 }
-.entry {
+/*.entry {
     position: absolute;
-    background-image: url("/img/introimage.jpg");
+    background-image: url("../img/introimage.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -17,8 +17,7 @@
     left: 0%;
     right: 0%;
     background-color: rgba(0, 0, 0, 1);
-    /*filter: brightness(0.6);*/
-}
+}*/
 .intro_image {
     
 }
