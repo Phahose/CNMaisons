@@ -270,7 +270,6 @@ select {
 .btn:hover {
     background-color: #292323;
     padding: 0.6rem;
-    transition: 0.2s ease-in-out;
 }
 .form{
     width: 70%;
@@ -697,7 +696,7 @@ input.filter-btn{
 .loggedin-list li {
     list-style: none;
     margin-left: 1rem;   
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-family: "Raleway", sans-serif;
     padding: 0.5rem;
     padding-bottom: 0;
