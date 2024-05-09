@@ -82,6 +82,12 @@
                 <div>
                     <label>Tenant ID:                    </label><br />
                     <input type="text" name="TenantID" value="@Model.tenantForReview.TenantID" readonly /><br />
+                    <label>Approval Status:                    </label><br />
+                    <select name="ApprovalStatus">
+                        <option value="@Model.tenantForReview.ApprovalStatus">@Model.tenantForReview.ApprovalStatus</option>
+                        <option value="Moved Out">Moved Out</option>
+                        <option value="Just Applied">Just Applied</option>
+                    </select>
 
                     <label>Property ID:                </label><br />
                     <input type="text" name="PropertyID" value="@Model.tenantForReview.PropertyID" readonly /><br />

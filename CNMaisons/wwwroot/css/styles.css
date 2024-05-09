@@ -4,9 +4,9 @@
     color: white;
     margin: 0;
 }
-/*.entry {
+.entry {
     position: absolute;
-    background-image: url("../img/introimage.jpg");
+   
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -17,7 +17,23 @@
     left: 0%;
     right: 0%;
     background-color: rgba(0, 0, 0, 1);
-}*/
+    z-index: 1
+}
+.entry_image {
+    position: absolute;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    height: 60vh;
+    top: 0%;
+    bottom: 45%;
+    left: 0%;
+    right: 0%;
+    background-color: rgba(0, 0, 0, 1);
+    z-index: -1;
+    width: 100%;
+}
 .intro_image {
     
 }
@@ -209,6 +225,9 @@ textarea, input[type=number], input[type=password] {
     background-color: rgba(255, 255, 255, 0.5);
     caret-color: #fff;
     color: #fff
+}
+input[type=text]::placeholder{
+    color: black;
 }
 input[type=file]{
    margin-top: .5rem;

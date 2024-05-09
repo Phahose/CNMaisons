@@ -17,6 +17,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Pages\introimage.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Pages\introimage.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.0" />
   </ItemGroup>
 

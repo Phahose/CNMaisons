@@ -9,7 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace CNMaisons.Pages
 {
-    //[Authorize(Roles = "LandLord, Staff")]
+    [Authorize(Roles = "LandLord, Staff")]
     public class UpdateTenantModel : PageModel
     {
         public bool ViewFormNow = false;
@@ -180,10 +180,8 @@ namespace CNMaisons.Pages
         [BindProperty]
         public string YourSignedForm { get; set; } = string.Empty;
 
-
         [BindProperty]
         public bool DeleteFlag { get; set; }
-
 
         [BindProperty]
         public string ApprovalStatus { get; set; } = string.Empty;
@@ -194,7 +192,6 @@ namespace CNMaisons.Pages
         public Tenant Tenant { get; set; } = new();
         public string TenantEmail {  get; set; } = string.Empty;
         public Employee Employee { get; set; } = new Employee();
-
         public void OnGet()
         {
             CNMPMS tenantController = new();
@@ -568,7 +565,7 @@ namespace CNMaisons.Pages
                             DOB = DOB,
                             Nationality = Nationality,
                             StateofOrigin = StateofOrigin,
-
+                            ApprovalStatus = ApprovalStatus,
                             LGA = LGA,
                             HomeTown = HomeTown,
                             PermanentHomeAddress = PermanentHomeAddress,
