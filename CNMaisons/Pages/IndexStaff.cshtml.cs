@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.IdentityModel.Tokens;
+using System.Text.Json;
 
 namespace CNMaisons.Pages
 {
@@ -123,7 +124,23 @@ namespace CNMaisons.Pages
                         }
                     }
                     break;
+                case "Full Refresh":
+                    GetListProperties();
+                break;
             }
+        }
+
+        public List<Property> GetListProperties()
+        {
+            List<Property> properties = new List<Property>();
+            string propertyliststring;
+            CNMPMS controller = new CNMPMS();
+            properties = controller.GetProperties();
+
+            propertyliststring = JsonSerializer.Serialize(properties);
+            HttpContext.Session.SetString("ListOfProperties", propertyliststring);
+
+            return properties;
         }
     }
 }

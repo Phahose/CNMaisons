@@ -194,8 +194,14 @@ header li a:hover{
     background-color: #0056b3;
 }
 
+.full-refresh{
+    margin: 0.3rem;
+    padding: 0.3rem;
+    background-color: seagreen;
+    color: white;
+}
 /*Sign Up Page*/
-.application_form{
+.application_form {
     width: fit-content;
     margin: auto;
     max-width: 50rem;

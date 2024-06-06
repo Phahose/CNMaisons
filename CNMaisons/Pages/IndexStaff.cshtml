@@ -75,38 +75,43 @@
                         <div class="next_rent">
                             <a href="~/AddProperty" class="more-info">Add Property</a>
                         </div>
+                        <input type="submit" name="Submit" value="Full Refresh" class="full-refresh">
                     }
-                    <div>
+                    <details>
+                        <summary>Update Password</summary>
                         <div>
-                            <p class="title">FirstName</p>
-                            <div class="val">@Model.Employee.FirstName</div>
-                            <p class="title">LastName</p>
-                            <div class="val">@Model.Employee.LastName</div>
+                            <div>
+                                <p class="title">FirstName</p>
+                                <div class="val">@Model.Employee.FirstName</div>
+                                <p class="title">LastName</p>
+                                <div class="val">@Model.Employee.LastName</div>
+                            </div>
+                            <fieldset>
+                                @if (Model.SuccessMessage != "")
+                                {
+                                    <p class="success_message">@Model.SuccessMessage</p>
+                                }
+                                <legend>Update Password</legend>
+                                <label for="Email">Email</label>
+                                <br />
+                                <input type="email" name="Email" required maxlength="100" value="@Model.Users.Email" />
+                                <br />
+                                <label for="Password">Password</label>
+                                <br />
+                                <input type="password" name="Password"/>
+                                <br />
+                                <label for="ConfirmPassword">Confirm Password</label>
+                                <br />
+                                <input type="password" name="ConfirmPassword" />
+                                <br />
+                                @Html.ValidationMessage("PasswordError")
+                                @Html.ValidationMessage("ConfirmPasswordError")
+                                @Html.ValidationMessage("PasswordMatchError")
+                                <input type="submit" name="Submit" class="btn" value="Update">
+                            </fieldset>
                         </div>
-                        <fieldset>
-                            @if (Model.SuccessMessage != "")
-                            {
-                                <p class="success_message">@Model.SuccessMessage</p>
-                            }
-                            <legend>Update Password</legend>
-                            <label for="Email">Email</label>
-                            <br />
-                            <input type="email" name="Email" required maxlength="100" value="@Model.Users.Email" />
-                            <br />
-                            <label for="Password">Password</label>
-                            <br />
-                            <input type="password" name="Password" required />
-                            <br />
-                            <label for="ConfirmPassword">Confirm Password</label>
-                            <br />
-                            <input type="password" name="ConfirmPassword"/>
-                            <br />
-                            @Html.ValidationMessage("PasswordError")
-                            @Html.ValidationMessage("ConfirmPasswordError")
-                            @Html.ValidationMessage("PasswordMatchError")
-                            <input type="submit" name="Submit" class="btn" value="Update">
-                        </fieldset>
-                    </div>
+                    </details>
+                   
                 </div>
                 @if (Model.IsPasswordChaned == false)
                 {
