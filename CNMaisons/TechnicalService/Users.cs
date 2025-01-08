@@ -1,6 +1,7 @@
 ﻿using CNMaisons.Domain;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using System.Data.Common;
 using System.Security.Cryptography;
 
 namespace CNMaisons.TechnicalService
@@ -299,5 +300,102 @@ namespace CNMaisons.TechnicalService
             cnMaisonsConnection.Close();
             return users;
         }
+
+        public bool AddResetToken (Token Token)
+        {
+            bool Success = false;
+            string successMessage;
+            SqlConnection cnMaisonsConnection = new SqlConnection();
+            cnMaisonsConnection.ConnectionString = connectionString;
+            cnMaisonsConnection.Open();
+
+
+            try
+            {
+                // Connection
+                SqlConnection MyDataSource = new SqlConnection();
+                MyDataSource.ConnectionString = connectionString;
+                MyDataSource.Open();
+
+                // Command
+                SqlCommand MyCommand = new SqlCommand();
+                MyCommand.Connection = MyDataSource;
+                MyCommand.CommandType = CommandType.StoredProcedure;
+                MyCommand.CommandText = "InsertPasswordResetToken";
+
+                void AddParameter(string parameterName, SqlDbType sqlDbType, object value)
+                {
+                    MyCommand.Parameters.Add(new SqlParameter
+                    {
+                        ParameterName = parameterName,
+                        SqlDbType = sqlDbType,
+                        Direction = ParameterDirection.Input,
+                        Value = value
+                    });
+                }
+
+                // Adding parameters
+                AddParameter("@Email", SqlDbType.VarChar, Token.Email);
+                AddParameter("@Token", SqlDbType.NVarChar, Token.TokenCode);
+                AddParameter("@ExpiresAt", SqlDbType.VarChar, Token.ExpiresAt);
+
+
+                MyCommand.ExecuteNonQuery();
+                MyDataSource.Close();
+                successMessage = "Successful!";
+                Success = true;
+            }
+            catch (Exception ex)
+            {
+                successMessage = $"An error occurred: {ex.Message}";
+                Success = false;
+            }
+
+            return Success;
+        }
+
+        public Token GetTokenByCode(string token)
+        {
+            Token passwordResetToken = new Token();
+            SqlConnection cnMaisonsConnection = new SqlConnection();
+            cnMaisonsConnection.ConnectionString = connectionString;
+            cnMaisonsConnection.Open();
+
+            SqlCommand GetTokenCommand = new()
+            {
+                CommandType = CommandType.StoredProcedure,
+                Connection = cnMaisonsConnection,
+                CommandText = "GetTokenByCode"
+            };
+
+            SqlParameter TokenParameter = new()
+            {
+                ParameterName = "@Token",
+                SqlDbType = SqlDbType.NVarChar,
+                Direction = ParameterDirection.Input,
+                SqlValue = token
+            };
+
+            GetTokenCommand.Parameters.Add(TokenParameter);
+            SqlDataReader TokenReader = GetTokenCommand.ExecuteReader();
+
+            if (TokenReader.HasRows)
+            {
+                while (TokenReader.Read())
+                {
+                    passwordResetToken.TokenID = (int)TokenReader["TokenId"];
+                    passwordResetToken.Email = (string)TokenReader["Email"];
+                    passwordResetToken.TokenCode = (string)TokenReader["Token"];
+                    passwordResetToken.CreatedAt = (DateTime)TokenReader["CreatedAt"];
+                    passwordResetToken.ExpiresAt = (DateTime)TokenReader["ExpiresAt"];
+                    passwordResetToken.IsUsed = (bool)TokenReader["IsUsed"];
+                }
+            }
+            TokenReader.Close();
+            cnMaisonsConnection.Close();
+            return passwordResetToken;
+        }
+
+
     }
 }

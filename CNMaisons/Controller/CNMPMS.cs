@@ -314,21 +314,47 @@ namespace CNMaisons.Controller
         }
         
 
-    public bool AddReminder(string tenantID, string description, DateTime dueDateRemindedFor)
-    {
-        bool Success;
-        Payments payments = new Payments();
-        Success = payments.AddReminder(tenantID, description, dueDateRemindedFor);
-        return Success;
-    }
+        public bool AddReminder(string tenantID, string description, DateTime dueDateRemindedFor)
+        {
+            bool Success;
+            Payments payments = new Payments();
+            Success = payments.AddReminder(tenantID, description, dueDateRemindedFor);
+            return Success;
+        }
 
-    public List<Reminder> GetAllReminder()
-    {
-        List<Reminder> reminders = new List<Reminder>();
-        Payments paymentServices = new Payments();
-        reminders = paymentServices.GetAllReminders();
-        return reminders;
+        public List<Reminder> GetAllReminder()
+        {
+            List<Reminder> reminders = new List<Reminder>();
+            Payments paymentServices = new Payments();
+            reminders = paymentServices.GetAllReminders();
+            return reminders;
+        }
+
+        public string AddToken(Token Token)
+        {
+            bool result = false;
+            string Message = string.Empty;
+            Users users = new Users();
+            result = users.AddResetToken(Token);
+            if (result == true)
+            {
+               Message = "Success";
+            }
+            else
+            {
+                Message = "Failed";
+            }
+            return Message;
+        }
+
+        public Token GetToken(string Token)
+        {
+            Token token = new Token();  
+            Users users = new Users();
+            token = users.GetTokenByCode(Token);
+
+            return token;
+        }
     }
-}
 }
 
