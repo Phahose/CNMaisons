@@ -45,3 +45,23 @@ BEGIN
 END;
 GO
 
+
+
+
+CREATE PROCEDURE GetTokenByCode
+    @Token NVARCHAR(256)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        TokenId,    -- Unique identifier for the token
+        Email,      -- Email associated with the token
+        Token,      -- The token code itself
+        CreatedAt,  -- When the token was created
+        ExpiresAt,  -- When the token will expire
+        IsUsed      -- Whether the token has been used
+    FROM PasswordResetTokens
+    WHERE Token = @Token;
+END;
+GO

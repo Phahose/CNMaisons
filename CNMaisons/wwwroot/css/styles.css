@@ -76,7 +76,8 @@ header li a:hover{
     width: fit-content;
     margin: auto;
     color: white;
-    font-size: 1.3rem;
+    font-size: .9rem;
+    max-width: 90%;
 }
 .searchbox {
     background-color: rgba(0, 0, 0, 0.7);
@@ -90,6 +91,7 @@ header li a:hover{
     display: flex;
     align-items: center;
     justify-content:center;
+    max-width: 70%;
 }
 .searchfield {
     width: 70%;
