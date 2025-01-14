@@ -101,7 +101,7 @@ namespace CNMaisons.Pages
                     
                 }
             }
-            Message = "Invalid attempt";
+            Message = "Invalid Username or Password";
             return Page();
         }
 

@@ -16,16 +16,31 @@
                 <p style="font-size: small; color: red; background-color:white; padding: 0.5rem;">@Model.Message</p>
             }
             <legend>Login</legend>
+            <img src="~/img/png/p_icon_w.png" alt="login profile image" />
             <label for="Email">Email</label>
             <br />
-            <input type="email" name="Email" required/>
+            <input type="email" name="Email" required />
             <br />
             <label for="Password">Password</label>
             <br />
-            <input type="password" name="Password" required/>
+            <div class="password-container">
+                <input type="password" name="Password" id="Password" required />
+                <button type="button" class="toggle-password" onclick="togglePassword()">🔒</button>
+            </div>
             <br />
-            <input type="submit" name="Submit" value="Login" class="btn"/>
+            <input type="submit" name="Submit" value="Login" class="btn" />
             <a href="~/ForgotPassword" style="padding-top: 1rem; text-decoration: none; color: white">Forgot Password?</a>
-        </fieldset>      
+        </fieldset>
     </form>
 </div>
+<script>
+    function togglePassword() {
+        const passwordInput = document.getElementById("Password");
+        const toggleButton = document.querySelector(".toggle-password");
+        const isPasswordVisible = passwordInput.type === "text";
+
+        passwordInput.type = isPasswordVisible ? "password" : "text";
+        toggleButton.textContent = isPasswordVisible ? "🔒" : "🔓";
+    }
+
+</script>
