@@ -58,6 +58,14 @@
                     <p>@property.PropertyID</p>
                     <p>@property.PropertyName</p>
                     <p>@property.PropertyPrice</p>
+                    @if(property.Occupied == true)
+                    {
+                        <p>Occupied</p>
+                    }
+                    else
+                    {
+                        <p>Vacant</p>
+                    }
                 </div>
                 <div>
                     <input type="hidden" name="PropertyID" value="@property.PropertyID">

@@ -4,7 +4,6 @@
     color: white;
     margin: 0;
     padding:0;
-    width: 96%;
 }
 .entry {
     position: relative;  
@@ -239,7 +238,8 @@ textarea, input[type=number], input[type=password] {
     border: 1px solid #fff;
     background-color: rgba(255, 255, 255, 0.5);
     caret-color: #fff;
-    color: #fff
+    color: #fff;
+    max-width: 100%;
 }
 input[type=text]::placeholder{
     color: black;
@@ -661,8 +661,9 @@ input.filter-btn{
 }
 .img-table{
     width: 100%;
-    margin: auto;
+    margin: auto;  
 }
+
 .delConfirmation {
     background-color: #282a2e;
     border: 1px solid white;
@@ -691,6 +692,8 @@ input.filter-btn{
     display: none;
     background-color: red;
 }
+
+
 
 /*Create Employee*/
 .success_message{
@@ -746,8 +749,9 @@ input.filter-btn{
 }
 
 .loggedin-pages {
-   background-color: #e39a3b;
-   display: flex;
+    background-color: #e39a3b;
+    display: flex;
+    min-width: fit-content;
 }
 .loggedin-nav {
     display: flex;
@@ -839,6 +843,7 @@ input.filter-btn{
     width: 90%;
     margin: auto;
 }
+
 /*Index Tenant*/
 .more-info{
     text-decoration: none;
@@ -977,7 +982,7 @@ summary {
     transform: translate(-50%, -50%) scale(1);
 }
 
-/*Biggeer than 1000px */
+/*Biggeer than 800px */
 @media (min-width: 800px) {
     .properties {
         margin-top: 7rem;
@@ -986,17 +991,27 @@ summary {
 }
 
 
+/*Smaller than 980px */
+@media (max-width: 1200px){
+    .loggedin-nav li{
+        font-size: 0.9rem;
+    }
+    .loggedin-nav .intro_image {
+        width: 5em;
+    }
+   
+}
 /*Smaller than 780px */
 @media (max-width: 780px) {
-    
-    body{
-        padding:0;
-        margin:0;
-        display:flex;
-        flex-flow:column;
-        justify-content:center;
-        overflow-x: hidden;
+
+    body {
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
     }
+
     .intro_image {
         width: 50%;
         min-width: 4rem;
@@ -1011,82 +1026,93 @@ summary {
         padding: 0.5rem;
         align-items: center;
     }
-    header ul{
-        display: flex;
-        width: 70%;
-        justify-content: center;
-    }
-    header li {
-        list-style: none;
-        margin-left: 1rem;
-        font-size: 0.6rem;
-        padding: 0.2rem;
-        min-width: 4rem;
-        display: flex;
-        justify-content: center;
-    }
+
+        header ul {
+            display: flex;
+            width: 70%;
+            justify-content: center;
+        }
+
+        header li {
+            list-style: none;
+            margin-left: 1rem;
+            font-size: 0.6rem;
+            padding: 0.2rem;
+            min-width: 4rem;
+            display: flex;
+            justify-content: center;
+        }
 
     .quote {
         font-size: .5rem;
     }
-    .cards{
-        display:block;
+
+    .cards {
+        display: block;
     }
 
     .searchbox {
         width: fit-content;
         display: flex;
         align-items: center;
-        justify-content:center;
+        justify-content: center;
         max-width: 70%;
-        height:fit-content;
+        height: fit-content;
     }
 
-    .searchbox form{
-        display: flex;
-        flex-flow: column;
-    }
+        .searchbox form {
+            display: flex;
+            flex-flow: column;
+        }
+
     .searchfield {
         max-width: 60%;
         font-size: .5rem;
         outline: none;
-        margin:1rem auto;
+        margin: 1rem auto;
         background-color: blue;
         max-height: 0.2rem;
     }
+
     .search_button {
         padding: 0.5rem 0.5rem;
         max-width: fit-content;
         font-size: 0.5rem;
     }
+
     .properties {
         margin-top: 14rem;
     }
-    .prop_head{
+
+    .prop_head {
         font-size: 0.6rem;
     }
-    .properties form{
+
+    .properties form {
         justify-content: center;
         display: flex;
         margin: auto;
-        align-content:center;
+        align-content: center;
     }
+
     .cards {
         display: flex;
         margin: auto;
         flex-flow: column;
-        align-items:center;
-        justify-content:center;
+        align-items: center;
+        justify-content: center;
         min-width: 30rem;
     }
-    .property-card{
-        max-height:18rem;
+
+    .property-card {
+        max-height: 18rem;
         min-width: 13rem;
     }
-    .property-card img {
-        height: 30%;
-        width: 100%;
-    }
+
+        .property-card img {
+            height: 30%;
+            width: 100%;
+        }
 
     .property-details {
         padding: 1rem;
@@ -1125,5 +1151,29 @@ summary {
         border-radius: 5px;
         cursor: pointer;
         font-size: 0.6rem;
+    }
+    .loggedin-icon_div{
+        display: none;
+    }
+    .t_image {
+        display: none;
+    }
+    .prop-card{
+        flex-flow: column;
+    }
+
+    .img-row {
+        width: 4rem;
+    }
+    .img-row img{
+        width: 4rem;
+        height: 4rem
+    }
+    .img-table input[type=file] {
+        width: 11rem;
+        font-size: 0.6rem;
+    }
+    .img-table label{
+        font-size: 0.8rem;
     }
 }

@@ -97,8 +97,7 @@ namespace CNMaisons.Pages
                     else
                     {
                         return RedirectToPage("/Index");
-                    }
-                    
+                    }                   
                 }
             }
             Message = "Invalid Username or Password";

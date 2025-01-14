@@ -7,8 +7,6 @@
 
 }
 
-
-
 <script src="~/libraries/jquery/jquery.js"></script>
 <script src="~/libraries/jquery-validate/jquery.validate.js"></script>
 <script src="~/libraries/jquery-validate-unobtrusive/jquery.validate.unobtrusive.js"></script>
@@ -86,11 +84,11 @@
             @foreach (var tennant in Model.ListOfTenants)
             {
                 <div class="prop-card">
-                    <div>
+                    <div class="t_image">
                         <a href="#"><img src="data:image;base64,@Convert.ToBase64String(tennant.Passport)" alt="Tenant Profile Picture" /></a>
                     </div>
                     <div>
-                        <p><label class="label">Property ID:</label> @tennant.PropertyID</p>
+                        <p><label class="label ">Property ID:</label> @tennant.PropertyID</p>
                         <p><label class="label">Tenant Name:</label>@tennant.FirstName @tennant.LastName</p>
                         <p><label class="label">Tenant ID:</label>@tennant.TenantID</p>
                         <p><label class="label">Status:</label>@tennant.ApprovalStatus</p>
