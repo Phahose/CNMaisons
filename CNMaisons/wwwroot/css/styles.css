@@ -1176,4 +1176,10 @@ summary {
     .img-table label{
         font-size: 0.8rem;
     }
+
+
+    .loginForm {
+        width: 15rem;
+        max-width: 30rem;
+    }
 }
