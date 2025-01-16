@@ -30,6 +30,8 @@ namespace CNMaisons.Pages
         public User Users { get; set; } = new User();
         public string Email { get; set; } = string.Empty;
         public Employee Employee { get; set; } = new Employee();
+        public List<Tenant> TenantList { get; set; } = new();
+        public Dictionary<string, List<Tenant>> TenantsWithProperties = new();
         public void OnGet()
         {
             Email = HttpContext.Session.GetString("Email")!;
@@ -38,6 +40,19 @@ namespace CNMaisons.Pages
             DisplayedPropertyList = PropertyList.ToList();
             Users = controller.GetUserByEmail(Email);
             Employee = controller.GetAllEmployees(Email);
+
+            foreach (var property in DisplayedPropertyList)
+            {
+                TenantList = controller.GetTenantByProperty(property.PropertyID);
+                if (!TenantsWithProperties.ContainsKey(property.PropertyID))
+                {
+                    TenantsWithProperties[property.PropertyID] = new List<Tenant>();
+                }
+                if (TenantList.Count > 0)
+                {
+                    TenantsWithProperties[property.PropertyID].Add(TenantList[0]);
+                }
+            }
         }
 
         public IActionResult OnPost()
@@ -48,6 +63,9 @@ namespace CNMaisons.Pages
             DisplayedPropertyList = PropertyList.ToList();
             Users = controller.GetUserByEmail(Email);
             Employee = controller.GetAllEmployees(Email);
+
+           
+
             switch (Submit)
             {
                 case "Filter":

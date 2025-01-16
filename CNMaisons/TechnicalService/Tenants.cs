@@ -976,10 +976,60 @@ namespace CNMaisons.TechnicalService
             return Success;
         }
 
+        public List<Tenant> GetApprovedTenantsByPropertyID(string propertyID)
+        {
+            List<Tenant> tenants = new List<Tenant>();
+            SqlConnection cnMaisonsConnection = new SqlConnection();
+            cnMaisonsConnection.ConnectionString = connectionString;
+            cnMaisonsConnection.Open();
+
+            SqlCommand getTenantsCommand = new()
+            {
+                CommandType = CommandType.StoredProcedure,
+                Connection = cnMaisonsConnection,
+                CommandText = "GetTenantByPropertyID"
+            };
+
+            SqlParameter propertyIDParameter = new()
+            {
+                ParameterName = "@PropertyID",
+                SqlDbType = SqlDbType.VarChar,
+                Direction = ParameterDirection.Input,
+                SqlValue = propertyID
+            };
+
+            getTenantsCommand.Parameters.Add(propertyIDParameter);
+            SqlDataReader myDataReader = getTenantsCommand.ExecuteReader();
+
+            if (myDataReader.HasRows)
+            {
+                while (myDataReader.Read())
+                {
+                    Tenant tenant = new Tenant
+                    {
+                        TenantID = myDataReader["TenantID"]?.ToString(),
+                        PropertyID = myDataReader["PropertyID"]?.ToString(),
+                        FirstName = myDataReader["FirstName"]?.ToString(),
+                        LastName = myDataReader["LastName"]?.ToString(),
+                        PhoneNumber = myDataReader["PhoneNumber"]?.ToString(),
+                        Email = myDataReader["Email"]?.ToString(),
+                        ApprovalStatus = myDataReader["ApprovalStatus"]?.ToString(),
+                        NextRentDue = myDataReader["NextRentDue"] == DBNull.Value ? default(DateTime) : (DateTime)myDataReader["NextRentDue"]
+                        // Add more fields here as needed, matching the Tenant class properties.
+                    };
+
+                    tenants.Add(tenant);
+                }
+            }
+
+            myDataReader.Close();
+            cnMaisonsConnection.Close();
+            return tenants;
+        }
 
 
 
-        
+
 
     }
 }

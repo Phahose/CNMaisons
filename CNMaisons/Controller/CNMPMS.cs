@@ -355,6 +355,16 @@ namespace CNMaisons.Controller
 
             return token;
         }
+
+        public List<Tenant> GetTenantByProperty(string propertyID) 
+        { 
+            List<Tenant> tenants = new List<Tenant>();
+            Tenants tenantControlls = new Tenants();
+
+            tenants = tenantControlls.GetApprovedTenantsByPropertyID(propertyID);
+
+            return tenants;
+        }
     }
 }
 
