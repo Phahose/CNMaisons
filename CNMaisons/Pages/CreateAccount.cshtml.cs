@@ -2,11 +2,13 @@
 using CNMaisons.Controller;
 using CNMaisons.Domain;
 using CNMaisons.TechnicalService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace CNMaisons.Pages
 {
+    [Authorize(Roles = "LandLord")]
     public class CreateAccountModel : PageModel
     {
 

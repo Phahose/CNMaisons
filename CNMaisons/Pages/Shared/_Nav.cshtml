@@ -1,0 +1,56 @@
+@{
+    var isAuthed = User?.Identity?.IsAuthenticated ?? false;
+    var isTenant = User?.IsInRole("Tenant") ?? false;
+    var isStaff = User?.IsInRole("Staff") ?? false;
+    var isLandlord = User?.IsInRole("LandLord") ?? false;
+}
+@* Single site header, rendered on every page.
+   Anonymous visitors get the marketing nav; authenticated users get a
+   role-based member nav (with Log Out). *@
+<header class="site-header">
+    <a href="~/Index" class="site-header__brand" aria-label="CN Maisons home">
+        <img src="~/img/png/logo-no-background.png" alt="CN Maisons" />
+    </a>
+
+    <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" data-nav-toggle>
+        <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <nav aria-label="Primary">
+        <ul class="site-nav" data-nav>
+            @if (!isAuthed)
+            {
+                <li><a href="~/Index">Home</a></li>
+                <li><a href="~/LeaseApplication">Apply to Rent</a></li>
+                <li><a href="~/RequestPropertyVisit">Book a Visit</a></li>
+                <li class="site-nav__cta"><a href="~/Login">Log In</a></li>
+            }
+            else
+            {
+                @if (isTenant)
+                {
+                    <li><a href="~/IndexTenant">My Account</a></li>
+                    <li><a href="~/AddPayment">Make Payment</a></li>
+                    <li><a href="~/ViewPayment">Payments</a></li>
+                }
+                @if (isStaff)
+                {
+                    <li><a href="~/IndexStaff">My Account</a></li>
+                    <li><a href="~/ViewPropertyAdmin">Properties</a></li>
+                    <li><a href="~/ViewInquiry">Inquiries</a></li>
+                    <li><a href="~/UpdateTenant">Tenants</a></li>
+                }
+                @if (isLandlord)
+                {
+                    <li><a href="~/IndexStaff">My Account</a></li>
+                    <li><a href="~/ViewPropertyAdmin">Properties</a></li>
+                    <li><a href="~/AddProperty">Add Property</a></li>
+                    <li><a href="~/ViewTenantbyLandLord">Tenants</a></li>
+                    <li><a href="~/CreateAccount">New Employee</a></li>
+                    <li><a href="~/ViewFinancebyLandlord">Finances</a></li>
+                }
+                <li class="site-nav__cta"><a href="~/Logout">Log Out</a></li>
+            }
+        </ul>
+    </nav>
+</header>

@@ -1,65 +1,53 @@
-﻿@page
+@page
 @model CNMaisons.Pages.IndexTenantModel
 @{
-    ViewData["Title"] = "Home";
+    ViewData["Title"] = "My Account";
+    var approved = Model.Tenant.ApprovalStatus == "Approved";
 }
-<div class="memberhome">
-    <div>
-        <div class="home_intro">
-            <nav class="memberhome_nav">
-                <a href="~/Index"><img src="~/img/png/logo-no-background.png" width="150" class="intro_image" /></a>
-                <ul>
-                    <li><a href="~/IndexTenant">My Account</a></li>
-                    @if (Model.Tenant.ApprovalStatus != "Approved")
-                    {
-                        <li><a href="~/SignLeaseForm">Sign Lease Form</a></li>
-                    }
-                    @if(Model.Tenant.ApprovalStatus =="Approved")
-                    {
-                        <li><a href="~/AddPayment">Record Rent Payment</a></li>
-                        <li><a href="~/ViewPayment">View Added Payments</a></li>
-                    }
-                </ul>
-            </nav>
-            <div class="basic_info">
-                <div class="icon_div">
-                    @if (Model.Tenant.Passport != null)
-                    {
-                        @if (Model.Tenant.Passport.Length > 0)
-                        {
-                            <img src="data:image;base64,@Convert.ToBase64String(Model.Tenant.Passport)" alt="Property Image" />
-                        }
-                        else
-                        {
-                            <img src="~/img/profile_icon.png" width="150" class="intro_image" />
-                        }
-                    }
-                    else
-                    {
-                        <img src="~/img/profile_icon.png" width="150" class="intro_image" />
-                    }
 
-                </div>
-                <h2>@Model.Tenant.FirstName @Model.Tenant.LastName</h2>
-                <p>Tenant ID: @Model.Tenant.TenantID</p>
-            </div>
-        </div> 
-        <p class="title">Account info</p>
-        <div class="infodiv transition-fade-down">
-            <div class="boxcontainer ">
-                <div class="box1">
-                    <div>
-                        <p><span>Full Name</span>: @Model.Tenant.FirstName @Model.Tenant.LastName</p>
-                        <p><span>Email</span>: @Model.Users.Email</p>
-                        <p><span>Phone Number</span>: @Model.Tenant.PhoneNumber</p>
-                        <p><span>Application Status</span>: @Model.Tenant.ApprovalStatus</p>
-                        <p><span>Nationality</span>: @Model.Tenant.Nationality</p>
-                        <p><span>Property ID</span>: @Model.Tenant.PropertyID</p>
-                    </div>
-                    <div class="next_rent">
-                        <a href="~/ViewTenant" class="more-info">View More info</a>
-                    </div>
-                </div>
+<div class="container">
+    <div class="profile-card">
+        @if (Model.Tenant.Passport != null && Model.Tenant.Passport.Length > 0)
+        {
+            <img class="avatar" src="data:image;base64,@Convert.ToBase64String(Model.Tenant.Passport)" alt="Passport photo" />
+        }
+        else
+        {
+            <img class="avatar" src="~/img/profile_icon.png" alt="" />
+        }
+        <div>
+            <h2>@Model.Tenant.FirstName @Model.Tenant.LastName</h2>
+            <p class="profile-meta">Tenant ID: @Model.Tenant.TenantID</p>
+            <p class="profile-meta">
+                Application status:
+                <span class="badge @(approved ? "badge--success" : "badge--warning")">@Model.Tenant.ApprovalStatus</span>
+            </p>
+        </div>
+    </div>
+
+    <div class="action-grid">
+        @if (!approved)
+        {
+            <a href="~/SignLeaseForm" class="action-card">Sign Lease Form</a>
+        }
+        else
+        {
+            <a href="~/AddPayment" class="action-card">Record Rent Payment</a>
+            <a href="~/ViewPayment" class="action-card">View Payments</a>
+        }
+        <a href="~/ViewTenant" class="action-card">View Full Application</a>
+    </div>
+
+    <div class="card transition-fade-down">
+        <div class="card__body">
+            <h3 class="mt-0">Account info</h3>
+            <div class="info-list">
+                <div class="info-row"><span class="k">Full Name</span><span class="v">@Model.Tenant.FirstName @Model.Tenant.LastName</span></div>
+                <div class="info-row"><span class="k">Email</span><span class="v">@Model.Users.Email</span></div>
+                <div class="info-row"><span class="k">Phone Number</span><span class="v">@Model.Tenant.PhoneNumber</span></div>
+                <div class="info-row"><span class="k">Application Status</span><span class="v">@Model.Tenant.ApprovalStatus</span></div>
+                <div class="info-row"><span class="k">Nationality</span><span class="v">@Model.Tenant.Nationality</span></div>
+                <div class="info-row"><span class="k">Property ID</span><span class="v">@Model.Tenant.PropertyID</span></div>
             </div>
         </div>
     </div>

@@ -1,0 +1,217 @@
+/* ============================================================
+   Base — reset, global element styling, form & table primitives.
+   These own the shared primitives across every page.
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    line-height: var(--leading-normal);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* --- Headings & text --- */
+h1, h2, h3, h4, h5, h6 {
+    line-height: var(--leading-tight);
+    font-weight: var(--weight-bold);
+    margin: 0 0 var(--space-3);
+}
+
+h1 { font-size: var(--text-3xl); }
+h2 { font-size: var(--text-2xl); }
+h3 { font-size: var(--text-xl); }
+h4 { font-size: var(--text-lg); }
+
+p { margin: 0 0 var(--space-3); }
+
+a {
+    color: var(--brand-400);
+    text-decoration: none;
+    transition: color var(--transition);
+}
+
+a:hover { color: var(--brand-300); }
+
+img { max-width: 100%; display: block; }
+
+/* --- Accessible focus for keyboard users --- */
+:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+    border-radius: var(--radius-sm);
+}
+
+/* ============================================================
+   Forms
+   ============================================================ */
+
+label {
+    display: inline-block;
+    margin-bottom: var(--space-1);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    color: var(--text-muted);
+}
+
+input[type=text],
+input[type=email],
+input[type=tel],
+input[type=date],
+input[type=number],
+input[type=password],
+input[type=search],
+textarea,
+select {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    margin-bottom: var(--space-4);
+    font-family: inherit;
+    font-size: var(--text-base);
+    color: var(--text);
+    background-color: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    caret-color: var(--brand-400);
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+textarea { min-height: 6rem; resize: vertical; }
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--text-subtle);
+    opacity: 1;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: var(--brand-400);
+    box-shadow: var(--focus-ring);
+}
+
+select option {
+    color: var(--text);
+    background-color: var(--surface-2);
+}
+
+input[type=file] {
+    display: block;
+    margin: var(--space-2) 0 var(--space-4);
+    color: var(--text-muted);
+    font-size: var(--text-sm);
+}
+
+input[type=file]::file-selector-button {
+    margin-right: var(--space-3);
+    padding: 0.4rem 0.9rem;
+    font-family: inherit;
+    color: var(--text);
+    background-color: var(--surface-3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background-color var(--transition);
+}
+
+input[type=file]::file-selector-button:hover {
+    background-color: var(--border);
+}
+
+fieldset {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background-color: var(--surface);
+    padding: var(--space-5);
+    margin: 0 0 var(--space-5);
+}
+
+legend {
+    padding: 0 var(--space-2);
+    font-size: var(--text-lg);
+    font-weight: var(--weight-semibold);
+    color: var(--text);
+}
+
+/* ============================================================
+   Tables
+   ============================================================ */
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    background-color: var(--surface);
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+th,
+td {
+    padding: var(--space-3) var(--space-4);
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+
+th {
+    background-color: var(--surface-2);
+    font-weight: var(--weight-semibold);
+    font-size: var(--text-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--text-muted);
+}
+
+tbody tr:hover { background-color: var(--surface-2); }
+tbody tr:last-child td { border-bottom: none; }
+
+/* ============================================================
+   Details / summary (accordions used across member pages)
+   ============================================================ */
+
+details {
+    margin: var(--space-3) 0;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background-color: var(--surface);
+}
+
+summary {
+    cursor: pointer;
+    padding: var(--space-3) var(--space-4);
+    background-color: var(--surface-2);
+    font-weight: var(--weight-semibold);
+    list-style: none;
+}
+
+summary::-webkit-details-marker { display: none; }
+
+summary::after {
+    content: "＋";
+    float: right;
+    color: var(--brand-400);
+}
+
+details[open] summary::after { content: "－"; }
+
+details > div { padding: var(--space-4); }
+
+/* --- Utility --- */
+.hideItem,
+.hideform { display: none; }

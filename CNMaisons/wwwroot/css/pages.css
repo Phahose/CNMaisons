@@ -1,0 +1,315 @@
+/* ============================================================
+   Pages — redesigned public page styles (Phase 2).
+   Loaded last so it wins over legacy where selectors overlap.
+   ============================================================ */
+
+/* ---------- Home hero ---------- */
+.hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 62vh;
+    padding: var(--space-8) var(--space-5);
+    background: linear-gradient(rgba(10, 10, 12, 0.55), rgba(10, 10, 12, 0.85)),
+                url("/img/introimage.jpg") center / cover no-repeat;
+    text-align: center;
+}
+
+.hero__inner { max-width: 760px; }
+
+.hero__title {
+    font-size: clamp(2rem, 5vw, var(--text-4xl));
+    margin-bottom: var(--space-4);
+}
+
+.hero__lead {
+    color: var(--text-muted);
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-6);
+}
+
+/* Search form on hero */
+.search {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    justify-content: center;
+    max-width: 560px;
+    margin: 0 auto;
+}
+.search .searchfield {
+    flex: 1 1 16rem;
+    margin: 0;
+    min-width: 0;
+}
+.search .search_button { flex: 0 0 auto; }
+
+/* ---------- Property grid ---------- */
+.properties { padding: var(--space-7) var(--space-5); max-width: var(--container-max); margin: 0 auto; }
+
+.prop_head {
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-bold);
+    text-align: center;
+    margin-bottom: var(--space-6);
+}
+
+.cards {
+    display: grid;
+    gap: var(--space-5);
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+    width: 100%;
+    margin: 0;
+}
+
+.property-card {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    transition: transform var(--transition), box-shadow var(--transition);
+}
+.property-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+
+.property-card img {
+    width: 100%;
+    height: 12rem;
+    object-fit: cover;
+}
+
+.property-details {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-4);
+    flex: 1;
+}
+
+.property-title { font-size: var(--text-lg); margin: 0; color: var(--text); }
+.property-location { color: var(--text-muted); font-size: var(--text-sm); margin: 0; }
+.property-description {
+    color: var(--text-muted);
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.property-price {
+    font-size: var(--text-xl);
+    font-weight: var(--weight-bold);
+    color: var(--brand-400);
+    margin: var(--space-2) 0;
+}
+.property-card form { margin: 0; margin-top: auto; }
+.property-card .btn { width: 100%; }
+
+.empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: var(--text-muted);
+    padding: var(--space-6);
+}
+
+/* ---------- Auth pages (Login / Forgot Password) ---------- */
+.auth {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - var(--header-h) - 8rem);
+    padding: var(--space-7) var(--space-4);
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 26rem;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    padding: var(--space-6);
+}
+
+.auth-card fieldset {
+    border: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+}
+
+.auth-card legend {
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-bold);
+    margin-bottom: var(--space-2);
+    padding: 0;
+}
+
+.auth-card__icon {
+    width: 4rem;
+    height: 4rem;
+    margin: 0 auto var(--space-4);
+    display: block;
+}
+
+.auth-card .btn { width: 100%; margin-top: var(--space-2); }
+
+.auth-links {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--space-4);
+    font-size: var(--text-sm);
+}
+
+/* Password field with visibility toggle */
+.password-container { position: relative; }
+.password-container input { padding-right: 2.75rem; }
+.toggle-password {
+    position: absolute;
+    right: 0.5rem;
+    top: 0.55rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: var(--text-lg);
+    line-height: 1;
+    color: var(--text-muted);
+}
+.toggle-password:hover { color: var(--text); }
+
+/* ---------- Property details ---------- */
+.swiper {
+    width: 100%;
+    max-width: 60rem;
+    margin: 0 auto var(--space-6);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+.swiper-slide img {
+    width: 100%;
+    height: clamp(16rem, 45vh, 32rem);
+    object-fit: cover;
+}
+.swiper .swiper-button-next,
+.swiper .swiper-button-prev {
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.4);
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: var(--radius-full);
+}
+.swiper .swiper-button-next::after,
+.swiper .swiper-button-prev::after { font-size: 1.1rem; }
+.swiper-pagination-bullet { background: #fff; }
+.swiper-pagination-bullet-active { background: var(--brand-400); }
+
+.property-info {
+    max-width: 60rem;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-6);
+    justify-content: space-between;
+}
+.property-info h1 { font-size: var(--text-3xl); margin: 0 0 var(--space-2); }
+.property-info .prop_id { color: var(--text-muted); margin: 0 0 var(--space-2); }
+.property-info .prop_price {
+    font-size: var(--text-3xl);
+    font-weight: var(--weight-bold);
+    color: var(--brand-400);
+    margin: 0;
+}
+.property-info .location { color: var(--text-muted); font-style: italic; margin: 0 0 var(--space-3); }
+.property-info .icons { display: flex; gap: var(--space-4); }
+.property-info .icons i { color: var(--brand-400); margin-right: var(--space-1); }
+
+/* ---------- Member dashboards ---------- */
+.profile-card {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+    flex-wrap: wrap;
+    background: linear-gradient(135deg, var(--brand-700), var(--surface) 70%);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    margin-bottom: var(--space-6);
+}
+.profile-card .avatar {
+    width: 5.5rem;
+    height: 5.5rem;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--brand-400);
+    flex: 0 0 auto;
+}
+.profile-card h2 { margin: 0 0 var(--space-1); }
+.profile-card .profile-meta { color: var(--text-muted); margin: 0; }
+
+.action-grid {
+    display: grid;
+    gap: var(--space-4);
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+    margin-bottom: var(--space-6);
+}
+.action-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text);
+    font-weight: var(--weight-semibold);
+    transition: border-color var(--transition), transform var(--transition);
+}
+.action-card:hover { border-color: var(--brand-400); color: var(--text); transform: translateY(-2px); }
+.action-card::after { content: "→"; color: var(--brand-400); }
+
+.info-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); gap: var(--space-3) var(--space-5); }
+.info-list .info-row { display: flex; flex-direction: column; gap: 2px; }
+.info-list .info-row .k { font-size: var(--text-sm); color: var(--text-muted); }
+.info-list .info-row .v { font-weight: var(--weight-medium); }
+
+/* ---------- Property admin cards ---------- */
+/* Action column: stack the update/delete controls with breathing room. */
+.prop-card > div:last-child {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    align-items: stretch;
+    min-width: 10rem;
+}
+.prop-card > div:last-child form { margin: 0; }
+.prop-card .update-prop-button,
+.prop-card .delete-prop-button {
+    width: 100%;
+    justify-content: center;
+}
+
+/* ---------- Compact single-column form (e.g. visit request) ---------- */
+.form-grid--stack { grid-template-columns: 1fr; }
+
+/* ---------- Error page ---------- */
+.error-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 60vh;
+    padding: var(--space-7) var(--space-5);
+}
+.error-page h1 { color: var(--brand-400); font-size: clamp(2rem, 6vw, var(--text-4xl)); }
+.error-page p { color: var(--text-muted); max-width: 34rem; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 780px) {
+    .hero { min-height: 52vh; }
+    .property-info { flex-direction: column; gap: var(--space-3); }
+}

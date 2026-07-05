@@ -5,7 +5,6 @@ using System.ComponentModel;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container
-builder.Services.AddRazorPages();
 builder.Services.AddSession();
 //builder.Services.AddHostedService<BackgroundWorkerService>();
 
@@ -35,7 +34,7 @@ else
 app.UseStaticFiles(); // add for wwroot
 app.UseRouting();
 app.UseSession();
-app.MapRazorPages();
 app.UseAuthentication();
 app.UseAuthorization();
+app.MapRazorPages();
 app.Run();

@@ -1,133 +1,86 @@
-﻿@page
+@page
 @model CNMaisons.Pages.IndexStaffModel
 @{
-    ViewData["Title"] = "Home";
+    ViewData["Title"] = "My Account";
+    var isLandlord = Model.Users.Role == "LandLord";
 }
-<div class="memberhome">
-    <div>
-        <div class="home_intro">
-            <nav class="memberhome_nav">
-                <a href="~/Index"><img src="~/img/png/logo-no-background.png" width="150" class="intro_image" /></a>
-                @if (Model.Users.Role == "LandLord")
-                {
-                    <ul>
-                        <li><a href="~/IndexStaff">My Account</a></li>
-                        <li><a href="~/ViewTenantbyLandLord">View Tenant </a></li>
-                        <li><a href="~/CreateAccount">Create New Employee Account</a></li>
-                        <li><a href="~/ViewFinancebyLandlord">View Financial Report</a></li>
 
-                    </ul>
-                }
-                @if (Model.Users.Role == "Staff")
-                {
-                    <ul>
-                        <li>
-                            <a href="~/IndexStaff">My Account</a>
-                        </li>
-                        <li>
-                            <a href="~/ViewInquiry">View Inquiry </a>
-                       </li>
-                    </ul>
-                }
-            </nav>
-            <div class="basic_info">
-                <div class="icon_div">
-                    @if (Model.Employee.EmployeeImage != null)
-                    {
-                        @if (Model.Employee.EmployeeImage.Length > 0)
-                        {
-                            <img src="data:image;base64,@Convert.ToBase64String(Model.Employee.EmployeeImage)" alt="Property Image" />
-                        }
-                        else
-                        {
-                            <img src="~/img/profile_icon.png" width="150" class="intro_image" />
-                        }
-                    }
-                    else
-                    {
-                        <img src="~/img/profile_icon.png" width="150" class="intro_image" />
-                    }
-                </div>
-                <h2>@Model.Employee.FirstName @Model.Employee.LastName</h2>
-                <p>@Model.Users.Role</p>
-                <p>Employee ID: @Model.Employee.EmployeeId</p>
-            </div>
-        </div> 
-        <p class="title">Account info</p>
-        <div class="infodiv transition-fade-down">
-            <form method="post" name="StaffAccountForm">              
-                <div>
-                    <div class="next_rent">
-                        <a href="~/ViewInquiry" class="more-info">View Visit Requests</a>
-                    </div>
-                    <div class="next_rent">
-                        <a href="~/ViewPropertyAdmin" class="more-info">View Properties</a>
-                    </div>
-                    <div class="next_rent">
-                        <a href="~/UpdateTenant" class="more-info">Update Tenant</a>
-                    </div>
-                   
-                    @if (Model.Users.Role == "LandLord")
-                    {
-                        <div class="next_rent">
-                            <a href="~/ReviewApplication" class="more-info">Review Tennancy Applications</a>
-                        </div>
-                        <div class="next_rent">
-                            <a href="~/AddProperty" class="more-info">Add Property</a>
-                        </div>
-                        <input type="submit" name="Submit" value="Full Refresh" class="full-refresh">
-                    }
-                    <details>
-                        <summary>Update Password</summary>
-                        <div>
-                            <div>
-                                <p class="title">FirstName</p>
-                                <div class="val">@Model.Employee.FirstName</div>
-                                <p class="title">LastName</p>
-                                <div class="val">@Model.Employee.LastName</div>
-                            </div>
-                            <fieldset>
-                                @if (Model.SuccessMessage != "")
-                                {
-                                    <p class="success_message">@Model.SuccessMessage</p>
-                                }
-                                <legend>Update Password</legend>
-                                <label for="Email">Email</label>
-                                <br />
-                                <input type="email" name="Email" required maxlength="100" value="@Model.Users.Email" />
-                                <br />
-                                <label for="Password">Password</label>
-                                <br />
-                                <input type="password" name="Password"/>
-                                <br />
-                                <label for="ConfirmPassword">Confirm Password</label>
-                                <br />
-                                <input type="password" name="ConfirmPassword" />
-                                <br />
-                                @Html.ValidationMessage("PasswordError")
-                                @Html.ValidationMessage("ConfirmPasswordError")
-                                @Html.ValidationMessage("PasswordMatchError")
-                                <input type="submit" name="Submit" class="btn" value="Update">
-                            </fieldset>
-                        </div>
-                    </details>
-                   
-                </div>
-                @if (Model.IsPasswordChaned == false)
-                {
-                    <div class="update-password transition-fade-down">
-                        <p>Default Password: Update Your Password to Secure Your Account</p>
-                        <label for="Password">New Password</label><br/>
-                        <input type="password" name="Password" required><br/>
-                        @Html.ValidationMessage("PasswordError")
-                        <label for="PasswordConfirm">Re-enter Password</label><br />
-                        <input type="password" name="PasswordConfirm" required><br />
-                        @Html.ValidationMessage("ConfirmPasswordError")
-                        @Html.ValidationMessage("PasswordMatchError")
-                        <input type="submit" name="Submit" value="Update Password">
-                    </div>
-                }
-            </form>
+<div class="container">
+    <div class="profile-card">
+        @if (Model.Employee.EmployeeImage != null && Model.Employee.EmployeeImage.Length > 0)
+        {
+            <img class="avatar" src="data:image;base64,@Convert.ToBase64String(Model.Employee.EmployeeImage)" alt="Employee photo" />
+        }
+        else
+        {
+            <img class="avatar" src="~/img/profile_icon.png" alt="" />
+        }
+        <div>
+            <h2>@Model.Employee.FirstName @Model.Employee.LastName</h2>
+            <p class="profile-meta"><span class="badge badge--info">@Model.Users.Role</span></p>
+            <p class="profile-meta">Employee ID: @Model.Employee.EmployeeId</p>
         </div>
     </div>
+
+    <form method="post" name="StaffAccountForm">
+        <h3>Quick actions</h3>
+        <div class="action-grid">
+            <a href="~/ViewInquiry" class="action-card">View Visit Requests</a>
+            <a href="~/ViewPropertyAdmin" class="action-card">View Properties</a>
+            <a href="~/UpdateTenant" class="action-card">Update Tenant</a>
+            @if (isLandlord)
+            {
+                <a href="~/ReviewApplication" class="action-card">Review Applications</a>
+                <a href="~/AddProperty" class="action-card">Add Property</a>
+                <a href="~/ViewTenantbyLandLord" class="action-card">View Tenants</a>
+                <a href="~/ViewFinancebyLandlord" class="action-card">Financial Report</a>
+            }
+        </div>
+
+        @if (isLandlord)
+        {
+            <p><input type="submit" name="Submit" value="Full Refresh" class="full-refresh"></p>
+        }
+
+        <details>
+            <summary>Update Password</summary>
+            <div class="card__body">
+                @if (Model.SuccessMessage != "")
+                {
+                    <p class="success_message">@Model.SuccessMessage</p>
+                }
+                <fieldset>
+                    <legend>Update Password</legend>
+                    <label for="Email">Email</label>
+                    <input type="email" id="Email" name="Email" required maxlength="100" value="@Model.Users.Email" />
+
+                    <label for="Password">Password</label>
+                    <input type="password" id="Password" name="Password" />
+
+                    <label for="ConfirmPassword">Confirm Password</label>
+                    <input type="password" id="ConfirmPassword" name="ConfirmPassword" />
+
+                    @Html.ValidationMessage("PasswordError")
+                    @Html.ValidationMessage("ConfirmPasswordError")
+                    @Html.ValidationMessage("PasswordMatchError")
+                    <input type="submit" name="Submit" class="btn" value="Update">
+                </fieldset>
+            </div>
+        </details>
+
+        @if (Model.IsPasswordChaned == false)
+        {
+            <div class="update-password transition-fade-down">
+                <p>Default password in use — update it to secure your account.</p>
+                <label for="Password">New Password</label>
+                <input type="password" name="Password" required>
+                @Html.ValidationMessage("PasswordError")
+                <label for="PasswordConfirm">Re-enter Password</label>
+                <input type="password" name="PasswordConfirm" required>
+                @Html.ValidationMessage("ConfirmPasswordError")
+                @Html.ValidationMessage("PasswordMatchError")
+                <input type="submit" name="Submit" value="Update Password" class="btn">
+            </div>
+        }
+    </form>
 </div>

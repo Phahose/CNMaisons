@@ -1,35 +1,34 @@
-﻿@page
+@page
 @model CNMaisons.Pages.LoginModel
 @{
-    Layout = "_Header";
     ViewData["Title"] = "Login";
 }
-<div class="login_page">
-    <video autoplay muted loop id="video-background">
-        <source src="~/img/login.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
-    <form name="Login" method="post" class="form loginForm">
+<div class="auth">
+    <form name="Login" method="post" class="auth-card">
         <fieldset>
+            <legend>Welcome back</legend>
+            <img src="~/img/png/p_icon_w.png" alt="" class="auth-card__icon" />
+
             @if (Model.Message != "")
             {
-                <p style="font-size: small; color: red; background-color:white; padding: 0.5rem;">@Model.Message</p>
+                <p class="alert alert--danger">@Model.Message</p>
             }
-            <legend>Login</legend>
-            <img src="~/img/png/p_icon_w.png" alt="login profile image" />
+
             <label for="Email">Email</label>
-            <br />
-            <input type="email" name="Email" required />
-            <br />
+            <input type="email" id="Email" name="Email" required />
+
             <label for="Password">Password</label>
-            <br />
             <div class="password-container">
                 <input type="password" name="Password" id="Password" required />
-                <button type="button" class="toggle-password" onclick="togglePassword()">🔒</button>
+                <button type="button" class="toggle-password" onclick="togglePassword()" aria-label="Show password">🔒</button>
             </div>
-            <br />
+
             <input type="submit" name="Submit" value="Login" class="btn" />
-            <a href="~/ForgotPassword" style="padding-top: 1rem; text-decoration: none; color: white">Forgot Password?</a>
+
+            <div class="auth-links">
+                <a href="~/ForgotPassword">Forgot password?</a>
+                <a href="~/LeaseApplication">Apply to rent</a>
+            </div>
         </fieldset>
     </form>
 </div>
@@ -42,5 +41,4 @@
         passwordInput.type = isPasswordVisible ? "password" : "text";
         toggleButton.textContent = isPasswordVisible ? "🔒" : "🔓";
     }
-
 </script>

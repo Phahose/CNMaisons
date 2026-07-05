@@ -65,3 +65,36 @@ BEGIN
     WHERE Token = @Token;
 END;
 GO
+
+
+CREATE PROCEDURE GetTenantByPropertyID
+    @PropertyID VARCHAR(7)
+AS
+BEGIN
+    -- Check for null parameter
+    IF @PropertyID IS NULL
+    BEGIN
+        RAISERROR('GetApprovedTenantsByPropertyID - required parameter: @PropertyID.', 16, 1);
+        RETURN;
+    END
+
+    -- Select tenants with approved status for the specified property
+    SELECT 
+        TenantID,
+        FirstName,
+        LastName,
+		PhoneNumber,
+		Email,
+        ApprovalStatus,
+        PropertyID,
+		NextRentDue
+    FROM 
+        Tenant
+    WHERE 
+        PropertyID = @PropertyID
+        AND ApprovalStatus = 'Approved';
+END;
+
+DROP Procedure GetTenantByPropertyID
+EXEC  GetTenantByPropertyID 'CN00009'
+

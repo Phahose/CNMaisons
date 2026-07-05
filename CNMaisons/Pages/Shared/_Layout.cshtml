@@ -1,20 +1,42 @@
-﻿<!DOCTYPE html>
-
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
-    <link rel="stylesheet" href="~/css/styles.css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewBag.Title @(string.IsNullOrEmpty(ViewBag.Title as string) ? "CN Maisons" : "· CN Maisons")</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,100;0,300;0,400;0,500;0,700;0,800;0,900;1,100;1,300;1,400;1,500;1,700;1,800;1,900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="~/css/styles.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://kit.fontawesome.com/d2022e2e35.js" crossorigin="anonymous" async></script>
 </head>
 <body>
-    <div>
-        @RenderBody()
+    <div class="page">
+        @await Html.PartialAsync("_Nav")
+
+        <main class="page__main">
+            @RenderBody()
+        </main>
+
+        <footer class="site-footer">
+            <div class="site-footer__inner">
+                <span>&copy; @DateTime.Now.Year CN Maisons. All rights reserved.</span>
+                <nav aria-label="Footer">
+                    <a href="~/Index">Home</a>
+                    &nbsp;·&nbsp;
+                    <a href="~/LeaseApplication">Apply to Rent</a>
+                    &nbsp;·&nbsp;
+                    <a href="~/RequestPropertyVisit">Book a Visit</a>
+                </nav>
+            </div>
+        </footer>
     </div>
-    <script src="~/js/script.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="~/js/script.js"></script>
+    <script src="~/js/nav.js"></script>
 </body>
 </html>

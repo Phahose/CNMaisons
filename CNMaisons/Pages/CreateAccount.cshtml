@@ -1,98 +1,51 @@
-﻿@page
+@page
 @model CNMaisons.Pages.CreateAccountModel
 @{
-   // Layout = "_Header";
     ViewData["Title"] = "Create Account";
 }
-<div>
-    <div class="home_intro">
-        <nav class="memberhome_nav">
-            <a href="~/Index"><img src="~/img/png/logo-no-background.png" width="150" class="intro_image" /></a>
-            <ul>
-                @if (Model.Users.Role == "LandLord")
-                {
 
-                    <li><a href="~/IndexStaff">My Account</a></li>
-                    <li><a href="~/ViewTenantbyLandLord">View Tenant </a></li>
-                    <li><a href="~/CreateAccount">Create New Employee Account</a></li>
-                    <li><a href="~/ViewFinancebyLandlord">View Financial Report</a></li>
-                }
-                @if (Model.Users.Role == "Staff")
-                {
-                
-                    <li>
-                        <a href="~/IndexStaff">My Account</a>
-                    </li>
-                    <li>
-                        <a href="~/IndexStaff">My Account</a>
-                    </li>
-                    <li>
-                        <a href="~/ViewInquiry">View Inquiry </a>
-                    </li>
-                }
-            </ul>
-        </nav>
-        <div class="basic_info">
-            <div class="icon_div">
-                @if (Model.Employee.EmployeeImage != null)
-                {
-                    <img src="data:image;base64,@Convert.ToBase64String(Model.Employee.EmployeeImage)" alt="Property Image" />
-                }
-                else
-                {
-                    <a href="~/Index"><img src="~/img/profile_icon" width="150" class="intro_image" /></a>
-                }
-            </div>
-            <h2>@Model.Employee.FirstName @Model.Employee.LastName</h2>
-            <p>@Model.Users.Role</p>
-        </div>
-    </div>
-    <form name="Login" method="post" class="form " enctype="multipart/form-data">
-        <br />
-        @foreach (string error in Model.errorMessage)
-        {
-            <p style="font-size: small; color: red; background-color:white; padding: 0.5rem;">@error</p>
-            
-        }     
-        @if (Model.Message != "")
-        {
-            <p style="font-size: small; color: green; background-color:white; padding: 0.5rem;">@Model.Message</p>
-        }  
+<div class="container container--narrow">
+    <h1 class="section-title">Create a new employee account</h1>
+
+    @foreach (string error in Model.errorMessage)
+    {
+        <p class="alert alert--danger">@error</p>
+    }
+    @if (Model.Message != "")
+    {
+        <p class="alert alert--success">@Model.Message</p>
+    }
+
+    <form name="Login" method="post" class="card" enctype="multipart/form-data">
         <fieldset>
-            <legend>Create New User</legend>
-            <label>First Name</label>
-            <br />
-            <input type="text" name="UserFirstName" required maxlength="30" />
-            <br />
-            <label>Last Name</label>
-            <br />
-            <input type="text" name="LastName" required maxlength="30" />
-            <br />
+            <legend>New user details</legend>
+
+            <label for="UserFirstName">First Name</label>
+            <input type="text" id="UserFirstName" name="UserFirstName" required maxlength="30" />
+
+            <label for="LastName">Last Name</label>
+            <input type="text" id="LastName" name="LastName" required maxlength="30" />
+
             <label for="Email">Email</label>
-            <br />
-            <input type="email" name="Email" required maxlength="100" />
-            <br />
+            <input type="email" id="Email" name="Email" required maxlength="100" />
+
             <label for="Password">Password</label>
-            <br />
-            <input type="password" name="Password" required />
-            <br />
+            <input type="password" id="Password" name="Password" required />
+
             <label for="ConfirmPassword">Confirm Password</label>
-            <br />
-            <input type="password" name="ConfirmPassword" required />
-            <br />
+            <input type="password" id="ConfirmPassword" name="ConfirmPassword" required />
+
             <label for="EmployeeImage">Employee Image</label>
-            <br />
-            <input type="file" name="EmployeeImage" accept=".jpg, .jpeg, .png" />
-            <br />
-            <label for="Role">Select Role:</label>
-            <br />
-            <select name="Role" class="form-control" required>
-                <option value="0">--Make-a-Selection--</option>
+            <input type="file" id="EmployeeImage" name="EmployeeImage" accept=".jpg, .jpeg, .png" />
+
+            <label for="Role">Select Role</label>
+            <select id="Role" name="Role" required>
+                <option value="0">-- Make a Selection --</option>
                 <option value="LandLord">Landlord</option>
                 <option value="Staff">Staff</option>
             </select>
-            <button name="Submit" type="submit" class="btn">Submit</button>
-              
+
+            <button name="Submit" type="submit" class="btn">Create Account</button>
         </fieldset>
     </form>
 </div>

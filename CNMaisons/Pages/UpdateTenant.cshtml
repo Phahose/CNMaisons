@@ -1,276 +1,162 @@
-﻿@page
+@page
 @model CNMaisons.Pages.UpdateTenantModel
 @{
     ViewData["Title"] = "Update Tenant";
     var emailPattern = new System.Text.RegularExpressions.Regex(@"^[^\s@]+@[^\s@]+\.[^\s@]+$");
+    var t = Model.tenantForReview;
 }
 <script src="~/libraries/jquery/jquery.js"></script>
 <script src="~/libraries/jquery-validate/jquery.validate.js"></script>
 <script src="~/libraries/jquery-validate-unobtrusive/jquery.validate.unobtrusive.js"></script>
 
-<script type="text/javascript">
-    function copyTenantID(tenantID) {
-        document.querySelector('input[name="FindTenantID"]').value = tenantID;
-    }
-</script>
 
-<div>
-    <div class="loggedin-pages">
-        <nav class="loggedin-nav">
-            <a href="~/Index"><img src="~/img/png/logo-no-background.png" width="150" class="intro_image" /></a>
-            <ul class="loggedin-list">
-                @if (Model.Users.Role == "LandLord")
-                {
-                    <li><a href="~/IndexStaff">My Account</a></li>
-                    <li><a href="~/ViewTenantbyLandLord">View Tenant </a></li>
-                    <li><a href="~/CreateAccount">Create New Employee Account</a></li>
-                    <li><a href="~/ViewFinancebyLandlord">View Financial Report</a></li>
-                }
-                @if (Model.Users.Role == "Staff")
-                {
+<div class="container">
+    <h1 class="section-title">Update tenant</h1>
 
-                    <li>
-                        <a href="~/IndexStaff">My Account</a>
-                    </li>
-                    <li>
-                        <a href="~/ViewInquiry">View Inquiry </a>
-                    </li>
-                }
-                <li class="loggedin-icon_div">
-                    @if (Model.Employee.EmployeeImage != null)
-                    {
-                        <img src="data:image;base64,@Convert.ToBase64String(Model.Employee.EmployeeImage)" alt="Property Image" />
-                    }
-                    else
-                    {
-                        <a href="~/Index"><img src="~/img/profile_icon" width="150" class="intro_image" /></a>
-                    }
-                </li>
-            </ul>
-        </nav>
-    </div>
-    <form name="FindPendingApplicationForm" method="post" class="form property_form transition-fade-down">
-        <h4>Update Tenant</h4>
-        <div style="display: flex; align-content: center">
-            <table style="border-collapse: collapse; text-align: left; width: 100%;">
-                <tr>
-                    <td>Tenant ID</td>
-                    <td><input type="text" name="FindTenantID" maxlength="5"/></td>
-                </tr>
-                <tr>
-                    <td><input type="submit" name="Submit" value="Find" class="btn" /></td>
-                </tr>
-                <tr>
-                    <td>
-                        @if (Model.Message != "")
-                        {
-                            <p style="font-size: medium; color: green; background-color:white; padding: 0.5rem;">@Model.Message</p>
-                        }                      
-                    </td>
-
-                </tr>
-            </table>
-        </div>
+    <form name="FindPendingApplicationForm" method="post" class="transition-fade-down">
+        <fieldset>
+            <legend>Find a tenant</legend>
+            <div class="field">
+                <label for="FindTenantID">Tenant ID</label>
+                <input type="text" id="FindTenantID" name="FindTenantID" maxlength="5" />
+            </div>
+            <input type="submit" name="Submit" value="Find" class="btn" />
+            @if (Model.Message != "")
+            {
+                <p class="alert alert--success" style="margin-top: var(--space-4);">@Model.Message</p>
+            }
+        </fieldset>
     </form>
 
     @if (Model.ViewFormNow == true)
     {
-
-        <form name="Application" method="post" class="form property_form transition-fade-down" enctype="multipart/form-data">
+        <form name="Application" method="post" class="transition-fade-down" enctype="multipart/form-data">
             <fieldset>
                 <legend>Personal Information</legend>
-                <div>
-                    <label>Tenant ID:                    </label><br />
-                    <input type="text" name="TenantID" value="@Model.tenantForReview.TenantID" readonly /><br />
-                    <label>Approval Status:                    </label><br />
-                    <select name="ApprovalStatus">
-                        <option value="@Model.tenantForReview.ApprovalStatus">@Model.tenantForReview.ApprovalStatus</option>
-                        <option value="Moved Out">Moved Out</option>
-                        <option value="Just Applied">Just Applied</option>
-                    </select>
-
-                    <label>Property ID:                </label><br />
-                    <input type="text" name="PropertyID" value="@Model.tenantForReview.PropertyID" readonly /><br />
-
-                    <label>First Name:                 </label><br />
-                    <input type="text" name="FirstName" value="@Model.tenantForReview.FirstName" /><br />
-
-                    <label>Last Name:                  </label><br />
-                    <input type="text" name="LastName" value="@Model.tenantForReview.LastName" /><br />
-
-                    <label>Phone Number:         </label><br />
-                    <input type="tel" name="PhoneNumber" value="@Model.tenantForReview.PhoneNumber" /><br />
-
-                    <label>Email:                          </label><br />
-                    <input type="email" name="Email" value="@Model.tenantForReview.Email" /><br />
-
-                    <label>Date of Birth:             </label><br />
-                    @* <input type="date" name="DOB" value="@Model.tenantForReview.DOB" /><br /> *@
-                    <input type="date" name="DOB" value="@Model.tenantForReview.DOB.ToString("yyyy-MM-dd")" /><br />
-
-
-                    <label>Nationality:                </label><br />
-                    <input type="text" name="Nationality" value="@Model.tenantForReview.Nationality" /><br />
-
-                    <label>State of Origin:          </label><br />
-                    <input type="text" name="StateofOrigin" value="@Model.tenantForReview.StateofOrigin" /><br />
-
-                    <label>Local Govt. Area:      </label><br />
-                    <input type="text" name="LGA" value="@Model.tenantForReview.LGA" /><br />
-
-                    <label>Home Town:              </label><br />
-                    <input type="text" name="HomeTown" value="@Model.tenantForReview.HomeTown" /><br />
-
-                    <label>Permanent Home Add: </label><br />
-                    <input type="text" name="PermanentHomeAddress" value="@Model.tenantForReview.PermanentHomeAddress" /><br />
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="TenantID">Tenant ID</label>
+                        <input type="text" id="TenantID" name="TenantID" value="@t.TenantID" readonly />
+                    </div>
+                    <div class="field">
+                        <label for="ApprovalStatus">Approval Status</label>
+                        <select id="ApprovalStatus" name="ApprovalStatus">
+                            <option value="@t.ApprovalStatus">@t.ApprovalStatus</option>
+                            <option value="Moved Out">Moved Out</option>
+                            <option value="Just Applied">Just Applied</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="PropertyID">Property ID</label>
+                        <input type="text" id="PropertyID" name="PropertyID" value="@t.PropertyID" readonly />
+                    </div>
+                    <div class="field">
+                        <label for="FirstName">First Name</label>
+                        <input type="text" id="FirstName" name="FirstName" value="@t.FirstName" />
+                    </div>
+                    <div class="field">
+                        <label for="LastName">Last Name</label>
+                        <input type="text" id="LastName" name="LastName" value="@t.LastName" />
+                    </div>
+                    <div class="field">
+                        <label for="PhoneNumber">Phone Number</label>
+                        <input type="tel" id="PhoneNumber" name="PhoneNumber" value="@t.PhoneNumber" />
+                    </div>
+                    <div class="field">
+                        <label for="Email">Email</label>
+                        <input type="email" id="Email" name="Email" value="@t.Email" />
+                    </div>
+                    <div class="field">
+                        <label for="DOB">Date of Birth</label>
+                        <input type="date" id="DOB" name="DOB" value="@t.DOB.ToString("yyyy-MM-dd")" />
+                    </div>
+                    <div class="field">
+                        <label for="Nationality">Nationality</label>
+                        <input type="text" id="Nationality" name="Nationality" value="@t.Nationality" />
+                    </div>
+                    <div class="field">
+                        <label for="StateofOrigin">State of Origin</label>
+                        <input type="text" id="StateofOrigin" name="StateofOrigin" value="@t.StateofOrigin" />
+                    </div>
+                    <div class="field">
+                        <label for="LGA">Local Govt. Area</label>
+                        <input type="text" id="LGA" name="LGA" value="@t.LGA" />
+                    </div>
+                    <div class="field">
+                        <label for="HomeTown">Home Town</label>
+                        <input type="text" id="HomeTown" name="HomeTown" value="@t.HomeTown" />
+                    </div>
+                    <div class="field field--full">
+                        <label for="PermanentHomeAddress">Permanent Home Address</label>
+                        <input type="text" id="PermanentHomeAddress" name="PermanentHomeAddress" value="@t.PermanentHomeAddress" />
+                    </div>
                 </div>
             </fieldset>
-
-
-
-
 
             <fieldset>
                 <legend>Occupation Info</legend>
-                <div>
-                    <label>Occupation: </label><br />
-                    <input type="text" name="Occupation" value="@Model.tenantForReview.Occupation" /><br />
-
-                    <label>Self Employed: </label><br />
-                    <input type="text" name="SelfEmployed" value="@Model.tenantForReview.SelfEmployed" /><br />
-
-                    <label>Business Registration Number: </label><br />
-                    <input type="text" name="BusinessRegistrationNumber" value="@Model.tenantForReview.BusinessRegistrationNumber" /><br />
-
-                    <label>Coporate Affairs Certificate: </label><br />
-                    <input type="text" name="CorporateAffairsCertificate" value="@Model.tenantForReview.CorporateAffairsCertificate" /><br />
-
-                    <label>Name of Employer: </label><br />
-                    <input type="text" name="NameofEmployer" value="@Model.tenantForReview.NameofEmployer" /><br />
-
-                    <label>Address Of Employer: </label><br />
-                    <input type="text" name="AddressOfEmployer" value="@Model.tenantForReview.AddressOfEmployer" /><br />
-
-                    <label>Length On Job: </label><br />
-                    <input type="text" name="LengthOnJob" value="@Model.tenantForReview.LengthOnJob" /><br />
-
-                    <label>Current Position Held: </label><br />
-                    <input type="text" name="CurrentPositionHeld" value="@Model.tenantForReview.CurrentPositionHeld" /><br />
-
-                    <label>Nature Of Job: </label><br />
-                    <input type="text" name="NatureOfJob" value="@Model.tenantForReview.NatureOfJob" /><br />
-
+                <div class="form-grid">
+                    <div class="field"><label for="Occupation">Occupation</label><input type="text" id="Occupation" name="Occupation" value="@t.Occupation" /></div>
+                    <div class="field"><label for="SelfEmployed">Self Employed</label><input type="text" id="SelfEmployed" name="SelfEmployed" value="@t.SelfEmployed" /></div>
+                    <div class="field"><label for="BusinessRegistrationNumber">Business Registration Number</label><input type="text" id="BusinessRegistrationNumber" name="BusinessRegistrationNumber" value="@t.BusinessRegistrationNumber" /></div>
+                    <div class="field"><label for="CorporateAffairsCertificate">Corporate Affairs Certificate</label><input type="text" id="CorporateAffairsCertificate" name="CorporateAffairsCertificate" value="@t.CorporateAffairsCertificate" /></div>
+                    <div class="field"><label for="NameofEmployer">Name of Employer</label><input type="text" id="NameofEmployer" name="NameofEmployer" value="@t.NameofEmployer" /></div>
+                    <div class="field"><label for="AddressOfEmployer">Address Of Employer</label><input type="text" id="AddressOfEmployer" name="AddressOfEmployer" value="@t.AddressOfEmployer" /></div>
+                    <div class="field"><label for="LengthOnJob">Length On Job</label><input type="text" id="LengthOnJob" name="LengthOnJob" value="@t.LengthOnJob" /></div>
+                    <div class="field"><label for="CurrentPositionHeld">Current Position Held</label><input type="text" id="CurrentPositionHeld" name="CurrentPositionHeld" value="@t.CurrentPositionHeld" /></div>
+                    <div class="field"><label for="NatureOfJob">Nature Of Job</label><input type="text" id="NatureOfJob" name="NatureOfJob" value="@t.NatureOfJob" /></div>
                 </div>
             </fieldset>
 
-
-
-
             <fieldset>
                 <legend>Past Rental Information</legend>
-                <div>
-                    <label>Former Residence Address: </label><br />
-                    <input type="text" name="FormerResidenceAddress" value="@Model.tenantForReview.FormerResidenceAddress" /><br />
-
-                    <label>Reason For Moving: </label><br />
-                    <input type="text" name="ReasonForMoving" value="@Model.tenantForReview.ReasonForMoving" /><br />
-
-                    <label>Length Of Stay At Old Residence: </label><br />
-                    <input type="text" name="LengthOfStayAtOldResidence" value="@Model.tenantForReview.LengthOfStayAtOldResidence" /><br />
-
-                    <label>Name Of Former Resident Manager: </label><br />
-                    <input type="text" name="NameOfFormerResidentManager" value="@Model.tenantForReview.NameOfFormerResidentManager" /><br />
-
-                    <label>Objections To Reasons For Moving: </label><br />
-                    <input type="text" name="ObjectionsToReasonsForMoving" value="@Model.tenantForReview.ObjectionsToReasonsForMoving" /><br />
+                <div class="form-grid">
+                    <div class="field field--full"><label for="FormerResidenceAddress">Former Residence Address</label><input type="text" id="FormerResidenceAddress" name="FormerResidenceAddress" value="@t.FormerResidenceAddress" /></div>
+                    <div class="field field--full"><label for="ReasonForMoving">Reason For Moving</label><input type="text" id="ReasonForMoving" name="ReasonForMoving" value="@t.ReasonForMoving" /></div>
+                    <div class="field"><label for="LengthOfStayAtOldResidence">Length Of Stay At Old Residence</label><input type="text" id="LengthOfStayAtOldResidence" name="LengthOfStayAtOldResidence" value="@t.LengthOfStayAtOldResidence" /></div>
+                    <div class="field"><label for="NameOfFormerResidentManager">Name Of Former Resident Manager</label><input type="text" id="NameOfFormerResidentManager" name="NameOfFormerResidentManager" value="@t.NameOfFormerResidentManager" /></div>
+                    <div class="field field--full"><label for="ObjectionsToReasonsForMoving">Objections To Reasons For Moving</label><input type="text" id="ObjectionsToReasonsForMoving" name="ObjectionsToReasonsForMoving" value="@t.ObjectionsToReasonsForMoving" /></div>
                 </div>
             </fieldset>
 
             <fieldset>
                 <legend>Marital Information</legend>
-                <div>
-                    <label>Marital Status: </label><br />
-                    <input type="text" name="MaritalStatus" value="@Model.tenantForReview.MaritalStatus" /><br />
-
-                    <label>Spouse First Name: </label><br />
-                    <input type="text" name="SpouseFirstName" value="@Model.tenantForReview.SpouseFirstName" /><br />
-
-                    <label>Spouse Last Name: </label><br />
-                    <input type="text" name="SpouseLastName" value="@Model.tenantForReview.SpouseLastName" /><br />
-
-                    <label>Spouse Occupation: </label><br />
-                    <input type="text" name="SpouseOccupation" value="@Model.tenantForReview.SpouseOccupation" /><br />
-
-                    <label>Number Of Occupants: </label><br />
-                    <input type="text" name="NumberOfOccupants" value="@Model.tenantForReview.NumberOfOccupants" /><br />
-
+                <div class="form-grid">
+                    <div class="field"><label for="MaritalStatus">Marital Status</label><input type="text" id="MaritalStatus" name="MaritalStatus" value="@t.MaritalStatus" /></div>
+                    <div class="field"><label for="SpouseFirstName">Spouse First Name</label><input type="text" id="SpouseFirstName" name="SpouseFirstName" value="@t.SpouseFirstName" /></div>
+                    <div class="field"><label for="SpouseLastName">Spouse Last Name</label><input type="text" id="SpouseLastName" name="SpouseLastName" value="@t.SpouseLastName" /></div>
+                    <div class="field"><label for="SpouseOccupation">Spouse Occupation</label><input type="text" id="SpouseOccupation" name="SpouseOccupation" value="@t.SpouseOccupation" /></div>
+                    <div class="field"><label for="NumberOfOccupants">Number Of Occupants</label><input type="text" id="NumberOfOccupants" name="NumberOfOccupants" value="@t.NumberOfOccupants" /></div>
                 </div>
             </fieldset>
+
             <fieldset>
                 <legend>Next of Kin Information</legend>
-                <div>
-                    <label>Next Of Kin First Name: </label><br />
-                    <input type="text" name="NextOfKinFirstName" value="@Model.tenantForReview.NextOfKinFirstName" /><br />
-
-                    <label>Next Of Kin Last Name: </label><br />
-                    <input type="text" name="NextOfKinLastName" value="@Model.tenantForReview.NextOfKinLastName" /><br />
-
-                    <label>Next Of Kin Address: </label><br />
-                    <input type="text" name="NextOfKinAddress" value="@Model.tenantForReview.NextOfKinAddress" /><br />
-
-                    <label>Next Of Kin Phone Number: </label><br />
-                    <input type="text" name="NextOfKinPhoneNumber" value="@Model.tenantForReview.NextOfKinPhoneNumber" /><br />
-
+                <div class="form-grid">
+                    <div class="field"><label for="NextOfKinFirstName">Next Of Kin First Name</label><input type="text" id="NextOfKinFirstName" name="NextOfKinFirstName" value="@t.NextOfKinFirstName" /></div>
+                    <div class="field"><label for="NextOfKinLastName">Next Of Kin Last Name</label><input type="text" id="NextOfKinLastName" name="NextOfKinLastName" value="@t.NextOfKinLastName" /></div>
+                    <div class="field"><label for="NextOfKinAddress">Next Of Kin Address</label><input type="text" id="NextOfKinAddress" name="NextOfKinAddress" value="@t.NextOfKinAddress" /></div>
+                    <div class="field"><label for="NextOfKinPhoneNumber">Next Of Kin Phone Number</label><input type="text" id="NextOfKinPhoneNumber" name="NextOfKinPhoneNumber" value="@t.NextOfKinPhoneNumber" /></div>
                 </div>
             </fieldset>
+
             <fieldset>
                 <legend>Guarantor Information</legend>
-                <div>
-                    <label>Guarantor1 First Name: </label><br />
-                    <input type="text" name="Guarantor1FirstName" value="@Model.tenantForReview.Guarantor1FirstName" /><br />
-
-                    <label>Guarantor1 Last Name: </label><br />
-                    <input type="text" name="Guarantor1LastName" value="@Model.tenantForReview.Guarantor1LastName" /><br />
-
-                    <label>Guarantor1 Address: </label><br />
-                    <input type="text" name="Guarantor1Address" value="@Model.tenantForReview.Guarantor1Address" /><br />
-
-                    <label>Guarantor1 Occupation: </label><br />
-                    <input type="text" name="Guarantor1Occupation" value="@Model.tenantForReview.Guarantor1Occupation" /><br />
-
-                    <label>Guarantor1 Phone Number: </label><br />
-                    <input type="text" name="Guarantor1PhoneNumber" value="@Model.tenantForReview.Guarantor1PhoneNumber" /><br />
-
-                    <label>Guarantor1 Alternate Phone Number: </label><br />
-                    <input type="text" name="Guarantor1AlternatePhoneNumber" value="@Model.tenantForReview.Guarantor1AlternatePhoneNumber" /><br />
-
-                    <label>Guarantor2 First Name: </label><br />
-                    <input type="text" name="Guarantor2FirstName" value="@Model.tenantForReview.Guarantor2FirstName" /><br />
-
-                    <label>Guarantor2 Last Name: </label><br />
-                    <input type="text" name="Guarantor2LastName" value="@Model.tenantForReview.Guarantor2LastName" /><br />
-
-                    <label>Guarantor2 Address: </label><br />
-                    <input type="text" name="Guarantor2Address" value="@Model.tenantForReview.Guarantor2Address" /><br />
-
-                    <label>Guarantor2 Occupation: </label><br />
-                    <input type="text" name="Guarantor2Occupation" value="@Model.tenantForReview.Guarantor2Occupation" /><br />
-
-                    <label>Guarantor2 Phone Number: </label><br />
-                    <input type="text" name="Guarantor2PhoneNumber" value="@Model.tenantForReview.Guarantor2PhoneNumber" /><br />
-
-                    <label>Guarantor2 Alternate Phone Number: </label><br />
-                    <input type="text" name="Guarantor2AlternatePhoneNumber" value="@Model.tenantForReview.Guarantor2AlternatePhoneNumber" /><br />
-                    <br />
-                    
-
-
-                    <button type="submit" name="Submit" style="text-align: center;" value="Submit">
-                        <img src="../img/buttons/primary-submit.svg" alt="Save Icon" width="24" height="24" style="vertical-align: middle;">
-                        <span style="vertical-align: middle;">Submit</span>
-                    </button>
-
+                <div class="form-grid">
+                    <div class="field"><label for="Guarantor1FirstName">Guarantor1 First Name</label><input type="text" id="Guarantor1FirstName" name="Guarantor1FirstName" value="@t.Guarantor1FirstName" /></div>
+                    <div class="field"><label for="Guarantor1LastName">Guarantor1 Last Name</label><input type="text" id="Guarantor1LastName" name="Guarantor1LastName" value="@t.Guarantor1LastName" /></div>
+                    <div class="field"><label for="Guarantor1Address">Guarantor1 Address</label><input type="text" id="Guarantor1Address" name="Guarantor1Address" value="@t.Guarantor1Address" /></div>
+                    <div class="field"><label for="Guarantor1Occupation">Guarantor1 Occupation</label><input type="text" id="Guarantor1Occupation" name="Guarantor1Occupation" value="@t.Guarantor1Occupation" /></div>
+                    <div class="field"><label for="Guarantor1PhoneNumber">Guarantor1 Phone Number</label><input type="text" id="Guarantor1PhoneNumber" name="Guarantor1PhoneNumber" value="@t.Guarantor1PhoneNumber" /></div>
+                    <div class="field"><label for="Guarantor1AlternatePhoneNumber">Guarantor1 Alternate Phone Number</label><input type="text" id="Guarantor1AlternatePhoneNumber" name="Guarantor1AlternatePhoneNumber" value="@t.Guarantor1AlternatePhoneNumber" /></div>
+                    <div class="field"><label for="Guarantor2FirstName">Guarantor2 First Name</label><input type="text" id="Guarantor2FirstName" name="Guarantor2FirstName" value="@t.Guarantor2FirstName" /></div>
+                    <div class="field"><label for="Guarantor2LastName">Guarantor2 Last Name</label><input type="text" id="Guarantor2LastName" name="Guarantor2LastName" value="@t.Guarantor2LastName" /></div>
+                    <div class="field"><label for="Guarantor2Address">Guarantor2 Address</label><input type="text" id="Guarantor2Address" name="Guarantor2Address" value="@t.Guarantor2Address" /></div>
+                    <div class="field"><label for="Guarantor2Occupation">Guarantor2 Occupation</label><input type="text" id="Guarantor2Occupation" name="Guarantor2Occupation" value="@t.Guarantor2Occupation" /></div>
+                    <div class="field"><label for="Guarantor2PhoneNumber">Guarantor2 Phone Number</label><input type="text" id="Guarantor2PhoneNumber" name="Guarantor2PhoneNumber" value="@t.Guarantor2PhoneNumber" /></div>
+                    <div class="field"><label for="Guarantor2AlternatePhoneNumber">Guarantor2 Alternate Phone Number</label><input type="text" id="Guarantor2AlternatePhoneNumber" name="Guarantor2AlternatePhoneNumber" value="@t.Guarantor2AlternatePhoneNumber" /></div>
                 </div>
+                <button type="submit" name="Submit" class="btn" value="Submit">Submit</button>
             </fieldset>
         </form>
     }
